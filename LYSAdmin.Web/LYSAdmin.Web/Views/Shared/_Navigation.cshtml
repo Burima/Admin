@@ -1,0 +1,51 @@
+﻿<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="img-circle" src="~/Images/profile_small.jpg" />
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">David Williams</strong>
+                            </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="@Url.Action("Profile", "AppViews")">Profile</a></li>
+                        <li><a href="@Url.Action("Contacts", "AppViews")">Contacts</a></li>
+                        <li><a href="@Url.Action("Inbox", "Mailbox")">Mailbox</a></li>
+                        <li class="divider"></li>
+                        <li><a href="@Url.Action("Login", "Pages")">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li class="@Html.IsSelected(controller: "Dashboards")">
+                <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="@Html.IsSelected(action: "Dashboard_1")"><a href="@Url.Action("Dashboard_1", "Dashboard")">Dashboard v.1</a></li>
+                    <li class="@Html.IsSelected(action: "Dashboard_2")"><a href="@Url.Action("Dashboard_2", "Dashboard")">Dashboard v.2</a></li>
+                    <li class="@Html.IsSelected(action: "Dashboard_3")"><a href="@Url.Action("Dashboard_3", "Dashboard")">Dashboard v.3</a></li>
+                    <li class="@Html.IsSelected(action: "Dashboard_4_1")"><a href="@Url.Action("Dashboard_4_1", "Dashboard")">Dashboard v.4</a></li>
+                </ul>
+            </li>
+            <li class="@Html.IsSelected(controller: "Properties")">
+                <a href="@Url.Action("Houses", "Estate")"><i class="fa fa-diamond"></i> <span class="nav-label">Estate</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="@Html.IsSelected(action: "Apartments")"><a href="@Url.Action("Apartments", "Estate")">Apartments</a></li>
+                    <li class="@Html.IsSelected(action: "Blocks")"><a href="@Url.Action("Blocks", "Estate")">Blocks</a></li>
+                    <li class="@Html.IsSelected(action: "Houses")"><a href="@Url.Action("Houses", "Estate")">Houses</a></li>
+                    <li class="@Html.IsSelected(action: "Rooms")"><a href="@Url.Action("Rooms", "Estate")">Rooms</a></li>                    
+                </ul>
+            </li>           
+            <li class="@Html.IsSelected(controller: "Employee")">
+                <a href="@Url.Action("Employee", "Employee")"><i class="fa fa-users"></i> <span class="nav-label">Employee</span> </a>
+            </li>            
+        </ul>
+    </div>
+</nav>

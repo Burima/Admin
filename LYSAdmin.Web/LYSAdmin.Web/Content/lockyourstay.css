@@ -1,0 +1,51 @@
+﻿
+/*make the input large*/
+.input-large {
+  font-size: 1.2em;
+  padding-top: 4%;
+  padding-bottom: 4%;
+}
+
+/*auto savinf */
+.saving-progress{
+  float: right;
+  color: #3fb34f;  
+}
+/*remove bold for label inside form-group*/
+.form-group label{
+    font-weight:500;
+    font-size: 1.2em;
+}
+
+/*row space*/
+.row-space-top-1 {
+  margin-top: 1%;
+}
+
+/*validation error*/
+.validation-error {
+  color: #ff5a5f;
+}
+
+/* maximum character for a control*/
+.max-character-entered{
+    float:right;
+    color:#82888a;
+    font-size:1.1em;
+}
+
+/*row padding 5pc*/
+.row-padding-top-5{
+    padding-top:5%;
+}
+
+/*error*/
+input.error,
+textarea.error,.form-control.error {
+    border: 1px solid red;
+}
+label.error {
+    display:none !important;
+}
+
+
