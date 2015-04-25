@@ -23,8 +23,16 @@
 }
 
 /*validation error*/
-.validation-error {
-  color: #ff5a5f;
+.error {
+  /*color: #ff5a5f;*/
+  border: 1px solid red;
+}
+.input-validation-error{
+    border: 1px solid red;
+}
+
+.has-error{
+    border: 1px solid red;
 }
 
 /* maximum character for a control*/

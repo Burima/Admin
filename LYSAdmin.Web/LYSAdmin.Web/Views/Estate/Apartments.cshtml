@@ -17,13 +17,13 @@
                 <h3 class="m-t-none m-b">Add new Apartment</h3>
                 @*<p>Add new Apartment today for more expirience.</p>*@
                 <br />
-                <br />
-                <form role="form" style="min-height:420px">
+                @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "add-apartment-form", style = "min-height:420px" }))
+                {
                     <div class="saving-progress hidden"><h4>Saved!</h4></div>
                     <div class="form-group">
                         <label>Apartment Name</label>
-                        @*<input type="text" placeholder="Enter apartment name" class="form-control input-large" maxlength="50" tabindex="1" required>*@  
-                       @Html.TextBoxFor(m => m.ApartmentName, new {type="text", placeholder="Enter apartment name", @class="form-control input-large", maxlength="50", tabindex="1" })                      
+                        @*<input type="text" placeholder="Enter apartment name" class="form-control input-large" maxlength="50" tabindex="1" required>*@
+                        @Html.TextBoxFor(m => m.ApartmentName, new { type = "text", placeholder = "Enter apartment name", @class = "form-control input-large", maxlength = "50", tabindex = "1" })
                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                     </div>
                     <div class="form-group">
@@ -34,17 +34,18 @@
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        @*<textarea rows="4" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3"></textarea>*@     
-                        @Html.TextAreaFor(m => m.Description, new { rows="4", placeholder="Description", @class="form-control input-large" ,maxlength="500", tabindex="3"})                   
+                        @*<textarea rows="4" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3"></textarea>*@
+                        @Html.TextAreaFor(m => m.Description, new { rows = "4", placeholder = "Description", @class = "form-control input-large", maxlength = "500", tabindex = "3" })
                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
                     </div>
                     <div class="form-group row-padding-top-5">
                         <div class="pull-right">
                             <button id="btnCancel" class="btn btn-white" type="button" tabindex="4">Cancel</button>
-                            <button class="btn btn-primary" type="submit" tabindex="5">Save</button>
+                            <button id="btnSave" class="btn btn-primary" type="submit" tabindex="5">Save</button>
                         </div>
                     </div>
-                </form>
+                    @*</form>*@
+                }
             </div>
         </div>
     </div>
@@ -75,6 +76,7 @@
 </div>
 
 @section scripts{
+
     <script>
         //reference url
         var HousesUrl = '@Url.Action("Houses","Properties")';
@@ -86,16 +88,14 @@
                 window.location = HousesUrl;
             });
 
-            $(".required").validate({
-                rules: {
-                    // simple rule, converted to {required:true}
-                    name: "required"
-                }
-            });
+            //$.validator.unobtrusive.parse($("form"));
+            //$('.btnSave').click(function () {
+            //    $('#add-apartment-form').submit();
+            //});
         });
 
         //show the limit of char left
-        function charlimit(){
+        function charlimit() {
             $("form :input").each(function () {
                 var input = $(this); // This is the jquery object of the input, do what you will
                 if (input.parent().find("span.span-char-left").length) {
@@ -106,15 +106,16 @@
         };
 
         //keyup event for all inputs
-        function inputkeyup(){
+        function inputkeyup() {
             $("form :input").each(function () {
-                var input = $(this); 
-                input.keyup(function(){
+                var input = $(this);
+                input.keyup(function () {
                     if (input.parent().find("span.span-char-left").length) {
                         input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
                     }
                 });
             })
         };
+
     </script>
 }

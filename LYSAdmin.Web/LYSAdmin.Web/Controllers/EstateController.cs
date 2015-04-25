@@ -19,6 +19,11 @@ namespace LYSAdmin.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddApartment()
+        {
+            return View("Apartment");
+        }
         public ActionResult Blocks()
         {
             return View();
