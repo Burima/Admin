@@ -147,7 +147,8 @@ namespace LYSAdmin.Web
 
             // validate 
             bundles.Add(new ScriptBundle("~/plugins/validate").Include(
-                      "~/Scripts/plugins/validate/jquery.validate.min.js"));
+                      "~/Scripts/plugins/validate/jquery.validate.min.js",
+                      "~/Scripts/plugins/validate/jquery.validate.unobtrusive.min.js"));
 
             // fullCalendar styles
             bundles.Add(new StyleBundle("~/plugins/fullCalendarStyles").Include(
@@ -287,6 +288,7 @@ namespace LYSAdmin.Web
             bundles.Add(new ScriptBundle("~/plugins/tinycon").Include(
                       "~/Scripts/plugins/tinycon/tinycon.min.js"));
 
+            
         }
     }
 }

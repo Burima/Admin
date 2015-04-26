@@ -18,20 +18,20 @@
         <EntityTypeShape EntityType="LYSAdmin.Data.DBEntity.Role" Width="1.5" PointX="12" PointY="23.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdmin.Data.DBEntity.Room" Width="1.5" PointX="14.25" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdmin.Data.DBEntity.UserDetail" Width="1.5" PointX="16.5" PointY="22.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.DBEntity.User" Width="1.5" PointX="14.25" PointY="22.5" IsExpanded="true" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Apartments_AreaID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Blocks_ApartmentID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Areas_CityID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK__Basic_Amenities__Houses" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Beds_RoomID" ManuallyRouted="false" />
-        <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Beds_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Houses_BlockID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Cities_CountryID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_HouseDescriptions_HouseID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_HouseImages_HouseID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK__Rooms__HouseID" ManuallyRouted="false" />
-        <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Users_RoleID" ManuallyRouted="false" />
-        <AssociationConnector Association="LYSAdmin.Data.DBEntity.PK_UserDetails_UserID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.DBEntity.User" Width="1.5" PointX="14.25" PointY="22.5" />
+        <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Beds_UserID" />
+        <AssociationConnector Association="LYSAdmin.Data.DBEntity.FK_Users_RoleID" />
+        <AssociationConnector Association="LYSAdmin.Data.DBEntity.PK_UserDetails_UserID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -15,6 +15,13 @@ namespace LYSAdmin.Web
 
             //Employee
             routes.MapRoute(
+                name: "Account",
+                url: "Account/{action}",
+                defaults: new { controller = "Account", action = "Login" }
+            );
+
+            //Employee
+            routes.MapRoute(
                 name: "Employee",
                 url: "Employee/{action}",
                 defaults: new { controller = "Employee", action = "Employee" }
@@ -31,7 +38,7 @@ namespace LYSAdmin.Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Dashboard", action = "Dashboard_1", id = UrlParameter.Optional }
+                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
             );
         }
 

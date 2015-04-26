@@ -105,6 +105,12 @@
     <Compile Include="DBEntity\UserDetail.cs">
       <DependentUpon>LYSAdminDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBRepository\BaseRepository.cs" />
+    <Compile Include="DBRepository\IBaseRepository.cs" />
+    <Compile Include="DBRepository\IUnitOfWork.cs" />
+    <Compile Include="DBRepository\IUserRepository.cs" />
+    <Compile Include="DBRepository\UnitOfWork.cs" />
+    <Compile Include="DBRepository\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -133,9 +139,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DBRepository\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
