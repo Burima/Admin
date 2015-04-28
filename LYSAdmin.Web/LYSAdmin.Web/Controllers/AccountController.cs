@@ -41,7 +41,7 @@ namespace LYSAdmin.Web.Controllers
                 if (user_Check != null && user_Check.UserID>0)
                 {
                     //Return To Home Page
-                    Session["UserDetails"] = user_Check;
+                    Session["User"] = user_Check;
                     return RedirectToAction("Dashboard_1", "Dashboard");
                 }
                 else

@@ -13,7 +13,7 @@ namespace LYSAdmin.Domain.UserManagement
     public class UserManagement : IUserManagement
     {
         private IUnitOfWork unitOfWork = null;
-        private IBaseRepository<Data.DBEntity.User> userRepository=null;        
+        private IBaseRepository<Data.DBEntity.User> userRepository = null;
 
         public UserManagement()
         {
@@ -25,13 +25,36 @@ namespace LYSAdmin.Domain.UserManagement
         }
         public Model.User ValidateUser(Model.LoginViewModel user)
         {
-            var userDeatils = userRepository.FirstOrDefault(m => m.Username==user.Username & m.Password==user.Password);//Check in DB through repository
+            var userDeatils = userRepository.FirstOrDefault(m => m.Username == user.Username & m.Password == user.Password);//Check in DB through repository
             Model.User modelUser = new Model.User();
 
-            if(userDeatils!=null)
+            if (userDeatils != null)
             {
-                modelUser = Mapper.Map<Data.DBEntity.User, Model.User>(userDeatils);//Converting Data.DBEntity.User to Model.User
+                modelUser = ConvertUserDBtoModel(userDeatils);//Converting Data.DBEntity.User to Model.User
+
             }
+
+            return modelUser;
+        }
+
+        //convert from db to model
+        private Model.User ConvertUserDBtoModel(Data.DBEntity.User dbUser)
+        {
+            Model.User modelUser = new Model.User();
+            modelUser.UserID = dbUser.UserID;
+            modelUser.FirstName = dbUser.FirstName;
+            modelUser.LastName = dbUser.LastName;
+            modelUser.Username = dbUser.Username;
+            modelUser.Password = dbUser.Password;
+            modelUser.Sex = dbUser.Sex;
+            modelUser.RoleID = dbUser.RoleID;
+            modelUser.MobileNumber = dbUser.MobileNumber;
+            modelUser.IsBackGroundVerified = dbUser.IsBackGroundVerified;
+            modelUser.CreatedBy = dbUser.CreatedBy;
+            modelUser.CreatedOn = dbUser.CreatedOn;
+            modelUser.LastUpdatedOn = dbUser.LastUpdatedOn;
+            modelUser.Status = dbUser.Status;
+            modelUser.Photo = dbUser.Photo;            
 
             return modelUser;
         }

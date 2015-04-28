@@ -183,6 +183,7 @@
     <Compile Include="Models\ScaffoldingContext.cs" />
     <Compile Include="Models\ScaffoldingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\LYSAdminAuthorize.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
@@ -829,6 +830,14 @@
     <Content Include="Views\Estate\Rooms.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
+    <Content Include="Views\Estate\_AddApartment.cshtml" />
+    <Content Include="Views\Estate\_EditApartment.cshtml" />
+    <Content Include="Views\Estate\_AddBlock.cshtml" />
+    <Content Include="Views\Estate\_EditBlock.cshtml" />
+    <Content Include="Views\Estate\_AddHouse.cshtml" />
+    <Content Include="Views\Estate\_EditHouse.cshtml" />
+    <Content Include="Views\Estate\_AddRoom.cshtml" />
+    <Content Include="Views\Estate\_EditRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
