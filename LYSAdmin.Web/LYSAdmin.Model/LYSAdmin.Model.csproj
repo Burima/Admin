@@ -49,6 +49,7 @@
     <Compile Include="City.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Country.cs" />
+    <Compile Include="EstateViewModels.cs" />
     <Compile Include="House.cs" />
     <Compile Include="HouseDescription.cs" />
     <Compile Include="HouseImage.cs" />

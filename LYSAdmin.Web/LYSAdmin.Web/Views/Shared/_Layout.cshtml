@@ -102,8 +102,9 @@
 
     <!-- Skin config script - only for demo purpose-->
     @Scripts.Render("~/bundles/skinConfig")
-
-    <!-- Handler for local scripts -->
+    <!--progress bar -->
+    @Html.Partial("_ShowAndHideProgress")
+    <!-- Handler for custom scripts -->
     @RenderSection("scripts", required: false)
 </body>
 </html>

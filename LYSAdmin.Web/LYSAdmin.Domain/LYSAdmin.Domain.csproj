@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApartmentManagement\ApartmentManagement.cs" />
+    <Compile Include="ApartmentManagement\IApartmentManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserManagement\IUserManagement.cs" />
     <Compile Include="UserManagement\UserManagement.cs" />

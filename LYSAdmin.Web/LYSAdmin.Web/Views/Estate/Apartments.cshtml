@@ -1,4 +1,4 @@
-﻿@model LYSAdmin.Model.Apartment
+﻿@model LYSAdmin.Model.ApartmentViewModel
 @{
     ViewBag.Title = "Apartments";
 
@@ -22,26 +22,26 @@
                     <div class="saving-progress hidden"><h4>Saved!</h4></div>
                     <div class="form-group">
                         <label>Apartment Name</label>
-                        @*<input type="text" placeholder="Enter apartment name" class="form-control input-large" maxlength="50" tabindex="1" required>*@
-                        @Html.TextBoxFor(m => m.ApartmentName, new { type = "text", placeholder = "Enter apartment name", @class = "form-control input-large", maxlength = "50", tabindex = "1" })
+                        <input type="text" id="txtApartmentName" placeholder="Enter apartment name" class="form-control input-large" maxlength="50" tabindex="1" required name="Apartment.ApartmentName">
+                        @*@Html.TextBoxFor(m => m.ApartmentName, new { type = "text", placeholder = "Enter apartment name", @class = "form-control input-large", maxlength = "50", tabindex = "1" })*@
                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                     </div>
                     <div class="form-group">
                         <label>House No</label>
-                        @*<input type="text" placeholder="Enter house no" class="form-control input-large" maxlength="50" tabindex="2">*@
-                        @Html.TextBoxFor(m => m.HouseNo, new { type = "text", placeholder = "Enter house no", @class = "form-control input-large", maxlength = "50", tabindex = "2" })
+                        <input type="text" id="txtHouseNo" placeholder="Enter house no" class="form-control input-large" maxlength="50" tabindex="2" name="Apartment.HouseNo">
+                        @*@Html.TextBoxFor(m => m.HouseNo, new { type = "text", placeholder = "Enter house no", @class = "form-control input-large", maxlength = "50", tabindex = "2" })*@
                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        @*<textarea rows="4" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3"></textarea>*@
-                        @Html.TextAreaFor(m => m.Description, new { rows = "4", placeholder = "Description", @class = "form-control input-large", maxlength = "500", tabindex = "3" })
+                        <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3" name="Apartment.Description"></textarea>
+                        @*@Html.TextAreaFor(m => m.Description, new { rows = "4", placeholder = "Description", @class = "form-control input-large", maxlength = "500", tabindex = "3" })*@
                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
                     </div>
                     <div class="form-group row-padding-top-5">
                         <div class="pull-right">
-                            <button id="btnCancel" class="btn btn-white" type="button" tabindex="4">Cancel</button>
-                            <button id="btnSave" class="btn btn-primary" type="submit" tabindex="5">Save</button>
+                            <button id="btnCancel" class="btn btn-white" onclick="window.location.href='@Url.Action("Houses", "Properties")'" type="button" tabindex="4">Cancel</button>
+                            <button id="btnAddApartment" class="btn btn-primary" type="button" tabindex="5">Save</button>
                         </div>
                     </div>
                     @*</form>*@
@@ -76,16 +76,20 @@
 </div>
 
 @section scripts{
-
+    
     <script>
         //reference url
-        var HousesUrl = '@Url.Action("Houses","Properties")';
+        var ApartmentsUrl = '@Url.Action("Apartments","Estate")';
+        var AddApartmentUrl = '@Url.Action("AddApartment", "Estate")';
 
         $(document).ready(function () {
             charlimit();
             inputkeyup();
-            $('#btnCancel').click(function () {
-                window.location = HousesUrl;
+            $('#btnAddApartment').click(function () {
+                if ($('#add-apartment-form').valid()) {
+                    //on form valid do a ajax call to add apartment
+                    fnAddApartment();
+                }
             });
 
             //$.validator.unobtrusive.parse($("form"));
@@ -117,5 +121,39 @@
             })
         };
 
+
+
+        function fnAddApartment() {
+            var jmodel = { ApartmentName: JSON.stringify($("#txtApartmentName").val()), HouseNo: JSON.stringify($("#txtHouseNo").val()), Description: JSON.stringify($("#txtDescription").val()) };           
+
+            showProgress(false, "Adding Apartment. Please wait...");
+            $.ajax({
+                url: AddApartmentUrl,
+                type: 'POST',
+                data: jmodel,
+                dataType: 'JSON',
+                success: function (response, textStatus, XMLHttpRequest) {
+                    if (response.toUpperCase() == "SUCCESS") {
+                        alert('s');
+                        location.href = ApartmentsUrl;
+                    } else if (response.toUpperCase() == "FAILED") {
+                        alert('f');
+                        //Adding of new Apartment failed
+                    } else if (response.toUpperCase() == "SelectArea") {
+                        alert('a');
+                        //Area is not selected
+                    }
+                    hideProgress();
+                },
+                error: function (xhr, status) {
+                    alert('error');
+                    hideProgress();
+                }
+
+
+            });
+
+
+        }
     </script>
 }

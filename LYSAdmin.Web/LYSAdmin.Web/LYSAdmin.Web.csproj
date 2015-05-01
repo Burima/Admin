@@ -173,7 +173,6 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\EstateController.cs" />
-    <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -344,6 +343,7 @@
     <Content Include="Images\p_big1.jpg" />
     <Content Include="Images\p_big2.jpg" />
     <Content Include="Images\p_big3.jpg" />
+    <Content Include="Images\spinner01.gif" />
     <Content Include="Images\zender_logo.png" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -838,6 +838,7 @@
     <Content Include="Views\Estate\_EditHouse.cshtml" />
     <Content Include="Views\Estate\_AddRoom.cshtml" />
     <Content Include="Views\Estate\_EditRoom.cshtml" />
+    <Content Include="Views\Shared\_ShowAndHideProgress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
