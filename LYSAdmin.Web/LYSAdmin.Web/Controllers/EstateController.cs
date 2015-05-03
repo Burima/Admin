@@ -62,12 +62,24 @@ namespace LYSAdmin.Web.Controllers
         [HttpPost]
         public JsonResult AddApartment(string ApartmentName, string HouseNo, string Description)
         {  
+
+            var User=(User)Session["User"];
             apartment.ApartmentName = JsonConvert.DeserializeObject<string>(ApartmentName);
             apartment.HouseNo = JsonConvert.DeserializeObject<string>(HouseNo);
             apartment.Description = JsonConvert.DeserializeObject<string>(Description);
+            apartment.Status = true;
             apartment.CreatedOn = DateTime.Now;
             apartment.LastUpdatedOn = DateTime.Now;
-            apartment.Status = true;
+            apartment.IsDeleted = false;
+            apartment.CreatedBy = User.UserID;
+            if (User.RoleID<=3)
+            {
+                apartment.OwnerID = User.UserID;
+            }
+            else
+            {
+                apartment.OwnerID = User.ManagerID;
+            }
             Session["AreaID"] = 1;//test data
             if (Session["AreaID"] !=null && Convert.ToInt32(Session["AreaID"]) > 0)
             {

@@ -27,7 +27,7 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
     
-        public virtual Apartment Apartment { get; set; }
         public virtual ICollection<House> Houses { get; set; }
+        public virtual Apartment Apartment { get; set; }
     }
 }

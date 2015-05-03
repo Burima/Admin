@@ -1,159 +1,79 @@
-﻿@model LYSAdmin.Model.ApartmentViewModel
+﻿@using LYSAdmin.Model;
+@model LYSAdmin.Model.ApartmentViewModel
 @{
     ViewBag.Title = "Apartments";
-
+    var User=(User)Session["User"];
 }
 
-<div class="row  border-bottom white-bg dashboard-header">
-    <!--Center Content-->
-    <div class="col-sm-9">
-        @*<div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-primary pull-right" type="button" tabindex="4">View All</button>
-                </div>
-            </div>*@
-        <div class="row">
-            <div class="col-sm-8">
-                <h3 class="m-t-none m-b">Add new Apartment</h3>
-                @*<p>Add new Apartment today for more expirience.</p>*@
-                <br />
-                @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "add-apartment-form", style = "min-height:420px" }))
-                {
-                    <div class="saving-progress hidden"><h4>Saved!</h4></div>
-                    <div class="form-group">
-                        <label>Apartment Name</label>
-                        <input type="text" id="txtApartmentName" placeholder="Enter apartment name" class="form-control input-large" maxlength="50" tabindex="1" required name="Apartment.ApartmentName">
-                        @*@Html.TextBoxFor(m => m.ApartmentName, new { type = "text", placeholder = "Enter apartment name", @class = "form-control input-large", maxlength = "50", tabindex = "1" })*@
-                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                    </div>
-                    <div class="form-group">
-                        <label>House No</label>
-                        <input type="text" id="txtHouseNo" placeholder="Enter house no" class="form-control input-large" maxlength="50" tabindex="2" name="Apartment.HouseNo">
-                        @*@Html.TextBoxFor(m => m.HouseNo, new { type = "text", placeholder = "Enter house no", @class = "form-control input-large", maxlength = "50", tabindex = "2" })*@
-                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3" name="Apartment.Description"></textarea>
-                        @*@Html.TextAreaFor(m => m.Description, new { rows = "4", placeholder = "Description", @class = "form-control input-large", maxlength = "500", tabindex = "3" })*@
-                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
-                    </div>
-                    <div class="form-group row-padding-top-5">
-                        <div class="pull-right">
-                            <button id="btnCancel" class="btn btn-white" onclick="window.location.href='@Url.Action("Houses", "Properties")'" type="button" tabindex="4">Cancel</button>
-                            <button id="btnAddApartment" class="btn btn-primary" type="button" tabindex="5">Save</button>
-                        </div>
-                    </div>
-                    @*</form>*@
-                }
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="statistic-box">
-            <h4>
-                Project Beta progress
-            </h4>
-            <p>
-                You have two project with not compleated task.
-            </p>
-            <div class="row text-center">
-                <div class="col-lg-6">
-                    <canvas id="polarChart" width="80" height="80"></canvas>
-                    <h5>Kolter</h5>
-                </div>
-                <div class="col-lg-6">
-                    <canvas id="doughnutChart" width="78" height="78"></canvas>
-                    <h5>Maxtor</h5>
-                </div>
-            </div>
-            <div class="m-t">
-                <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
-            </div>
+<!-- Datatable Css-->
+@Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
 
+<div class="wrapper wrapper-content animated fadeInRight" id="divApartments">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Apartments</h5>
+                    <button class="btn btn-primary pull-right btn-show-add-apartment" type="button" style="margin-top:-1%;">Add</button>      
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-striped table-bordered table-hover dataTables-apartments">
+                        <thead>
+                            <tr>
+                                <th>Apartment Name</th>
+                                <th>Description</th>
+                                <th>House No</th>
+                                <th>Add Block</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Trident</td>
+                                <td>
+                                    Internet
+                                    Explorer 4.0
+                                </td>
+                                <td>Win 95+</td>
+                                <td>4</td>
+                                <td>X</td>
+                            </tr>                           
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Apartment Name</th>
+                                <th>Description</th>
+                                <th>House No</th>
+                                <th>Add Block</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
 
+<div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divAddApartment">
+    @Html.Partial("_AddApartment")
+</div>
+
+
 @section scripts{
-    
+
     <script>
         //reference url
         var ApartmentsUrl = '@Url.Action("Apartments","Estate")';
         var AddApartmentUrl = '@Url.Action("AddApartment", "Estate")';
-
-        $(document).ready(function () {
-            charlimit();
-            inputkeyup();
-            $('#btnAddApartment').click(function () {
-                if ($('#add-apartment-form').valid()) {
-                    //on form valid do a ajax call to add apartment
-                    fnAddApartment();
-                }
-            });
-
-            //$.validator.unobtrusive.parse($("form"));
-            //$('.btnSave').click(function () {
-            //    $('#add-apartment-form').submit();
-            //});
-        });
-
-        //show the limit of char left
-        function charlimit() {
-            $("form :input").each(function () {
-                var input = $(this); // This is the jquery object of the input, do what you will
-                if (input.parent().find("span.span-char-left").length) {
-                    input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
-                }
-                //alert(input.attr("type"));
-            });
-        };
-
-        //keyup event for all inputs
-        function inputkeyup() {
-            $("form :input").each(function () {
-                var input = $(this);
-                input.keyup(function () {
-                    if (input.parent().find("span.span-char-left").length) {
-                        input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
-                    }
-                });
-            })
-        };
-
-
-
-        function fnAddApartment() {
-            var jmodel = { ApartmentName: JSON.stringify($("#txtApartmentName").val()), HouseNo: JSON.stringify($("#txtHouseNo").val()), Description: JSON.stringify($("#txtDescription").val()) };           
-
-            showProgress(false, "Adding Apartment. Please wait...");
-            $.ajax({
-                url: AddApartmentUrl,
-                type: 'POST',
-                data: jmodel,
-                dataType: 'JSON',
-                success: function (response, textStatus, XMLHttpRequest) {
-                    if (response.toUpperCase() == "SUCCESS") {
-                        alert('s');
-                        location.href = ApartmentsUrl;
-                    } else if (response.toUpperCase() == "FAILED") {
-                        alert('f');
-                        //Adding of new Apartment failed
-                    } else if (response.toUpperCase() == "SelectArea") {
-                        alert('a');
-                        //Area is not selected
-                    }
-                    hideProgress();
-                },
-                error: function (xhr, status) {
-                    alert('error');
-                    hideProgress();
-                }
-
-
-            });
-
-
-        }
     </script>
+
+    <!-- jQuery DataTable -->
+    @Scripts.Render("~/plugins/dataTables")
+
+    <!--Custom Script for Apartment-->
+    <script src='@Url.Content("~/Scripts/Custom/Apartment.js")'></script>
 }

@@ -25,7 +25,6 @@ namespace LYSAdmin.Data.DBEntity
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Apartment> Apartments { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<BasicAmenity> BasicAmenities { get; set; }
         public virtual DbSet<Bed> Beds { get; set; }
@@ -38,6 +37,7 @@ namespace LYSAdmin.Data.DBEntity
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
+        public virtual DbSet<Apartment> Apartments { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

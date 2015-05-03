@@ -17,6 +17,11 @@
           <Property Name="AreaID" Type="int" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="LastUpdatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="OwnerID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Areas">
           <Key>
@@ -213,6 +218,7 @@
           <Property Name="LastUpdatedOn" Type="datetime" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="Photo" Type="varchar" MaxLength="50" />
+          <Property Name="ManagerID" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__Basic_Amenities__Houses">
           <End Role="Houses" Type="Self.Houses" Multiplicity="1" />
@@ -247,6 +253,18 @@
             </Principal>
             <Dependent Role="Apartments">
               <PropertyRef Name="AreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Apartments_OwnerID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Apartments" Type="Self.Apartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Apartments">
+              <PropertyRef Name="OwnerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -397,6 +415,10 @@
             <End Role="Areas" EntitySet="Areas" />
             <End Role="Apartments" EntitySet="Apartments" />
           </AssociationSet>
+          <AssociationSet Name="FK_Apartments_OwnerID" Association="Self.FK_Apartments_OwnerID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Apartments" EntitySet="Apartments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Areas_CityID" Association="Self.FK_Areas_CityID">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Areas" EntitySet="Areas" />
@@ -442,21 +464,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LYSAdmin.Data.DBEntity" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Apartment">
-          <Key>
-            <PropertyRef Name="ApartmentID" />
-          </Key>
-          <Property Name="ApartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="HouseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="AreaID" Type="Int32" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Area" Relationship="Self.FK_Apartments_AreaID" FromRole="Apartments" ToRole="Areas" />
-          <NavigationProperty Name="Blocks" Relationship="Self.FK_Blocks_ApartmentID" FromRole="Apartments" ToRole="Blocks" />
-        </EntityType>
         <EntityType Name="Area">
           <Key>
             <PropertyRef Name="AreaID" />
@@ -466,8 +473,8 @@
           <Property Name="CityID" Type="Int32" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Apartments" Relationship="Self.FK_Apartments_AreaID" FromRole="Areas" ToRole="Apartments" />
           <NavigationProperty Name="City" Relationship="Self.FK_Areas_CityID" FromRole="Areas" ToRole="Cities" />
+          <NavigationProperty Name="Apartments" Relationship="LYSAdmin.Data.DBEntity.FK_Apartments_AreaID" FromRole="Area" ToRole="Apartment" />
         </EntityType>
         <EntityType Name="BasicAmenity">
           <Key>
@@ -537,8 +544,8 @@
           <Property Name="ApartmentID" Type="Int32" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Apartment" Relationship="Self.FK_Blocks_ApartmentID" FromRole="Blocks" ToRole="Apartments" />
           <NavigationProperty Name="Houses" Relationship="Self.FK_Houses_BlockID" FromRole="Blocks" ToRole="Houses" />
+          <NavigationProperty Name="Apartment" Relationship="LYSAdmin.Data.DBEntity.FK_Blocks_ApartmentID" FromRole="Block" ToRole="Apartment" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -655,30 +662,6 @@
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="LYSAdmin.Data.DBEntity.PK_UserDetails_UserID" FromRole="UserDetail" ToRole="User" />
         </EntityType>
-        <Association Name="FK_Apartments_AreaID">
-          <End Role="Areas" Type="Self.Area" Multiplicity="0..1" />
-          <End Role="Apartments" Type="Self.Apartment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Areas">
-              <PropertyRef Name="AreaID" />
-            </Principal>
-            <Dependent Role="Apartments">
-              <PropertyRef Name="AreaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Blocks_ApartmentID">
-          <End Role="Apartments" Type="Self.Apartment" Multiplicity="0..1" />
-          <End Role="Blocks" Type="Self.Block" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Apartments">
-              <PropertyRef Name="ApartmentID" />
-            </Principal>
-            <Dependent Role="Blocks">
-              <PropertyRef Name="ApartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Areas_CityID">
           <End Role="Cities" Type="Self.City" Multiplicity="0..1" />
           <End Role="Areas" Type="Self.Area" Multiplicity="*" />
@@ -776,7 +759,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="LYSAdminEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Apartments" EntityType="Self.Apartment" />
           <EntitySet Name="Areas" EntityType="Self.Area" />
           <EntitySet Name="BasicAmenities" EntityType="Self.BasicAmenity" />
           <EntitySet Name="Beds" EntityType="Self.Bed" />
@@ -789,14 +771,6 @@
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
-          <AssociationSet Name="FK_Apartments_AreaID" Association="Self.FK_Apartments_AreaID">
-            <End Role="Areas" EntitySet="Areas" />
-            <End Role="Apartments" EntitySet="Apartments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Blocks_ApartmentID" Association="Self.FK_Blocks_ApartmentID">
-            <End Role="Apartments" EntitySet="Apartments" />
-            <End Role="Blocks" EntitySet="Blocks" />
-          </AssociationSet>
           <AssociationSet Name="FK_Areas_CityID" Association="Self.FK_Areas_CityID">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Areas" EntitySet="Areas" />
@@ -829,7 +803,20 @@
             <End Role="Houses" EntitySet="Houses" />
             <End Role="Rooms" EntitySet="Rooms" />
           </AssociationSet>
+          <EntitySet Name="Apartments" EntityType="LYSAdmin.Data.DBEntity.Apartment" />
+          <AssociationSet Name="FK_Apartments_AreaID" Association="LYSAdmin.Data.DBEntity.FK_Apartments_AreaID">
+            <End Role="Area" EntitySet="Areas" />
+            <End Role="Apartment" EntitySet="Apartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blocks_ApartmentID" Association="LYSAdmin.Data.DBEntity.FK_Blocks_ApartmentID">
+            <End Role="Apartment" EntitySet="Apartments" />
+            <End Role="Block" EntitySet="Blocks" />
+          </AssociationSet>
           <EntitySet Name="Users" EntityType="LYSAdmin.Data.DBEntity.User" />
+          <AssociationSet Name="FK_Apartments_OwnerID" Association="LYSAdmin.Data.DBEntity.FK_Apartments_OwnerID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Apartment" EntitySet="Apartments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Beds_UserID" Association="LYSAdmin.Data.DBEntity.FK_Beds_UserID">
             <End Role="User" EntitySet="Users" />
             <End Role="Bed" EntitySet="Beds" />
@@ -843,6 +830,51 @@
             <End Role="UserDetail" EntitySet="UserDetails" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Apartment">
+          <Key>
+            <PropertyRef Name="ApartmentID" />
+          </Key>
+          <Property Name="ApartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HouseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="AreaID" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Area" Relationship="LYSAdmin.Data.DBEntity.FK_Apartments_AreaID" FromRole="Apartment" ToRole="Area" />
+          <NavigationProperty Name="Blocks" Relationship="LYSAdmin.Data.DBEntity.FK_Blocks_ApartmentID" FromRole="Apartment" ToRole="Block" />
+          <NavigationProperty Name="User" Relationship="LYSAdmin.Data.DBEntity.FK_Apartments_OwnerID" FromRole="Apartment" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Apartments_AreaID">
+          <End Type="LYSAdmin.Data.DBEntity.Area" Role="Area" Multiplicity="0..1" />
+          <End Type="LYSAdmin.Data.DBEntity.Apartment" Role="Apartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="AreaID" />
+            </Principal>
+            <Dependent Role="Apartment">
+              <PropertyRef Name="AreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blocks_ApartmentID">
+          <End Type="LYSAdmin.Data.DBEntity.Apartment" Role="Apartment" Multiplicity="0..1" />
+          <End Type="LYSAdmin.Data.DBEntity.Block" Role="Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="Block">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserID" />
@@ -861,10 +893,24 @@
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Apartments" Relationship="LYSAdmin.Data.DBEntity.FK_Apartments_OwnerID" FromRole="User" ToRole="Apartment" />
           <NavigationProperty Name="Beds" Relationship="LYSAdmin.Data.DBEntity.FK_Beds_UserID" FromRole="User" ToRole="Bed" />
           <NavigationProperty Name="Role" Relationship="LYSAdmin.Data.DBEntity.FK_Users_RoleID" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserDetails" Relationship="LYSAdmin.Data.DBEntity.PK_UserDetails_UserID" FromRole="User" ToRole="UserDetail" />
         </EntityType>
+        <Association Name="FK_Apartments_OwnerID">
+          <End Type="LYSAdmin.Data.DBEntity.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.DBEntity.Apartment" Role="Apartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Apartment">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Beds_UserID">
           <End Type="LYSAdmin.Data.DBEntity.User" Role="User" Multiplicity="1" />
           <End Type="LYSAdmin.Data.DBEntity.Bed" Role="Bed" Multiplicity="*" />
@@ -907,20 +953,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LYSAdminDataDBEntityStoreContainer" CdmEntityContainer="LYSAdminEntities">
-          <EntitySetMapping Name="Apartments">
-            <EntityTypeMapping TypeName="LYSAdmin.Data.DBEntity.Apartment">
-              <MappingFragment StoreEntitySet="Apartments">
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="ApartmentName" ColumnName="ApartmentName" />
-                <ScalarProperty Name="HouseNo" ColumnName="HouseNo" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Areas">
             <EntityTypeMapping TypeName="LYSAdmin.Data.DBEntity.Area">
               <MappingFragment StoreEntitySet="Areas">
@@ -1110,9 +1142,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Apartments">
+            <EntityTypeMapping TypeName="LYSAdmin.Data.DBEntity.Apartment">
+              <MappingFragment StoreEntitySet="Apartments">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="HouseNo" ColumnName="HouseNo" />
+                <ScalarProperty Name="ApartmentName" ColumnName="ApartmentName" />
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="LYSAdmin.Data.DBEntity.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
