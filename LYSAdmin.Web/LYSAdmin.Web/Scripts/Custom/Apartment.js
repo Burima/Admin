@@ -1,21 +1,29 @@
 ﻿$(document).ready(function () {
     //Initialize data table
-    $('.dataTables-apartments').dataTable();
+    $('.dataTables-apartments').dataTable({
+        /* Disable initial sort */
+        "aaSorting": []
+    });
 
     $('.btn-show-add-apartment').click(function () {
         $('#divApartments').hide();
         $('#divAddApartment').show();
+        $('#divEditApartment').hide();
         
     });
 
+    //Char Limit function
     charlimit();
     inputkeyup();
+
+    //Add button
     $('#btnAddApartment').click(function () {
         if ($('#add-apartment-form').valid()) {
             //on form valid do a ajax call to add apartment
             fnAddApartment();
         }
     });
+
 
     //$.validator.unobtrusive.parse($("form"));
     //$('.btnSave').click(function () {
@@ -74,9 +82,51 @@ function fnAddApartment() {
             alert('error');
             hideProgress();
         }
-
-
     });
-
-
 }
+
+//Edit Apartment
+function fnGetApartmentByID(element) {
+   
+        var trId = $(element).closest('tr').attr('id');        
+        var jmodel = { apartmentID: JSON.stringify(trId) };
+        
+        showProgress(false, "Getting Apartment Details. Please wait...");
+        $.ajax({
+            url: GetApartmentByIDUrl,
+            type: 'POST',
+            data: jmodel,
+            dataType: 'JSON',
+            success: function (response, textStatus, XMLHttpRequest) {
+                if (response != null) {
+                    alert(response.CreatedOn);
+                    var createdOn = new Date(parseInt((response.CreatedOn).replace("/Date(", "").replace(")/", ""), 10));
+                    //var createdOn = new Date(parseInt(response.CreatedOn.substr(6), 10));
+                    alert(createdOn);
+                    $('#divApartments').hide();
+                    $('#divAddApartment').hide();
+                    $('#divEditApartment').show();
+                    //Fill apartment details
+                    $('#hdnEditApartmentID').val(response.ApartmentID);
+                    $('#txtEditApartmentName').val(response.ApartmentName);
+                    $('#txtEditHouseNo').val(response.HouseNo);
+                    $('#txtEditDescription').val(response.Description);
+                    $('#hdnEditAreaID').val(response.AreaID);
+                    $('#hdnEditCreatedOn').val(createdOn);
+                    $('#hdnEditCreatedBy').val(response.CreatedBy);
+                    $('#hdnEditOwnerID').val(response.OwnerID);
+                    //set char limit 
+                    charlimit();
+                } else {
+                    alert("Error! Please try again later...");
+                }
+
+                hideProgress();
+            },
+            error: function (xhr, status) {
+                alert("Error! Please try again later...");
+                hideProgress();
+            }
+        });        
+}
+

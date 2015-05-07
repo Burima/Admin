@@ -2,7 +2,7 @@
 @model LYSAdmin.Model.ApartmentViewModel
 @{
     ViewBag.Title = "Apartments";
-    var User=(User)Session["User"];
+    var User = (User)Session["User"];
 }
 
 <!-- Datatable Css-->
@@ -14,7 +14,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Apartments</h5>
-                    <button class="btn btn-primary pull-right btn-show-add-apartment" type="button" style="margin-top:-1%;">Add</button>      
+                    <button class="btn btn-primary pull-right btn-show-add-apartment" type="button" style="margin-top:-1%;">Add</button>
                 </div>
                 <div class="ibox-content">
 
@@ -24,21 +24,24 @@
                                 <th>Apartment Name</th>
                                 <th>Description</th>
                                 <th>House No</th>
-                                <th>Add Block</th>
+                                <th>Add Blocks</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Trident</td>
-                                <td>
-                                    Internet
-                                    Explorer 4.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td>4</td>
-                                <td>X</td>
-                            </tr>                           
+                            @if (Model != null && Model.Apartments != null && Model.Apartments.Count > 0)
+                            {
+                                foreach (var apartment in Model.Apartments)
+                                {
+                                    <tr class="gradeX" id="@apartment.ApartmentID">                                       
+                                        <td><a onclick="fnGetApartmentByID(this)" style="cursor:pointer;">@apartment.ApartmentName</a></td>
+                                        <td>@apartment.HouseNo</td>
+                                        <td>@apartment.Description</td>
+                                        <td><input type="button" class="btnAddBlocks" value="Add Blocks"></td>
+                                        <td><input type="button" class="btnDeleteApartment" value="Delete"></td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                         <tfoot>
                             <tr>
@@ -61,6 +64,9 @@
 <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divAddApartment">
     @Html.Partial("_AddApartment")
 </div>
+<div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divEditApartment">
+    @Html.Partial("_EditApartment")
+</div>
 
 
 @section scripts{
@@ -69,11 +75,13 @@
         //reference url
         var ApartmentsUrl = '@Url.Action("Apartments","Estate")';
         var AddApartmentUrl = '@Url.Action("AddApartment", "Estate")';
+        var GetApartmentByIDUrl = '@Url.Action("GetApartmentByID", "Estate")';
+        var EditApartmentUrl = '@Url.Action("EditApartment", "Estate")';
     </script>
 
     <!-- jQuery DataTable -->
     @Scripts.Render("~/plugins/dataTables")
-
+@*<script src='@Url.Action("~/Scripts/plugins/fullcalendar/moment.min.js")'></script>*@
     <!--Custom Script for Apartment-->
     <script src='@Url.Content("~/Scripts/Custom/Apartment.js")'></script>
 }

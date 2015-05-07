@@ -49,7 +49,9 @@ namespace LYSAdmin.Web.Controllers
         /// <returns></returns>
         public ActionResult Apartments()
         {
-            return View();
+            ApartmentViewModel apartmentViewModel = new ApartmentViewModel();
+            apartmentViewModel.Apartments = apartmentManagement.GetApartments(GetOwnerID());
+            return View(apartmentViewModel);
         }
 
 
@@ -71,15 +73,8 @@ namespace LYSAdmin.Web.Controllers
             apartment.CreatedOn = DateTime.Now;
             apartment.LastUpdatedOn = DateTime.Now;
             apartment.IsDeleted = false;
-            apartment.CreatedBy = User.UserID;
-            if (User.RoleID<=3)
-            {
-                apartment.OwnerID = User.UserID;
-            }
-            else
-            {
-                apartment.OwnerID = User.ManagerID;
-            }
+            apartment.CreatedBy = User.UserID;            
+            apartment.OwnerID = User.RoleID <= 3 ? User.UserID : User.ManagerID;
             Session["AreaID"] = 1;//test data
             if (Session["AreaID"] !=null && Convert.ToInt32(Session["AreaID"]) > 0)
             {
@@ -103,6 +98,38 @@ namespace LYSAdmin.Web.Controllers
             
         }
 
+        [HttpPost]
+        public JsonResult GetApartmentByID(string apartmentID)
+        {            
+            apartment= apartmentManagement.GetApartmentByID(JsonConvert.DeserializeObject<int>(apartmentID));
+
+            return Json(apartment);
+        }
+
+        //Edit Apartment
+        [HttpPost]
+        public ActionResult EditApartment(ApartmentViewModel apartmentViewModel)
+        {
+            apartmentViewModel.Apartment.Status = true;
+            apartmentViewModel.Apartment.LastUpdatedOn = DateTime.Now;
+            int count = apartmentManagement.UpdateApartment(apartmentViewModel);
+            return View(apartmentViewModel);
+        }
+        private dynamic GetOwnerID()
+        {
+            var user = (Model.User)Session["User"];
+            int ownerID = 0;
+            if(user!=null)
+            {
+                ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID;
+                return ownerID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+        }
         #endregion Apartment
     }
 }

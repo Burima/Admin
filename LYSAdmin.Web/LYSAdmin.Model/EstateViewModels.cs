@@ -12,5 +12,6 @@ namespace LYSAdmin.Model
     public class ApartmentViewModel
     {
         public Apartment Apartment { get; set; }
+        public List<Apartment> Apartments { get; set; }
     }
 }
