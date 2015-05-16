@@ -1,7 +1,7 @@
 ﻿body {
 }
 
-div.room{
+.room{
     list-style:none;
     position:relative;
     float:left;
@@ -10,12 +10,16 @@ div.room{
     height :116px;
 }
 
-a.bed_inactive{
+.bed_inactive{
     padding-bottom:10px;
     color:#f3f3f4;
 }
 
-a.bed_active{
+.bed_active{
     padding-bottom:10px;
     color:#1ab394;
+}
+
+.margin_4_pc{
+    margin-left:4%;
 }

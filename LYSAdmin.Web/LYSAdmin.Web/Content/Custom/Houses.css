@@ -1,0 +1,28 @@
+﻿body {
+}
+
+.accordion-container {
+	 background-color: #f3f3f4;
+     padding: 0px;
+}
+.accordion-heading {
+	background-color:#f3f3f4;
+}
+.accordion-toggle.open {
+	background: #333;
+	color: #1ab394;
+}
+.accordion-toggle:hover {
+	background: #666;
+}
+.accordion-toggle span.toggle-icon {
+	position: absolute;
+	top: 9px;
+	right: 20px;
+	font-size: 1.5em;
+}
+.accordion-content {
+	display: none;
+	padding: 20px;
+	overflow: auto;
+}
