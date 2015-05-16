@@ -1,0 +1,21 @@
+﻿body {
+}
+
+div.room{
+    list-style:none;
+    position:relative;
+    float:left;
+    background-color:white;
+    padding-top:10px;
+    height :116px;
+}
+
+a.bed_inactive{
+    padding-bottom:10px;
+    color:#f3f3f4;
+}
+
+a.bed_active{
+    padding-bottom:10px;
+    color:#1ab394;
+}

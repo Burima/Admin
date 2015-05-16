@@ -3,7 +3,7 @@
     ViewBag.Title = "Rooms";
 
 }
-
+<link href='@Url.Content("~/Content/Custom/Rooms.css")' rel="stylesheet" />
 <div class="row  border-bottom white-bg dashboard-header">
     <!--Center Content-->
     <div class="col-sm-9">
@@ -21,6 +21,25 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                     Add
                 </button>
+                <br/>
+                <br/>
+                <div class="row gray-bg" style="padding:10px">
+                    <div class="col-md-5 room">
+                        <div class="row">
+                            <div class="col-md-4"><a href="#" class="bed_inactive"><i class="fa fa-bed fa-2x"></i></a></div>
+                            <div class="col-md-4"><a href="#" class="bed_active"><i class="fa fa-bed fa-2x"></i></a></div>
+                            <div class="col-md-4"><a href="#" class="bed_inactive"><i class="fa fa-bed fa-2x"></i></a></div>
+                            <div class="col-md-4"><a href="#" class="bed_inactive"><i class="fa fa-bed fa-2x"></i></a></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 room col-md-offset-2">
+                        <div class="row">
+                            <div class="col-md-4"><a href="#" class="bed_inactive"><i class="fa fa-bed fa-2x"></i></a></div>
+                            <div class="col-md-4"><a href="#" class="bed_active"><i class="fa fa-bed fa-2x"></i></a></div>
+                        </div>
+                    </div>
+                </div>
                 @using (Html.BeginForm("AddRoom", "Estate", FormMethod.Post, new { role = "form", id = "add-room-form", style = "min-height:420px" }))
                 {
                     <div class="saving-progress hidden"><h4>Saved!</h4></div>
@@ -63,6 +82,7 @@
                     </div>
                     @*</form>*@
                 }
+               
             </div>
         </div>
     </div>
