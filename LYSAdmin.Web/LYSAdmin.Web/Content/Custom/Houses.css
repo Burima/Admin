@@ -18,8 +18,8 @@
     background: #1ab394;
     color: #ffffff;
 }
-#nav li ul {
-        display: none;
+
+#accordion li ul {
         list-style-type:none;
         padding-left:0px;
     }
@@ -33,4 +33,9 @@
     height: 30%;
     margin: 0px;
     padding: 0px
+}
+
+#accordion{
+    list-style-type:none;
+    padding:0px;
 }

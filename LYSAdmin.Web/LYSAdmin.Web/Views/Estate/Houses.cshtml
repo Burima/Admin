@@ -7,18 +7,18 @@
     <!--Center Content-->
     <div class="col-sm-9">
        <h3 class="m-t-none m-b">Add new House</h3>
-        @using (Html.BeginForm("AddRoom", "Estate", FormMethod.Post, new { role = "form", id = "add-room-form", style = "min-height:420px" }))
-        {
-        <ul id="nav" >
-            <li>
-                <a href="#" class=""><h3>Basic Information</h3></a>
-                <ul>
-                    <li class="saving-progress hidden"><h4>Saved!</h4></li>
-                    <li>
-                        <div class="form-group" style="padding-top:5%">
-                            <label>House Name</label>
-                            <input type="text" id="txtHouseName" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
-                            @*@Html.TextBoxFor(m => m.ApartmentName, new { type = "text", placeholder = "Enter apartment name", @class = "form-control input-large", maxlength = "50", tabindex = "1" })*@
+        @*@using (Html.BeginForm("AddRoom", "Estate", FormMethod.Post, new { role = "form", id = "add-room-form", style = "min-height:420px" }))
+         {
+            <ul id="nav" >
+         <li>
+             <a href="#" data-toggle="collapse" data-parent="#accordion"><h3>Basic Information</h3></a>
+             <ul>
+                 <li class="saving-progress hidden"><h4>Saved!</h4></li>
+                 <li>
+                     <div class="form-group" style="padding-top:5%">
+                         <label>House Name</label>
+                         <input type="text" id="txtHouseName" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
+                         
                             <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                         </div>
                     </li>
@@ -26,7 +26,7 @@
                       <div class="form-group">
                         <label>Description</label>
                         <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3" name="House.Description"></textarea>
-                        @*@Html.TextAreaFor(m => m.Description, new { rows = "4", placeholder = "Description", @class = "form-control input-large", maxlength = "500", tabindex = "3" })*@
+                        
                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
                     </div>
                    </li>
@@ -82,7 +82,62 @@
                 </ul>
             </li>
         </ul>
-        }
+        }*@
+        <ul class="panel-group" id="accordion">
+            <li>
+                <h3><a href="#accordionOne" data-toggle="collapse" data-parent="#accordion">Basic Information</a></h3>
+                    <ul id="accordionOne" class="panel-collapse panel in">
+                        <li class="saving-progress hidden"><h4>Saved!</h4></li>
+                        <li>
+                            <div class="form-group">
+                                <label>House Name</label>
+                                <input type="text" id="txtHouseName" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
+
+                                <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3" name="House.Description"></textarea>
+
+                                <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group row-padding-top-5">
+                                <div class="pull-right">
+                                    <button id="btnNext" class="btn btn-primary" type="button" tabindex="5">Next</button>
+                                </div>
+                            </div>
+                        </li>
+
+                   </ul>
+            </li>
+            <li>
+                <h3><a href="#accordionTwo" data-toggle="collapse" data-parent="#accordion">Locality</a></h3>
+                <ul id="accordionTwo" class="panel-collapse panel">
+                    <li>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" id="txtHouseName" placeholder="Enter Address" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
+                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <label>Landmark</label>
+                            <input type="text" id="txtHouseName" placeholder="Enter Landmark" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
+                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                        </div>
+                    </li>
+                    
+
+                </ul>
+            </li>
+
+
+        </ul>
    </div>
 
     <div class="col-sm-3">
@@ -123,19 +178,19 @@
             $('#btnCancel').click(function () {
                 window.location = HousesUrl;
             });
-            $('#nav > li > a').click(function () {
-                if ($(this).attr('class') != 'active') {
-                    $('#nav li ul').slideUp();
-                    $(this).next().slideToggle();
-                    $('#nav li a').removeClass('active');
-                    $(this).addClass('active');
-                } else {
-                    $('#nav li ul').slideUp();
-                    $(this).next().slideToggle();
-                    $(this).removeClass('active');
-                    $(this).next().addClass('active');
-                }
-            });
+            //$('#nav > li > a').click(function () {
+            //    if ($(this).attr('class') != 'active') {
+            //        $('#nav li ul').slideUp();
+            //        $(this).next().slideToggle();
+            //        $('#nav li a').removeClass('active');
+            //        $(this).addClass('active');
+            //    } else {
+            //        $('#nav li ul').slideUp();
+            //        $(this).next().slideToggle();
+            //        $(this).removeClass('active');
+            //        $(this).next().addClass('active');
+            //    }
+            //});
         });
         
         //show the limit of char left
