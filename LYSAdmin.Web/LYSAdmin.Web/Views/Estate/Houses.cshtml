@@ -3,86 +3,11 @@
     ViewBag.Title = "House";
 }
 <link href="~/Content/Custom/Houses.css" rel="stylesheet" />
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 <div class="row  border-bottom white-bg dashboard-header">
     <!--Center Content-->
     <div class="col-sm-9">
        <h3 class="m-t-none m-b">Add new House</h3>
-        @*@using (Html.BeginForm("AddRoom", "Estate", FormMethod.Post, new { role = "form", id = "add-room-form", style = "min-height:420px" }))
-         {
-            <ul id="nav" >
-         <li>
-             <a href="#" data-toggle="collapse" data-parent="#accordion"><h3>Basic Information</h3></a>
-             <ul>
-                 <li class="saving-progress hidden"><h4>Saved!</h4></li>
-                 <li>
-                     <div class="form-group" style="padding-top:5%">
-                         <label>House Name</label>
-                         <input type="text" id="txtHouseName" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
-                         
-                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                        </div>
-                    </li>
-                    <li>
-                      <div class="form-group">
-                        <label>Description</label>
-                        <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3" name="House.Description"></textarea>
-                        
-                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
-                    </div>
-                   </li>
-                    <li>
-                        <div class="form-group row-padding-top-5">
-                        <div class="pull-right">
-                            <button id="btnNext" class="btn btn-primary" type="button" tabindex="5">Next</button>
-                        </div>
-                    </div>
-                  </li>
-                </ul>
-             
-            <li style="padding-top:30px;">
-                <a href="#"><h3>Locality</h3>  </a>
-                <ul>
-                    <li>
-                        <div class="form-group" style="padding-top:5%">
-                        <label>Address</label>
-                        <input type="text" id="txtHouseName" placeholder="Enter Address" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
-                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="form-group">
-                            <label>Landmark</label>
-                            <input type="text" id="txtHouseName" placeholder="Enter Landmark" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
-                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="form-group">
-                            <div id="map-canvas"></div>
-                        </div>
-                    </li>
-                    
-                </ul>
-            </li>
-            <li style ="padding-top:30px;">
-                <a href="#"><h3>Detail Information</h3></a>
-                <ul>
-                    <li><a href="#">Sub-Item 3 a</a></li>
-                    <li><a href="#">Sub-Item 3 b</a></li>
-                    <li><a href="#">Sub-Item 3 c</a></li>
-                    <li><a href="#">Sub-Item 3 d</a></li>
-                </ul>
-            
-            <li>
-                <a href="#"><h3>Images</h3></a>
-                <ul>
-                    <li><a href="#">Sub-Item 4 a</a></li>
-                    <li><a href="#">Sub-Item 4 b</a></li>
-                    <li><a href="#">Sub-Item 4 c</a></li>
-                </ul>
-            </li>
-        </ul>
-        }*@
         <ul class="panel-group" id="accordion">
             <li>
                 <h3><a href="#accordionOne" data-toggle="collapse" data-parent="#accordion">Basic Information</a></h3>
@@ -110,30 +35,38 @@
                                     <button id="btnNext" class="btn btn-primary" type="button" tabindex="5">Next</button>
                                 </div>
                             </div>
+
                         </li>
 
                    </ul>
             </li>
             <li>
                 <h3><a href="#accordionTwo" data-toggle="collapse" data-parent="#accordion">Locality</a></h3>
-                <ul id="accordionTwo" class="panel-collapse panel">
+                   <ul id="accordionTwo" class="panel-collapse panel">
                     <li>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <input type="text" id="txtHouseName" placeholder="Enter Address" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
-                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Address</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Address</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.HouseName">
+                                <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.HouseName">
+                                <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                            </div>
                         </div>
-                    </li>
-                    <li>
-                        <div class="form-group">
-                            <label>Landmark</label>
-                            <input type="text" id="txtHouseName" placeholder="Enter Landmark" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
-                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                        <div class="row">
+                            <div id="map-canvas" class="col-md-12"></div>
                         </div>
+                       
                     </li>
-                    
-
                 </ul>
+                
             </li>
 
 
@@ -221,17 +154,17 @@
         var latlng;
         function initialize() {
             geocoder = new google.maps.Geocoder();
-            latlng= new google.maps.LatLng(-34.397, 150.644);
+            latlng = new google.maps.LatLng(21.1311084, 82.7792231);
             var mapOptions = {
-                zoom: 15,
+                zoom: 4,
                 center: latlng
             }
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         }
 
         function codeAddress() {
-            var address = document.getElementById('address').value;
-            geocoder.geocode( { 'address': address}, function(results, status) {
+            var address = document.getElementById('txtAddress').value;
+            geocoder.geocode({ 'txtAddress': address }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     map.setCenter(results[0].geometry.location);
                     var marker = new google.maps.Marker({
