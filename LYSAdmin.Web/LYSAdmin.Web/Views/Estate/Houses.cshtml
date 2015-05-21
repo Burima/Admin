@@ -49,15 +49,18 @@
                                 <label>Address</label>
                             </div>
                             <div class="col-md-6">
-                                <label>Address</label>
+                                <label>Landmark</label>
                             </div>
-                            <div class="col-md-6">
-                                <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.HouseName">
+                            <div class="col-md-4">
+                                <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Address">
                                 <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                             </div>
-                            <div class="col-md-6">
-                                <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.HouseName">
+                            <div class="col-md-4">
+                                <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Landmark">
                                 <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                            </div>
+                            <div class="col-md-4">
+                                <button id="btnContinue" class="btn btn-primary" type="button" tabindex="5" value="Geocode" onclick="codeAddress()">Continue</button>
                             </div>
                         </div>
                         <div class="row">
@@ -164,43 +167,26 @@
 
         function codeAddress() {
             var address = document.getElementById('txtAddress').value;
-            geocoder.geocode({ 'txtAddress': address }, function (results, status) {
+            geocoder.geocode({ 'address': address }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
+                    var mapOptions = {
+                        zoom: 15,
+                     }
+                    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                     map.setCenter(results[0].geometry.location);
                     var marker = new google.maps.Marker({
                         map: map,
                         position: results[0].geometry.location,
+                        animation: google.maps.Animation.DROP
                     });
-                    var request = {
-                        location: results[0].geometry.location,
-                        radius: 1000,
-                        query: 'restaurant'
-                    };
                     infowindow = new google.maps.InfoWindow();
-                    var service = new google.maps.places.PlacesService(map);
-                    service.textSearch(request, callback);
-		
+                    
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
             });
         }
-
-        function callback(results, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                for (var i = 0; i < results.length; i++) {
-                    createMarker(results[i]);
-                }
-            }
-        }
-
-        function createMarker(place) {
-            var placeLoc = place.geometry.location;
-            var marker = new google.maps.Marker({
-                map: map,
-                position: place.geometry.location
-            });
-        }
+       
 
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
