@@ -45,25 +45,25 @@
                    <ul id="accordionTwo" class="panel-collapse panel">
                     <li>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <label>Address</label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <label>Landmark</label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Address">
                                 <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Landmark">
                                 <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                             </div>
-                            <div class="col-md-4">
-                                <button id="btnContinue" class="btn btn-primary" type="button" tabindex="5" value="Geocode" onclick="codeAddress()">Continue</button>
+                            <div class="col-md-2">
+                                <button id="btnNext" class="btn btn-primary" type="button" tabindex="5" value="Geocode" onclick="codeAddress()">Next</button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row row-padding-top-5">
                             <div id="map-canvas" class="col-md-12"></div>
                         </div>
                        
@@ -71,8 +71,84 @@
                 </ul>
                 
             </li>
+            @*Accordian Three - Detailed Information*@
+            <li>
+                <h3><a href="#accordionThree" data-toggle="collapse" data-parent="#accordion">Detailed Information</a></h3>
+                <ul id="accordionThree" class="panel-collapse panel">
+                    <li>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>BHK Types</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Sharing Type</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Gender</label>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="ddlBHKTypes" class="form-control input-sm" tabindex="1" required name="HouseDescripion.BedRoom">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="ddlSharingTypes" class="form-control input-sm" tabindex="1" required name="HouseDescripion.SharingType">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="ddlGender" class="form-control input-sm" tabindex="1" required name="HouseDescripion.Gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row row-padding-top-5">
+                            <div class="col-md-5">
+                                <label>Monthly Rent</label>
+                            </div>
+                            <div class="col-md-5">
+                                <label>Deposit</label>
+                            </div>
+                          
+                            <div class="col-md-5">
+                                <input type="text" id="txtMonthlyRent" placeholder="Monthly Rent" class="form-control input-sm" maxlength="50" tabindex="1" required name="HouseDescription.Address">
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" id="txtDeposit" placeholder="Deposit" class="form-control input-sm" maxlength="50" tabindex="1" required name="HouseDescription.Landmark">
+                            </div>
+                            <div class="col-md-2">
+                                <button id="btnNext" class="btn btn-primary" type="button" tabindex="5">Next</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            @*Accordian Four - Basic Ameniies*@
+            <li>
+                <h3><a href="#accordionThree" data-toggle="collapse" data-parent="#accordion">Detailed Information</a></h3>
+                <ul id="accordionThree" class="panel-collapse panel">
+                    <li>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="checkbox" name="BasicAmenities" value="1">I have a bike
+                            </div>
+
+                        </div>
 
 
+                    </li>
+                </ul>
+
+            </li>
         </ul>
    </div>
 
