@@ -1,8 +1,10 @@
 ﻿@using LYSAdmin.Model;
+@using Newtonsoft.Json;
 @model LYSAdmin.Model.ApartmentViewModel
 @{
     ViewBag.Title = "Apartments";
     var User = (User)Session["User"];
+
 }
 
 <!-- Datatable Css-->
@@ -33,11 +35,14 @@
                             {
                                 foreach (var apartment in Model.Apartments)
                                 {
-                                    <tr class="gradeX" id="@apartment.ApartmentID">                                       
+                                    <tr class="gradeX" id="@apartment.ApartmentID">
                                         <td><a onclick="fnGetApartmentByID(this)" style="cursor:pointer;">@apartment.ApartmentName</a></td>
                                         <td>@apartment.HouseNo</td>
                                         <td>@apartment.Description</td>
-                                        <td><input type="button" class="btnAddBlocks" value="Add Blocks"></td>
+                                        <td>                                            
+                                            <input type="button"  class="btnShowModalBlocks" value="Add Blocks">  
+                                            <input type="hidden" class="hdnBlocks" value="@JsonConvert.SerializeObject(apartment.Blocks)">
+                                        </td>
                                         <td><input type="button" class="btnDeleteApartment" value="Delete"></td>
                                     </tr>
                                 }
@@ -67,8 +72,35 @@
 <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divEditApartment">
     @Html.Partial("_EditApartment")
 </div>
+@* modal addblocks *@
+<form action="@Url.Action("saveBlock","Estate",FormMethod.Post)" id="saveblockmodal">
+    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>                    
+                    <h4 class="modal-title">Blocks</h4>
 
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="hdnApartmentID" />
+                    @*<div class="form-group"><label>Block</label> <input type="text" placeholder="Enter block name" class="form-control"></div>*@
+                    <div class="row">
+                        <label class="col-md-8">All Blocks</label><a class="col-md-1 glyphicon glyphicon-plus pull-right" id="addnewblock"></a>
+                    </div>
+                    <div class="form-group" id="divAddBlock">
 
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>                    
+                    <button type="button" class="btn btn-primary" id="modalblocksave">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 @section scripts{
 
     <script>
@@ -77,11 +109,14 @@
         var AddApartmentUrl = '@Url.Action("AddApartment", "Estate")';
         var GetApartmentByIDUrl = '@Url.Action("GetApartmentByID", "Estate")';
         var EditApartmentUrl = '@Url.Action("EditApartment", "Estate")';
+        var SaveBlocskUrl = '@Url.Action("SaveBlocks", "Estate")';
+
+
     </script>
 
     <!-- jQuery DataTable -->
     @Scripts.Render("~/plugins/dataTables")
-@*<script src='@Url.Action("~/Scripts/plugins/fullcalendar/moment.min.js")'></script>*@
+    @*<script src='@Url.Action("~/Scripts/plugins/fullcalendar/moment.min.js")'></script>*@
     <!--Custom Script for Apartment-->
     <script src='@Url.Content("~/Scripts/Custom/Apartment.js")'></script>
 }
