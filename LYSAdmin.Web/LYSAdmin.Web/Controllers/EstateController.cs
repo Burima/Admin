@@ -26,7 +26,15 @@ namespace LYSAdmin.Web.Controllers
         public ActionResult Index()
         {
             return View("Houses");
-        }       
+        }
+
+        
+        // GET: Estate/Houses
+        [HttpGet]
+        public ActionResult Houses()
+        {
+            return View("Houses");
+        }   
 
         public ActionResult Blocks()
         {
