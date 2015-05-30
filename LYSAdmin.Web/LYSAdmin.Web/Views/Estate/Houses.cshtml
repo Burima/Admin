@@ -3,7 +3,8 @@
     ViewBag.Title = "House";
 }
 <link href="~/Content/Custom/Houses.css" rel="stylesheet" />
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places" type="text/javascript"></script>
+<script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
 <div class="row  border-bottom white-bg dashboard-header">
     <!--Center Content-->
     <div class="col-sm-9">
@@ -43,7 +44,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseLocality" onclick="initialize()">Locality</a>
+                                <a class="locality "data-toggle="collapse" data-parent="#accordion" href="#collapseLocality" onclick="initialize()">Locality</a>
                             </h4>
                         </div>
                         <div id="collapseLocality" class="panel-collapse collapse">
@@ -56,7 +57,7 @@
                                         <label>Landmark</label>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Address">
+                                        <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Address" autocomplete="off">
                                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                                     </div>
                                     <div class="col-md-5">
@@ -64,7 +65,7 @@
                                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                                     </div>
                                     <div class="col-md-2">
-                                        <button id="btnNext" class="btn btn-primary" type="button" tabindex="5" value="Geocode" onclick="codeAddress()">Next</button>
+                                        <button id="btnNext" class="btn btn-primary" type="button" tabindex="5" value="Geocode">Next</button>
                                     </div>
                                 </div>
                                 <div class="row row-padding-top-5">
@@ -422,6 +423,57 @@
                 }
 
             }
+
+            $(document).on("click", ".locality", function (e) {
+                e.preventDefault();
+                initialize();
+            });
+            var geocoder;
+            var map;
+            var infowindow;
+            var latlng;
+            function initialize() {
+                geocoder = new google.maps.Geocoder();
+                latlng = new google.maps.LatLng(21.1311084, 82.7792231);
+                var mapOptions = {
+                    zoom: 4,
+                    center: latlng
+                }
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            }
+
+            $(document).on("click", "#btnNext", function (e) {
+                e.preventDefault();
+                codeAddress();
+            });
+            function codeAddress() {
+                var address = document.getElementById('txtAddress').value;
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var mapOptions = {
+                            zoom: 15,
+                        }
+                        var image = '/Images/marker-green.png';
+                        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location,
+                            animation: google.maps.Animation.DROP,
+                            draggable:true,
+                            icon: image
+                        });
+                        infowindow = new google.maps.InfoWindow();
+
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+
             
         });
         
@@ -447,43 +499,13 @@
             })
         };
 
-        var geocoder;
-        var map;
-        var infowindow;
-        var latlng;
-        function initialize() {
-            geocoder = new google.maps.Geocoder();
-            latlng = new google.maps.LatLng(21.1311084, 82.7792231);
-            var mapOptions = {
-                zoom: 4,
-                center: latlng
-            }
-            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        }
+        var cityOptions = {
+            types: ['(regions)']
+        };
+        var city = document.getElementById('txtAddress');
+        var cityAuto = new google.maps.places.Autocomplete(city, cityOptions);
 
-        function codeAddress() {
-            var address = document.getElementById('txtAddress').value;
-            geocoder.geocode({ 'address': address }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    var mapOptions = {
-                        zoom: 15,
-                     }
-                    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                    map.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: results[0].geometry.location,
-                        animation: google.maps.Animation.DROP
-                    });
-                    infowindow = new google.maps.InfoWindow();
-                    
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
+
        
-
-        google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 }
