@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using LYSAdmin.Web.Utilities;
 using LYSAdmin.Domain.ApartmentManagement;
 using LYSAdmin.Domain.BlockManagement;
+using LYSAdmin.Model;
 using Newtonsoft.Json;
 
 namespace LYSAdmin.Web.Controllers
@@ -17,6 +18,7 @@ namespace LYSAdmin.Web.Controllers
         private IApartmentManagement apartmentManagement;
         private IBlockManagement blockManagement;
         Apartment apartment = new Apartment();
+        HouseViewModel houseViewModel = new HouseViewModel();
         public EstateController(ApartmentManagement apartmentManagement, BlockManagement blockManagement)
         {
             this.apartmentManagement = apartmentManagement;
@@ -25,42 +27,8 @@ namespace LYSAdmin.Web.Controllers
         // GET: Estate
         public ActionResult Index()
         {
-            return View("Houses");
+            return RedirectToAction("Houses", "Estate");
         }
-
-        
-        // GET: Estate/Houses
-        [HttpGet]
-        public ActionResult Houses()
-        {
-            return View("Houses");
-        }   
-
-        public ActionResult Blocks()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public JsonResult SaveBlocks(string Blocksarray)
-        {
-            List<Block> blocks = JsonConvert.DeserializeObject<List<Block>>(Blocksarray);
-            int count = blockManagement.SaveBlocks(blocks);
-            if(count>0)
-            {
-                return Json("Success");
-            }
-            else
-            {
-                return Json("Failed");
-            }
-        }
-
-        public ActionResult Rooms()
-        {
-            return View();
-        }
-
 
         #region Apartment
         /// <summary>
@@ -151,5 +119,46 @@ namespace LYSAdmin.Web.Controllers
 
         }
         #endregion Apartment
+
+        #region Blocks
+        public ActionResult Blocks()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult SaveBlocks(string Blocksarray)
+        {
+            List<Block> blocks = JsonConvert.DeserializeObject<List<Block>>(Blocksarray);
+            int count = blockManagement.SaveBlocks(blocks);
+            if(count>0)
+            {
+                return Json("Success");
+            }
+            else
+            {
+                return Json("Failed");
+            }
+        }
+
+        #endregion Blocks
+
+        #region Houses
+        // GET: Estate/Houses
+        [HttpGet]
+        public ActionResult Houses()
+        {
+            houseViewModel.Apartments = apartmentManagement.GetApartments(GetOwnerID());
+            return View("Houses", houseViewModel);
+        }
+
+        #endregion Houses
+        public ActionResult Rooms()
+        {
+            return View();
+        }
+
+
+        
     }
 }

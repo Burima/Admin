@@ -14,4 +14,11 @@ namespace LYSAdmin.Model
         public Apartment Apartment { get; set; }
         public List<Apartment> Apartments { get; set; }
     }
+
+    public class HouseViewModel
+    {
+        public House House { get; set; }
+        public List<House> Houses { get; set; }
+        public List<Apartment> Apartments { get; set; }
+    }
 }

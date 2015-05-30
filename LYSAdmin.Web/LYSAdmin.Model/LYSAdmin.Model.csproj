@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountViewModels.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Apartment.cs" />
     <Compile Include="Area.cs" />
     <Compile Include="BasicAmenity.cs" />
@@ -49,7 +49,7 @@
     <Compile Include="City.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Country.cs" />
-    <Compile Include="EstateViewModels.cs" />
+    <Compile Include="ViewModels\EstateViewModels.cs" />
     <Compile Include="House.cs" />
     <Compile Include="HouseDescription.cs" />
     <Compile Include="HouseImage.cs" />
