@@ -11,15 +11,14 @@ namespace LYSAdmin.Model
         public int DescrID { get; set; }
         public int HouseID { get; set; }
         public string Address { get; set; }
-        public string Monthly_Rent { get; set; }
-        public string SharingType { get; set; }
         public string Gender { get; set; }
-        public string Deposit { get; set; }
-        public Nullable<int> Bedroom_No { get; set; }
         public string Landmark { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
+        public int No_of_Rooms { get; set; }
+        public int No_of_Bathrooms { get; set; }
+        public Nullable<int> No_of_Balconnies { get; set; }
 
         public virtual House House { get; set; }
     }

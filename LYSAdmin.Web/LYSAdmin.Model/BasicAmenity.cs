@@ -46,6 +46,14 @@ namespace LYSAdmin.Model
         public Nullable<bool> Kitchen_Facility_with_Gas { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime LastUpdatedOn { get; set; }
+        public Nullable<bool> Lunch_Given { get; set; }
+        public Nullable<bool> BreakFast_Given { get; set; }
+        public Nullable<bool> Dinner_Given { get; set; }
+        public Nullable<bool> Guardian_Entry { get; set; }
+        public Nullable<bool> NonVeg_allowed { get; set; }
+        public Nullable<bool> No_Smoking { get; set; }
+        public Nullable<bool> No_Drinking { get; set; }
+        public Nullable<bool> No_Boys_Entry { get; set; }
 
         public virtual House House { get; set; }
     }

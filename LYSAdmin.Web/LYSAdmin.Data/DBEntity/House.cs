@@ -16,9 +16,9 @@ namespace LYSAdmin.Data.DBEntity
     {
         public House()
         {
+            this.HouseImages = new HashSet<HouseImage>();
             this.BasicAmenities = new HashSet<BasicAmenity>();
             this.HouseDescriptions = new HashSet<HouseDescription>();
-            this.HouseImages = new HashSet<HouseImage>();
             this.Rooms = new HashSet<Room>();
         }
     
@@ -32,11 +32,14 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
         public Nullable<int> LinkID { get; set; }
         public Nullable<int> LinkTypeID { get; set; }
+        public Nullable<bool> isDeleted { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     
-        public virtual ICollection<BasicAmenity> BasicAmenities { get; set; }
-        public virtual Block Block { get; set; }
-        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
         public virtual ICollection<HouseImage> HouseImages { get; set; }
+        public virtual ICollection<BasicAmenity> BasicAmenities { get; set; }
+        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
     }
 }
