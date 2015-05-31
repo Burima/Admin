@@ -1,1 +1,433 @@
-﻿
+﻿@model LYSAdmin.Model.HouseViewModel
+@using Newtonsoft.Json;
+
+<!--Center Content-->
+<div class="col-sm-9">
+    <h3 class="m-t-none m-b">Add new House</h3>
+    <hr />
+    <div class="ibox-content no-padding">
+        <div class="panel-body no-padding">
+            <div class="panel-group padding-botton-5-pc" id="accordion">
+                @*Accordion One - Basic Information*@
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseBasicInformation">Basic Information</a>
+                        </h5>
+                    </div>
+                    <div id="collapseBasicInformation" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <label>Apartment</label>
+                            @*<input type="text" id="txtApartment" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
+                            <select name="Apartment" class="form-control">
+                                <option value="" disabled selected>Select Apartment</option>
+                                @foreach (var apartment in Model.Apartments.OrderBy(m => m.ApartmentID))
+                                {
+
+                                    <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
+                                }
+                            </select>
+                        </div>
+                        <div id="divBlocks" class="panel-body hidden">
+                            <label>Block</label>
+                            @*<input type="text" id="txtBlock" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
+                            <span id="spnNoBlockFound" class="hidden"><br />You do not have any Block for this Apartment. Click <a>here</a> to add Block</span>
+                            <select id="ddlBlocks" name="Block" class="form-control"></select>
+                        </div>
+                        <div class="panel-body">
+                            <label>House Name</label>
+                            <input type="text" id="txtHouseName" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">
+
+                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                        </div>
+                        <div class="panel-body">
+                            <label>Description</label>
+                            <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3" name="House.Description"></textarea>
+
+                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
+                        </div>
+                        <div class="panel-body row-padding-top-5">
+                            <div class="pull-right">
+                                <button class="btn btn-primary" type="button" tabindex="5">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Accordion Two - Locality*@
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="locality " data-toggle="collapse" data-parent="#accordion" href="#collapseLocality">Locality</a>
+                        </h4>
+                    </div>
+                    <div id="collapseLocality" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label>Address</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <label>Landmark</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Address" autocomplete="off">
+                                    <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Landmark">
+                                    <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnNext" class="btn btn-primary" type="button" tabindex="5" value="Geocode">Next</button>
+                                </div>
+                            </div>
+                            <div class="row row-padding-top-5">
+                                <div id="map-canvas" class="col-md-12"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Accordian Three - Detailed Information*@
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseDetailInformation">Detail Information</a>
+                        </h4>
+                    </div>
+                    <div id="collapseDetailInformation" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>BHK Types</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Sharing Type</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Gender</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="ddlBHKTypes" class="form-control input-sm" tabindex="1" required name="HouseDescripion.BedRoom_No">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="ddlSharingTypes" class="form-control input-sm" tabindex="1" required name="HouseDescripion.SharingType">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="ddlGender" class="form-control input-sm" tabindex="1" required name="HouseDescripion.Gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row row-padding-top-5">
+                                <div class="col-md-5">
+                                    <label>Monthly Rent</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <label>Deposit</label>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <input type="text" id="txtMonthlyRent" placeholder="Monthly Rent" class="form-control input-sm" maxlength="50" tabindex="1" required name="HouseDescription.Monthly_Rent">
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" id="txtDeposit" placeholder="Deposit" class="form-control input-sm" maxlength="50" tabindex="1" required name="HouseDescription.Deposit">
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnNext" class="btn btn-primary" type="button" tabindex="5">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Accordion Four - Basic Amenities*@
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseBasicAmenities">Amenities</a>
+                        </h4>
+                    </div>
+                    <div id="collapseBasicAmenities" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">AC
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Two Wheeler Open Parking
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Wifi
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Room Service
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Fridge
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Water Supply
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">GYM
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Party Hall
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Four Wheeler Open Parking
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Common TV
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">House Keeping
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Washing Machine
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Hot and Cold Water Supply
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Individual Lockers
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Swimming Pool
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Lift
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Attached Bathrooms
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Two wheeler closed parking
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Individual TV
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Security
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Newspaper
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Mineral water
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Intercom Facility
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Playground
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Club house
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Power Backup
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Four wheeler close parking
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">LCD TV with cable connection
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Emergency Medical Services
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Ironing and washing services
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Aqua Guard
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Video Survillience
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Kitchen Facility with gas connection
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">LCD TV with cable connection
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Emergency Medical Services
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Ironing and washing services
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Non Veg allowed
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="BasicAmenities">Parents allowed
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 row-padding-top-5">
+                                    <button id="btnNext" class="btn btn-primary" type="button" tabindex="5">Next</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                @*Accordion Five - Gallery*@
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseGallery">Gallery</a>
+                        </h4>
+                    </div>
+                    <div id="collapseGallery" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="ibox-content">
+                                <form id="my-awesome-dropzone" class="dropzone" action="@Url.Action("FileUploadHandler", "Forms")" method="post" enctype="multipart/form-data">
+                                    <div class="dropzone-previews"></div>
+
+                                    <button type="submit" class="btn btn-primary pull-right">Submit this form!</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                @*Accordion Six - Add Rooms*@
+                <div class="panel panel-default ">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseAddRooms">Detail Information</a>
+                        </h4>
+                    </div>
+                    <div id="collapseAddRooms" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12"><h3>Tell us more about your property House</h3></div>
+                                <div class="col-md-12">
+                                    <div><h4>Property Details</h4></div>
+                                    <div class="col-md-4" style="padding-left:0px;">
+                                        <select name="NumberOfRooms" class="form-control" tabindex="1">
+                                            <option value="" disabled selected>Rooms</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select name="NumberOfBathrooms" class="form-control" tabindex="1">
+                                            <option value="" disabled selected>Bathrooms</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select name="NumberOfBalconies" class="form-control" tabindex="1">
+                                            <option value="" disabled selected>Balconies</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div><h4>Gender</h4></div>
+                                    <div class="col-md-4" style="padding-left:0px;">
+                                        <select id="ddlGender" class="form-control" tabindex="1" required name="HouseDescripion.Gender">
+                                            <option value="" disabled selected>Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 hidden" id="divRoomdetails">
+
+                                </div>
+                                <div class="col-md-offset-7 col-md-5 row-padding-top-5">
+                                    <button class="btn btn-primary pull-right" type="button" tabindex="5">Done</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-3">
+    <div class="statistic-box">
+        <h4>
+            Project Beta progress
+        </h4>
+        <p>
+            You have two project with not compleated task.
+        </p>
+        <div class="row text-center">
+            <div class="col-lg-6">
+                <canvas id="polarChart" width="80" height="80"></canvas>
+                <h5>Kolter</h5>
+            </div>
+            <div class="col-lg-6">
+                <canvas id="doughnutChart" width="78" height="78"></canvas>
+                <h5>Maxtor</h5>
+            </div>
+        </div>
+        <div class="m-t">
+            <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+        </div>
+
+    </div>
+</div>
