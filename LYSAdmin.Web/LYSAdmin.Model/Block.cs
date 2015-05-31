@@ -18,10 +18,11 @@ namespace LYSAdmin.Model
         public Nullable<int> ApartmentID { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
+        public Nullable<bool> isDeleted { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
 
         public virtual Apartment Apartment { get; set; }
-        public virtual ICollection<House> Houses { get; set; }
-
-        public IList<Apartment> Aparments { get; set; }
     }
 }

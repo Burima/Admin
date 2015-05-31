@@ -21,7 +21,7 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
     
-        public virtual Room Room { get; set; }
         public virtual User User { get; set; }
+        public virtual Room Room { get; set; }
     }
 }
