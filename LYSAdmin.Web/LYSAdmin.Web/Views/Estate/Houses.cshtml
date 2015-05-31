@@ -3,13 +3,13 @@
 @{
     ViewBag.Title = "House";
 }
-<link href="~/Content/Custom/Houses.css" rel="stylesheet" />
+<link href='@Url.Content("~/Content/Custom/Houses.css")' rel="stylesheet" />
 
 <div class="row  border-bottom white-bg dashboard-header">
     <!--Center Content-->
     <div class="col-sm-9">
 
-       <h3 class="m-t-none m-b">Add new House</h3>
+        <h3 class="m-t-none m-b">Add new House</h3>
         <hr />
         <div class="ibox-content no-padding">
             <div class="panel-body no-padding">
@@ -30,7 +30,7 @@
                                     @foreach (var apartment in Model.Apartments.OrderBy(m => m.ApartmentID))
                                     {
 
-                                        <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
+                                    <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
                                     }
                                 </select>
                             </div>
@@ -38,9 +38,7 @@
                                 <label>Block</label>
                                 @*<input type="text" id="txtBlock" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
                                 <span id="spnNoBlockFound" class="hidden"><br />You do not have any Block for this Apartment. Click <a>here</a> to add Block</span>
-                                <select id="ddlBlocks" name="Block" class="form-control">
-
-                                </select>
+                                <select id="ddlBlocks" name="Block" class="form-control"></select>
                             </div>
                             <div class="panel-body">
                                 <label>House Name</label>
@@ -65,7 +63,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a class="locality "data-toggle="collapse" data-parent="#accordion" href="#collapseLocality">Locality</a>
+                                <a class="locality " data-toggle="collapse" data-parent="#accordion" href="#collapseLocality">Locality</a>
                             </h4>
                         </div>
                         <div id="collapseLocality" class="panel-collapse collapse">
@@ -336,7 +334,7 @@
                                     </form>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     @*Accordion Six - Add Rooms*@
@@ -349,26 +347,70 @@
                         <div id="collapseAddRooms" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <label>Room 1:</label>
-                                    </div>
-                                    <div class="ddRooms col-md-4">
-                                        <select id="ddlBed" class="form-control input-sm" tabindex="1">
+                                    <div class="col-md-12"><h2>Tell us more about your property House</h2></div>
+                                    <div class="col-md-12">
+                                        <div><h4>Property Details</h4></div>
+                                        @*<div class="col-md-4">*@
+                                        <select name="NumberOfRooms" class="col-md-4 input-lg" tabindex="1">
+                                            <option value="" disabled selected>Rooms</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
-                                            <option value="3">4</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
                                         </select>
+                                        @*</div>
+                                            <div class="col-md-4">*@
+                                        <select name="NumberOfBathrooms" class="col-md-4 input-lg" tabindex="1">
+                                            <option value="" disabled selected>Bathrooms</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                        @*</div>
+                                            <div class="col-md-4">*@
+                                        <select name="NumberOfBalconies" class="col-md-4 input-lg" tabindex="1">
+                                            <option value="" disabled selected>Balconies</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                        @*</div>*@
                                     </div>
-                                    <div class="col-md-4">
-                                        <button id="btnAdd" class="btn btn-primary pull-right" type="button" tabindex="5"><i class="fa fa-plus"></i>&nbsp;Add</button>
+                                    <div class="col-md-12">
+                                        <div><h4>Property Area (Square feet)</h4></div>
+                                        <input type="text" placeholder="Propertty Area" class="col-md-4 input-lg" />
+                                    </div>
+                                    <div id="divRoomdetails" class="col-md-12 hidden">                                        
+                                        @*<div>
+                                            <div class="row margin-bottom-2-pc">
+                                                <label class="col-md-2">Room <span>1</span></label>
+                                                <select class="col-md-3 number-of-beds input-lg" tabindex="1">
+                                                    <option value="" disabled selected>Beds</option>
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                </select>
+                                                <input type="text" placeholder="Rent" class="col-md-3 input-lg bed-rent" />
+                                                <input type="text" placeholder="Advance" class="col-md-3 input-lg bed-advance" />
+                                            </div>
+                                        </div>*@
                                     </div>
                                 </div>
-                                <div class="row row-padding-top-5">
-                                    <div class="col-md-4">
-                                        <button id="btnSubmit" class="btn btn-primary" type="submit" tabindex="5">Done</button>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -376,7 +418,7 @@
                 </div>
             </div>
         </div>
-   </div>
+    </div>
 
     <div class="col-sm-3">
         <div class="statistic-box">
@@ -408,30 +450,30 @@
     @Styles.Render("~/Content/plugins/dropzone/dropZoneStyles")
 }
 @section scripts{
-<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places" type="text/javascript"></script>
-<script src='@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.js")'></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places" type="text/javascript"></script>
+    <script src='@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.js")'></script>
 
-@Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/dropZone")
     <script>
         //reference url
         var HousesUrl = '@Url.Action("Houses","Estate")';
 
         $(document).ready(function () {
             charlimit();
-            inputkeyup();           
+            inputkeyup();
 
             //apartmet seletion change
             $("select[name='Apartment']").change(function () {
-                //visible div block 
+                //visible div block
                 $('#divBlocks').removeClass('hidden');
 
                 //var val = $(this).find("option[val='" + $(this).val() + "']").attr("val");
                 //$(this).parents("form").find(".selectDenomonation").val(val);
                 var blocks = $(this).find(':selected').attr('blocks');
-                eval("var blockList = " + blocks);             
+                eval("var blockList = " + blocks);
 
                 /* number of items in features array
-                   by default it will contain [] so length will two if there is no blocks 
+                   by default it will contain [] so length will two if there is no blocks
                 */
                 if (Object.keys(blocks).length > 2) {
                     //make no block found invisible
@@ -452,14 +494,39 @@
                     $('#spnNoBlockFound').removeClass("hidden");
                     $('#ddlBlocks').addClass('hidden');
                 }
-                //for (member in blocks) {
-                //    if (blocks[member] != null) {
-                //        alert(blocks[member])
-                //    }                        
-                // }
-                
             });
 
+            //on selecting number of rooms in houses
+            $("select[name='NumberOfRooms']").change(function () {
+                var val = $(this).find(':selected').attr('value');
+                if (val > 0) {
+                    var divRoomDetails=$('#divRoomdetails');
+                    divRoomDetails.removeClass('hidden');
+                    divRoomDetails.empty();
+                    divRoomDetails.append('<div><h4>Room Details</h4></div>');
+                    for (var i = 1; i <=val; i++) {
+                        var newroom = '<div class="row margin-bottom-2-pc">' +
+                                                 '<label class="col-md-2">Room <span>' + i + '</span></label>' +
+                                                 '<select class="col-md-3 number-of-beds input-lg" tabindex="1">' +
+                                                     '<option value="" disabled selected>Beds</option>' +
+                                                     '<option value="0">0</option>' +
+                                                     '<option value="1">1</option>' +
+                                                     '<option value="2">2</option>' +
+                                                     '<option value="3">3</option>' +
+                                                     '<option value="4">4</option>' +
+                                                     '<option value="5">5</option>' +
+                                                     '<option value="6">6</option>' +
+                                                 '</select>' +
+                                                 '<input type="text" placeholder="Rent" class="col-md-3 input-lg bed-rent" />' +
+                                                 '<input type="text" placeholder="Advance" class="col-md-3 input-lg bed-advance" /></div>';
+                        
+                        divRoomDetails.append(newroom);
+                    }
+
+                }
+            });
+
+            //dropzone
             Dropzone.options.myAwesomeDropzone = {
 
                 autoProcessQueue: false,
@@ -522,7 +589,7 @@
                             map: map,
                             position: results[0].geometry.location,
                             animation: google.maps.Animation.DROP,
-                            draggable:true,
+                            draggable: true,
                             icon: image
                         });
                         infowindow = new google.maps.InfoWindow();
@@ -536,9 +603,9 @@
 
             google.maps.event.addDomListener(window, 'load', initialize);
 
-            
+
         });
-        
+
         //show the limit of char left
         function charlimit() {
             $("form :input").each(function () {
@@ -568,6 +635,6 @@
         var cityAuto = new google.maps.places.Autocomplete(city, cityOptions);
 
 
-        
+
     </script>
 }
