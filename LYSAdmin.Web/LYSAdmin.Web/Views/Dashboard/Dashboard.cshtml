@@ -20,7 +20,7 @@
             <div class="row text-center">
                 <div class="col-lg-4">
                     <canvas id="doughnutChart1" width="100" height="100"></canvas>
-                    <h5>Kolter</h5>
+                    <h5>Occupancy</h5>
                 </div>
                 <div class="col-lg-4">
                     <canvas id="doughnutChart2" width="100" height="100"></canvas>
@@ -560,25 +560,51 @@
                     }
             );
 
-            var doughnutData = [
+            var doughnutData_1 = [
                 {
                     value: 300,
                     color: "#a3e1d4",
                     highlight: "#1ab394",
-                    label: "App"
+                    label: "Occupied"
                 },
                 {
                     value: 50,
                     color: "#dedede",
                     highlight: "#1ab394",
-                    label: "Software"
+                    label: "Vacant"
+                },
+                
+            ];
+            var doughnutData_2 = [
+                {
+                    value: 300,
+                    color: "#a3e1d4",
+                    highlight: "#1ab394",
+                    label: "New Joined"
                 },
                 {
-                    value: 100,
-                    color: "#b5b8cf",
+                    value: 50,
+                    color: "#dedede",
                     highlight: "#1ab394",
-                    label: "Laptop"
-                }
+                    label: "Old"
+                },
+
+            ];
+
+            var doughnutData_3 = [
+               {
+                   value: 300,
+                   color: "#a3e1d4",
+                   highlight: "#1ab394",
+                   label: "Leaving"
+               },
+               {
+                   value: 50,
+                   color: "#dedede",
+                   highlight: "#1ab394",
+                   label: "Staying"
+               },
+
             ];
 
             var doughnutOptions = {
@@ -593,9 +619,9 @@
             };
 
             //var ctx = document.getElementById("doughnutChart1").getContext("2d");
-            var DoughnutChart_1 = new Chart(document.getElementById("doughnutChart1").getContext("2d")).Doughnut(doughnutData, doughnutOptions);
-            var DoughnutChart_2 = new Chart(document.getElementById("doughnutChart2").getContext("2d")).Doughnut(doughnutData, doughnutOptions);
-            var DoughnutChart_3 = new Chart(document.getElementById("doughnutChart3").getContext("2d")).Doughnut(doughnutData, doughnutOptions);
+            var DoughnutChart_1 = new Chart(document.getElementById("doughnutChart1").getContext("2d")).Doughnut(doughnutData_1, doughnutOptions);
+            var DoughnutChart_2 = new Chart(document.getElementById("doughnutChart2").getContext("2d")).Doughnut(doughnutData_2, doughnutOptions);
+            var DoughnutChart_3 = new Chart(document.getElementById("doughnutChart3").getContext("2d")).Doughnut(doughnutData_3, doughnutOptions);
 
             var polarData = [
                 {
