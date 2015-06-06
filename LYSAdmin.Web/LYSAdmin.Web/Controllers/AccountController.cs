@@ -42,7 +42,7 @@ namespace LYSAdmin.Web.Controllers
                 {
                     //Return To Home Page
                     Session["User"] = user_Check;
-                    return RedirectToAction("Dashboard_1", "Dashboard");
+                    return RedirectToAction("Dashboard", "Dashboard");
                 }
                 else
                 {

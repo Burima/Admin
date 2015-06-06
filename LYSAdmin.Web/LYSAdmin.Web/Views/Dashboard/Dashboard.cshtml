@@ -1,68 +1,15 @@
-﻿@{
-    ViewBag.Title = "Dashboard v.1";
+﻿@using LYSAdmin.Model
+@{
+    ViewBag.Title = "Dashboard";
+    var User = (User)Session["User"];
 }
 
 <div class="row  border-bottom white-bg dashboard-header">
 
     <div class="col-sm-3">
-        <h2>Welcome Amelia</h2>
-        <small>You have 42 messages and 6 notifications.</small>
-        <ul class="list-group clear-list m-t">
-            <li class="list-group-item fist-item">
-                <span class="pull-right">
-                    09:00 pm
-                </span>
-                <span class="label label-success">1</span> Please contact me
-            </li>
-            <li class="list-group-item">
-                <span class="pull-right">
-                    10:16 am
-                </span>
-                <span class="label label-info">2</span> Sign a contract
-            </li>
-            <li class="list-group-item">
-                <span class="pull-right">
-                    08:22 pm
-                </span>
-                <span class="label label-primary">3</span> Open new shop
-            </li>
-            <li class="list-group-item">
-                <span class="pull-right">
-                    11:06 pm
-                </span>
-                <span class="label label-default">4</span> Call back to Sylvia
-            </li>
-            <li class="list-group-item">
-                <span class="pull-right">
-                    12:00 am
-                </span>
-                <span class="label label-primary">5</span> Write a letter to Sandra
-            </li>
-        </ul>
+        <h2>Welcome @User.FirstName</h2>
     </div>
-    <div class="col-sm-6">
-        <div class="flot-chart dashboard-chart">
-            <div class="flot-chart-content" id="flot-dashboard-chart"></div>
-        </div>
-        <div class="row text-left">
-            <div class="col-xs-4">
-                <div class=" m-l-md">
-                    <span class="h4 font-bold m-t block">$ 406,100</span>
-                    <small class="text-muted m-b block">Sales marketing report</small>
-                </div>
-            </div>
-            <div class="col-xs-4">
-                <span class="h4 font-bold m-t block">$ 150,401</span>
-                <small class="text-muted m-b block">Annual sales revenue</small>
-            </div>
-            <div class="col-xs-4">
-                <span class="h4 font-bold m-t block">$ 16,822</span>
-                <small class="text-muted m-b block">Half-year revenue margin</small>
-            </div>
-
-        </div>
-    </div>
-    <div class="col-sm-3">
+    <div class="col-md-12">
         <div class="statistic-box">
             <h4>
                 Project Beta progress
@@ -71,12 +18,16 @@
                 You have two project with not compleated task.
             </p>
             <div class="row text-center">
-                <div class="col-lg-6">
-                    <canvas id="polarChart" width="80" height="80"></canvas>
+                <div class="col-lg-4">
+                    <canvas id="doughnutChart1" width="100" height="100"></canvas>
                     <h5>Kolter</h5>
                 </div>
-                <div class="col-lg-6">
-                    <canvas id="doughnutChart" width="78" height="78"></canvas>
+                <div class="col-lg-4">
+                    <canvas id="doughnutChart2" width="100" height="100"></canvas>
+                    <h5>Maxtor</h5>
+                </div>
+                <div class="col-lg-4">
+                    <canvas id="doughnutChart3" width="100" height="100"></canvas>
                     <h5>Maxtor</h5>
                 </div>
             </div>
@@ -641,8 +592,10 @@
                 animateScale: false,
             };
 
-            var ctx = document.getElementById("doughnutChart").getContext("2d");
-            var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+            //var ctx = document.getElementById("doughnutChart1").getContext("2d");
+            var DoughnutChart_1 = new Chart(document.getElementById("doughnutChart1").getContext("2d")).Doughnut(doughnutData, doughnutOptions);
+            var DoughnutChart_2 = new Chart(document.getElementById("doughnutChart2").getContext("2d")).Doughnut(doughnutData, doughnutOptions);
+            var DoughnutChart_3 = new Chart(document.getElementById("doughnutChart3").getContext("2d")).Doughnut(doughnutData, doughnutOptions);
 
             var polarData = [
                 {

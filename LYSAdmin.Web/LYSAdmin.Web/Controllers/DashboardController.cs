@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LYSAdmin.Web.Utilities;
 
 namespace LYSAdmin.Web.Controllers
 {
     public class DashboardController : Controller
     {
         // GET: Dashboard
-
+        [LYSAdminAuthorize]
         public ActionResult Index()
         {
-            return View("Dashboard_1");
+            return View("Dashboard");
         }
-        public ActionResult Dashboard_1()
+        public ActionResult Dashboard()
         {
             return View();
         }
