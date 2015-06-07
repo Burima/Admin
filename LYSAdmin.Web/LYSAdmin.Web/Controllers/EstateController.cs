@@ -152,7 +152,15 @@ namespace LYSAdmin.Web.Controllers
             return View("Houses", houseViewModel);
         }
 
+        // POST: Estate/AddHouse
+        [HttpPost]
+
         #endregion Houses
+        public ActionResult AddHouse(HouseViewModel houseViewModel)
+        {
+           
+            return View("Houses", houseViewModel);
+        }
         public ActionResult Rooms()
         {
             return View();

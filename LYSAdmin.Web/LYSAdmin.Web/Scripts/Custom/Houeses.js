@@ -68,6 +68,19 @@
         }
     });
 
+
+    /*---------------------- button click events for every forms ----------------------------------------------------*/
+
+    //btnSaveBasicInformation
+    $('#btnSaveBasicInformation').click(function () {
+        if ($('#add-basic-information-form').valid()) {
+            $('#collapseBasicInformation').removeClass('in');
+            $('#collapseLocality').addClass('in');
+        }
+    });
+
+    /*---------------------- end button click events for every forms ----------------------------------------------------*/
+
     //dropzone
     Dropzone.options.myAwesomeDropzone = {
 
@@ -144,6 +157,7 @@
 
 
     google.maps.event.addDomListener(window, 'load', initialize);
+
 
 
 });

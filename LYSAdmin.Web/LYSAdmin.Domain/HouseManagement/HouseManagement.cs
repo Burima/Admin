@@ -205,9 +205,9 @@ namespace LYSAdmin.Domain.HouseManagement
             return house;
         }
 
-        public int AddHouse(House house)
+        public int AddHouse(HouseViewModel houseViewModel)
         {
-            var dbHouse = Mapper.Map<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>(house);//Converting Model.Apartment to Data.Apartment
+            var dbHouse = Mapper.Map<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>(houseViewModel.House);//Converting Model.Apartment to Data.Apartment
             houseRepository.Insert(dbHouse);//Inserting new lead
             return unitOfWork.SaveChanges();//Saving the changes to DB
 

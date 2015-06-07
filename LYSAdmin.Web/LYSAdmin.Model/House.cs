@@ -10,6 +10,7 @@ namespace LYSAdmin.Model
     {
         public int HouseID { get; set; }
         public string HouseName { get; set; }
+        public string DisplayName { get; set; }
         public string Description { get; set; }
         public Nullable<bool> Status { get; set; }
         public Nullable<int> OwnerID { get; set; }
