@@ -16,5 +16,20 @@ namespace LYSAdmin.Model.Constants
             OwnerStaff = 4,
             EndUser=5
         }
+
+        public enum Bed_Status
+        {
+            Booked = 1,
+            Staying = 2,
+            NoticeGiven = 3,
+            Exited = 4
+        }
+
+        public enum LinkTypeID
+        {
+            Apartment = 1,
+            Block = 2,
+            None = 3
+        }
     }
 }
