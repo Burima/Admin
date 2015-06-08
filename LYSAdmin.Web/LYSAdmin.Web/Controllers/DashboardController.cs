@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LYSAdmin.Web.Utilities;
+using LYSAdmin.Domain.DashboardManagement;
+using LYSAdmin.Model.ViewModels;
 
 namespace LYSAdmin.Web.Controllers
 {
@@ -12,9 +14,13 @@ namespace LYSAdmin.Web.Controllers
     {
         // GET: Dashboard
         [LYSAdminAuthorize]
+
+        DashboardManagement DashboardManagement = new DashboardManagement();
+        
         public ActionResult Index()
         {
-            return View("Dashboard");
+            DonughtChart CountLeads = DashboardManagement.GetDonught(GetOwnerID());
+            return View(CountLeads);
         }
         public ActionResult Dashboard()
         {
@@ -39,6 +45,22 @@ namespace LYSAdmin.Web.Controllers
         public ActionResult Dashboard_4_1()
         {
             return View();
+        }
+
+        private dynamic GetOwnerID()
+        {
+            var user = (Model.User)Session["User"];
+            int ownerID = 0;
+            if (user != null)
+            {
+                ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID;
+                return ownerID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
         }
     }
 }

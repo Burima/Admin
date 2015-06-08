@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using LYSAdmin.Web.Utilities;
 using LYSAdmin.Domain.ApartmentManagement;
 using LYSAdmin.Domain.BlockManagement;
-using LYSAdmin.Model;
 using Newtonsoft.Json;
 
 namespace LYSAdmin.Web.Controllers
