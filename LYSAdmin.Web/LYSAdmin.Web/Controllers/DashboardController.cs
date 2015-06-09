@@ -6,14 +6,14 @@ using System.Web;
 using System.Web.Mvc;
 using LYSAdmin.Web.Utilities;
 using LYSAdmin.Domain.DashboardManagement;
-using LYSAdmin.Model.ViewModels;
+using LYSAdmin.Model;
 
 namespace LYSAdmin.Web.Controllers
 {
+     [LYSAdminAuthorize]
     public class DashboardController : Controller
     {
-        // GET: Dashboard
-        [LYSAdminAuthorize]
+        // GET: Dashboard       
 
         DashboardManagement DashboardManagement = new DashboardManagement();
         

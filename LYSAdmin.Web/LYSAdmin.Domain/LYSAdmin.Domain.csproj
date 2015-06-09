@@ -49,6 +49,8 @@
     <Compile Include="ApartmentManagement\IApartmentManagement.cs" />
     <Compile Include="BlockManagement\BlockManagement.cs" />
     <Compile Include="BlockManagement\IBlockManagement.cs" />
+    <Compile Include="DashboardManagement\DashboardManagement.cs" />
+    <Compile Include="DashboardManagement\IDashboardManagement.cs" />
     <Compile Include="HouseManagement\HouseManagement.cs" />
     <Compile Include="HouseManagement\IHouseManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

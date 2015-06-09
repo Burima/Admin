@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LYSAdmin.Model.ViewModels
+namespace LYSAdmin.Model
 {
     public class DashboardViewModel
     {
