@@ -10,17 +10,17 @@ using LYSAdmin.Model;
 
 namespace LYSAdmin.Web.Controllers
 {
-     [LYSAdminAuthorize]
+    [LYSAdminAuthorize]
     public class DashboardController : Controller
     {
         // GET: Dashboard       
 
         DashboardManagement DashboardManagement = new DashboardManagement();
-        
+        [HttpGet]
         public ActionResult Index()
         {
             DonughtChart CountLeads = DashboardManagement.GetDonught(GetOwnerID());
-            return View(CountLeads);
+            return View("Dashboard",CountLeads);
         }
         public ActionResult Dashboard()
         {
