@@ -15,16 +15,18 @@ namespace LYSAdmin.Web.Controllers
     {
         // GET: Dashboard       
 
-        DashboardManagement DashboardManagement = new DashboardManagement();
+        DashboardManagement dashboardManagement = new DashboardManagement();
         [HttpGet]
         public ActionResult Index()
         {
-            DonughtChart CountLeads = DashboardManagement.GetDonught(GetOwnerID());
-            return View("Dashboard",CountLeads);
+            return View("Dashboard");
         }
+
+         [HttpGet]
         public ActionResult Dashboard()
         {
-            return View();
+            DonughtChart CountLeads = dashboardManagement.GetDonught(GetOwnerID());
+            return View("Dashboard", CountLeads);
         }
 
         public ActionResult Dashboard_2()
