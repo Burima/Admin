@@ -16,7 +16,7 @@ namespace LYSAdmin.Model.Constants
             OwnerStaff = 4,
             EndUser=5
         }
-
+        [Flags]
         public enum Bed_Status
         {
             Booked = 1,
