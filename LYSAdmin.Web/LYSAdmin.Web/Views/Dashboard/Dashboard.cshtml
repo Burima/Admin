@@ -1,4 +1,5 @@
-﻿@using LYSAdmin.Model
+﻿@using Newtonsoft.Json
+@using LYSAdmin.Model
 @model LYSAdmin.Model.DonughtChart
 @{
     ViewBag.Title = "Dashboard";
@@ -492,8 +493,10 @@
     @Scripts.Render("~/plugins/peity")
 
     <script type="text/javascript">
-    $(document).ready(function () {
+        var occupied = @Html.Raw(Model.Occupied)
 
+      $(document).ready(function () {
+        
         $(".bar_dashboard").peity("bar", {
             fill: ["#1ab394", "#d7d7d7"],
             width: 100
@@ -565,15 +568,16 @@
                 }
         );
 
+
         var doughnutData_1 = [
             {
-                value : "@Model.Occupied",
+                value :occupied,
                 color: "#a3e1d4",
                 highlight: "#1ab394",
                 label: "Occupied"
             },
             {
-                value: "@Model.Empty",
+                value: occupied,
                 color: "#dedede",
                 highlight: "#1ab394",
                 label: "Vacant"
