@@ -493,10 +493,11 @@
     @Scripts.Render("~/plugins/peity")
 
     <script type="text/javascript">
-        var occupied = @Html.Raw(Model.Occupied)
+        @Html.Raw("var occupied = " +  Json.Encode(this.Model.Occupied) + ";" )
+        @Html.Raw("var empty = " +  Json.Encode(this.Model.Empty) + ";" )
 
       $(document).ready(function () {
-        
+
         $(".bar_dashboard").peity("bar", {
             fill: ["#1ab394", "#d7d7d7"],
             width: 100
@@ -577,7 +578,7 @@
                 label: "Occupied"
             },
             {
-                value: occupied,
+                value: empty,
                 color: "#dedede",
                 highlight: "#1ab394",
                 label: "Vacant"

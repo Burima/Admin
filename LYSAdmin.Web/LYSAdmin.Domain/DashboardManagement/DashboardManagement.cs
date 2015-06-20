@@ -39,14 +39,15 @@ namespace LYSAdmin.Domain.DashboardManagement
             rooms = (from r in roomRepository
                      where houses.Contains(r.HouseID)
                      select r.RoomID).ToList();
+
             //entered static data
             //need to be filled by Enum
 
-            donughtChart.Empty = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.UserID == 2)
+            donughtChart.Empty = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.Booked)
                                   select new Bed { }
                                      ).Count();
 
-            donughtChart.Occupied = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.UserID == 3)
+            donughtChart.Occupied = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.Exited)
                                      select new Bed { }
                                      ).Count();
 
