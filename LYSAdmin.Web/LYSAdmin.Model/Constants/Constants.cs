@@ -22,7 +22,7 @@ namespace LYSAdmin.Model.Constants
             Booked = 1,
             Staying = 2,
             NoticeGiven = 3,
-            Exited = 4
+            Vacant = 4
         }
 
         public enum LinkTypeID

@@ -23,6 +23,6 @@ namespace LYSAdmin.Model
 
         public int Leaving { get; set; }
 
-        public int Remaining { get; set; }
+        public int Staying { get; set; }
     }
 }

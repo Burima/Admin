@@ -495,6 +495,10 @@
     <script type="text/javascript">
         @Html.Raw("var occupied = " +  Json.Encode(this.Model.Occupied) + ";" )
         @Html.Raw("var empty = " +  Json.Encode(this.Model.Empty) + ";" )
+        @Html.Raw("var newJoined = " +  Json.Encode(this.Model.NewEntered) + ";" )
+        @Html.Raw("var existing = " +  Json.Encode(this.Model.Existing) + ";" )
+        @Html.Raw("var noticeGiven = " +  Json.Encode(this.Model.Leaving) + ";" )
+        @Html.Raw("var staying = " +  Json.Encode(this.Model.Staying) + ";" )
 
       $(document).ready(function () {
 
@@ -587,13 +591,13 @@
         ];
         var doughnutData_2 = [
             {
-                value: 300,
+                value: newJoined,
                 color: "#a3e1d4",
                 highlight: "#1ab394",
                 label: "New Joined"
             },
             {
-                value: 50,
+                value: existing,
                 color: "#dedede",
                 highlight: "#1ab394",
                 label: "Existing"
@@ -603,13 +607,13 @@
 
         var doughnutData_3 = [
            {
-               value: 300,
+               value: noticeGiven,
                color: "#a3e1d4",
                highlight: "#1ab394",
                label: "Leaving"
            },
            {
-               value: 50,
+               value: staying,
                color: "#dedede",
                highlight: "#1ab394",
                label: "Staying"

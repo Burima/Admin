@@ -35,21 +35,39 @@ namespace LYSAdmin.Domain.DashboardManagement
                       where p.OwnerID == OwnerID
                      select p.HouseID).ToList();
 
-
             rooms = (from r in roomRepository
                      where houses.Contains(r.HouseID)
                      select r.RoomID).ToList();
 
-            //entered static data
-            //need to be filled by Enum
-
-            donughtChart.Empty = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.Booked)
+            donughtChart.Empty = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.Vacant)
                                   select new Bed { }
                                      ).Count();
 
-            donughtChart.Occupied = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.Exited)
+            donughtChart.Occupied = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.Booked)
                                      select new Bed { }
                                      ).Count();
+
+            donughtChart.NewEntered = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.Staying
+                                           && DateTime.Compare(b.Status_Update_Date.Value,DateTime.Now) < 15)
+                                     select new Bed { }
+                                     ).Count();
+
+            donughtChart.Existing = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.Staying
+                                           && DateTime.Compare(b.Status_Update_Date.Value, DateTime.Now) > 15)
+                                       select new Bed { }
+                                     ).Count();
+
+            donughtChart.Leaving = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.Bed_Status == (int)Constants.Bed_Status.NoticeGiven
+                                           && DateTime.Compare(b.Status_Update_Date.Value, DateTime.Now) < 15)
+                                     select new Bed { }
+                                     ).Count();
+
+            donughtChart.Staying = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && (b.Bed_Status == (int)Constants.Bed_Status.NoticeGiven
+                                       || b.Bed_Status == (int)Constants.Bed_Status.Staying) 
+                                       && DateTime.Compare(b.Status_Update_Date.Value, DateTime.Now) > 15)
+                                    select new Bed { }
+                                     ).Count();
+
 
             return donughtChart;
         }
