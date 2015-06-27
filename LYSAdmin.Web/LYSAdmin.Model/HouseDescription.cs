@@ -14,11 +14,13 @@ namespace LYSAdmin.Model
         public string Gender { get; set; }
         public string Landmark { get; set; }
         public string Description { get; set; }
+        public int NoOfRooms { get; set; }
+        public int NoOfBathrooms { get; set; }
+        public Nullable<int> NoOfBalconnies { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
-        public int No_of_Rooms { get; set; }
-        public int No_of_Bathrooms { get; set; }
-        public Nullable<int> No_of_Balconnies { get; set; }
 
         public virtual House House { get; set; }
     }

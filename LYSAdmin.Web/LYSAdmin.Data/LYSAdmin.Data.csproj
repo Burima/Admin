@@ -54,9 +54,6 @@
     <Compile Include="DBEntity\Area.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBEntity\BasicAmenity.cs">
-      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DBEntity\Bed.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
@@ -70,6 +67,9 @@
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DBEntity\House.cs">
+      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBEntity\HouseAmenity.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DBEntity\HouseDescription.cs">

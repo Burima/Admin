@@ -20,10 +20,10 @@ namespace LYSAdmin.Data.DBEntity
         public bool Status { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
-        public Nullable<int> Bed_Status { get; set; }
-        public Nullable<System.DateTime> Status_Update_Date { get; set; }
+        public Nullable<int> Bedstatus { get; set; }
+        public Nullable<System.DateTime> Statusupdatedate { get; set; }
     
-        public virtual Room Room { get; set; }
         public virtual User User { get; set; }
+        public virtual Room Room { get; set; }
     }
 }

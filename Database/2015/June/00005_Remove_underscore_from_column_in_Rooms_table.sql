@@ -26,8 +26,8 @@ CREATE TABLE [dbo].[Rooms](
 	[CreatedOn] [datetime] NOT NULL,
 	[LastUpdatedOn] [datetime] NOT NULL,
 	[Status] [bit] NOT NULL,
-	[Monthlyrent] [varchar](20) NOT NULL,
-	[NoofBeds] [int] NOT NULL,
+	[MonthlyRent] [varchar](20) NOT NULL,
+	[NoOfBeds] [int] NOT NULL,
 	[Deposit] [varchar](20) NOT NULL,
  CONSTRAINT [PK__Rooms] PRIMARY KEY CLUSTERED 
 (

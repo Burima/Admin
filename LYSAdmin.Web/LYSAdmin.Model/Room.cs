@@ -16,8 +16,8 @@ namespace LYSAdmin.Model
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime LastUpdatedOn { get; set; }
         public bool Status { get; set; }
-        public string Monthly_Rent { get; set; }
-        public int No_of_Beds { get; set; }
+        public string MonthlyRent { get; set; }
+        public int NoOfBeds { get; set; }
         public string Deposit { get; set; }
 
         public virtual ICollection<Bed> Beds { get; set; }
