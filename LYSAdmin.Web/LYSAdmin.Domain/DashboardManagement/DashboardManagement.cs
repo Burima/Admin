@@ -31,6 +31,7 @@ namespace LYSAdmin.Domain.DashboardManagement
 
             IList<int> houses = new List<int>();
             IList<int> rooms = new List<int>();
+            DateTime matchedDate = DateTime.Today.AddDays(-15);
             houses = (from p in houseRepository
                       where p.OwnerID == OwnerID
                      select p.HouseID).ToList();
@@ -48,23 +49,23 @@ namespace LYSAdmin.Domain.DashboardManagement
                                      ).Count();
 
             donughtChart.NewEntered = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Staying
-                                           && DateTime.Compare(b.StatusUpdateDate.Value,DateTime.Today) < 15)
+                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
                                      select new Bed { }
                                      ).Count();
 
             donughtChart.Existing = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Staying
-                                           && DateTime.Compare(b.StatusUpdateDate.Value, DateTime.Today) > 15)
+                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
                                        select new Bed { }
                                      ).Count();
 
             donughtChart.Leaving = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.NoticeGiven
-                                           && DateTime.Compare(b.StatusUpdateDate.Value, DateTime.Today) < 15)
+                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
                                      select new Bed { }
                                      ).Count();
 
             donughtChart.Staying = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && (b.BedStatus == (int)Constants.Bed_Status.NoticeGiven
-                                       || b.BedStatus == (int)Constants.Bed_Status.Staying) 
-                                       && DateTime.Compare(b.StatusUpdateDate.Value, DateTime.Today) > 15)
+                                       || b.BedStatus == (int)Constants.Bed_Status.Staying)
+                                       && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
                                     select new Bed { }
                                      ).Count();
 
