@@ -23,8 +23,6 @@
         <AssociationConnector Association="LYSAdminModel.FK_HouseImages_HouseID" />
         <AssociationConnector Association="LYSAdminModel.FK_Users_RoleID" />
         <AssociationConnector Association="LYSAdminModel.PK_UserDetails_UserID" />
-        <EntityTypeShape EntityType="LYSAdminModel.HouseAmenity" Width="1.5" PointX="3" PointY="24.625" />
-        <AssociationConnector Association="LYSAdminModel.FK__House_Amenities__Houses" />
         <EntityTypeShape EntityType="LYSAdminModel.HouseDescription" Width="1.5" PointX="3" PointY="16.75" />
         <AssociationConnector Association="LYSAdminModel.FK_HouseDescriptions_HouseID" />
         <EntityTypeShape EntityType="LYSAdminModel.Room" Width="1.5" PointX="3" PointY="12" />
@@ -32,6 +30,8 @@
         <EntityTypeShape EntityType="LYSAdminModel.Bed" Width="1.5" PointX="5.25" PointY="8.75" />
         <AssociationConnector Association="LYSAdminModel.FK_Beds_RoomID" />
         <AssociationConnector Association="LYSAdminModel.FK_Beds_UserID" />
+        <EntityTypeShape EntityType="LYSAdminModel.HouseAmenity" Width="1.5" PointX="3" PointY="24.625" />
+        <AssociationConnector Association="LYSAdminModel.FK__House_Amenities__Houses" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
