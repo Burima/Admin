@@ -8,7 +8,7 @@ namespace LYSAdmin.Model
 {
     public class HouseAmenity
     {
-        ublic int AminityID { get; set; }
+        public int AminityID { get; set; }
         public int HouseID { get; set; }
         public Nullable<bool> AC { get; set; }
         public Nullable<bool> Fridge { get; set; }
