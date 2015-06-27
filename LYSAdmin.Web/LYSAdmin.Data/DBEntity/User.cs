@@ -17,8 +17,8 @@ namespace LYSAdmin.Data.DBEntity
         public User()
         {
             this.Apartments = new HashSet<Apartment>();
-            this.Beds = new HashSet<Bed>();
             this.UserDetails = new HashSet<UserDetail>();
+            this.Beds = new HashSet<Bed>();
         }
     
         public int UserID { get; set; }
@@ -38,8 +38,8 @@ namespace LYSAdmin.Data.DBEntity
         public int ManagerID { get; set; }
     
         public virtual ICollection<Apartment> Apartments { get; set; }
-        public virtual ICollection<Bed> Beds { get; set; }
         public virtual Role Role { get; set; }
         public virtual ICollection<UserDetail> UserDetails { get; set; }
+        public virtual ICollection<Bed> Beds { get; set; }
     }
 }

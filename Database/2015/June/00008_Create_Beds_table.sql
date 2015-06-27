@@ -12,8 +12,8 @@ CREATE TABLE [dbo].[Beds](
 	[Status] [bit] NOT NULL,
 	[CreatedOn] [datetime] NULL,
 	[LastUpdatedOn] [datetime] NULL,
-	[Bedstatus] [int] NULL,
-	[Statusupdatedate] [datetime] NULL,
+	[BedStatus] [int] NULL,
+	[StatusUpdateDate] [datetime] NULL,
  CONSTRAINT [PK_Bed] PRIMARY KEY CLUSTERED 
 (
 	[BedID] ASC

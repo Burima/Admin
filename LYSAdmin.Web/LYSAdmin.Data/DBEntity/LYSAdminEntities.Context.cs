@@ -27,7 +27,6 @@ namespace LYSAdmin.Data.DBEntity
     
         public virtual DbSet<Apartment> Apartments { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
-        public virtual DbSet<Bed> Beds { get; set; }
         public virtual DbSet<Block> Blocks { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
@@ -39,5 +38,6 @@ namespace LYSAdmin.Data.DBEntity
         public virtual DbSet<HouseAmenity> HouseAmenities { get; set; }
         public virtual DbSet<HouseDescription> HouseDescriptions { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<Bed> Beds { get; set; }
     }
 }

@@ -25,8 +25,8 @@ namespace LYSAdmin.Model
         public int ManagerID { get; set; }
 
         public virtual ICollection<Apartment> Apartments { get; set; }
-        public virtual ICollection<Bed> Beds { get; set; }
         public virtual Role Role { get; set; }
         public virtual ICollection<UserDetail> UserDetails { get; set; }
+        public virtual ICollection<Bed> Beds { get; set; }
     }
 }

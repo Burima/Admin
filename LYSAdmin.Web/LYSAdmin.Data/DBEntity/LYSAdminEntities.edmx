@@ -43,8 +43,8 @@
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="LastUpdatedOn" Type="datetime" />
-          <Property Name="Bedstatus" Type="int" />
-          <Property Name="Statusupdatedate" Type="datetime" />
+          <Property Name="BedStatus" Type="int" />
+          <Property Name="StatusUpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Blocks">
           <Key>
@@ -472,7 +472,6 @@
         <EntityContainer Name="LYSAdminEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Apartments" EntityType="LYSAdminModel.Apartment" />
           <EntitySet Name="Areas" EntityType="LYSAdminModel.Area" />
-          <EntitySet Name="Beds" EntityType="LYSAdminModel.Bed" />
           <EntitySet Name="Blocks" EntityType="LYSAdminModel.Block" />
           <EntitySet Name="Cities" EntityType="LYSAdminModel.City" />
           <EntitySet Name="Countries" EntityType="LYSAdminModel.Country" />
@@ -496,10 +495,6 @@
           <AssociationSet Name="FK_Areas_CityID" Association="LYSAdminModel.FK_Areas_CityID">
             <End Role="City" EntitySet="Cities" />
             <End Role="Area" EntitySet="Areas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Beds_UserID" Association="LYSAdminModel.FK_Beds_UserID">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Bed" EntitySet="Beds" />
           </AssociationSet>
           <AssociationSet Name="FK_Cities_CountryID" Association="LYSAdminModel.FK_Cities_CountryID">
             <End Role="Country" EntitySet="Countries" />
@@ -528,13 +523,18 @@
             <End Role="HouseDescription" EntitySet="HouseDescriptions" />
           </AssociationSet>
           <EntitySet Name="Rooms" EntityType="LYSAdminModel.Room" />
+          <AssociationSet Name="FK__Rooms__HouseID" Association="LYSAdminModel.FK__Rooms__HouseID">
+            <End Role="House" EntitySet="Houses" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+          <EntitySet Name="Beds" EntityType="LYSAdminModel.Bed" />
           <AssociationSet Name="FK_Beds_RoomID" Association="LYSAdminModel.FK_Beds_RoomID">
             <End Role="Room" EntitySet="Rooms" />
             <End Role="Bed" EntitySet="Beds" />
           </AssociationSet>
-          <AssociationSet Name="FK__Rooms__HouseID" Association="LYSAdminModel.FK__Rooms__HouseID">
-            <End Role="House" EntitySet="Houses" />
-            <End Role="Room" EntitySet="Rooms" />
+          <AssociationSet Name="FK_Beds_UserID" Association="LYSAdminModel.FK_Beds_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Bed" EntitySet="Beds" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Apartment">
@@ -569,21 +569,6 @@
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Apartments" Relationship="LYSAdminModel.FK_Apartments_AreaID" FromRole="Area" ToRole="Apartment" />
           <NavigationProperty Name="City" Relationship="LYSAdminModel.FK_Areas_CityID" FromRole="Area" ToRole="City" />
-        </EntityType>
-        <EntityType Name="Bed">
-          <Key>
-            <PropertyRef Name="BedID" />
-          </Key>
-          <Property Name="BedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoomID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="Bedstatus" Type="Int32" />
-          <Property Name="Statusupdatedate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="User" Relationship="LYSAdminModel.FK_Beds_UserID" FromRole="Bed" ToRole="User" />
-          <NavigationProperty Name="Room" Relationship="LYSAdminModel.FK_Beds_RoomID" FromRole="Bed" ToRole="Room" />
         </EntityType>
         <EntityType Name="Block">
           <Key>
@@ -708,9 +693,9 @@
           <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ManagerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Apartments" Relationship="LYSAdminModel.FK_Apartments_OwnerID" FromRole="User" ToRole="Apartment" />
-          <NavigationProperty Name="Beds" Relationship="LYSAdminModel.FK_Beds_UserID" FromRole="User" ToRole="Bed" />
           <NavigationProperty Name="Role" Relationship="LYSAdminModel.FK_Users_RoleID" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserDetails" Relationship="LYSAdminModel.PK_UserDetails_UserID" FromRole="User" ToRole="UserDetail" />
+          <NavigationProperty Name="Beds" Relationship="LYSAdminModel.FK_Beds_UserID" FromRole="User" ToRole="Bed" />
         </EntityType>
         <Association Name="FK_Apartments_AreaID">
           <End Type="LYSAdminModel.Area" Role="Area" Multiplicity="0..1" />
@@ -757,18 +742,6 @@
             </Principal>
             <Dependent Role="Area">
               <PropertyRef Name="CityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Beds_UserID">
-          <End Type="LYSAdminModel.User" Role="User" Multiplicity="1" />
-          <End Type="LYSAdminModel.Bed" Role="Bed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Bed">
-              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -928,8 +901,35 @@
           <Property Name="MonthlyRent" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="NoOfBeds" Type="Int32" Nullable="false" />
           <Property Name="Deposit" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Beds" Relationship="LYSAdminModel.FK_Beds_RoomID" FromRole="Room" ToRole="Bed" />
           <NavigationProperty Name="House" Relationship="LYSAdminModel.FK__Rooms__HouseID" FromRole="Room" ToRole="House" />
+          <NavigationProperty Name="Beds" Relationship="LYSAdminModel.FK_Beds_RoomID" FromRole="Room" ToRole="Bed" />
+        </EntityType>
+        <Association Name="FK__Rooms__HouseID">
+          <End Type="LYSAdminModel.House" Role="House" Multiplicity="1" />
+          <End Type="LYSAdminModel.Room" Role="Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Bed">
+          <Key>
+            <PropertyRef Name="BedID" />
+          </Key>
+          <Property Name="BedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoomID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="BedStatus" Type="Int32" />
+          <Property Name="StatusUpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Room" Relationship="LYSAdminModel.FK_Beds_RoomID" FromRole="Bed" ToRole="Room" />
+          <NavigationProperty Name="User" Relationship="LYSAdminModel.FK_Beds_UserID" FromRole="Bed" ToRole="User" />
         </EntityType>
         <Association Name="FK_Beds_RoomID">
           <End Type="LYSAdminModel.Room" Role="Room" Multiplicity="1" />
@@ -943,15 +943,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Rooms__HouseID">
-          <End Type="LYSAdminModel.House" Role="House" Multiplicity="1" />
-          <End Type="LYSAdminModel.Room" Role="Room" Multiplicity="*" />
+        <Association Name="FK_Beds_UserID">
+          <End Type="LYSAdminModel.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdminModel.Bed" Role="Bed" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="House">
-              <PropertyRef Name="HouseID" />
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="Room">
-              <PropertyRef Name="HouseID" />
+            <Dependent Role="Bed">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -988,20 +988,6 @@
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
                 <ScalarProperty Name="AreaName" ColumnName="AreaName" />
                 <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Beds">
-            <EntityTypeMapping TypeName="LYSAdminModel.Bed">
-              <MappingFragment StoreEntitySet="Beds">
-                <ScalarProperty Name="Statusupdatedate" ColumnName="Statusupdatedate" />
-                <ScalarProperty Name="Bedstatus" ColumnName="Bedstatus" />
-                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-                <ScalarProperty Name="BedID" ColumnName="BedID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1208,6 +1194,20 @@
                 <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
                 <ScalarProperty Name="HouseID" ColumnName="HouseID" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Beds">
+            <EntityTypeMapping TypeName="LYSAdminModel.Bed">
+              <MappingFragment StoreEntitySet="Beds">
+                <ScalarProperty Name="StatusUpdateDate" ColumnName="StatusUpdateDate" />
+                <ScalarProperty Name="BedStatus" ColumnName="BedStatus" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="BedID" ColumnName="BedID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

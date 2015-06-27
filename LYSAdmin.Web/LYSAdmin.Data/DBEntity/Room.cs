@@ -29,7 +29,7 @@ namespace LYSAdmin.Data.DBEntity
         public int NoOfBeds { get; set; }
         public string Deposit { get; set; }
     
-        public virtual ICollection<Bed> Beds { get; set; }
         public virtual House House { get; set; }
+        public virtual ICollection<Bed> Beds { get; set; }
     }
 }
