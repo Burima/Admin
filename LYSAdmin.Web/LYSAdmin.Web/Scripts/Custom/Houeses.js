@@ -108,7 +108,8 @@
 
     }
 
-    $(document).on("click", ".locality", function (e) {
+    //autofill of address
+    $(".locality").click(function (e) {
         e.preventDefault();
         initialize();
     });
@@ -116,6 +117,7 @@
     var map;
     var infowindow;
     var latlng;
+    //function to autofind address by google api
     function initialize() {
         geocoder = new google.maps.Geocoder();
         latlng = new google.maps.LatLng(21.1311084, 82.7792231);
@@ -126,7 +128,7 @@
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     }
 
-    $(document).on("click", "#btnNext", function (e) {
+    $(document).on("click", "#btnNextLocality", function (e) {
         e.preventDefault();
         codeAddress();
     });
