@@ -19,6 +19,7 @@ namespace LYSAdmin.Data.DBEntity
             this.HouseImages = new HashSet<HouseImage>();
             this.HouseDescriptions = new HashSet<HouseDescription>();
             this.Rooms = new HashSet<Room>();
+            this.HouseReviews = new HashSet<HouseReview>();
             this.HouseAmenities = new HashSet<HouseAmenity>();
         }
     
@@ -40,6 +41,7 @@ namespace LYSAdmin.Data.DBEntity
         public virtual ICollection<HouseImage> HouseImages { get; set; }
         public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<HouseReview> HouseReviews { get; set; }
         public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
     }
 }

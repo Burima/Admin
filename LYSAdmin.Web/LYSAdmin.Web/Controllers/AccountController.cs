@@ -63,5 +63,14 @@ namespace LYSAdmin.Web.Controllers
         {
             return View();
         }
+
+        //GET: Account/Logout
+        public ActionResult Logout()
+        {
+
+            Session.Abandon();//Clear Session details
+            return RedirectToAction("Login", "Account"); //Redirect to login page
+        }
+
     }
 }

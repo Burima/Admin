@@ -10,51 +10,51 @@ namespace LYSAdmin.Model
     {
         public int AminityID { get; set; }
         public int HouseID { get; set; }
-        public Nullable<bool> AC { get; set; }
-        public Nullable<bool> Fridge { get; set; }
-        public Nullable<bool> Wifi { get; set; }
-        public Nullable<bool> Washingmachine { get; set; }
-        public Nullable<bool> AttachBathrooms { get; set; }
-        public Nullable<bool> KitchenFacilityWithGas { get; set; }
-        public Nullable<bool> CommonTV { get; set; }
-        public Nullable<bool> IndividualTV { get; set; }
-        public Nullable<bool> LCDTVCableConnection { get; set; }
-        public Nullable<bool> Wardrobes { get; set; }
-        public Nullable<bool> IntercomFacility { get; set; }
-        public Nullable<bool> IroningWashingServices { get; set; }
-        public Nullable<bool> LunchGiven { get; set; }
-        public Nullable<bool> BreakFastGiven { get; set; }
-        public Nullable<bool> DinnerGiven { get; set; }
-        public Nullable<bool> WaterSupply { get; set; }
-        public Nullable<bool> HotColdWaterSupply { get; set; }
-        public Nullable<bool> MineralDrinkingWater { get; set; }
-        public Nullable<bool> Aquaguard { get; set; }
-        public Nullable<bool> Housekeeping { get; set; }
-        public Nullable<bool> RoomService { get; set; }
-        public Nullable<bool> Newspaper { get; set; }
-        public Nullable<bool> TwoWheelerOpenParking { get; set; }
-        public Nullable<bool> TwoWheelerCloseParking { get; set; }
-        public Nullable<bool> FourWheelerOpenParking { get; set; }
-        public Nullable<bool> FourWheelerCloseParking { get; set; }
-        public Nullable<bool> Lockers { get; set; }
-        public Nullable<bool> GYM { get; set; }
-        public Nullable<bool> Lift { get; set; }
-        public Nullable<bool> Playground { get; set; }
-        public Nullable<bool> Clubhouse { get; set; }
-        public Nullable<bool> Partyhall { get; set; }
-        public Nullable<bool> Security { get; set; }
-        public Nullable<bool> SwimmingPool { get; set; }
-        public Nullable<bool> VideoSurveillance { get; set; }
-        public Nullable<bool> Powerbackup { get; set; }
-        public Nullable<bool> EmergencyMedicalServices { get; set; }
-        public Nullable<bool> NonVegAllowed { get; set; }
-        public Nullable<bool> GuardianEntry { get; set; }
-        public Nullable<bool> NoSmoking { get; set; }
-        public Nullable<bool> NoDrinking { get; set; }
-        public Nullable<bool> NoBoysEntry { get; set; }
+        public bool AC { get; set; }
+        public bool Fridge { get; set; }
+        public bool Wifi { get; set; }
+        public bool Washingmachine { get; set; }
+        public bool AttachBathrooms { get; set; }
+        public bool KitchenFacilityWithGas { get; set; }
+        public bool CommonTV { get; set; }
+        public bool IndividualTV { get; set; }
+        public bool LCDTVCableConnection { get; set; }
+        public bool Wardrobes { get; set; }
+        public bool IntercomFacility { get; set; }
+        public bool IroningWashingServices { get; set; }
+        public bool LunchGiven { get; set; }
+        public bool BreakFastGiven { get; set; }
+        public bool DinnerGiven { get; set; }
+        public bool WaterSupply { get; set; }
+        public bool HotColdWaterSupply { get; set; }
+        public bool MineralDrinkingWater { get; set; }
+        public bool Aquaguard { get; set; }
+        public bool Housekeeping { get; set; }
+        public bool RoomService { get; set; }
+        public bool Newspaper { get; set; }
+        public bool TwoWheelerOpenParking { get; set; }
+        public bool TwoWheelerCloseParking { get; set; }
+        public bool FourWheelerOpenParking { get; set; }
+        public bool FourWheelerCloseParking { get; set; }
+        public bool Lockers { get; set; }
+        public bool GYM { get; set; }
+        public bool Lift { get; set; }
+        public bool Playground { get; set; }
+        public bool Clubhouse { get; set; }
+        public bool Partyhall { get; set; }
+        public bool Security { get; set; }
+        public bool SwimmingPool { get; set; }
+        public bool VideoSurveillance { get; set; }
+        public bool Powerbackup { get; set; }
+        public bool EmergencyMedicalServices { get; set; }
+        public bool NonVegAllowed { get; set; }
+        public bool GuardianEntry { get; set; }
+        public bool NoSmoking { get; set; }
+        public bool NoDrinking { get; set; }
+        public bool NoBoysEntry { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime LastUpdatedOn { get; set; }
-    
+
         public virtual House House { get; set; }
     }
 }

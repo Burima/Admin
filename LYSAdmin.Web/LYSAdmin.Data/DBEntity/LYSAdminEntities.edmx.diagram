@@ -30,6 +30,9 @@
         <EntityTypeShape EntityType="LYSAdminModel.Bed" Width="1.5" PointX="5.25" PointY="8.75" />
         <AssociationConnector Association="LYSAdminModel.FK_Beds_RoomID" />
         <AssociationConnector Association="LYSAdminModel.FK_Beds_UserID" />
+        <EntityTypeShape EntityType="LYSAdminModel.HouseReview" Width="1.5" PointX="8.25" PointY="10.5" />
+        <AssociationConnector Association="LYSAdminModel.FK_HouseReviews_HouseID" />
+        <AssociationConnector Association="LYSAdminModel.FK_HouseReviews_UserID" />
         <EntityTypeShape EntityType="LYSAdminModel.HouseAmenity" Width="1.5" PointX="3" PointY="24.625" />
         <AssociationConnector Association="LYSAdminModel.FK__House_Amenities__Houses" />
       </Diagram>

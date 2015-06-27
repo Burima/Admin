@@ -87,48 +87,48 @@
           </Key>
           <Property Name="AminityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HouseID" Type="int" Nullable="false" />
-          <Property Name="AC" Type="bit" />
-          <Property Name="Fridge" Type="bit" />
-          <Property Name="Wifi" Type="bit" />
-          <Property Name="Washingmachine" Type="bit" />
-          <Property Name="AttachBathrooms" Type="bit" />
-          <Property Name="KitchenFacilityWithGas" Type="bit" />
-          <Property Name="CommonTV" Type="bit" />
-          <Property Name="IndividualTV" Type="bit" />
-          <Property Name="LCDTVCableConnection" Type="bit" />
-          <Property Name="Wardrobes" Type="bit" />
-          <Property Name="IntercomFacility" Type="bit" />
-          <Property Name="IroningWashingServices" Type="bit" />
-          <Property Name="LunchGiven" Type="bit" />
-          <Property Name="BreakFastGiven" Type="bit" />
-          <Property Name="DinnerGiven" Type="bit" />
-          <Property Name="WaterSupply" Type="bit" />
-          <Property Name="HotColdWaterSupply" Type="bit" />
-          <Property Name="MineralDrinkingWater" Type="bit" />
-          <Property Name="Aquaguard" Type="bit" />
-          <Property Name="Housekeeping" Type="bit" />
-          <Property Name="RoomService" Type="bit" />
-          <Property Name="Newspaper" Type="bit" />
-          <Property Name="TwoWheelerOpenParking" Type="bit" />
-          <Property Name="TwoWheelerCloseParking" Type="bit" />
-          <Property Name="FourWheelerOpenParking" Type="bit" />
-          <Property Name="FourWheelerCloseParking" Type="bit" />
-          <Property Name="Lockers" Type="bit" />
-          <Property Name="GYM" Type="bit" />
-          <Property Name="Lift" Type="bit" />
-          <Property Name="Playground" Type="bit" />
-          <Property Name="Clubhouse" Type="bit" />
-          <Property Name="Partyhall" Type="bit" />
-          <Property Name="Security" Type="bit" />
-          <Property Name="SwimmingPool" Type="bit" />
-          <Property Name="VideoSurveillance" Type="bit" />
-          <Property Name="Powerbackup" Type="bit" />
-          <Property Name="EmergencyMedicalServices" Type="bit" />
-          <Property Name="NonVegAllowed" Type="bit" />
-          <Property Name="GuardianEntry" Type="bit" />
-          <Property Name="NoSmoking" Type="bit" />
-          <Property Name="NoDrinking" Type="bit" />
-          <Property Name="NoBoysEntry" Type="bit" />
+          <Property Name="AC" Type="bit" Nullable="false" />
+          <Property Name="Fridge" Type="bit" Nullable="false" />
+          <Property Name="Wifi" Type="bit" Nullable="false" />
+          <Property Name="Washingmachine" Type="bit" Nullable="false" />
+          <Property Name="AttachBathrooms" Type="bit" Nullable="false" />
+          <Property Name="KitchenFacilityWithGas" Type="bit" Nullable="false" />
+          <Property Name="CommonTV" Type="bit" Nullable="false" />
+          <Property Name="IndividualTV" Type="bit" Nullable="false" />
+          <Property Name="LCDTVCableConnection" Type="bit" Nullable="false" />
+          <Property Name="Wardrobes" Type="bit" Nullable="false" />
+          <Property Name="IntercomFacility" Type="bit" Nullable="false" />
+          <Property Name="IroningWashingServices" Type="bit" Nullable="false" />
+          <Property Name="LunchGiven" Type="bit" Nullable="false" />
+          <Property Name="BreakFastGiven" Type="bit" Nullable="false" />
+          <Property Name="DinnerGiven" Type="bit" Nullable="false" />
+          <Property Name="WaterSupply" Type="bit" Nullable="false" />
+          <Property Name="HotColdWaterSupply" Type="bit" Nullable="false" />
+          <Property Name="MineralDrinkingWater" Type="bit" Nullable="false" />
+          <Property Name="Aquaguard" Type="bit" Nullable="false" />
+          <Property Name="Housekeeping" Type="bit" Nullable="false" />
+          <Property Name="RoomService" Type="bit" Nullable="false" />
+          <Property Name="Newspaper" Type="bit" Nullable="false" />
+          <Property Name="TwoWheelerOpenParking" Type="bit" Nullable="false" />
+          <Property Name="TwoWheelerCloseParking" Type="bit" Nullable="false" />
+          <Property Name="FourWheelerOpenParking" Type="bit" Nullable="false" />
+          <Property Name="FourWheelerCloseParking" Type="bit" Nullable="false" />
+          <Property Name="Lockers" Type="bit" Nullable="false" />
+          <Property Name="GYM" Type="bit" Nullable="false" />
+          <Property Name="Lift" Type="bit" Nullable="false" />
+          <Property Name="Playground" Type="bit" Nullable="false" />
+          <Property Name="Clubhouse" Type="bit" Nullable="false" />
+          <Property Name="Partyhall" Type="bit" Nullable="false" />
+          <Property Name="Security" Type="bit" Nullable="false" />
+          <Property Name="SwimmingPool" Type="bit" Nullable="false" />
+          <Property Name="VideoSurveillance" Type="bit" Nullable="false" />
+          <Property Name="Powerbackup" Type="bit" Nullable="false" />
+          <Property Name="EmergencyMedicalServices" Type="bit" Nullable="false" />
+          <Property Name="NonVegAllowed" Type="bit" Nullable="false" />
+          <Property Name="GuardianEntry" Type="bit" Nullable="false" />
+          <Property Name="NoSmoking" Type="bit" Nullable="false" />
+          <Property Name="NoDrinking" Type="bit" Nullable="false" />
+          <Property Name="NoBoysEntry" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
@@ -159,6 +159,16 @@
           <Property Name="HouseID" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="LastUpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HouseReviews">
+          <Key>
+            <PropertyRef Name="HouseReviewID" />
+          </Key>
+          <Property Name="HouseReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="HouseID" Type="int" Nullable="false" />
+          <Property Name="Comments" Type="varchar" MaxLength="500" />
+          <Property Name="Rating" Type="decimal" Precision="3" Scale="2" />
         </EntityType>
         <EntityType Name="Houses">
           <Key>
@@ -373,6 +383,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HouseReviews_HouseID">
+          <End Role="Houses" Type="Self.Houses" Multiplicity="1" />
+          <End Role="HouseReviews" Type="Self.HouseReviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Houses">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="HouseReviews">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HouseReviews_UserID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="HouseReviews" Type="Self.HouseReviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="HouseReviews">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_RoleID">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -407,6 +441,7 @@
           <EntitySet Name="HouseAmenities" EntityType="Self.HouseAmenities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HouseDescriptions" EntityType="Self.HouseDescriptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HouseImages" EntityType="Self.HouseImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HouseReviews" EntityType="Self.HouseReviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Houses" EntityType="Self.Houses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
@@ -455,6 +490,14 @@
           <AssociationSet Name="FK_HouseImages_HouseID" Association="Self.FK_HouseImages_HouseID">
             <End Role="Houses" EntitySet="Houses" />
             <End Role="HouseImages" EntitySet="HouseImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HouseReviews_HouseID" Association="Self.FK_HouseReviews_HouseID">
+            <End Role="Houses" EntitySet="Houses" />
+            <End Role="HouseReviews" EntitySet="HouseReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HouseReviews_UserID" Association="Self.FK_HouseReviews_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="HouseReviews" EntitySet="HouseReviews" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_RoleID" Association="Self.FK_Users_RoleID">
             <End Role="Roles" EntitySet="Roles" />
@@ -530,6 +573,15 @@
           <AssociationSet Name="FK_Beds_UserID" Association="LYSAdminModel.FK_Beds_UserID">
             <End Role="User" EntitySet="Users" />
             <End Role="Bed" EntitySet="Beds" />
+          </AssociationSet>
+          <EntitySet Name="HouseReviews" EntityType="LYSAdminModel.HouseReview" />
+          <AssociationSet Name="FK_HouseReviews_HouseID" Association="LYSAdminModel.FK_HouseReviews_HouseID">
+            <End Role="House" EntitySet="Houses" />
+            <End Role="HouseReview" EntitySet="HouseReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HouseReviews_UserID" Association="LYSAdminModel.FK_HouseReviews_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="HouseReview" EntitySet="HouseReviews" />
           </AssociationSet>
           <EntitySet Name="HouseAmenities" EntityType="LYSAdminModel.HouseAmenity" />
           <AssociationSet Name="FK__House_Amenities__Houses" Association="LYSAdminModel.FK__House_Amenities__Houses">
@@ -641,6 +693,7 @@
           <NavigationProperty Name="HouseImages" Relationship="LYSAdminModel.FK_HouseImages_HouseID" FromRole="House" ToRole="HouseImage" />
           <NavigationProperty Name="HouseDescriptions" Relationship="LYSAdminModel.FK_HouseDescriptions_HouseID" FromRole="House" ToRole="HouseDescription" />
           <NavigationProperty Name="Rooms" Relationship="LYSAdminModel.FK__Rooms__HouseID" FromRole="House" ToRole="Room" />
+          <NavigationProperty Name="HouseReviews" Relationship="LYSAdminModel.FK_HouseReviews_HouseID" FromRole="House" ToRole="HouseReview" />
           <NavigationProperty Name="HouseAmenities" Relationship="LYSAdminModel.FK__House_Amenities__Houses" FromRole="House" ToRole="HouseAmenity" />
         </EntityType>
         <EntityType Name="Role">
@@ -696,6 +749,7 @@
           <NavigationProperty Name="Role" Relationship="LYSAdminModel.FK_Users_RoleID" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="UserDetails" Relationship="LYSAdminModel.PK_UserDetails_UserID" FromRole="User" ToRole="UserDetail" />
           <NavigationProperty Name="Beds" Relationship="LYSAdminModel.FK_Beds_UserID" FromRole="User" ToRole="Bed" />
+          <NavigationProperty Name="HouseReviews" Relationship="LYSAdminModel.FK_HouseReviews_UserID" FromRole="User" ToRole="HouseReview" />
         </EntityType>
         <Association Name="FK_Apartments_AreaID">
           <End Type="LYSAdminModel.Area" Role="Area" Multiplicity="0..1" />
@@ -891,54 +945,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="HouseReview">
+          <Key>
+            <PropertyRef Name="HouseReviewID" />
+          </Key>
+          <Property Name="HouseReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="HouseID" Type="Int32" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Rating" Type="Decimal" Precision="3" Scale="2" />
+          <NavigationProperty Name="House" Relationship="LYSAdminModel.FK_HouseReviews_HouseID" FromRole="HouseReview" ToRole="House" />
+          <NavigationProperty Name="User" Relationship="LYSAdminModel.FK_HouseReviews_UserID" FromRole="HouseReview" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_HouseReviews_HouseID">
+          <End Type="LYSAdminModel.House" Role="House" Multiplicity="1" />
+          <End Type="LYSAdminModel.HouseReview" Role="HouseReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="HouseReview">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HouseReviews_UserID">
+          <End Type="LYSAdminModel.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdminModel.HouseReview" Role="HouseReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="HouseReview">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="HouseAmenity">
           <Key>
             <PropertyRef Name="AminityID" />
           </Key>
           <Property Name="AminityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HouseID" Type="Int32" Nullable="false" />
-          <Property Name="AC" Type="Boolean" />
-          <Property Name="Fridge" Type="Boolean" />
-          <Property Name="Wifi" Type="Boolean" />
-          <Property Name="Washingmachine" Type="Boolean" />
-          <Property Name="AttachBathrooms" Type="Boolean" />
-          <Property Name="KitchenFacilityWithGas" Type="Boolean" />
-          <Property Name="CommonTV" Type="Boolean" />
-          <Property Name="IndividualTV" Type="Boolean" />
-          <Property Name="LCDTVCableConnection" Type="Boolean" />
-          <Property Name="Wardrobes" Type="Boolean" />
-          <Property Name="IntercomFacility" Type="Boolean" />
-          <Property Name="IroningWashingServices" Type="Boolean" />
-          <Property Name="LunchGiven" Type="Boolean" />
-          <Property Name="BreakFastGiven" Type="Boolean" />
-          <Property Name="DinnerGiven" Type="Boolean" />
-          <Property Name="WaterSupply" Type="Boolean" />
-          <Property Name="HotColdWaterSupply" Type="Boolean" />
-          <Property Name="MineralDrinkingWater" Type="Boolean" />
-          <Property Name="Aquaguard" Type="Boolean" />
-          <Property Name="Housekeeping" Type="Boolean" />
-          <Property Name="RoomService" Type="Boolean" />
-          <Property Name="Newspaper" Type="Boolean" />
-          <Property Name="TwoWheelerOpenParking" Type="Boolean" />
-          <Property Name="TwoWheelerCloseParking" Type="Boolean" />
-          <Property Name="FourWheelerOpenParking" Type="Boolean" />
-          <Property Name="FourWheelerCloseParking" Type="Boolean" />
-          <Property Name="Lockers" Type="Boolean" />
-          <Property Name="GYM" Type="Boolean" />
-          <Property Name="Lift" Type="Boolean" />
-          <Property Name="Playground" Type="Boolean" />
-          <Property Name="Clubhouse" Type="Boolean" />
-          <Property Name="Partyhall" Type="Boolean" />
-          <Property Name="Security" Type="Boolean" />
-          <Property Name="SwimmingPool" Type="Boolean" />
-          <Property Name="VideoSurveillance" Type="Boolean" />
-          <Property Name="Powerbackup" Type="Boolean" />
-          <Property Name="EmergencyMedicalServices" Type="Boolean" />
-          <Property Name="NonVegAllowed" Type="Boolean" />
-          <Property Name="GuardianEntry" Type="Boolean" />
-          <Property Name="NoSmoking" Type="Boolean" />
-          <Property Name="NoDrinking" Type="Boolean" />
-          <Property Name="NoBoysEntry" Type="Boolean" />
+          <Property Name="AC" Type="Boolean" Nullable="false" />
+          <Property Name="Fridge" Type="Boolean" Nullable="false" />
+          <Property Name="Wifi" Type="Boolean" Nullable="false" />
+          <Property Name="Washingmachine" Type="Boolean" Nullable="false" />
+          <Property Name="AttachBathrooms" Type="Boolean" Nullable="false" />
+          <Property Name="KitchenFacilityWithGas" Type="Boolean" Nullable="false" />
+          <Property Name="CommonTV" Type="Boolean" Nullable="false" />
+          <Property Name="IndividualTV" Type="Boolean" Nullable="false" />
+          <Property Name="LCDTVCableConnection" Type="Boolean" Nullable="false" />
+          <Property Name="Wardrobes" Type="Boolean" Nullable="false" />
+          <Property Name="IntercomFacility" Type="Boolean" Nullable="false" />
+          <Property Name="IroningWashingServices" Type="Boolean" Nullable="false" />
+          <Property Name="LunchGiven" Type="Boolean" Nullable="false" />
+          <Property Name="BreakFastGiven" Type="Boolean" Nullable="false" />
+          <Property Name="DinnerGiven" Type="Boolean" Nullable="false" />
+          <Property Name="WaterSupply" Type="Boolean" Nullable="false" />
+          <Property Name="HotColdWaterSupply" Type="Boolean" Nullable="false" />
+          <Property Name="MineralDrinkingWater" Type="Boolean" Nullable="false" />
+          <Property Name="Aquaguard" Type="Boolean" Nullable="false" />
+          <Property Name="Housekeeping" Type="Boolean" Nullable="false" />
+          <Property Name="RoomService" Type="Boolean" Nullable="false" />
+          <Property Name="Newspaper" Type="Boolean" Nullable="false" />
+          <Property Name="TwoWheelerOpenParking" Type="Boolean" Nullable="false" />
+          <Property Name="TwoWheelerCloseParking" Type="Boolean" Nullable="false" />
+          <Property Name="FourWheelerOpenParking" Type="Boolean" Nullable="false" />
+          <Property Name="FourWheelerCloseParking" Type="Boolean" Nullable="false" />
+          <Property Name="Lockers" Type="Boolean" Nullable="false" />
+          <Property Name="GYM" Type="Boolean" Nullable="false" />
+          <Property Name="Lift" Type="Boolean" Nullable="false" />
+          <Property Name="Playground" Type="Boolean" Nullable="false" />
+          <Property Name="Clubhouse" Type="Boolean" Nullable="false" />
+          <Property Name="Partyhall" Type="Boolean" Nullable="false" />
+          <Property Name="Security" Type="Boolean" Nullable="false" />
+          <Property Name="SwimmingPool" Type="Boolean" Nullable="false" />
+          <Property Name="VideoSurveillance" Type="Boolean" Nullable="false" />
+          <Property Name="Powerbackup" Type="Boolean" Nullable="false" />
+          <Property Name="EmergencyMedicalServices" Type="Boolean" Nullable="false" />
+          <Property Name="NonVegAllowed" Type="Boolean" Nullable="false" />
+          <Property Name="GuardianEntry" Type="Boolean" Nullable="false" />
+          <Property Name="NoSmoking" Type="Boolean" Nullable="false" />
+          <Property Name="NoDrinking" Type="Boolean" Nullable="false" />
+          <Property Name="NoBoysEntry" Type="Boolean" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="House" Relationship="LYSAdminModel.FK__House_Amenities__Houses" FromRole="HouseAmenity" ToRole="House" />
@@ -1156,6 +1246,17 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
                 <ScalarProperty Name="BedID" ColumnName="BedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HouseReviews">
+            <EntityTypeMapping TypeName="LYSAdminModel.HouseReview">
+              <MappingFragment StoreEntitySet="HouseReviews">
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="HouseID" ColumnName="HouseID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="HouseReviewID" ColumnName="HouseReviewID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

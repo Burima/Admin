@@ -819,11 +819,6 @@
     <Content Include="Views\Shared\_TopNavbar2.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_1.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_2.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_3.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_4.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_4_1.cshtml" />
     <Content Include="Views\Properties\Apartments.cshtml" />
     <Content Include="Views\Properties\Blocks.cshtml" />
     <Content Include="Views\Properties\Houses.cshtml" />
@@ -844,6 +839,7 @@
     <Content Include="Views\Estate\_AddRoom.cshtml" />
     <Content Include="Views\Estate\_EditRoom.cshtml" />
     <Content Include="Views\Shared\_ShowAndHideProgress.cshtml" />
+    <Content Include="Views\Dashboard\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
