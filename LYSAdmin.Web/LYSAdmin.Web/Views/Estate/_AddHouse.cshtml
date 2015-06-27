@@ -5,20 +5,20 @@
 <div class="col-sm-9">
     <h3 class="m-t-none m-b">Add new House</h3>
     <hr />
-    <div class="ibox-content no-padding">
-        <div class="panel-body no-padding">
-            <div class="panel-group padding-botton-5-pc" id="accordion">
-                <!-- Start Basic Information -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseBasicInformation">Basic Information</a>
-                        </h5>
-                    </div>
-                    <div id="collapseBasicInformation" class="panel-collapse collapse in">
-                        <div class="panel-body ">
-                            @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "add-basic-information-form", style = "min-height:420px" }))
-                            {
+    @using (Html.BeginForm("AddHouse", "Estate", FormMethod.Post, new { role = "form", id = "add-basic-information-form", style = "min-height:420px" }))
+    {
+        <div class="ibox-content no-padding">
+            <div class="panel-body no-padding">
+                <div class="panel-group padding-botton-5-pc" id="accordion">
+                    <!-- Start Basic Information -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseBasicInformation">Basic Information</a>
+                            </h5>
+                        </div>
+                        <div id="collapseBasicInformation" class="panel-collapse collapse in">
+                            <div class="panel-body ">
                                 <div class="form-group">
                                     <label>Apartment</label>
                                     @*<input type="text" id="txtApartment" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
@@ -27,7 +27,7 @@
                                         @foreach (var apartment in Model.Apartments.OrderBy(m => m.ApartmentID))
                                         {
 
-                                            <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
+                                        <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
                                         }
                                     </select>
                                 </div>
@@ -57,21 +57,18 @@
                                         <button id="btnSaveBasicInformation" class="btn btn-primary" type="button" tabindex="5">Next</button>
                                     </div>
                                 </div>
-                            }
+                            </div>
                         </div>
-                    </div>
-                </div><!-- End Basic Information -->
-                <!-- Start Locality -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a class="locality " data-toggle="collapse" data-parent="#accordion" href="#collapseLocality">Locality</a>
-                        </h4>
-                    </div>
-                    <div id="collapseLocality" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "add-locality-form", style = "min-height:420px" }))
-                            {
+                    </div><!-- End Basic Information -->
+                    <!-- Start Locality -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="locality " data-toggle="collapse" data-parent="#accordion" href="#collapseLocality">Locality</a>
+                            </h4>
+                        </div>
+                        <div id="collapseLocality" class="panel-collapse collapse">
+                            <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <label>Address</label>
@@ -94,22 +91,19 @@
                                 <div class="row row-padding-top-5">
                                     <div id="map-canvas" class="col-md-12"></div>
                                 </div>
-                            }
-                        </div>
+                            </div>
 
-                    </div>
-                </div><!-- End Locality -->
-                <!-- Start Basic Amenities -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseBasicAmenities">Amenities</a>
-                        </h4>
-                    </div>
-                    <div id="collapseBasicAmenities" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "add-basic-amenities-form", style = "min-height:420px" }))
-                            {
+                        </div>
+                    </div><!-- End Locality -->
+                    <!-- Start Basic Amenities -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseBasicAmenities">Amenities</a>
+                            </h4>
+                        </div>
+                        <div id="collapseBasicAmenities" class="panel-collapse collapse">
+                            <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <input type="checkbox" name="BasicAmenities">AC
@@ -254,43 +248,39 @@
                                     <div class="col-md-5 row-padding-top-5">
                                         <button id="btnSaveAmenities" class="btn btn-primary" type="button" tabindex="5">Next</button>
                                     </div>
-
-                                </div>
-                            }
-                        </div>
-
-                    </div>
-                </div><!-- End Basic Amenities -->
-                <!-- Start Gallery -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseGallery">Gallery</a>
-                        </h4>
-                    </div>
-                    <div id="collapseGallery" class="panel-collapse collapse">                       
-                            <div class="panel-body">
-                                <div class="ibox-content">
-                                    <form id="my-awesome-dropzone" class="dropzone" action="@Url.Action("FileUploadHandler", "Forms")" method="post" enctype="multipart/form-data">
-                                        <div class="dropzone-previews"></div>
-                                        <button id="btnSaveGallery" type="submit" class="btn btn-primary pull-right">Submit this form!</button>
-                                    </form>
                                 </div>
                             </div>
-                       
-                    </div>
-                </div><!-- End Gallery -->
-                <!-- Start Detail Information -->
-                <div class="panel panel-default ">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseAddRooms">Detail Information</a>
-                        </h4>
-                    </div>
-                    <div id="collapseAddRooms" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            @using (Html.BeginForm("AddHouse", "Estate", FormMethod.Post, new { role = "form", id = "add-basic-amenities-form", style = "min-height:420px" }))
-                            {
+
+                        </div>
+                    </div><!-- End Basic Amenities -->
+                    <!-- Start Gallery -->
+                    @*<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseGallery">Gallery</a>
+                                </h4>
+                            </div>
+                            <div id="collapseGallery" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="ibox-content">
+                                            <form id="my-awesome-dropzone" class="dropzone" action="@Url.Action("FileUploadHandler", "Forms")" method="post" enctype="multipart/form-data">
+                                                <div class="dropzone-previews"></div>
+                                                <button id="btnSaveGallery" type="submit" class="btn btn-primary pull-right">Submit this form!</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>*@<!-- End Gallery -->
+                    <!-- Start Detail Information -->
+                    <div class="panel panel-default ">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseAddRooms">Detail Information</a>
+                            </h4>
+                        </div>
+                        <div id="collapseAddRooms" class="panel-collapse collapse">
+                            <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12"><h3>Tell us more about your property House</h3></div>
                                     <div class="col-md-12">
@@ -348,14 +338,14 @@
                                         <button id="btnSaveDetailInformation" class="btn btn-primary pull-right" type="submit" tabindex="5">Done</button>
                                     </div>
                                 </div>
-                            }
+                            </div>
                         </div>
-                    </div>
-                </div><!-- End Detail Information -->
+                    </div><!-- End Detail Information -->
 
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
 
 <div class="col-sm-3">
