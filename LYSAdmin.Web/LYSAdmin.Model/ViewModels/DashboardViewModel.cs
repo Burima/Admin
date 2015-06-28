@@ -25,4 +25,17 @@ namespace LYSAdmin.Model
 
         public int Staying { get; set; }
     }
+
+    public class HouseComments
+    {
+        public String Comments { get; set; }
+
+        public String UserName { get; set; }
+
+        public DateTime FeedbackTime { get; set; }
+
+        public String HouseName { get; set; }
+
+        public float Rating { get; set; }
+    }
 }

@@ -16,6 +16,8 @@ namespace LYSAdmin.Domain.DashboardManagement
         private IBaseRepository<Data.DBEntity.Bed> bedRepository = null;
         private IBaseRepository<Data.DBEntity.Room> roomRepository = null;
         private IBaseRepository<Data.DBEntity.House> houseRepository = null;
+        private IBaseRepository<Data.DBEntity.HouseReview> houseReviewRepository = null;
+        private IBaseRepository<Data.DBEntity.User> userRepository = null;
 
         public DashboardManagement()
         {
@@ -23,6 +25,8 @@ namespace LYSAdmin.Domain.DashboardManagement
             bedRepository = new BaseRepository<Data.DBEntity.Bed>(unitOfWork);
             roomRepository = new BaseRepository<Data.DBEntity.Room>(unitOfWork);
             houseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
+            houseReviewRepository = new BaseRepository<Data.DBEntity.HouseReview>(unitOfWork);
+            userRepository = new BaseRepository<Data.DBEntity.User>(unitOfWork);
         }
 
         public DonughtChart GetDonught(int OwnerID)
@@ -71,6 +75,11 @@ namespace LYSAdmin.Domain.DashboardManagement
 
 
             return donughtChart;
+        }
+
+        public HouseComments GetCommentsAndRating(int OwnerID)
+        {
+            
         }
 
     }

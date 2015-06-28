@@ -169,6 +169,7 @@
           <Property Name="HouseID" Type="int" Nullable="false" />
           <Property Name="Comments" Type="varchar" MaxLength="500" />
           <Property Name="Rating" Type="decimal" Precision="3" Scale="2" />
+          <Property Name="CommentTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Houses">
           <Key>
@@ -574,6 +575,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Bed" EntitySet="Beds" />
           </AssociationSet>
+          <EntitySet Name="HouseAmenities" EntityType="LYSAdminModel.HouseAmenity" />
+          <AssociationSet Name="FK__House_Amenities__Houses" Association="LYSAdminModel.FK__House_Amenities__Houses">
+            <End Role="House" EntitySet="Houses" />
+            <End Role="HouseAmenity" EntitySet="HouseAmenities" />
+          </AssociationSet>
           <EntitySet Name="HouseReviews" EntityType="LYSAdminModel.HouseReview" />
           <AssociationSet Name="FK_HouseReviews_HouseID" Association="LYSAdminModel.FK_HouseReviews_HouseID">
             <End Role="House" EntitySet="Houses" />
@@ -582,11 +588,6 @@
           <AssociationSet Name="FK_HouseReviews_UserID" Association="LYSAdminModel.FK_HouseReviews_UserID">
             <End Role="User" EntitySet="Users" />
             <End Role="HouseReview" EntitySet="HouseReviews" />
-          </AssociationSet>
-          <EntitySet Name="HouseAmenities" EntityType="LYSAdminModel.HouseAmenity" />
-          <AssociationSet Name="FK__House_Amenities__Houses" Association="LYSAdminModel.FK__House_Amenities__Houses">
-            <End Role="House" EntitySet="Houses" />
-            <End Role="HouseAmenity" EntitySet="HouseAmenities" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Apartment">
@@ -693,8 +694,8 @@
           <NavigationProperty Name="HouseImages" Relationship="LYSAdminModel.FK_HouseImages_HouseID" FromRole="House" ToRole="HouseImage" />
           <NavigationProperty Name="HouseDescriptions" Relationship="LYSAdminModel.FK_HouseDescriptions_HouseID" FromRole="House" ToRole="HouseDescription" />
           <NavigationProperty Name="Rooms" Relationship="LYSAdminModel.FK__Rooms__HouseID" FromRole="House" ToRole="Room" />
-          <NavigationProperty Name="HouseReviews" Relationship="LYSAdminModel.FK_HouseReviews_HouseID" FromRole="House" ToRole="HouseReview" />
           <NavigationProperty Name="HouseAmenities" Relationship="LYSAdminModel.FK__House_Amenities__Houses" FromRole="House" ToRole="HouseAmenity" />
+          <NavigationProperty Name="HouseReviews" Relationship="LYSAdminModel.FK_HouseReviews_HouseID" FromRole="House" ToRole="HouseReview" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -945,42 +946,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="HouseReview">
-          <Key>
-            <PropertyRef Name="HouseReviewID" />
-          </Key>
-          <Property Name="HouseReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="HouseID" Type="Int32" Nullable="false" />
-          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Rating" Type="Decimal" Precision="3" Scale="2" />
-          <NavigationProperty Name="House" Relationship="LYSAdminModel.FK_HouseReviews_HouseID" FromRole="HouseReview" ToRole="House" />
-          <NavigationProperty Name="User" Relationship="LYSAdminModel.FK_HouseReviews_UserID" FromRole="HouseReview" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_HouseReviews_HouseID">
-          <End Type="LYSAdminModel.House" Role="House" Multiplicity="1" />
-          <End Type="LYSAdminModel.HouseReview" Role="HouseReview" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="House">
-              <PropertyRef Name="HouseID" />
-            </Principal>
-            <Dependent Role="HouseReview">
-              <PropertyRef Name="HouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HouseReviews_UserID">
-          <End Type="LYSAdminModel.User" Role="User" Multiplicity="1" />
-          <End Type="LYSAdminModel.HouseReview" Role="HouseReview" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="HouseReview">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="HouseAmenity">
           <Key>
             <PropertyRef Name="AminityID" />
@@ -1042,6 +1007,43 @@
             </Principal>
             <Dependent Role="HouseAmenity">
               <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="HouseReview">
+          <Key>
+            <PropertyRef Name="HouseReviewID" />
+          </Key>
+          <Property Name="HouseReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="HouseID" Type="Int32" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Rating" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="CommentTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="House" Relationship="LYSAdminModel.FK_HouseReviews_HouseID" FromRole="HouseReview" ToRole="House" />
+          <NavigationProperty Name="User" Relationship="LYSAdminModel.FK_HouseReviews_UserID" FromRole="HouseReview" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_HouseReviews_HouseID">
+          <End Type="LYSAdminModel.House" Role="House" Multiplicity="1" />
+          <End Type="LYSAdminModel.HouseReview" Role="HouseReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="HouseReview">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HouseReviews_UserID">
+          <End Type="LYSAdminModel.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdminModel.HouseReview" Role="HouseReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="HouseReview">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1249,17 +1251,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HouseReviews">
-            <EntityTypeMapping TypeName="LYSAdminModel.HouseReview">
-              <MappingFragment StoreEntitySet="HouseReviews">
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="HouseID" ColumnName="HouseID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="HouseReviewID" ColumnName="HouseReviewID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="HouseAmenities">
             <EntityTypeMapping TypeName="LYSAdminModel.HouseAmenity">
               <MappingFragment StoreEntitySet="HouseAmenities">
@@ -1309,6 +1300,18 @@
                 <ScalarProperty Name="AC" ColumnName="AC" />
                 <ScalarProperty Name="HouseID" ColumnName="HouseID" />
                 <ScalarProperty Name="AminityID" ColumnName="AminityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HouseReviews">
+            <EntityTypeMapping TypeName="LYSAdminModel.HouseReview">
+              <MappingFragment StoreEntitySet="HouseReviews">
+                <ScalarProperty Name="CommentTime" ColumnName="CommentTime" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="HouseID" ColumnName="HouseID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="HouseReviewID" ColumnName="HouseReviewID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
