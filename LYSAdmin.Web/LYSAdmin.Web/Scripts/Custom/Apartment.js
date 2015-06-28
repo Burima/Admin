@@ -32,8 +32,8 @@
         var blocks= $(this).parent().find('.hdnBlocks').val(); //getting all the blocks from hidden field      
         eval("var blockList = " + blocks); //asigning to a variable
         //iterationg each block and generating html for existing blocks
-        $.each(blockList, function (i, block) {
-            $("#divAddBlock").append("<div class='form-group input-group'><input type='text' class='form-control col-md-4 existing-block' name=" + this.BlockName + " value=" + this.BlockName + " disabled><a class='input-group-addon glyphicon glyphicon-edit anchoreditblock'></a><input type='hidden' class='hdnBlockID' value=" + this.BlockID + "></div>");
+        $.each(blockList, function (i, block) {           
+            $("#divAddBlock").append("<div class='form-group input-group'><input type='text' class='form-control col-md-4 existing-block' name=" + "'" + this.BlockName + "'" + " value=" + "'" + this.BlockName + "'" + " disabled><a class='input-group-addon glyphicon glyphicon-edit anchoreditblock'></a><input type='hidden' class='hdnBlockID' value=" + this.BlockID + "></div>");
         });
 
        //on click of edit icon of existing blog
@@ -91,6 +91,7 @@
                 if (response == "Success") {
                     alert('blocks updated successfully');                    
                     $("#myModal").modal('hide');//Hide the modal
+                    window.location = ApartmentsUrl;
                 } else {
                     alert('Something went wrong. Please try again later !');
                     $("#myModal").modal('show');//Show the modal
