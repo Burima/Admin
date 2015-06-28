@@ -3,7 +3,7 @@
     inputkeyup();
 
     //apartmet seletion change
-    $("select[name='Apartment']").change(function () {
+    $("select[name='ApartmentID']").change(function () {
         //visible div block
         $('#divBlocks').removeClass('hidden');
 
@@ -37,7 +37,7 @@
     });
 
     //on selecting number of rooms in houses
-    $("select[name='NumberOfRooms']").change(function () {
+    $("select[name='HouseDescription.NumberOfRooms']").change(function () {
         var val = $(this).find(':selected').attr('value');
         if (val > 0) {
             var divRoomDetails=$('#divRoomdetails');
@@ -48,7 +48,7 @@
                 var newroom = '<div class="row margin-bottom-2-pc">' +
                                          '<label class="col-md-2">Room <span>' + i + '</span></label>' +
                                          '<div class="col-md-3">' +
-                                             '<select class="number-of-beds form-control" tabindex="1">' +
+                                             '<select class="number-of-beds form-control" tabindex="1" name="House.Rooms[' + (i - 1) + '].NoOfBeds">' +
                                                  '<option value="" disabled selected>Beds</option>' +
                                                  '<option value="0">0</option>' +
                                                  '<option value="1">1</option>' +
@@ -59,8 +59,9 @@
                                                  '<option value="6">6</option>' +                                         
                                              '</select>' +
                                          '</div>' +
-                                         '<div class="col-md-3"><input type="text" placeholder="Mothly Rent" class="form-control monthly-rent" /></div>' +
-                                         '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit" /></div></div>';
+                                         '<input type="hidden" name="House.Rooms[' + (i - 1) + '].RoomID" value="' + i + '">' +
+                                         '<div class="col-md-3"><input type="text" placeholder="Mothly Rent" class="form-control monthly-rent" name="House.Rooms[' + (i - 1) + '].MonthlyRent" /></div>' +
+                                         '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit" name="House.Rooms[' + (i - 1) + '].Deposit"/></div></div>';
                         
                 divRoomDetails.append(newroom);
             }
@@ -71,12 +72,18 @@
 
     /*---------------------- button click events for every forms ----------------------------------------------------*/
 
-    //btnSaveBasicInformation
-    $('#btnSaveBasicInformation').click(function () {
+    //btnNextBasicInformation
+    $('#btnNextBasicInformation').click(function () {
         if ($('#add-basic-information-form').valid()) {
             $('#collapseBasicInformation').removeClass('in');
             $('#collapseLocality').addClass('in');
         }
+    });
+
+    //btnNextAmenities
+    $('#btnNextAmenities').click(function () {
+        $('#collapseBasicAmenities').removeClass('in');
+        $('#collapseAddRooms').addClass('in');
     });
 
     /*---------------------- end button click events for every forms ----------------------------------------------------*/

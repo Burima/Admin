@@ -22,7 +22,7 @@
                                 <div class="form-group">
                                     <label>Apartment</label>
                                     @*<input type="text" id="txtApartment" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
-                                    <select name="Apartment" class="form-control">
+                                    <select name="ApartmentID" class="form-control">
                                         <option value="" disabled selected>Select Apartment</option>
                                         @foreach (var apartment in Model.Apartments.OrderBy(m => m.ApartmentID))
                                         {
@@ -35,7 +35,7 @@
                                     <label>Block</label>
                                     @*<input type="text" id="txtBlock" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
                                     <span id="spnNoBlockFound" class="hidden"><br />You do not have any Block for this Apartment. Click <a>here</a> to add Block</span>
-                                    <select id="ddlBlocks" name="Block" class="form-control"></select>
+                                    <select id="ddlBlocks" name="BlockID" class="form-control"></select>
                                 </div>
                                 <div class="form-group">
                                     <label>House Name</label>
@@ -107,169 +107,170 @@
                                 <!-- House Ammenities -->
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" value="true" name="HouseAmenity.AC">AC
+                                        <input type="hidden" value="0" name="House.HouseAmenities[0].HouseID">
+                                        <input type="checkbox" value="true" name="House.HouseAmenities[0].AC">AC
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" value="true" name="HouseAmenity.Fridge">Fridge                                        
+                                        <input type="checkbox" value="true" name="House.HouseAmenities[0].Fridge">Fridge                                        
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Wifi">Wifi
+                                        <input type="checkbox" name="House.HouseAmenities[0].Wifi">Wifi
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Washingmachine">Washing Machine                                        
+                                        <input type="checkbox" name="House.HouseAmenities[0].Washingmachine">Washing Machine                                        
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.AttachedBathrooms">Attached Bathrooms 
+                                        <input type="checkbox" name="House.HouseAmenities[0].AttachedBathrooms">Attached Bathrooms 
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.KitchenFacilityWithGas">Kitchen Facility with gas connection                                        
+                                        <input type="checkbox" name="House.HouseAmenities[0].KitchenFacilityWithGas">Kitchen Facility with gas connection                                        
                                     </div>
                                 </div>
                                 <!-- TV -->
                                 <div class="row">
                                     <div class="col-md-4">                                        
-                                        <input type="checkbox" name="HouseAmenity.CommonTV">Common TV
+                                        <input type="checkbox" name="House.HouseAmenities[0].CommonTV">Common TV
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.IndividualTV">Individual TV                                                                              
+                                        <input type="checkbox" name="House.HouseAmenities[0].IndividualTV">Individual TV                                                                              
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.LCDTVCableConnection">LCD TV with cable connection  
+                                        <input type="checkbox" name="House.HouseAmenities[0].LCDTVCableConnection">LCD TV with cable connection  
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Wardrobes">Wardrobes                                      
+                                        <input type="checkbox" name="House.HouseAmenities[0].Wardrobes">Wardrobes                                      
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.IntercomFacility">Intercom Facility
+                                        <input type="checkbox" name="House.HouseAmenities[0].IntercomFacility">Intercom Facility
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.IroningWashingServices">Ironing and washing services
+                                        <input type="checkbox" name="House.HouseAmenities[0].IroningWashingServices">Ironing and washing services
                                     </div>
                                 </div>
                                 <!-- Food Facility-->
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.LunchGiven">Lunch Given
+                                        <input type="checkbox" name="House.HouseAmenities[0].LunchGiven">Lunch Given
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.BreakFastGiven">BreakFast Given
+                                        <input type="checkbox" name="House.HouseAmenities[0].BreakFastGiven">BreakFast Given
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.DinnerGiven">Dinner Given
+                                        <input type="checkbox" name="House.HouseAmenities[0].DinnerGiven">Dinner Given
                                     </div>
                                 </div><!-- End Food Facility-->
                                 <!-- Water Supply-->
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.WaterSupply">Water Supply                                    
+                                        <input type="checkbox" name="House.HouseAmenities[0].WaterSupply">Water Supply                                    
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.HotAndColdWaterSupply">Hot and Cold Water Supply  
+                                        <input type="checkbox" name="House.HouseAmenities[0].HotAndColdWaterSupply">Hot and Cold Water Supply  
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.MinaralWater">Mineral water                                        
+                                        <input type="checkbox" name="House.HouseAmenities[0].MinaralWater">Mineral water                                        
                                     </div>
                                 </div><!-- End Water Supply-->
                                 
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Aquaguard">Aqua Guard
+                                        <input type="checkbox" name="House.HouseAmenities[0].Aquaguard">Aqua Guard
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.HouseKeeping">House Keeping
+                                        <input type="checkbox" name="House.HouseAmenities[0].HouseKeeping">House Keeping
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.RoomService">Room Service
+                                        <input type="checkbox" name="House.HouseAmenities[0].RoomService">Room Service
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Newspaper">Newspaper
+                                        <input type="checkbox" name="House.HouseAmenities[0].Newspaper">Newspaper
                                     </div> <!-- House Ammenities -->
                                     <!-- Society Ammenities-->
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.TwoWheelerOpenParking">Two Wheeler Open Parking
+                                        <input type="checkbox" name="House.HouseAmenities[0].TwoWheelerOpenParking">Two Wheeler Open Parking
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.TwoWheelerClosedParking">Two wheeler closed parking
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.FourWheelerOpenParking">Four Wheeler Open Parking
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.FourWheelerCloseParking">Four wheeler closed parking                                        
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Lockers"> Lockers
+                                        <input type="checkbox" name="House.HouseAmenities[0].TwoWheelerClosedParking">Two wheeler closed parking
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.GYM">GYM
+                                        <input type="checkbox" name="House.HouseAmenities[0].FourWheelerOpenParking">Four Wheeler Open Parking
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Lift">Lift
+                                        <input type="checkbox" name="House.HouseAmenities[0].FourWheelerCloseParking">Four wheeler closed parking                                        
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Playground">Playground
+                                        <input type="checkbox" name="House.HouseAmenities[0].Lockers"> Lockers
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Clubhouse">Club house
+                                        <input type="checkbox" name="House.HouseAmenities[0].GYM">GYM
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Partyhall">Party Hall
+                                        <input type="checkbox" name="House.HouseAmenities[0].Lift">Lift
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Security">Security
+                                        <input type="checkbox" name="House.HouseAmenities[0].Playground">Playground
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="House.HouseAmenities[0].Clubhouse">Club house
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="House.HouseAmenities[0].Partyhall">Party Hall
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="House.HouseAmenities[0].Security">Security
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.SwimingPool">Swimming Pool
+                                        <input type="checkbox" name="House.HouseAmenities[0].SwimingPool">Swimming Pool
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.VideoSurveillance">Video Survillience
+                                        <input type="checkbox" name="House.HouseAmenities[0].VideoSurveillance">Video Survillience
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.Powerbackup">Power Backup
+                                        <input type="checkbox" name="House.HouseAmenities[0].Powerbackup">Power Backup
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.EmergencyMedicalService">Emergency Medical Services
+                                        <input type="checkbox" name="House.HouseAmenities[0].EmergencyMedicalService">Emergency Medical Services
                                     </div><!-- End Society Ammenities-->
                                     <!-- Restriction -->
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.NonVegAllowed">Non Veg allowed
+                                        <input type="checkbox" name="House.HouseAmenities[0].NonVegAllowed">Non Veg allowed
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.GuardianEntry">Parents allowed
+                                        <input type="checkbox" name="House.HouseAmenities[0].GuardianEntry">Parents allowed
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.NoSmoking">No Smoking
+                                        <input type="checkbox" name="House.HouseAmenities[0].NoSmoking">No Smoking
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.NoDrinking">No Drinking
+                                        <input type="checkbox" name="House.HouseAmenities[0].NoDrinking">No Drinking
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="HouseAmenity.NoBoysEntry">No Boys Entry
+                                        <input type="checkbox" name="House.HouseAmenities[0].NoBoysEntry">No Boys Entry
                                     </div>
                                 </div><!-- End Restriction -->                               
                                 
                                 <div class="row">
-                                    <div class="col-md-5 row-padding-top-5">
-                                        <button id="btnNextAmenities" class="btn btn-primary" type="button" tabindex="5">Next</button>
+                                    <div class="col-md-12 row-padding-top-5">
+                                        <button id="btnNextAmenities" class="btn btn-primary pull-right" type="button" tabindex="5">Next</button>
                                     </div>
                                 </div>
                             </div>
@@ -309,7 +310,7 @@
                                     <div class="col-md-12">
                                         <div><h4>Property Details</h4></div>
                                         <div class="col-md-4" style="padding-left:0px;">
-                                            <select name="NumberOfRooms" class="form-control" tabindex="1">
+                                            <select name="House.HouseDescriptions[0].NoOfRooms" class="form-control" tabindex="1">
                                                 <option value="" disabled selected>Rooms</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -320,7 +321,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <select name="NumberOfBathrooms" class="form-control" tabindex="1">
+                                            <select name="House.HouseDescriptions[0].NoOfBathrooms" class="form-control" tabindex="1">
                                                 <option value="" disabled selected>Bathrooms</option>
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
@@ -332,7 +333,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <select name="NumberOfBalconies" class="form-control" tabindex="1">
+                                            <select name="House.HouseDescriptions[0].NoOfBalconnies" class="form-control" tabindex="1">
                                                 <option value="" disabled selected>Balconies</option>
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
@@ -347,7 +348,7 @@
                                     <div class="col-md-12">
                                         <div><h4>Gender</h4></div>
                                         <div class="col-md-4" style="padding-left:0px;">
-                                            <select id="ddlGender" class="form-control" tabindex="1" required name="HouseDescripion.Gender">
+                                            <select id="ddlGender" class="form-control" tabindex="1" required name="House.HouseDescriptions[0].Gender">
                                                 <option value="" disabled selected>Select Gender</option>
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>

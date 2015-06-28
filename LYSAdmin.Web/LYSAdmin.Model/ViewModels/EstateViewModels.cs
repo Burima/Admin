@@ -17,10 +17,14 @@ namespace LYSAdmin.Model
 
     public class HouseViewModel
     {
-        public House House { get; set; }
-
-        public HouseAmenity HouseAmenity { get; set; }
+        public House House { get; set; }       
         public List<House> Houses { get; set; }
         public List<Apartment> Apartments { get; set; }
+        public List<Room> Rooms { get; set; }
+
+        public int ApartmentID { get; set; }
+        public int BlockID { get; set; }
+
+
     }
 }
