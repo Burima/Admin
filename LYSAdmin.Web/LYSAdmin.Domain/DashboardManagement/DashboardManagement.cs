@@ -77,10 +77,10 @@ namespace LYSAdmin.Domain.DashboardManagement
             return donughtChart;
         }
 
-        public HouseComments GetCommentsAndRating(int OwnerID)
-        {
+        //public HouseComments GetCommentsAndRating(int OwnerID)
+        //{
             
-        }
+        //}
 
     }
 }

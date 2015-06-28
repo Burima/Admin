@@ -1,7 +1,12 @@
-﻿$(document).ready(function () {
+﻿
+var City = '';
+var Area = '';
+var Latitude, Longitude;
+
+$(document).ready(function () {
     charlimit();
     inputkeyup();
-
+    fnUpdateLocation();
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
         //visible div block
@@ -75,9 +80,22 @@
     //btnNextBasicInformation
     $('#btnNextBasicInformation').click(function () {
         if ($('#add-basic-information-form').valid()) {
-            $('#collapseBasicInformation').removeClass('in');
+            //hide BasicInformation upon valid data
+            $('#collapseBasicInformation').removeClass('in');            
+            //google api function
+            var address = Area + " " + City;
+            //initialization of the map based on area and city
+            codeAddress(address,true);
             $('#collapseLocality').addClass('in');
         }
+    });
+
+    //btnNextLocality click event
+    $('#btnNextLocality').click(function (e) {
+        e.preventDefault();
+        var address = document.getElementById('txtAddress').value;
+        address = address + " " + Area + " " + City;
+        codeAddress(address,false);
     });
 
     //btnNextAmenities
@@ -118,29 +136,14 @@
     //autofill of address
     $(".locality").click(function (e) {
         e.preventDefault();
-        initialize();
+        //initialize();
     });
     var geocoder;
     var map;
     var infowindow;
-    var latlng;
-    //function to autofind address by google api
-    function initialize() {
+      
+    function codeAddress(address,isIntialize) {
         geocoder = new google.maps.Geocoder();
-        latlng = new google.maps.LatLng(21.1311084, 82.7792231);
-        var mapOptions = {
-            zoom: 4,
-            center: latlng
-        }
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    }
-
-    $(document).on("click", "#btnNextLocality", function (e) {
-        e.preventDefault();
-        codeAddress();
-    });
-    function codeAddress() {
-        var address = document.getElementById('txtAddress').value;
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var mapOptions = {
@@ -149,6 +152,8 @@
                 var image = '/Images/marker-green.png';
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                 map.setCenter(results[0].geometry.location);
+                Latitude = results[0].geometry.location.lat();
+                Longitude = results[0].geometry.location.lng();
                 var marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location,
@@ -157,17 +162,20 @@
                     icon: image
                 });
                 infowindow = new google.maps.InfoWindow();
-
+                //alert('Latitude :' + Latitude + " " + 'Longitude:' + Longitude);
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         });
+        
+        google.maps.event.addListener(marker, "mouseup", function (event) {
+            if (!isIntialize) {
+                Latitude = this.position.lat();
+                Longitude = this.position.lng();
+                alert('Latitude :' + Latitude + " " + 'Longitude:' + Longitude);
+            }
+        });
     }
-
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-
-
 
 });
 
@@ -193,8 +201,14 @@ function inputkeyup() {
     })
 };
 
-var cityOptions = {
-    types: ['(regions)']
-};
-var city = document.getElementById('txtAddress');
-var cityAuto = new google.maps.places.Autocomplete(city, cityOptions);
+//var cityOptions = {
+//    types: ['(regions)']
+//};
+//var city = document.getElementById('txtAddress');
+//var cityAuto = new google.maps.places.Autocomplete(city, cityOptions);
+
+//update Location
+function fnUpdateLocation() {
+    City = 'Chennai';
+    Area = 'Sholinganallur';
+}
