@@ -7,13 +7,14 @@ $(document).ready(function () {
     charlimit();
     inputkeyup();
     fnUpdateLocation();
+    var address = Area + " " + City;
+    
+    codeAddress(address);
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
         //visible div block
         $('#divBlocks').removeClass('hidden');
 
-        //var val = $(this).find("option[val='" + $(this).val() + "']").attr("val");
-        //$(this).parents("form").find(".selectDenomonation").val(val);
         var blocks = $(this).find(':selected').attr('blocks');
         eval("var blockList = " + blocks);
 
@@ -83,9 +84,9 @@ $(document).ready(function () {
             //hide BasicInformation upon valid data
             $('#collapseBasicInformation').removeClass('in');            
             //google api function
-            var address = Area + " " + City;
+            
             //initialization of the map based on area and city
-            codeAddress(address,true);
+           // codeAddress(address,true);
             $('#collapseLocality').addClass('in');
         }
     });
@@ -95,7 +96,7 @@ $(document).ready(function () {
         e.preventDefault();
         var address = document.getElementById('txtAddress').value;
         address = address + " " + Area + " " + City;
-        codeAddress(address,false);
+        codeAddress(address);
     });
 
     //btnNextAmenities
@@ -141,8 +142,8 @@ $(document).ready(function () {
     var geocoder;
     var map;
     var infowindow;
-      
-    function codeAddress(address,isIntialize) {
+    var marker;
+    function codeAddress(address) {
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -154,7 +155,7 @@ $(document).ready(function () {
                 map.setCenter(results[0].geometry.location);
                 Latitude = results[0].geometry.location.lat();
                 Longitude = results[0].geometry.location.lng();
-                var marker = new google.maps.Marker({
+                marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location,
                     animation: google.maps.Animation.DROP,
@@ -168,12 +169,12 @@ $(document).ready(function () {
             }
         });
         
-        google.maps.event.addListener(marker, "mouseup", function (event) {
-            if (!isIntialize) {
+        google.maps.event.addListener(marker, "dragend", function (marker) {
+            //if (!isIntialize) {
                 Latitude = this.position.lat();
                 Longitude = this.position.lng();
                 alert('Latitude :' + Latitude + " " + 'Longitude:' + Longitude);
-            }
+            //}
         });
     }
 
@@ -200,6 +201,7 @@ function inputkeyup() {
         });
     })
 };
+
 
 //var cityOptions = {
 //    types: ['(regions)']

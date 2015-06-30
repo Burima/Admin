@@ -23,9 +23,10 @@ namespace LYSAdmin.Model
         public Nullable<int> CreatedBy { get; set; }
         public string DisplayName { get; set; }
 
-        public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
-        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
         public virtual ICollection<HouseImage> HouseImages { get; set; }
+        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
+        public virtual ICollection<HouseReview> HouseReviews { get; set; }
     }
 }
