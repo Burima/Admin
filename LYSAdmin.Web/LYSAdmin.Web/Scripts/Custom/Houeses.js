@@ -142,7 +142,7 @@ $(document).ready(function () {
     var geocoder;
     var map;
     var infowindow;
-    var marker;
+    
     function codeAddress(address) {
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': address }, function (results, status) {
@@ -155,7 +155,7 @@ $(document).ready(function () {
                 map.setCenter(results[0].geometry.location);
                 Latitude = results[0].geometry.location.lat();
                 Longitude = results[0].geometry.location.lng();
-                marker = new google.maps.Marker({
+                var marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location,
                     animation: google.maps.Animation.DROP,
@@ -164,18 +164,26 @@ $(document).ready(function () {
                 });
                 infowindow = new google.maps.InfoWindow();
                 //alert('Latitude :' + Latitude + " " + 'Longitude:' + Longitude);
+                (function (marker) {
+                     google.maps.event.addListener(marker, "dragend", function (e) {
+                        var lat, lng, address;
+                        geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                lat = marker.getPosition().lat();
+                                lng = marker.getPosition().lng();
+                                address = results[0].formatted_address;
+                                alert("Latitude: " + lat + "\nLongitude: " + lng + "\nAddress: " + address);
+                            }
+                        });
+                    });
+                })(marker);
+               
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         });
         
-        google.maps.event.addListener(marker, "dragend", function (marker) {
-            //if (!isIntialize) {
-                Latitude = this.position.lat();
-                Longitude = this.position.lng();
-                alert('Latitude :' + Latitude + " " + 'Longitude:' + Longitude);
-            //}
-        });
+        
     }
 
 });
