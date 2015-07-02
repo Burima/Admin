@@ -3,13 +3,14 @@ var City = '';
 var Area = '';
 var Latitude, Longitude;
 
+
 $(document).ready(function () {
     charlimit();
     inputkeyup();
     fnUpdateLocation();
-    var address = Area + " " + City;
+    //var address = Area + " " + City;
+    //codeAddress(address);
     
-    codeAddress(address);
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
         //visible div block
@@ -86,7 +87,7 @@ $(document).ready(function () {
             //google api function
             
             //initialization of the map based on area and city
-           // codeAddress(address,true);
+            initialize();
             $('#collapseLocality').addClass('in');
         }
     });
@@ -96,7 +97,7 @@ $(document).ready(function () {
         e.preventDefault();
         var address = document.getElementById('txtAddress').value;
         address = address + " " + Area + " " + City;
-        codeAddress(address);
+        updateMarker(address);
     });
 
     //btnNextAmenities
@@ -143,7 +144,7 @@ $(document).ready(function () {
     var map;
     var infowindow;
     
-    function codeAddress(address) {
+    function updateMarker(address) {
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -185,7 +186,32 @@ $(document).ready(function () {
         
         
     }
-
+    //initialize the map
+    function initialize() {
+        fnUpdateLocation();
+        var address = Area + " " + City;
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var mapOptions = {
+                    zoom: 15,
+                }
+                var image = '/Images/marker-green.png';
+                var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                map.setCenter(results[0].geometry.location);
+                Latitude = results[0].geometry.location.lat();
+                Longitude = results[0].geometry.location.lng();
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    animation: google.maps.Animation.DROP,
+                    draggable: true,
+                    icon: image
+                });
+                infowindow = new google.maps.InfoWindow();
+            }
+        });
+       }
 });
 
 //show the limit of char left
