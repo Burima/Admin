@@ -2,6 +2,7 @@
 var City = '';
 var Area = '';
 var Latitude, Longitude;
+var InitialLatitude, InitialLongitude;
 
 
 $(document).ready(function () {
@@ -164,18 +165,18 @@ $(document).ready(function () {
                     icon: image
                 });
                 infowindow = new google.maps.InfoWindow();
-                //alert('Latitude :' + Latitude + " " + 'Longitude:' + Longitude);
+               
                 (function (marker) {
-                     google.maps.event.addListener(marker, "dragend", function (e) {
-                        var lat, lng, address;
-                        geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                lat = marker.getPosition().lat();
-                                lng = marker.getPosition().lng();
-                                address = results[0].formatted_address;
-                                alert("Latitude: " + lat + "\nLongitude: " + lng + "\nAddress: " + address);
-                            }
-                        });
+                    google.maps.event.addListener(marker, "dragend", function (e) {
+                            var lat, lng, address;
+                            geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+                                if (status == google.maps.GeocoderStatus.OK) {
+                                    lat = marker.getPosition().lat();
+                                    lng = marker.getPosition().lng();
+                                    address = results[0].formatted_address;
+                                    alert("Latitude: " + lat + "\nLongitude: " + lng + "\nAddress: " + address);
+                                }
+                            });
                     });
                 })(marker);
                
@@ -199,13 +200,13 @@ $(document).ready(function () {
                 var image = '/Images/marker-green.png';
                 var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                 map.setCenter(results[0].geometry.location);
-                Latitude = results[0].geometry.location.lat();
-                Longitude = results[0].geometry.location.lng();
+                InitialLatitude = results[0].geometry.location.lat();
+                InitialLongitude = results[0].geometry.location.lng();
                 var marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location,
                     animation: google.maps.Animation.DROP,
-                    draggable: true,
+                    draggable: false,
                     icon: image
                 });
                 infowindow = new google.maps.InfoWindow();
