@@ -16,11 +16,11 @@ namespace LYSAdmin.Data.DBEntity
     {
         public House()
         {
-            this.HouseImages = new HashSet<HouseImage>();
-            this.HouseDescriptions = new HashSet<HouseDescription>();
-            this.Rooms = new HashSet<Room>();
             this.HouseAmenities = new HashSet<HouseAmenity>();
+            this.HouseDescriptions = new HashSet<HouseDescription>();
+            this.HouseImages = new HashSet<HouseImage>();
             this.HouseReviews = new HashSet<HouseReview>();
+            this.Rooms = new HashSet<Room>();
         }
     
         public int HouseID { get; set; }
@@ -37,11 +37,13 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public string DisplayName { get; set; }
+        public bool IsPg { get; set; }
+        public Nullable<int> PgInfoId { get; set; }
     
-        public virtual ICollection<HouseImage> HouseImages { get; set; }
-        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
-        public virtual ICollection<Room> Rooms { get; set; }
         public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
+        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
+        public virtual ICollection<HouseImage> HouseImages { get; set; }
         public virtual ICollection<HouseReview> HouseReviews { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

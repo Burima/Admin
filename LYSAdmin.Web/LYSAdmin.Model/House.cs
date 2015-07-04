@@ -22,11 +22,13 @@ namespace LYSAdmin.Model
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public string DisplayName { get; set; }
+        public bool IsPg { get; set; }
+        public Nullable<int> PgInfoId { get; set; }
 
-        public virtual ICollection<HouseImage> HouseImages { get; set; }
-        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
-        public virtual ICollection<Room> Rooms { get; set; }
         public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
+        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
+        public virtual ICollection<HouseImage> HouseImages { get; set; }
         public virtual ICollection<HouseReview> HouseReviews { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace LYSAdmin.Data.DBEntity
         public Area()
         {
             this.Apartments = new HashSet<Apartment>();
+            this.PgInfos = new HashSet<PgInfo>();
         }
     
         public int AreaID { get; set; }
@@ -27,5 +28,6 @@ namespace LYSAdmin.Data.DBEntity
     
         public virtual ICollection<Apartment> Apartments { get; set; }
         public virtual City City { get; set; }
+        public virtual ICollection<PgInfo> PgInfos { get; set; }
     }
 }

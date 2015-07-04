@@ -10,6 +10,7 @@ namespace LYSAdmin.Model
     public class Room
     {
 
+
         public int RoomID { get; set; }
         public int HouseID { get; set; }
         public string RoomNumber { get; set; }

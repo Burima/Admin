@@ -9,9 +9,7 @@ $(document).ready(function () {
     charlimit();
     inputkeyup();
     fnUpdateLocation();
-    //var address = Area + " " + City;
-    //codeAddress(address);
-    
+        
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
         //visible div block
