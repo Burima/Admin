@@ -22,11 +22,32 @@ namespace LYSAdmin.Web.Controllers
         {
             this.apartmentManagement = apartmentManagement;
             this.blockManagement = blockManagement;
+
+            //var Cities = System.Web.HttpContext.Current.Application["Cities"] as IList<Model.City>;
+            //var Areas = System.Web.HttpContext.Current.Application["Areas"] as IList<Model.Area>;
+           
         }
         // GET: Estate
         public ActionResult Index()
         {
             return RedirectToAction("Houses", "Estate");
+        }
+
+        //POST : Estate/UpdateLocation
+        [HttpPost]
+        public JsonResult UpdateLocation(int CityID,int AreaID)
+        {
+            if (CityID > 0 && AreaID > 0)
+            {
+                Session["CityID"] = CityID;
+                Session["AreaID"] = AreaID;
+                return Json("SUCCESS");
+            }
+            else
+            {
+                return Json("FAILED");
+            }
+            
         }
 
         #region Apartment
@@ -165,6 +186,8 @@ namespace LYSAdmin.Web.Controllers
         {
             return View();
         }
+
+
 
 
         

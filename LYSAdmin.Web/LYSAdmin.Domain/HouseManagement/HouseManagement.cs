@@ -18,7 +18,6 @@ namespace LYSAdmin.Domain.HouseManagement
             unitOfWork = new UnitOfWork();
             houseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
         }
-
         public IList<Model.House> GetHouses(int OwnerID)
         {
             IList<Model.House> houses = (from p in houseRepository.Get(p => p.isDeleted == false && p.OwnerID == OwnerID, q => q.OrderByDescending(p => p.LastUpdatedOn))

@@ -1,32 +1,74 @@
 ﻿@model LYSAdmin.Model.HouseViewModel
+@using LYSAdmin.Model
 @using Newtonsoft.Json;
 @{
     ViewBag.Title = "House";
+    var AreaID = Session["AreaID"] != null ? Convert.ToInt32(Session["AreaID"]) : 0;
+    var Areas = System.Web.HttpContext.Current.Application["Areas"] as List<Area>;    
 }
 <link href='@Url.Content("~/Content/Custom/Houses.css")' rel="stylesheet" />
+
+<!-- check whether city and area is selected or not to do operations in Estate-->
+
+<div class="modal inmodal" id="modalSelectCityAndArea" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">               
+                <h4 class="modal-title">Select Location</h4>
+
+            </div>
+            <div class="modal-body">                
+                <div class="form-group">
+                    <label>City</label>
+                    <select id="ddlCity" name="CityID" class="form-control">
+                        <option value="" disabled selected>Select City</option>
+                        @foreach (var city in System.Web.HttpContext.Current.Application["Cities"] as IList<City>)
+                        {
+
+                            <option value="@city.CityID">@city.CityName</option>
+                        }
+                    </select>
+
+                </div>
+                <div id="divArea" class="form-group hidden">
+                    <label>Area</label>
+                    <select id="ddlArea" name="AreaID" class="form-control"></select>
+                </div>
+            </div>
+            <div class="modal-footer">                
+                <button type="button" class="btn btn-primary" id="btnSaveLocation">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- View Houses -->
 <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divHouses">
 
 </div><!-- End View Houses -->
-
 <!-- Add House-->
-<div class="row  border-bottom white-bg dashboard-header"  id="divAddHouse">
-    @Html.Partial("_AddHouse",Model)   
+<div class="row  border-bottom white-bg dashboard-header" id="divAddHouse">
+    @Html.Partial("_AddHouse", Model)
 </div><!-- End Add House -->
-
 @section Styles {
     @Styles.Render("~/Content/plugins/dropzone/dropZoneStyles")
 }
 @section scripts{
+    
+    <!-- variables -->
+    <script>
+        var AreaID='@AreaID';
+        var Areas = '@Html.Raw(Json.Encode(Areas))';
+        //reference url
+        var HousesUrl = '@Url.Action("Houses","Estate")';
+        var UpdateLocationUrl = '@Url.Action("UpdateLocation", "Estate")';
+    </script>
+
     <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places" type="text/javascript"></script>
     <script src='@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.js")'></script>
 
     @Scripts.Render("~/plugins/dropZone")
-    <script>
-        //reference url
-        var HousesUrl = '@Url.Action("Houses","Estate")';
-    </script>
+    
     <!-- Custom javascript of Houses -->
     <script src='@Url.Content("~/Scripts/Custom/Houeses.js")'></script>
 

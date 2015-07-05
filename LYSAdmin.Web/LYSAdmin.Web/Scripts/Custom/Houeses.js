@@ -4,12 +4,29 @@ var Area = '';
 var Latitude, Longitude;
 var InitialLatitude, InitialLongitude;
 
+//converting all the areas in json list
+eval("var areaList = " + Areas);
 
 $(document).ready(function () {
+
+
+    //if area is not selected show modal
+    //for select City and Area
+    if (AreaID == 0) {
+        //prevent click outside and make all keyboard false 
+        $("#modalSelectCityAndArea").modal({ backdrop: 'static', keyboard: false });
+        //show the modal
+        $('#modalSelectCityAndArea').modal('show');
+    }
+
+
+    //set char limli of all the inputs
     charlimit();
     inputkeyup();
+
+    //update GEO location
     fnUpdateLocation();
-        
+
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
         //visible div block
@@ -46,11 +63,11 @@ $(document).ready(function () {
     $("select[name='HouseDescription.NumberOfRooms']").change(function () {
         var val = $(this).find(':selected').attr('value');
         if (val > 0) {
-            var divRoomDetails=$('#divRoomdetails');
+            var divRoomDetails = $('#divRoomdetails');
             divRoomDetails.removeClass('hidden');
             divRoomDetails.empty();
             divRoomDetails.append('<div><h4>Room Details</h4></div>');
-            for (var i = 1; i <=val; i++) {
+            for (var i = 1; i <= val; i++) {
                 var newroom = '<div class="row margin-bottom-2-pc">' +
                                          '<label class="col-md-2">Room <span>' + i + '</span></label>' +
                                          '<div class="col-md-3">' +
@@ -62,13 +79,13 @@ $(document).ready(function () {
                                                  '<option value="3">3</option>' +
                                                  '<option value="4">4</option>' +
                                                  '<option value="5">5</option>' +
-                                                 '<option value="6">6</option>' +                                         
+                                                 '<option value="6">6</option>' +
                                              '</select>' +
                                          '</div>' +
                                          '<input type="hidden" name="House.Rooms[' + (i - 1) + '].RoomID" value="' + i + '">' +
                                          '<div class="col-md-3"><input type="text" placeholder="Mothly Rent" class="form-control monthly-rent" name="House.Rooms[' + (i - 1) + '].MonthlyRent" /></div>' +
                                          '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit" name="House.Rooms[' + (i - 1) + '].Deposit"/></div></div>';
-                        
+
                 divRoomDetails.append(newroom);
             }
 
@@ -82,9 +99,9 @@ $(document).ready(function () {
     $('#btnNextBasicInformation').click(function () {
         if ($('#add-basic-information-form').valid()) {
             //hide BasicInformation upon valid data
-            $('#collapseBasicInformation').removeClass('in');            
+            $('#collapseBasicInformation').removeClass('in');
             //google api function
-            
+
             //initialization of the map based on area and city
             initialize();
             $('#collapseLocality').addClass('in');
@@ -142,7 +159,7 @@ $(document).ready(function () {
     var geocoder;
     var map;
     var infowindow;
-    
+
     function updateMarker(address) {
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': address }, function (results, status) {
@@ -163,27 +180,27 @@ $(document).ready(function () {
                     icon: image
                 });
                 infowindow = new google.maps.InfoWindow();
-               
+
                 (function (marker) {
                     google.maps.event.addListener(marker, "dragend", function (e) {
-                            var lat, lng, address;
-                            geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                    lat = marker.getPosition().lat();
-                                    lng = marker.getPosition().lng();
-                                    address = results[0].formatted_address;
-                                    alert("Latitude: " + lat + "\nLongitude: " + lng + "\nAddress: " + address);
-                                }
-                            });
+                        var lat, lng, address;
+                        geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                lat = marker.getPosition().lat();
+                                lng = marker.getPosition().lng();
+                                address = results[0].formatted_address;
+                                alert("Latitude: " + lat + "\nLongitude: " + lng + "\nAddress: " + address);
+                            }
+                        });
                     });
                 })(marker);
-               
+
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         });
-        
-        
+
+
     }
     //initialize the map
     function initialize() {
@@ -210,7 +227,7 @@ $(document).ready(function () {
                 infowindow = new google.maps.InfoWindow();
             }
         });
-       }
+    }
 });
 
 //show the limit of char left
@@ -246,4 +263,59 @@ function inputkeyup() {
 function fnUpdateLocation() {
     City = 'Chennai';
     Area = 'Sholinganallur';
+}
+
+//Change Area when changing City
+$("select[name='CityID']").change(function () {
+    var ddlvalue = $('#ddlCity').val();//get the selected value of ddlCityID
+    $('#divArea').removeClass('hidden');//make divArea visible
+    $('#ddlArea').empty();//Restart the Areas in a City
+    $('#ddlArea').append(
+                  $('<option value="" disabled selected></option>').html("--Select Area--")
+              );//Appending default value
+    $.each(areaList, function (i, area) {
+        //if CityID of area matches with city selected in the ddlCityID dropdown
+        //then fill the area dropdown with the corresponding City
+        if (ddlvalue == area.CityID) {
+            $('#ddlArea').append(
+            $('<option></option>').val(area.AreaID).html(area.AreaName)
+           );
+
+        } else {
+            alert('area is not covered by LYS in this city');
+
+        }
+
+    });
+});
+
+//bind locations to session after btnSaveLocation click
+$('#btnSaveLocation').click(function () {
+    fnSaveLocation();
+});
+
+function fnSaveLocation() {
+    var jmodel = { CityID: $("#ddlCity").val(), AreaID: $("#ddlArea").val() };
+
+    showProgress(false, "Updating Location. Please wait...");
+    $.ajax({
+        url: UpdateLocationUrl,
+        type: 'POST',
+        data: jmodel,
+        dataType: 'JSON',
+        success: function (response, textStatus, XMLHttpRequest) {
+            if (response.toUpperCase() == "SUCCESS") {
+                $('#modalSelectCityAndArea').modal('hide');
+               
+            } else if (response.toUpperCase() == "FAILED") {
+                alert('something went wrong. Please try again!');
+                //Adding of new Apartment failed
+            } 
+            hideProgress();
+        },
+        error: function (xhr, status) {
+            alert('error');
+            hideProgress();
+        }
+    });
 }

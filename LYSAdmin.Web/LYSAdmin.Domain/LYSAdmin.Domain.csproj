@@ -54,6 +54,8 @@
     <Compile Include="HouseManagement\HouseManagement.cs" />
     <Compile Include="HouseManagement\IHouseManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticContentManagement\IStaticContentManagement.cs" />
+    <Compile Include="StaticContentManagement\StaticContentManagement.cs" />
     <Compile Include="UserManagement\IUserManagement.cs" />
     <Compile Include="UserManagement\UserManagement.cs" />
   </ItemGroup>

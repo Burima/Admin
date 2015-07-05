@@ -96,6 +96,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LYSAdminEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DBEntity\PgInfo.cs">
+      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBEntity\Role.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
