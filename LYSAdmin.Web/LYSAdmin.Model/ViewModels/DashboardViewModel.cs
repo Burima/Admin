@@ -8,7 +8,10 @@ namespace LYSAdmin.Model
 {
     public class DashboardViewModel
     {
+        public DonughtChart DonughtChart { get; set; }
+        public IList<HouseComment> HouseComments { get; set; }
 
+        public IList<HouseRating> HouseRatings { get; set; }
     }
 
     public class DonughtChart
@@ -26,16 +29,26 @@ namespace LYSAdmin.Model
         public int Staying { get; set; }
     }
 
-    public class HouseComments
+    public class HouseComment
     {
-        public String Comments { get; set; }
+        public String Message { get; set; }
 
         public String UserName { get; set; }
 
-        public DateTime FeedbackTime { get; set; }
+        public string FeedbackTime { get; set; }
 
         public String HouseName { get; set; }
 
-        public float Rating { get; set; }
+        public decimal Rating { get; set; }
+
+    }
+
+    public class HouseRating
+    {
+        public int HouseID { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public decimal AverageRating { get; set; }
     }
 }

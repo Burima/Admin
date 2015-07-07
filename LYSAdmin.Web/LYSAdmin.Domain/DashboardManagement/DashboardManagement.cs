@@ -53,23 +53,23 @@ namespace LYSAdmin.Domain.DashboardManagement
                                      ).Count();
 
             donughtChart.NewEntered = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Staying
-                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
+                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
                                      select new Bed { }
                                      ).Count();
 
             donughtChart.Existing = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Staying
-                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
+                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
                                        select new Bed { }
                                      ).Count();
 
             donughtChart.Leaving = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.NoticeGiven
-                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
+                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
                                      select new Bed { }
                                      ).Count();
 
             donughtChart.Staying = (from b in bedRepository.Get(b => rooms.Contains(b.RoomID) && (b.BedStatus == (int)Constants.Bed_Status.NoticeGiven
                                        || b.BedStatus == (int)Constants.Bed_Status.Staying)
-                                       && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
+                                       && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
                                     select new Bed { }
                                      ).Count();
 
@@ -77,10 +77,59 @@ namespace LYSAdmin.Domain.DashboardManagement
             return donughtChart;
         }
 
-        //public HouseComments GetCommentsAndRating(int OwnerID)
-        //{
-            
-        //}
+        public DashboardViewModel GetCommentsAndRating(int OwnerID)
+        {
+            DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            IList<Model.HouseComment> houseComments = new List<Model.HouseComment>();
+            IList<Model.HouseRating> houseRatings = new List<Model.HouseRating>();
+            IList<Model.House> houses = new List<Model.House>();
+          
+            houses = (from p in houseRepository.Get(p => p.isDeleted == false && p.OwnerID == OwnerID)
+                      select new Model.House
+                      {
+                          HouseID = p.HouseID,
+                          DisplayName = p.DisplayName,
+                          HouseReviews = (from g in p.HouseReviews
+                                          select new LYSAdmin.Model.HouseReview
+                                          {
+                                              HouseID = g.HouseID,
+                                              Comments = g.Comments,
+                                              CommentTime = g.CommentTime,
+                                              Rating = g.Rating,
+                                              User = (from u in userRepository.Get(u => u.UserID == g.UserID)
+                                                      select new LYSAdmin.Model.User
+                                                      {
+                                                          FirstName = u.FirstName,
+                                                          LastName = u.LastName
+                                                      }).FirstOrDefault()
+
+                                          }).OrderBy(g => g.CommentTime).ToList()
+                      }).ToList();
+           
+            foreach (House house in houses)
+            {
+                HouseRating houseRating = new HouseRating();
+                houseRating.HouseID = house.HouseID;
+                houseRating.DisplayName = house.DisplayName;
+                houseRating.AverageRating = (decimal)house.HouseReviews.Average(p => p.Rating);
+                houseRatings.Add(houseRating);
+                foreach (Model.HouseReview houseReview in house.HouseReviews)
+                {
+                    Model.HouseComment comment = new Model.HouseComment();
+                    comment.Message = houseReview.Comments;
+                    comment.FeedbackTime = ((DateTime)houseReview.CommentTime).ToString("o");
+                    comment.HouseName = house.DisplayName;
+                    comment.Rating = (decimal)houseReview.Rating;
+                    comment.UserName = houseReview.User.FirstName +" "+ houseReview.User.LastName;
+                    houseComments.Add(comment);
+                }
+            }
+            dashboardViewModel.HouseComments = houseComments;
+            dashboardViewModel.HouseRatings = houseRatings;
+            dashboardViewModel.DonughtChart = GetDonught(OwnerID);
+
+            return dashboardViewModel;
+        }
 
     }
 }

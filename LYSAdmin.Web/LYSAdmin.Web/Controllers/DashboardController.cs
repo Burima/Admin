@@ -25,8 +25,7 @@ namespace LYSAdmin.Web.Controllers
          [HttpGet]
         public ActionResult Dashboard()
         {
-            DonughtChart CountLeads = dashboardManagement.GetDonught(GetOwnerID());
-            return View("Dashboard", CountLeads);
+            return View("Dashboard", dashboardManagement.GetCommentsAndRating(GetOwnerID()));
         }
 
         public ActionResult Dashboard_2()
