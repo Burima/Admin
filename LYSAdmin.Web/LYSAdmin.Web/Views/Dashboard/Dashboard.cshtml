@@ -511,8 +511,7 @@
         $.each(houseRatings, function (i, houseRating) {
 
             var data = '<li class="list-group-item">' +
-                          '<i class="fa fa-home"></i>&nbsp;' + houseRating.DisplayName +
-                          '<input type="hidden" name="amount" value='+houseRating.AverageRating+'>' +
+                          '<i class="fa fa-home"></i>&nbsp;' + houseRating.DisplayName +                          
                           '<p id = "pHouseRating"><span class="stars"><span style="width:' + (houseRating.AverageRating * 20) + '%;"></span></span></p>'
             '</li>';
             
