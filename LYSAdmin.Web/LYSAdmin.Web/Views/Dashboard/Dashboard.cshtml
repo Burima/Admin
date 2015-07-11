@@ -334,8 +334,8 @@
     @Scripts.Render("~/plugins/peity")
 
 @*added timeago script to display time differences of the comments given*@
-<script src='@Url.Content("~/Scripts/app/jquery.timeago.js")'></script>
-    
+<script src='@Url.Content("~/Scripts/app/jquery.timeago.js")'></script> 
+
    <script>
        var comments = '@Html.Raw(Json.Encode(Model.HouseComments))'
        var ratings = '@Html.Raw(Json.Encode(Model.HouseRatings))'
@@ -512,24 +512,25 @@
 
             var data = '<li class="list-group-item">' +
                           '<i class="fa fa-home"></i>&nbsp;' + houseRating.DisplayName +
-                          '<input type="hidden" name="amount" value='+houseRating.AverageRating+'>'+
-                          '<p id="starParagraph"><span class="stars"><span style="width: 40.48px;"></span></span></p>';
+                          '<input type="hidden" name="amount" value='+houseRating.AverageRating+'>' +
+                          '<p id = "pHouseRating"><span class="stars"><span></span></span></p>'
             '</li>';
+            alert(parseFloat($('input[name=amount]').val()));
             fnUpdateStars();
             $('#ulHouseRatings').append(data);
         });
     }
     
-    function fnUpdateStars() {
-        $('#starParagraph').html('<span class="stars">' + parseFloat($('input[name=amount]').val()) + '</span>');
+    function fnUpdateStars(value) {
+        $('#pHouseRating').html('<span class="stars">' + parseFloat($('input[name=amount]').val()) + '</span>');
         $('span.stars').stars();
     };
-
 
     $.fn.stars = function () {
         return $(this).each(function () {
             $(this).html($('<span />').width(Math.max(0, (Math.min(5, parseFloat($(this).html())))) * 16));
         });
     }
+
 </script>
 }
