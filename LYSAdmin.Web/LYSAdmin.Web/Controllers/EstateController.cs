@@ -25,7 +25,7 @@ namespace LYSAdmin.Web.Controllers
 
             //var Cities = System.Web.HttpContext.Current.Application["Cities"] as IList<Model.City>;
             //var Areas = System.Web.HttpContext.Current.Application["Areas"] as IList<Model.Area>;
-           
+
         }
         // GET: Estate
         public ActionResult Index()
@@ -35,31 +35,47 @@ namespace LYSAdmin.Web.Controllers
 
         //POST : Estate/UpdateLocation
         [HttpPost]
-        public JsonResult UpdateLocation(int CityID,int AreaID)
+        public JsonResult UpdateLocation(int CityID, int AreaID, string CityName, string AreaName)
         {
-            if (CityID > 0 && AreaID > 0)
+            if (CityID > 0 && AreaID > 0 && CityName != String.Empty && AreaName != String.Empty)
             {
                 Session["CityID"] = CityID;
                 Session["AreaID"] = AreaID;
+                Session["CityName"] = CityName;
+                Session["AreaName"] = AreaName;
                 return Json("SUCCESS");
+                
             }
             else
             {
                 return Json("FAILED");
             }
-            
+
         }
 
         #region Apartment
         /// <summary>
         /// Show List of All Apatments
         /// </summary>
+        /// <param name="Operation">
+        ///     Operation 1:view (default)
+        ///               2: Add
+        ///               
+        /// </param>
         /// <returns></returns>
-        public ActionResult Apartments()
+        public ActionResult Apartments(int Operation=1)
         {
-            ApartmentViewModel apartmentViewModel = new ApartmentViewModel();
-            apartmentViewModel.Apartments = apartmentManagement.GetApartments(GetOwnerID());
-            return View(apartmentViewModel);
+            if (Session["AreaID"] != null)
+            {
+                ApartmentViewModel apartmentViewModel = new ApartmentViewModel();
+                apartmentViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(GetOwnerID(), Convert.ToInt32(Session["AreaID"]));
+                apartmentViewModel.Operation = Operation;
+                return View(apartmentViewModel);
+            }
+            else
+            {
+                return View();
+            }
         }
 
 
@@ -83,7 +99,7 @@ namespace LYSAdmin.Web.Controllers
             apartment.IsDeleted = false;
             apartment.CreatedBy = User.UserID;
             apartment.OwnerID = User.RoleID <= 3 ? User.UserID : User.ManagerID;
-            Session["AreaID"] = 1;//test data
+            //Session["AreaID"] = 1;//test data
             if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
             {
                 apartment.AreaID = Convert.ToInt32(Session["AreaID"]);
@@ -151,7 +167,7 @@ namespace LYSAdmin.Web.Controllers
         {
             List<Block> blocks = JsonConvert.DeserializeObject<List<Block>>(Blocksarray);
             int count = blockManagement.SaveBlocks(blocks);
-            if(count>0)
+            if (count > 0)
             {
                 return Json("Success");
             }
@@ -168,16 +184,22 @@ namespace LYSAdmin.Web.Controllers
         [HttpGet]
         public ActionResult Houses()
         {
-            houseViewModel.Apartments = apartmentManagement.GetApartments(GetOwnerID());
-            return View("Houses", houseViewModel);
+            if (Session["AreaID"] != null)
+            {
+                houseViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(GetOwnerID(),Convert.ToInt32(Session["AreaID"]));
+                return View("Houses", houseViewModel);
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         // POST: Estate/AddHouse
         [HttpPost]
-
-       
         public ActionResult AddHouse(HouseViewModel houseViewModel)
-        {           
+        {
             return View("Houses", houseViewModel);
         }
 
@@ -190,6 +212,6 @@ namespace LYSAdmin.Web.Controllers
 
 
 
-        
+
     }
 }

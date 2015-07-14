@@ -90,5 +90,33 @@ namespace LYSAdmin.Domain.ApartmentManagement
             apartmentRepository.Update(dbApartment);
             return unitOfWork.SaveChanges();
         }
+
+        /// <summary>
+        /// this method is for getting all the apartments by a specific area
+        /// </summary>
+        /// <param name="OwnerID">Apartments will be Owner specific</param>
+        /// <param name="AreaID">Apartments will be Area specific</param>
+        /// <returns>IList of apartment</returns>
+        public IList<Model.Apartment> GetApartmentsByAreaID(int OwnerID,int AreaID)
+        {
+            IList<Model.Apartment> apartments = (from p in apartmentRepository.Get(p => p.IsDeleted == false && p.OwnerID == OwnerID && p.AreaID==AreaID, q => q.OrderByDescending(p => p.LastUpdatedOn))
+                                                 select new Model.Apartment
+                                                 {
+                                                     ApartmentID = p.ApartmentID,
+                                                     ApartmentName = p.ApartmentName,
+                                                     HouseNo = p.HouseNo,
+                                                     Description = p.Description,
+                                                     LastUpdatedOn = p.LastUpdatedOn,
+                                                     Blocks = (from g in p.Blocks
+                                                               select new LYSAdmin.Model.Block
+                                                               {
+                                                                   BlockID = g.BlockID,
+                                                                   BlockName = g.BlockName
+                                                               }).ToList()
+                                                 }).ToList();
+
+
+            return apartments;
+        }
     }
 }

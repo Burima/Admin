@@ -19,17 +19,24 @@
                         </div>
                         <div id="collapseBasicInformation" class="panel-collapse collapse in">
                             <div class="panel-body ">
-                                <div class="form-group">
-                                    <label>Apartment</label>
-                                    @*<input type="text" id="txtApartment" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
-                                    <select name="ApartmentID" class="form-control">
-                                        <option value="" disabled selected>Select Apartment</option>
-                                        @foreach (var apartment in Model.Apartments.OrderBy(m => m.ApartmentID))
-                                        {
+                                <div class="form-group">                                   
+                                    @if (Model.Apartments.Count > 0)
+                                    {
+                                        <label>Apartment</label>
+                                        <select name="ApartmentID" class="form-control">
+                                            <option value="" disabled selected>Select Apartment</option>
+                                            @foreach (var apartment in Model.Apartments.OrderBy(m => m.ApartmentID))
+                                            {
 
-                                        <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
-                                        }
-                                    </select>
+                                                <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
+                                            }
+
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <h4>No Aparment present in this Area. Click <a href='@Url.Action("Apartments", "Estate", new {Operation=2 })'>here</a> to Add New.</h4>
+                                    }
                                 </div>
                                 <div id="divBlocks" class="form-group hidden">
                                     <label>Block</label>
@@ -111,7 +118,7 @@
                                         <input type="checkbox" value="true" name="House.HouseAmenities[0].AC">AC
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" value="true" name="House.HouseAmenities[0].Fridge">Fridge                                        
+                                        <input type="checkbox" value="true" name="House.HouseAmenities[0].Fridge">Fridge
                                     </div>
                                     <div class="col-md-4">
                                         <input type="checkbox" name="House.HouseAmenities[0].Wifi">Wifi
@@ -119,30 +126,30 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].Washingmachine">Washing Machine                                        
+                                        <input type="checkbox" name="House.HouseAmenities[0].Washingmachine">Washing Machine
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].AttachedBathrooms">Attached Bathrooms 
+                                        <input type="checkbox" name="House.HouseAmenities[0].AttachedBathrooms">Attached Bathrooms
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].KitchenFacilityWithGas">Kitchen Facility with gas connection                                        
+                                        <input type="checkbox" name="House.HouseAmenities[0].KitchenFacilityWithGas">Kitchen Facility with gas connection
                                     </div>
                                 </div>
                                 <!-- TV -->
                                 <div class="row">
-                                    <div class="col-md-4">                                        
+                                    <div class="col-md-4">
                                         <input type="checkbox" name="House.HouseAmenities[0].CommonTV">Common TV
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].IndividualTV">Individual TV                                                                              
+                                        <input type="checkbox" name="House.HouseAmenities[0].IndividualTV">Individual TV
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].LCDTVCableConnection">LCD TV with cable connection  
+                                        <input type="checkbox" name="House.HouseAmenities[0].LCDTVCableConnection">LCD TV with cable connection
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].Wardrobes">Wardrobes                                      
+                                        <input type="checkbox" name="House.HouseAmenities[0].Wardrobes">Wardrobes
                                     </div>
                                     <div class="col-md-4">
                                         <input type="checkbox" name="House.HouseAmenities[0].IntercomFacility">Intercom Facility
@@ -166,16 +173,16 @@
                                 <!-- Water Supply-->
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].WaterSupply">Water Supply                                    
+                                        <input type="checkbox" name="House.HouseAmenities[0].WaterSupply">Water Supply
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].HotAndColdWaterSupply">Hot and Cold Water Supply  
+                                        <input type="checkbox" name="House.HouseAmenities[0].HotAndColdWaterSupply">Hot and Cold Water Supply
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].MinaralWater">Mineral water                                        
+                                        <input type="checkbox" name="House.HouseAmenities[0].MinaralWater">Mineral water
                                     </div>
                                 </div><!-- End Water Supply-->
-                                
+
                                 <div class="row">
                                     <div class="col-md-4">
                                         <input type="checkbox" name="House.HouseAmenities[0].Aquaguard">Aqua Guard
@@ -204,7 +211,7 @@
                                         <input type="checkbox" name="House.HouseAmenities[0].FourWheelerOpenParking">Four Wheeler Open Parking
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="House.HouseAmenities[0].FourWheelerCloseParking">Four wheeler closed parking                                        
+                                        <input type="checkbox" name="House.HouseAmenities[0].FourWheelerCloseParking">Four wheeler closed parking
                                     </div>
                                     <div class="col-md-4">
                                         <input type="checkbox" name="House.HouseAmenities[0].Lockers"> Lockers
@@ -232,7 +239,7 @@
                                         <input type="checkbox" name="House.HouseAmenities[0].Security">Security
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-md-4">
                                         <input type="checkbox" name="House.HouseAmenities[0].SwimingPool">Swimming Pool
@@ -266,8 +273,8 @@
                                     <div class="col-md-4">
                                         <input type="checkbox" name="House.HouseAmenities[0].NoBoysEntry">No Boys Entry
                                     </div>
-                                </div><!-- End Restriction -->                               
-                                
+                                </div><!-- End Restriction -->
+
                                 <div class="row">
                                     <div class="col-md-12 row-padding-top-5">
                                         <button id="btnNextAmenities" class="btn btn-primary pull-right" type="button" tabindex="5">Next</button>
@@ -359,7 +366,7 @@
 
                                     </div>
                                     <div class="col-md-offset-7 col-md-5 row-padding-top-5">
-                                        <button id="btnSaveDetailInformation" class="btn btn-primary pull-right" type="submit" tabindex="5">Done</button>
+                                        <button id="btnSaveAllInformation" class="btn btn-primary pull-right" type="submit" tabindex="5">Done</button>
                                     </div>
                                 </div>
                             </div>

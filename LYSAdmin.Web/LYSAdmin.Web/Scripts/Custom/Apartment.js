@@ -1,4 +1,18 @@
 ﻿$(document).ready(function () {
+    //filter view based on operation demand    
+    if (operation == 1) {
+        //view all apartments
+        $('#divApartments').show();
+        $('#divAddApartment').hide();
+        $('#divEditApartment').hide();
+    } else if (operation == 2) {
+        //add apartment 
+        $('#divApartments').hide();
+        $('#divAddApartment').show();
+        $('#divEditApartment').hide();
+    }
+    
+
     //Initialize data table
     $('.dataTables-apartments').dataTable({
         /* Disable initial sort */

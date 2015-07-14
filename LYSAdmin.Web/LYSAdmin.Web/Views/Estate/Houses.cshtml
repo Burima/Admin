@@ -4,7 +4,11 @@
 @{
     ViewBag.Title = "House";
     var AreaID = Session["AreaID"] != null ? Convert.ToInt32(Session["AreaID"]) : 0;
-    var Areas = System.Web.HttpContext.Current.Application["Areas"] as List<Area>;    
+    var Areas = System.Web.HttpContext.Current.Application["Areas"] as List<Area>;
+
+    //cityname and areaname
+    var CityName = Session["CityName"] != null ? Convert.ToString(Session["CityName"]) : String.Empty;
+    var AreaName = Session["AreaName"] != null ? Convert.ToString(Session["AreaName"]) : String.Empty;
 }
 <link href='@Url.Content("~/Content/Custom/Houses.css")' rel="stylesheet" />
 
@@ -13,14 +17,14 @@
 <div class="modal inmodal" id="modalSelectCityAndArea" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
-            <div class="modal-header">               
+            <div class="modal-header">
                 <h4 class="modal-title">Select Location</h4>
 
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <div class="form-group">
                     <label>City</label>
-                    <select id="ddlCity" name="CityID" class="form-control">
+                    <select id="ddlCity" name="CityID" class="form-control" required>
                         <option value="" disabled selected>Select City</option>
                         @foreach (var city in System.Web.HttpContext.Current.Application["Cities"] as IList<City>)
                         {
@@ -32,33 +36,42 @@
                 </div>
                 <div id="divArea" class="form-group hidden">
                     <label>Area</label>
-                    <select id="ddlArea" name="AreaID" class="form-control"></select>
+                    <select id="ddlArea" name="AreaID" class="form-control" required></select>
                 </div>
             </div>
-            <div class="modal-footer">                
+            <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnSaveLocation">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- View Houses -->
-<div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divHouses">
+@if (Session["AreaID"] != null)
+{
+    <!-- View Houses -->
+    <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divHouses">
 
-</div><!-- End View Houses -->
-<!-- Add House-->
-<div class="row  border-bottom white-bg dashboard-header" id="divAddHouse">
-    @Html.Partial("_AddHouse", Model)
-</div><!-- End Add House -->
+    </div><!-- End View Houses -->
+
+  <!-- Add House-->
+    <div class="row  border-bottom white-bg dashboard-header" id="divAddHouse">
+        @Html.Partial("_AddHouse", Model)
+    </div><!-- End Add House -->
+}
 @section Styles {
     @Styles.Render("~/Content/plugins/dropzone/dropZoneStyles")
 }
 @section scripts{
-    
+
     <!-- variables -->
     <script>
-        var AreaID='@AreaID';
+        var AreaID = '@AreaID';
         var Areas = '@Html.Raw(Json.Encode(Areas))';
+
+        //passing CityName and AreaName to Housees.js
+        var cityname = '@CityName';
+        var areaname = '@AreaName';
+
         //reference url
         var HousesUrl = '@Url.Action("Houses","Estate")';
         var UpdateLocationUrl = '@Url.Action("UpdateLocation", "Estate")';
@@ -68,7 +81,7 @@
     <script src='@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.js")'></script>
 
     @Scripts.Render("~/plugins/dropZone")
-    
+
     <!-- Custom javascript of Houses -->
     <script src='@Url.Content("~/Scripts/Custom/Houeses.js")'></script>
 

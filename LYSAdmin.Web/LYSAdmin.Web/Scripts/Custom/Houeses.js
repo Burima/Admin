@@ -1,6 +1,6 @@
 ﻿
-var City = '';
-var Area = '';
+var City = cityname;
+var Area = areaname;
 var Latitude, Longitude;
 var InitialLatitude, InitialLongitude;
 
@@ -13,19 +13,21 @@ $(document).ready(function () {
     //if area is not selected show modal
     //for select City and Area
     if (AreaID == 0) {
-        //prevent click outside and make all keyboard false 
-        $("#modalSelectCityAndArea").modal({ backdrop: 'static', keyboard: false });
-        //show the modal
-        $('#modalSelectCityAndArea').modal('show');
+        fnChangeLocation();
     }
-
+   
+    //Change Location through Skin
+    $('#btnChangeLocationSkin').click(function () {
+        alert();
+        fnChangeLocation();
+    });
 
     //set char limli of all the inputs
     charlimit();
     inputkeyup();
 
     //update GEO location
-    fnUpdateLocation();
+    //fnUpdateLocation();
 
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
@@ -60,7 +62,7 @@ $(document).ready(function () {
     });
 
     //on selecting number of rooms in houses
-    $("select[name='HouseDescription.NumberOfRooms']").change(function () {
+    $("select[name='House.HouseDescriptions[0].NoOfRooms']").change(function () {
         var val = $(this).find(':selected').attr('value');
         if (val > 0) {
             var divRoomDetails = $('#divRoomdetails');
@@ -204,7 +206,7 @@ $(document).ready(function () {
     }
     //initialize the map
     function initialize() {
-        fnUpdateLocation();
+        //fnUpdateLocation();
         var address = Area + " " + City;
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': address }, function (results, status) {
@@ -229,6 +231,15 @@ $(document).ready(function () {
         });
     }
 });
+
+
+//show change location modal
+function fnChangeLocation() {
+    //prevent click outside and make all keyboard false 
+    $("#modalSelectCityAndArea").modal({ backdrop: 'static', keyboard: false });
+    //show the modal
+    $('#modalSelectCityAndArea').modal('show');
+}
 
 //show the limit of char left
 function charlimit() {
@@ -260,10 +271,10 @@ function inputkeyup() {
 //var cityAuto = new google.maps.places.Autocomplete(city, cityOptions);
 
 //update Location
-function fnUpdateLocation() {
-    City = 'Chennai';
-    Area = 'Sholinganallur';
-}
+//function fnUpdateLocation() {
+//    City = 'Chennai';
+//    Area = 'Sholinganallur';
+//}
 
 //Change Area when changing City
 $("select[name='CityID']").change(function () {
@@ -282,7 +293,7 @@ $("select[name='CityID']").change(function () {
            );
 
         } else {
-            alert('area is not covered by LYS in this city');
+            //alert('area is not covered by LYS in this city');
 
         }
 
@@ -291,11 +302,32 @@ $("select[name='CityID']").change(function () {
 
 //bind locations to session after btnSaveLocation click
 $('#btnSaveLocation').click(function () {
-    fnSaveLocation();
+    //if ($('#update-location-form').valid()) {
+    //    fnSaveLocation();
+    //}
+    if ($("#ddlCity").val() > 0) {
+        //relese border red
+        $('#ddlCity').css('border-color', '#e5e6e7');
+        //check Area is selected or not
+        if ($("#ddlArea").val() > 0) {
+            //relese border red
+            $('#ddlArea').css('border-color', '#e5e6e7');
+
+            //id both city and area is selested update location
+            fnSaveLocation();
+        } else {
+            //area not selected
+            $('#ddlArea').css('border-color', 'red');            
+        }
+
+    } else {
+        //city not selected
+        $('#ddlCity').css('border-color', 'red');        
+    }
 });
 
 function fnSaveLocation() {
-    var jmodel = { CityID: $("#ddlCity").val(), AreaID: $("#ddlArea").val() };
+    var jmodel = { CityID: $("#ddlCity").val(), AreaID: $("#ddlArea").val(), CityName: $("#ddlCity :selected").text(), AreaName: $("#ddlArea :selected").text() };
 
     showProgress(false, "Updating Location. Please wait...");
     $.ajax({
@@ -306,11 +338,11 @@ function fnSaveLocation() {
         success: function (response, textStatus, XMLHttpRequest) {
             if (response.toUpperCase() == "SUCCESS") {
                 $('#modalSelectCityAndArea').modal('hide');
-               
+                location.href = HousesUrl;
             } else if (response.toUpperCase() == "FAILED") {
                 alert('something went wrong. Please try again!');
                 //Adding of new Apartment failed
-            } 
+            }
             hideProgress();
         },
         error: function (xhr, status) {
@@ -319,3 +351,5 @@ function fnSaveLocation() {
         }
     });
 }
+
+
