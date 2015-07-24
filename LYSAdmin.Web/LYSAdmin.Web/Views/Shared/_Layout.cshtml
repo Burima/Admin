@@ -24,8 +24,7 @@
 </head>
 <body>
     
-    <!-- Skin configuration box -->
-    @Html.Partial("_SkinConfig")
+   
 
     <!-- Wrapper-->
     <!-- PageClass give you ability to specify custom style for specific view based on action -->
@@ -54,6 +53,12 @@
                     if (routeValues.ContainsKey("controller"))
                     {
                         controllerName = routeValues["controller"].ToString();
+                    }
+                    //if controller is estate then render the setting
+                    if (controllerName == "Estate")
+                    {
+                         <!-- Skin configuration box -->
+                          @Html.Partial("_SkinConfig")
                     }
                 }
             }
@@ -106,5 +111,20 @@
     @Html.Partial("_ShowAndHideProgress")
     <!-- Handler for custom scripts -->
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        //Change Location through Skin
+        $('#btnChangeLocationSkin').click(function () {
+          alert();
+          fnChangeLocation();
+        });
+        //show change location modal
+        function fnChangeLocation() {
+            //prevent click outside and make all keyboard false 
+            $("#modalSelectCityAndArea").modal({ backdrop: 'static', keyboard: false });
+            //show the modal
+            $('#modalSelectCityAndArea').modal('show');
+        }
+    </script>
+
 </body>
 </html>

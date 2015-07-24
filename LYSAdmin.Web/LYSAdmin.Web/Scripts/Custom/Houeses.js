@@ -16,19 +16,11 @@ $(document).ready(function () {
         fnChangeLocation();
     }
    
-    //Change Location through Skin
-    $('#btnChangeLocationSkin').click(function () {
-        alert();
-        fnChangeLocation();
-    });
-
     //set char limli of all the inputs
     charlimit();
     inputkeyup();
 
-    //update GEO location
-    //fnUpdateLocation();
-
+    
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
         //visible div block
@@ -236,9 +228,9 @@ $(document).ready(function () {
 //show change location modal
 function fnChangeLocation() {
     //prevent click outside and make all keyboard false 
-    $("#modalSelectCityAndArea").modal({ backdrop: 'static', keyboard: false });
+  $("#modalSelectCityAndArea").modal({ backdrop: 'static', keyboard: false });
     //show the modal
-    $('#modalSelectCityAndArea').modal('show');
+   $('#modalSelectCityAndArea').modal('show');
 }
 
 //show the limit of char left
@@ -263,18 +255,6 @@ function inputkeyup() {
     })
 };
 
-
-//var cityOptions = {
-//    types: ['(regions)']
-//};
-//var city = document.getElementById('txtAddress');
-//var cityAuto = new google.maps.places.Autocomplete(city, cityOptions);
-
-//update Location
-//function fnUpdateLocation() {
-//    City = 'Chennai';
-//    Area = 'Sholinganallur';
-//}
 
 //Change Area when changing City
 $("select[name='CityID']").change(function () {
