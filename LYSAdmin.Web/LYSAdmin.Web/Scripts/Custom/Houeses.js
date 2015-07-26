@@ -183,7 +183,8 @@ $(document).ready(function () {
                                 lat = marker.getPosition().lat();
                                 lng = marker.getPosition().lng();
                                 address = results[0].formatted_address;
-                                alert("Latitude: " + lat + "\nLongitude: " + lng + "\nAddress: " + address);
+                                $('#latitude').text(lat);
+                                $('#longitude').text(lat);
                             }
                         });
                     });
@@ -219,6 +220,8 @@ $(document).ready(function () {
                     icon: image
                 });
                 infowindow = new google.maps.InfoWindow();
+                $('#latitude').text(marker.getPosition().lat());
+                $('#longitude').text(marker.getPosition().lng());
             }
         });
     }
