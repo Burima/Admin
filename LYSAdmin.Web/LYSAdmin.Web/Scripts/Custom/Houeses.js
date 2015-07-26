@@ -174,7 +174,8 @@ $(document).ready(function () {
                     icon: image
                 });
                 infowindow = new google.maps.InfoWindow();
-
+                $('#latitude').text(Latitude);
+                $('#longitude').text(Longitude);
                 (function (marker) {
                     google.maps.event.addListener(marker, "dragend", function (e) {
                         var lat, lng, address;
