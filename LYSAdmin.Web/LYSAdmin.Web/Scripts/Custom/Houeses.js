@@ -148,12 +148,18 @@ $(document).ready(function () {
     //autofill of address
     $(".locality").click(function (e) {
         e.preventDefault();
-        //initialize();
     });
     var geocoder;
     var map;
-    var infowindow;
-
+    var contentString = '<div id="form-group">'+
+        '<div id="row">' +
+        '<div class="col-md-8"><h4>Is this your final selected location?</h4></div>'+
+        '<div class="col-md-4"><button id= "btnYes" class="btn btn-primary" onclick="fnOpenBasicAmenities()">Yes</button></div>' +
+      '</div>'+
+        '</div>';
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
     function updateMarker(address) {
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': address }, function (results, status) {
@@ -173,7 +179,7 @@ $(document).ready(function () {
                     draggable: true,
                     icon: image
                 });
-                infowindow = new google.maps.InfoWindow();
+                
                 $('#latitude').text(Latitude);
                 $('#longitude').text(Longitude);
                 (function (marker) {
@@ -188,6 +194,9 @@ $(document).ready(function () {
                                 $('#longitude').text(lat);
                             }
                         });
+                    });
+                    google.maps.event.addListener(marker, "click", function (e) {
+                        infowindow.open(map,marker);
                     });
                 })(marker);
 
@@ -220,12 +229,19 @@ $(document).ready(function () {
                     draggable: false,
                     icon: image
                 });
-                infowindow = new google.maps.InfoWindow();
+               
+                (function (marker) {
+                    google.maps.event.addListener(marker, 'click', function () {
+                      
+                        infowindow.open(map, marker);
+                    });
+                })(marker);
                 $('#latitude').text(marker.getPosition().lat());
                 $('#longitude').text(marker.getPosition().lng());
             }
         });
     }
+
 });
 
 
@@ -335,5 +351,12 @@ function fnSaveLocation() {
         }
     });
 }
+//This method is used to open Basic Amenities accordian on selecting area
+function fnOpenBasicAmenities() {
+    $('#collapseLocality').removeClass('in');
+    $('#collapseBasicAmenities').addClass('in');
+}
+
+
 
 
