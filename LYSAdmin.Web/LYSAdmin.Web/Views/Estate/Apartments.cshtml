@@ -3,48 +3,57 @@
 @model LYSAdmin.Model.ApartmentViewModel
 @{
     ViewBag.Title = "Apartments";
+    //initialize AreaID
+    var AreaID = Session["AreaID"] != null ? Convert.ToInt32(Session["AreaID"]) : 0;
+    //get all the Areas from Application Variable
+    var Areas = System.Web.HttpContext.Current.Application["Areas"] as List<Area>;
+    //type of operation to be done(e.g. view,add)
+    var Operation = 0;
+    //storing current user session
     var User = (User)Session["User"];
+    if (Session["AreaID"] != null)
+    {
+        Operation = Model.Operation;
+    }
 
 }
 
 <!-- Datatable Css-->
 @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
 
-@if (Session["AreaID"] == null)
-{
-    <div class="modal inmodal" id="modalSelectCityAndArea" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content animated bounceInRight">
-                <div class="modal-header">
-                    <h4 class="modal-title">Select Location</h4>
+
+<div class="modal inmodal" id="modalSelectCityAndArea" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Location</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>City</label>
+                    <select id="ddlCity" name="CityID" class="form-control">
+                        <option value="" disabled selected>Select City</option>
+                        @foreach (var city in System.Web.HttpContext.Current.Application["Cities"] as IList<City>)
+                        {
+
+                            <option value="@city.CityID">@city.CityName</option>
+                        }
+                    </select>
 
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>City</label>
-                        <select id="ddlCity" name="CityID" class="form-control">
-                            <option value="" disabled selected>Select City</option>
-                            @foreach (var city in System.Web.HttpContext.Current.Application["Cities"] as IList<City>)
-                            {
-
-                                <option value="@city.CityID">@city.CityName</option>
-                            }
-                        </select>
-
-                    </div>
-                    <div id="divArea" class="form-group hidden">
-                        <label>Area</label>
-                        <select id="ddlArea" name="AreaID" class="form-control"></select>
-                    </div>
+                <div id="divArea" class="form-group hidden">
+                    <label>Area</label>
+                    <select id="ddlArea" name="AreaID" class="form-control"></select>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnSaveLocation">Save changes</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveLocation">Save changes</button>
             </div>
         </div>
     </div>
-}
-else
+</div>
+@if (Session["AreaID"] != null)
 {
     <div class="wrapper wrapper-content animated fadeInRight" id="divApartments" style="display:none">
         <div class="row">
@@ -60,35 +69,35 @@ else
                             <thead>
                                 <tr>
                                     <th>Apartment Name</th>
-                                    <th>Description</th>
                                     <th>House No</th>
+                                    <th>Description</th>                                    
                                     <th>Add Blocks</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (Model != null && Model.Apartments != null && Model.Apartments.Count > 0)
-                            {
-                                foreach (var apartment in Model.Apartments)
                                 {
-                            <tr class="gradeX" id="@apartment.ApartmentID">
-                                <td><a onclick="fnGetApartmentByID(this)" style="cursor:pointer;">@apartment.ApartmentName</a></td>
-                                <td>@apartment.HouseNo</td>
-                                <td>@apartment.Description</td>
-                                <td>
-                                    <input type="button" class="btnShowModalBlocks" value="Add Blocks">
-                                    <input type="hidden" class="hdnBlocks" value="@JsonConvert.SerializeObject(apartment.Blocks)">
-                                </td>
-                                <td><input type="button" class="btnDeleteApartment" value="Delete"></td>
-                            </tr>
+                                    foreach (var apartment in Model.Apartments)
+                                    {
+                                        <tr class="gradeX" id="@apartment.ApartmentID">
+                                            <td><a onclick="fnGetApartmentByID(this)" style="cursor:pointer;">@apartment.ApartmentName</a></td>
+                                            <td>@apartment.HouseNo</td>
+                                            <td>@apartment.Description</td>
+                                            <td>
+                                                <input type="button" class="btnShowModalBlocks" value="Add Blocks">
+                                                <input type="hidden" class="hdnBlocks" value="@JsonConvert.SerializeObject(apartment.Blocks)">
+                                            </td>
+                                            <td><input type="button" class="btnDeleteApartment" value="Delete"></td>
+                                        </tr>
+                                    }
                                 }
-                            }
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Apartment Name</th>
-                                    <th>Description</th>
                                     <th>House No</th>
+                                    <th>Description</th>                                    
                                     <th>Add Block</th>
                                     <th>Action</th>
                                 </tr>
@@ -141,14 +150,18 @@ else
 @section scripts{
 
     <script>
+        //storing AreaID and all Areas in javascript variable
+        var AreaID = '@AreaID';
+        var Areas = '@Html.Raw(Json.Encode(Areas))';
         //reference url
         var ApartmentsUrl = '@Url.Action("Apartments","Estate")';
         var AddApartmentUrl = '@Url.Action("AddApartment", "Estate")';
         var GetApartmentByIDUrl = '@Url.Action("GetApartmentByID", "Estate")';
         var EditApartmentUrl = '@Url.Action("EditApartment", "Estate")';
         var SaveBlocskUrl = '@Url.Action("SaveBlocks", "Estate")';
-
-        var operation = '@Model.Operation';
+        //updating location
+        var UpdateLocationUrl = '@Url.Action("UpdateLocation", "Estate")';
+        var operation = '@Operation';
     </script>
 
     <!-- jQuery DataTable -->

@@ -16,7 +16,7 @@ namespace LYSAdmin.Model
         public Nullable<decimal> Rating { get; set; }
         public Nullable<System.DateTime> CommentTime { get; set; }
 
-        public virtual House House { get; set; }
         public virtual User User { get; set; }
+        public virtual House House { get; set; }
     }
 }

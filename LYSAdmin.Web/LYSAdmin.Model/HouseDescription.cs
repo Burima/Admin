@@ -17,8 +17,6 @@ namespace LYSAdmin.Model
         public int NoOfRooms { get; set; }
         public int NoOfBathrooms { get; set; }
         public Nullable<int> NoOfBalconnies { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
 

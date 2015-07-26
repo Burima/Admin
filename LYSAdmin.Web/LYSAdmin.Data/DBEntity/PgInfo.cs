@@ -17,7 +17,9 @@ namespace LYSAdmin.Data.DBEntity
         public int PgInfoID { get; set; }
         public string Name { get; set; }
         public int AreaID { get; set; }
+        public int OwnerID { get; set; }
     
         public virtual Area Area { get; set; }
+        public virtual User User { get; set; }
     }
 }

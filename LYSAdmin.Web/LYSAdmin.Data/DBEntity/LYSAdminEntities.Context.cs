@@ -35,11 +35,11 @@ namespace LYSAdmin.Data.DBEntity
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Bed> Beds { get; set; }
         public virtual DbSet<HouseAmenity> HouseAmenities { get; set; }
-        public virtual DbSet<HouseDescription> HouseDescriptions { get; set; }
         public virtual DbSet<HouseImage> HouseImages { get; set; }
         public virtual DbSet<HouseReview> HouseReviews { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<HouseDescription> HouseDescriptions { get; set; }
         public virtual DbSet<House> Houses { get; set; }
         public virtual DbSet<PgInfo> PgInfos { get; set; }
-        public virtual DbSet<Room> Rooms { get; set; }
     }
 }

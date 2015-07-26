@@ -24,6 +24,8 @@ namespace LYSAdmin.Model
         public string DisplayName { get; set; }
         public bool IsPg { get; set; }
         public Nullable<int> PgInfoId { get; set; }
+        public Nullable<decimal> Latitude { get; set; }
+        public Nullable<decimal> Longitude { get; set; }
 
         public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
         public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
