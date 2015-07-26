@@ -180,8 +180,10 @@ $(document).ready(function () {
                     icon: image
                 });
                 
-                $('#latitude').text(Latitude);
-                $('#longitude').text(Longitude);
+                $('#spnLatitude').text(Latitude);
+                $('#spnLongitude').text(Longitude);
+                $('#hdnLatitude').val(Latitude);
+                $('#hdnLongitude').val(Longitude);
                 (function (marker) {
                     google.maps.event.addListener(marker, "dragend", function (e) {
                         var lat, lng, address;
@@ -190,8 +192,10 @@ $(document).ready(function () {
                                 lat = marker.getPosition().lat();
                                 lng = marker.getPosition().lng();
                                 address = results[0].formatted_address;
-                                $('#latitude').text(lat);
-                                $('#longitude').text(lat);
+                                $('#spnLatitude').text(lat);
+                                $('#spnLongitude').text(lng);
+                                $('#hdnLatitude').val(lat);
+                                $('#hdnLongitude').val(lng);
                             }
                         });
                     });
@@ -236,8 +240,10 @@ $(document).ready(function () {
                         infowindow.open(map, marker);
                     });
                 })(marker);
-                $('#latitude').text(marker.getPosition().lat());
-                $('#longitude').text(marker.getPosition().lng());
+                $('#spnLatitude').text(marker.getPosition().lat());
+                $('#spnLongitude').text(marker.getPosition().lng());
+                $('#hdnLatitude').val(marker.getPosition().lat());
+                $('#hdnLongitude').val(marker.getPosition().lng());
             }
         });
     }
