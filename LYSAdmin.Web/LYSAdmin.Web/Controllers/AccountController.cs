@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LYSAdmin.Domain.UserManagement;
+using LYSAdmin.Web.Utilities;
 
 namespace LYSAdmin.Web.Controllers
 {
@@ -70,6 +71,13 @@ namespace LYSAdmin.Web.Controllers
 
             Session.Abandon();//Clear Session details
             return RedirectToAction("Login", "Account"); //Redirect to login page
+        }
+
+        [LYSAdminAuthorize]
+        //GET : Account/ProfileView
+        public ActionResult ViewProfile()
+        {
+            return View();
         }
 
     }
