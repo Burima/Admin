@@ -3,8 +3,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
    
 }
+<link href="~/Content/Custom/ViewProfile.css" rel="stylesheet" />
 
 <div class = "col-md-12">
+
     <div class="tabs-container">
         <ul class="nav nav-tabs">
             <li class="active">
@@ -58,6 +60,7 @@
                     </div>
                 </div>
             </div>
+            @*tab 2 content*@
             <div id="tab-2" class="tab-pane">
                 <div class="row row-padding-top-5">
                     <div class="col-md-2">
@@ -92,8 +95,112 @@
                     </div>
                 </div>
             </div>
+            @*tab 3 content*@
+            @*tab 4 content*@
+            <div id="tab-4" class="tab-pane">
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>Present Address</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>Permanent Address</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>GovernmentID Type</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control">
+                            <option value="PANCard">PAN Card</option>
+                            <option value="VoterIDCard">Voter ID Card</option>
+                            <option value="DrivingLicense">Driving License</option>
+                            <option value="AadharCard">Aadhar Card</option>
+                            <option value="Passport">Passport</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>ID Number</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>ID Number</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>Profession</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>Current Employer</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>Office Address</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>Employee ID</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>Highest Education</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-2">
+                        <label>Institution Name</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row row-padding-top-5">
+                    <div class="col-md-offset-0">
+                        <button id="btnSaveChanges" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
 
 
