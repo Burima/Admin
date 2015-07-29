@@ -193,6 +193,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom\Houses.css" />
     <Content Include="Content\Custom\Rooms.css" />
+    <Content Include="Content\Custom\ViewProfile.css" />
     <Content Include="Content\email.css" />
     <Content Include="Content\lockyourstay.css" />
     <Content Include="Content\patterns\congruent_pentagon.png" />
@@ -841,6 +842,7 @@
     <Content Include="Views\Estate\_EditRoom.cshtml" />
     <Content Include="Views\Shared\_ShowAndHideProgress.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
+    <Content Include="Views\Account\ViewProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
