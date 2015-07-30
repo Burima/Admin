@@ -30,13 +30,16 @@
         <AssociationConnector Association="LYSAdminModel.FK_HouseReviews_UserID" />
         <EntityTypeShape EntityType="LYSAdminModel.HouseDescription" Width="1.5" PointX="9.625" PointY="39.375" />
         <EntityTypeShape EntityType="LYSAdminModel.House" Width="1.5" PointX="7.375" PointY="23.25" />
-        <EntityTypeShape EntityType="LYSAdminModel.PgInfo" Width="1.5" PointX="8.25" PointY="1.875" />
-        <AssociationConnector Association="LYSAdminModel.FK_PgInfos_AreaID" />
         <AssociationConnector Association="LYSAdminModel.FK__House_Amenities__Houses" />
         <AssociationConnector Association="LYSAdminModel.FK_HouseDescriptions_HouseID" />
         <AssociationConnector Association="LYSAdminModel.FK_HouseImages_HouseID" />
         <AssociationConnector Association="LYSAdminModel.FK_HouseReviews_HouseID" />
         <AssociationConnector Association="LYSAdminModel.FK__Rooms__HouseID" />
+        <EntityTypeShape EntityType="LYSAdminModel.PGDetail" Width="1.5" PointX="11.25" PointY="3" />
+        <AssociationConnector Association="LYSAdminModel.FK_PGDetails_AreaID" />
+        <AssociationConnector Association="LYSAdminModel.FK_PGDetails_OwnerID" />
+        <EntityTypeShape EntityType="LYSAdminModel.C_PGInfos_" Width="1.5" PointX="8.25" PointY="2" />
+        <AssociationConnector Association="LYSAdminModel.FK_PgInfos_AreaID" />
         <AssociationConnector Association="LYSAdminModel.FK_PgInfos_OwnerID" />
       </Diagram>
     </edmx:Diagrams>

@@ -40,6 +40,7 @@ namespace LYSAdmin.Data.DBEntity
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<HouseDescription> HouseDescriptions { get; set; }
         public virtual DbSet<House> Houses { get; set; }
-        public virtual DbSet<PgInfo> PgInfos { get; set; }
+        public virtual DbSet<PGDetail> PGDetails { get; set; }
+        
     }
 }

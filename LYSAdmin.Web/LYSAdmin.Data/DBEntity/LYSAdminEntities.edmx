@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="LYSAdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="[PGInfos]">
+          <Key>
+            <PropertyRef Name="PgInfoID" />
+          </Key>
+          <Property Name="PgInfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="[PGName]" Type="varchar" MaxLength="100" />
+          <Property Name="AreaID" Type="int" Nullable="false" />
+          <Property Name="OwnerID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Apartments">
           <Key>
             <PropertyRef Name="ApartmentID" />
@@ -192,12 +201,12 @@
           <Property Name="Latitude" Type="decimal" Precision="30" Scale="25" />
           <Property Name="Longitude" Type="decimal" Precision="30" Scale="25" />
         </EntityType>
-        <EntityType Name="PgInfos">
+        <EntityType Name="PGDetails">
           <Key>
-            <PropertyRef Name="PgInfoID" />
+            <PropertyRef Name="PGdetailID" />
           </Key>
-          <Property Name="PgInfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="PGdetailID" Type="int" Nullable="false" />
+          <Property Name="PGName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AreaID" Type="int" Nullable="false" />
           <Property Name="OwnerID" Type="int" Nullable="false" />
         </EntityType>
@@ -419,26 +428,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PgInfos_AreaID">
+        <Association Name="FK_PGDetails_AreaID">
           <End Role="Areas" Type="Self.Areas" Multiplicity="1" />
-          <End Role="PgInfos" Type="Self.PgInfos" Multiplicity="*" />
+          <End Role="PGDetails" Type="Self.PGDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Areas">
               <PropertyRef Name="AreaID" />
             </Principal>
-            <Dependent Role="PgInfos">
+            <Dependent Role="PGDetails">
+              <PropertyRef Name="AreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PGDetails_OwnerID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="PGDetails" Type="Self.PGDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PGDetails">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PgInfos_AreaID">
+          <End Role="Areas" Type="Self.Areas" Multiplicity="1" />
+          <End Role="[PGInfos]" Type="Self.[PGInfos]" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Areas">
+              <PropertyRef Name="AreaID" />
+            </Principal>
+            <Dependent Role="[PGInfos]">
               <PropertyRef Name="AreaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PgInfos_OwnerID">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="PgInfos" Type="Self.PgInfos" Multiplicity="*" />
+          <End Role="[PGInfos]" Type="Self.[PGInfos]" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="PgInfos">
+            <Dependent Role="[PGInfos]">
               <PropertyRef Name="OwnerID" />
             </Dependent>
           </ReferentialConstraint>
@@ -468,6 +501,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="LYSAdminModelStoreContainer">
+          <EntitySet Name="[PGInfos]" EntityType="Self.[PGInfos]" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Apartments" EntityType="Self.Apartments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Areas" EntityType="Self.Areas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Beds" EntityType="Self.Beds" Schema="dbo" store:Type="Tables" />
@@ -479,7 +513,7 @@
           <EntitySet Name="HouseImages" EntityType="Self.HouseImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HouseReviews" EntityType="Self.HouseReviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Houses" EntityType="Self.Houses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PgInfos" EntityType="Self.PgInfos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PGDetails" EntityType="Self.PGDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
@@ -536,13 +570,21 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="HouseReviews" EntitySet="HouseReviews" />
           </AssociationSet>
+          <AssociationSet Name="FK_PGDetails_AreaID" Association="Self.FK_PGDetails_AreaID">
+            <End Role="Areas" EntitySet="Areas" />
+            <End Role="PGDetails" EntitySet="PGDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PGDetails_OwnerID" Association="Self.FK_PGDetails_OwnerID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PGDetails" EntitySet="PGDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_PgInfos_AreaID" Association="Self.FK_PgInfos_AreaID">
             <End Role="Areas" EntitySet="Areas" />
-            <End Role="PgInfos" EntitySet="PgInfos" />
+            <End Role="[PGInfos]" EntitySet="[PGInfos]" />
           </AssociationSet>
           <AssociationSet Name="FK_PgInfos_OwnerID" Association="Self.FK_PgInfos_OwnerID">
             <End Role="Users" EntitySet="Users" />
-            <End Role="PgInfos" EntitySet="PgInfos" />
+            <End Role="[PGInfos]" EntitySet="[PGInfos]" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_RoleID" Association="Self.FK_Users_RoleID">
             <End Role="Roles" EntitySet="Roles" />
@@ -613,11 +655,6 @@
           </AssociationSet>
           <EntitySet Name="HouseDescriptions" EntityType="LYSAdminModel.HouseDescription" />
           <EntitySet Name="Houses" EntityType="LYSAdminModel.House" />
-          <EntitySet Name="PgInfos" EntityType="LYSAdminModel.PgInfo" />
-          <AssociationSet Name="FK_PgInfos_AreaID" Association="LYSAdminModel.FK_PgInfos_AreaID">
-            <End Role="Area" EntitySet="Areas" />
-            <End Role="PgInfo" EntitySet="PgInfos" />
-          </AssociationSet>
           <AssociationSet Name="FK__House_Amenities__Houses" Association="LYSAdminModel.FK__House_Amenities__Houses">
             <End Role="House" EntitySet="Houses" />
             <End Role="HouseAmenity" EntitySet="HouseAmenities" />
@@ -638,9 +675,23 @@
             <End Role="House" EntitySet="Houses" />
             <End Role="Room" EntitySet="Rooms" />
           </AssociationSet>
+          <EntitySet Name="PGDetails" EntityType="LYSAdminModel.PGDetail" />
+          <AssociationSet Name="FK_PGDetails_AreaID" Association="LYSAdminModel.FK_PGDetails_AreaID">
+            <End Role="Area" EntitySet="Areas" />
+            <End Role="PGDetail" EntitySet="PGDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PGDetails_OwnerID" Association="LYSAdminModel.FK_PGDetails_OwnerID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PGDetail" EntitySet="PGDetails" />
+          </AssociationSet>
+          <EntitySet Name="C_PGInfos_" EntityType="LYSAdminModel.C_PGInfos_" />
+          <AssociationSet Name="FK_PgInfos_AreaID" Association="LYSAdminModel.FK_PgInfos_AreaID">
+            <End Role="Area" EntitySet="Areas" />
+            <End Role="C_PGInfos_" EntitySet="C_PGInfos_" />
+          </AssociationSet>
           <AssociationSet Name="FK_PgInfos_OwnerID" Association="LYSAdminModel.FK_PgInfos_OwnerID">
             <End Role="User" EntitySet="Users" />
-            <End Role="PgInfo" EntitySet="PgInfos" />
+            <End Role="C_PGInfos_" EntitySet="C_PGInfos_" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Apartment">
@@ -675,7 +726,8 @@
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Apartments" Relationship="LYSAdminModel.FK_Apartments_AreaID" FromRole="Area" ToRole="Apartment" />
           <NavigationProperty Name="City" Relationship="LYSAdminModel.FK_Areas_CityID" FromRole="Area" ToRole="City" />
-          <NavigationProperty Name="PgInfos" Relationship="LYSAdminModel.FK_PgInfos_AreaID" FromRole="Area" ToRole="PgInfo" />
+          <NavigationProperty Name="PGDetails" Relationship="LYSAdminModel.FK_PGDetails_AreaID" FromRole="Area" ToRole="PGDetail" />
+          <NavigationProperty Name="C_PGInfos_" Relationship="LYSAdminModel.FK_PgInfos_AreaID" FromRole="Area" ToRole="C_PGInfos_" />
         </EntityType>
         <EntityType Name="Block">
           <Key>
@@ -770,7 +822,8 @@
           <NavigationProperty Name="UserDetails" Relationship="LYSAdminModel.PK_UserDetails_UserID" FromRole="User" ToRole="UserDetail" />
           <NavigationProperty Name="Beds" Relationship="LYSAdminModel.FK_Beds_UserID" FromRole="User" ToRole="Bed" />
           <NavigationProperty Name="HouseReviews" Relationship="LYSAdminModel.FK_HouseReviews_UserID" FromRole="User" ToRole="HouseReview" />
-          <NavigationProperty Name="PgInfos" Relationship="LYSAdminModel.FK_PgInfos_OwnerID" FromRole="User" ToRole="PgInfo" />
+          <NavigationProperty Name="PGDetails" Relationship="LYSAdminModel.FK_PGDetails_OwnerID" FromRole="User" ToRole="PGDetail" />
+          <NavigationProperty Name="C_PGInfos_" Relationship="LYSAdminModel.FK_PgInfos_OwnerID" FromRole="User" ToRole="C_PGInfos_" />
         </EntityType>
         <Association Name="FK_Apartments_AreaID">
           <End Type="LYSAdminModel.Area" Role="Area" Multiplicity="0..1" />
@@ -1044,29 +1097,6 @@
           <NavigationProperty Name="HouseReviews" Relationship="LYSAdminModel.FK_HouseReviews_HouseID" FromRole="House" ToRole="HouseReview" />
           <NavigationProperty Name="Rooms" Relationship="LYSAdminModel.FK__Rooms__HouseID" FromRole="House" ToRole="Room" />
         </EntityType>
-        <EntityType Name="PgInfo">
-          <Key>
-            <PropertyRef Name="PgInfoID" />
-          </Key>
-          <Property Name="PgInfoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AreaID" Type="Int32" Nullable="false" />
-          <Property Name="OwnerID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Area" Relationship="LYSAdminModel.FK_PgInfos_AreaID" FromRole="PgInfo" ToRole="Area" />
-          <NavigationProperty Name="User" Relationship="LYSAdminModel.FK_PgInfos_OwnerID" FromRole="PgInfo" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_PgInfos_AreaID">
-          <End Type="LYSAdminModel.Area" Role="Area" Multiplicity="1" />
-          <End Type="LYSAdminModel.PgInfo" Role="PgInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Area">
-              <PropertyRef Name="AreaID" />
-            </Principal>
-            <Dependent Role="PgInfo">
-              <PropertyRef Name="AreaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__House_Amenities__Houses">
           <End Type="LYSAdminModel.House" Role="House" Multiplicity="1" />
           <End Type="LYSAdminModel.HouseAmenity" Role="HouseAmenity" Multiplicity="*" />
@@ -1127,14 +1157,72 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PgInfos_OwnerID">
+        <EntityType Name="PGDetail">
+          <Key>
+            <PropertyRef Name="PGdetailID" />
+          </Key>
+          <Property Name="PGdetailID" Type="Int32" Nullable="false" />
+          <Property Name="PGName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AreaID" Type="Int32" Nullable="false" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Area" Relationship="LYSAdminModel.FK_PGDetails_AreaID" FromRole="PGDetail" ToRole="Area" />
+          <NavigationProperty Name="User" Relationship="LYSAdminModel.FK_PGDetails_OwnerID" FromRole="PGDetail" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_PGDetails_AreaID">
+          <End Type="LYSAdminModel.Area" Role="Area" Multiplicity="1" />
+          <End Type="LYSAdminModel.PGDetail" Role="PGDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="AreaID" />
+            </Principal>
+            <Dependent Role="PGDetail">
+              <PropertyRef Name="AreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PGDetails_OwnerID">
           <End Type="LYSAdminModel.User" Role="User" Multiplicity="1" />
-          <End Type="LYSAdminModel.PgInfo" Role="PgInfo" Multiplicity="*" />
+          <End Type="LYSAdminModel.PGDetail" Role="PGDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="PgInfo">
+            <Dependent Role="PGDetail">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="C_PGInfos_">
+          <Key>
+            <PropertyRef Name="PgInfoID" />
+          </Key>
+          <Property Name="PgInfoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_PGName_" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AreaID" Type="Int32" Nullable="false" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Area" Relationship="LYSAdminModel.FK_PgInfos_AreaID" FromRole="C_PGInfos_" ToRole="Area" />
+          <NavigationProperty Name="User" Relationship="LYSAdminModel.FK_PgInfos_OwnerID" FromRole="C_PGInfos_" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_PgInfos_AreaID">
+          <End Type="LYSAdminModel.Area" Role="Area" Multiplicity="1" />
+          <End Type="LYSAdminModel.C_PGInfos_" Role="C_PGInfos_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="AreaID" />
+            </Principal>
+            <Dependent Role="C_PGInfos_">
+              <PropertyRef Name="AreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PgInfos_OwnerID">
+          <End Type="LYSAdminModel.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdminModel.C_PGInfos_" Role="C_PGInfos_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="C_PGInfos_">
               <PropertyRef Name="OwnerID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1409,12 +1497,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PgInfos">
-            <EntityTypeMapping TypeName="LYSAdminModel.PgInfo">
-              <MappingFragment StoreEntitySet="PgInfos">
+          <EntitySetMapping Name="PGDetails">
+            <EntityTypeMapping TypeName="LYSAdminModel.PGDetail">
+              <MappingFragment StoreEntitySet="PGDetails">
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PGName" ColumnName="PGName" />
+                <ScalarProperty Name="PGdetailID" ColumnName="PGdetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_PGInfos_">
+            <EntityTypeMapping TypeName="LYSAdminModel.C_PGInfos_">
+              <MappingFragment StoreEntitySet="[PGInfos]">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="C_PGName_" ColumnName="[PGName]" />
                 <ScalarProperty Name="PgInfoID" ColumnName="PgInfoID" />
               </MappingFragment>
             </EntityTypeMapping>

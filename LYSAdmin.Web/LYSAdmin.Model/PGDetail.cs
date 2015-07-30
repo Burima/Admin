@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace LYSAdmin.Model
 {
-    public class PgInfo
+    public class PGDetail
     {
-        public int PgInfoID { get; set; }
-        public string Name { get; set; }
+        public int PGdetailID { get; set; }
+        public string PGName { get; set; }
         public int AreaID { get; set; }
         public int OwnerID { get; set; }
 

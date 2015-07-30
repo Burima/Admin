@@ -191,6 +191,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom\Dashboard.css" />
     <Content Include="Content\Custom\Houses.css" />
     <Content Include="Content\Custom\Rooms.css" />
     <Content Include="Content\Custom\ViewProfile.css" />
@@ -821,10 +822,6 @@
     <Content Include="Views\Shared\_TopNavbar2.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Properties\Apartments.cshtml" />
-    <Content Include="Views\Properties\Blocks.cshtml" />
-    <Content Include="Views\Properties\Houses.cshtml" />
-    <Content Include="Views\Properties\Rooms.cshtml" />
     <Content Include="Views\Employee\Employee.cshtml" />
     <Content Include="Views\Estate\Apartments.cshtml" />
     <Content Include="Views\Estate\Blocks.cshtml" />

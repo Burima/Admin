@@ -20,7 +20,8 @@ namespace LYSAdmin.Data.DBEntity
             this.UserDetails = new HashSet<UserDetail>();
             this.Beds = new HashSet<Bed>();
             this.HouseReviews = new HashSet<HouseReview>();
-            this.PgInfos = new HashSet<PgInfo>();
+            this.PGDetails = new HashSet<PGDetail>();
+            
         }
     
         public int UserID { get; set; }
@@ -44,6 +45,7 @@ namespace LYSAdmin.Data.DBEntity
         public virtual ICollection<UserDetail> UserDetails { get; set; }
         public virtual ICollection<Bed> Beds { get; set; }
         public virtual ICollection<HouseReview> HouseReviews { get; set; }
-        public virtual ICollection<PgInfo> PgInfos { get; set; }
+        public virtual ICollection<PGDetail> PGDetails { get; set; }
+        
     }
 }
