@@ -8,6 +8,8 @@ using LYSAdmin.Web.Utilities;
 using LYSAdmin.Domain.ApartmentManagement;
 using LYSAdmin.Domain.BlockManagement;
 using Newtonsoft.Json;
+using LYSAdmin.Domain.HouseManagement;
+using LYSAdmin.Domain.PGDetailManagement;
 
 namespace LYSAdmin.Web.Controllers
 {
@@ -16,15 +18,16 @@ namespace LYSAdmin.Web.Controllers
     {
         private IApartmentManagement apartmentManagement;
         private IBlockManagement blockManagement;
+        private IHouseManagement houseManagement;
+        private IPGDetailManagement pgDetailManagement;
         Apartment apartment = new Apartment();
         HouseViewModel houseViewModel = new HouseViewModel();
-        public EstateController(ApartmentManagement apartmentManagement, BlockManagement blockManagement)
+        public EstateController(ApartmentManagement apartmentManagement, BlockManagement blockManagement, HouseManagement houseManagement, PGDetailManagement pgDetailManagement)
         {
             this.apartmentManagement = apartmentManagement;
             this.blockManagement = blockManagement;
-
-            //var Cities = System.Web.HttpContext.Current.Application["Cities"] as IList<Model.City>;
-            //var Areas = System.Web.HttpContext.Current.Application["Areas"] as IList<Model.Area>;
+            this.houseManagement = houseManagement;
+            this.pgDetailManagement = pgDetailManagement;
 
         }
         // GET: Estate
@@ -44,7 +47,7 @@ namespace LYSAdmin.Web.Controllers
                 Session["CityName"] = CityName;
                 Session["AreaName"] = AreaName;
                 return Json("SUCCESS");
-                
+
             }
             else
             {
@@ -63,7 +66,7 @@ namespace LYSAdmin.Web.Controllers
         ///               
         /// </param>
         /// <returns></returns>
-        public ActionResult Apartments(int Operation=1)
+        public ActionResult Apartments(int Operation = 1)
         {
             if (Session["AreaID"] != null)
             {
@@ -139,21 +142,7 @@ namespace LYSAdmin.Web.Controllers
             int count = apartmentManagement.UpdateApartment(apartmentViewModel);
             return View(apartmentViewModel);
         }
-        private dynamic GetOwnerID()
-        {
-            var user = (Model.User)Session["User"];
-            int ownerID = 0;
-            if (user != null)
-            {
-                ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID;
-                return ownerID;
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
 
-        }
         #endregion Apartment
 
         #region Blocks
@@ -180,19 +169,24 @@ namespace LYSAdmin.Web.Controllers
         #endregion Blocks
 
         #region Houses
+        /// <summary>
+        /// get all the PG/Hostel for a Area filter by OwnerID
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult GetPGsByOwnerIDandAreaID()
+        {
+            houseViewModel.PGDetails = pgDetailManagement.GetPGsByOwnerIDandAreaID(GetOwnerID(), GetAreaID());
+
+            return Json(JsonConvert.SerializeObject(houseViewModel.PGDetails), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Estate/Houses
         [HttpGet]
         public ActionResult Houses()
         {
-            if (Session["AreaID"] != null)
-            {
-                houseViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(GetOwnerID(),Convert.ToInt32(Session["AreaID"]));
-                return View("Houses", houseViewModel);
-            }
-            else
-            {
-                return View();
-            }
+            houseViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(GetOwnerID(), GetAreaID());
+            return View("Houses", houseViewModel);
 
         }
 
@@ -209,6 +203,27 @@ namespace LYSAdmin.Web.Controllers
             return View();
         }
 
+        #region HelperMethods
+        private dynamic GetOwnerID()
+        {
+            var user = (Model.User)Session["User"];
+            int ownerID = 0;
+            if (user != null)
+            {
+                ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID;
+                return ownerID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+        }
+        private dynamic GetAreaID()
+        {
+                return Convert.ToInt32(Session["AreaID"]);
+        }
+        #endregion Helpermethods
 
 
 

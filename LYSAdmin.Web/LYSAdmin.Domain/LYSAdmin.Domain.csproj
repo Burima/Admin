@@ -53,6 +53,8 @@
     <Compile Include="DashboardManagement\IDashboardManagement.cs" />
     <Compile Include="HouseManagement\HouseManagement.cs" />
     <Compile Include="HouseManagement\IHouseManagement.cs" />
+    <Compile Include="PGDetailManagement\IPGDetailManagement.cs" />
+    <Compile Include="PGDetailManagement\PGDetailManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticContentManagement\IStaticContentManagement.cs" />
     <Compile Include="StaticContentManagement\StaticContentManagement.cs" />

@@ -217,5 +217,7 @@ namespace LYSAdmin.Domain.HouseManagement
             houseRepository.Update(dbHouse);
             return unitOfWork.SaveChanges();
         }
+
+       
     }
 }

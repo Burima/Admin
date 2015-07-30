@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 
     //if area is not selected show modal
-    //for select City and Area
+    //for select City and fnOpenBasicAmenities()
     if (AreaID == 0) {
         fnChangeLocation();
     }
@@ -91,7 +91,7 @@ $(document).ready(function () {
 
     //btnNextBasicInformation
     $('#btnNextBasicInformation').click(function () {
-        if ($('#add-basic-information-form').valid()) {
+        if ($('#add-house-information-form').valid()) {
             //hide BasicInformation upon valid data
             $('#collapseBasicInformation').removeClass('in');
             //google api function
@@ -154,7 +154,7 @@ $(document).ready(function () {
     var contentString = '<div id="form-group">'+
         '<div id="row">' +
         '<div class="col-md-8"><h4>Is this your final selected location?</h4></div>'+
-        '<div class="col-md-4"><button id= "btnYes" class="btn btn-primary" onclick="fnOpenBasicAmenities()">Yes</button></div>' +
+        '<div class="col-md-4"><button type="button" id= "btnYes" class="btn btn-primary" onclick="fnOpenBasicAmenities()">Yes</button></div>' +
       '</div>'+
         '</div>';
     var infowindow = new google.maps.InfoWindow({
@@ -300,9 +300,7 @@ $("select[name='CityID']").change(function () {
 
         } else {
             //alert('area is not covered by LYS in this city');
-
         }
-
     });
 });
 
@@ -362,6 +360,54 @@ function fnOpenBasicAmenities() {
     $('#collapseLocality').removeClass('in');
     $('#collapseBasicAmenities').addClass('in');
 }
+
+//on Selection of ISPG radio button ddlSelectPG txtPGName
+$('input[name=IsPGorHostel]').click(function () {
+
+    if ($('input:radio[name=IsPGorHostel]:checked').val()==1) {
+        $('#lblSelectPG').removeClass('hidden');
+        //get all PG in the same Area under same owner
+        showProgress(false, "Getting PGs. Please wait...");
+        $.ajax({
+            url: GetPGsByOwnerIDandAreaIDUrl,
+            type: 'GET',           
+            dataType: 'JSON',
+            success: function (response, textStatus, XMLHttpRequest) {
+                var pgList = $.parseJSON(response);
+                if (pgList.length > 0) {
+                    $('#lblSelectPG').text("Select PG or Hostel in your Saved Area");//set label text
+                    $('#ddlSelectPG').removeClass('hidden');//make ddlSelectPG visible if PG is found
+                    $('#txtPGName').val("");//make new PGName empty (if we are selecting the pg PGName should be empty)
+                    $('#txtPGName').addClass('hidden');//hide txtPGName
+                    $('#ddlSelectPG').empty();//Restart the Areas in a City
+                    $('#ddlSelectPG').append(
+                                  $('<option value="0" disabled selected></option>').html("--Select PG--")
+                              );//Appending default value
+                    $.each(pgList, function (i, pg) {
+                        $('#ddlSelectPG').append(
+                        $('<option></option>').val(pg.PGdetailID).html(pg.PGName)
+                       );
+                    });
+                } else {
+                    $("#ddlSelectPG").val("0");
+                    $('#lblSelectPG').text("Enter new PG or Hostel Name");
+                    $('#ddlSelectPG').addClass('hidden');
+                    $('#txtPGName').removeClass('hidden');
+                }
+                hideProgress();
+            },
+            error: function (xhr, status) {
+                alert('error');
+                hideProgress();
+            }
+        });
+    } else {
+        $('#lblSelectPG').addClass('hidden');
+        $('#ddlSelectPG').addClass('hidden');
+        $('#txtPGName').addClass('hidden');
+    }
+});
+
 
 
 

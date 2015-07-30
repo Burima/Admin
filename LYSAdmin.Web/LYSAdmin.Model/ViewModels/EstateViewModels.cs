@@ -25,11 +25,13 @@ namespace LYSAdmin.Model
         public List<House> Houses { get; set; }
         public List<Apartment> Apartments { get; set; }
         public List<Room> Rooms { get; set; }
-
+        public List<PGDetail> PGDetails { get; set; }
         public int CityID { get; set; }
         public int AreaID { get; set; }
         public int ApartmentID { get; set; }
         public int BlockID { get; set; }
+
+        public PGDetail PGdetail { get; set; }
 
 
     }
