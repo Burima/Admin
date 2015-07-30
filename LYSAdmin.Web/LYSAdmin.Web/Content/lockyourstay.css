@@ -15,6 +15,7 @@
 .form-group label{
     font-weight:300;
     font-size: 1.1em;
+    padding-left:0px;
 }
 
 /*row space*/
@@ -55,5 +56,14 @@ textarea.error,.form-control.error {
 label.error {
     display:none !important;
 }
+/*------------- radio button------------*/
+.margin-left-2pc{
+    margin-left:2% !important;
+}
 
+
+.standard-font{
+     font-weight: 500 !important;
+    font-size: 1.2em !important;
+}
 
