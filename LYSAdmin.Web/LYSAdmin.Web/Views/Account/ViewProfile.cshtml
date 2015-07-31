@@ -3,7 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
    
 }
-<link href="~/Content/Custom/ViewProfile.css" rel="stylesheet" />
+
+@Styles.Render("~/Content/Custom/ViewProfile.css")
+@Styles.Render("~/plugins/imagecropperStyles")
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row  border-bottom white-bg dashboard-header">
@@ -23,7 +25,7 @@
                         <a data-toggle="tab" href="#tab-4">Background Verification Details</a>
                     </li>
                 </ul>
-                <div class="tab-content gray-bg">
+                <div class="tab-content gray-bg padding-left-3">
                     @*tab 1 content*@
                     <div id="tab-1" class="tab-pane active">
                         <div class="row">
@@ -39,9 +41,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mobile Number</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Enter Mobile Number"></div>
-                                <div class="form-group row-padding-top-5">
+                                    <input type="text" class="form-control input-sm" placeholder="Enter Mobile Number">
                                     <div class="pull-right">
+                                        <label><i class="fa fa-check"></i>Verified</label>
+                                        <a id="VerifyMobile" href="#">Verify</a>
+                                    </div>
+                                </div>
+                                <div class="form-group row-padding-top-5">
+                                    <div>
                                         <button id="btnSave" class="btn btn-primary" type="button" tabindex="5">Save</button>
                                     </div>
                                 </div>
@@ -69,7 +76,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group row-padding-top-5">
-                                    <div class="pull-right">
+                                    <div>
                                         <button id="btnSave" class="btn btn-primary" type="button" tabindex="5">Save</button>
                                     </div>
                                 </div>
@@ -77,65 +84,135 @@
                         </div>
                     </div>
                     @*tab 3 content*@
+                    <div id="tab-3" class="tab-pane">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title  back-change">
+                                            <h5>Profile Picture</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Crop image</label>
+                                                    <div class="image-crop">
+                                                        <img />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Preview image</label>
+                                                    <div class="img-preview img-preview-sm"></div>
+                                                    <div class="row row-padding-top-5">
+                                                        <div class="col-md-5">
+                                                            <label title="Upload image file" for="inputImage" class="btn btn-primary">
+                                                                <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+                                                                Upload new image
+                                                            </label>
+
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <button id="btnSave" class="btn btn-primary">Save</button>
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @*tab 4 content*@
                     <div id="tab-4" class="tab-pane">
                         <div class="row">
-                            <div class="col-md-6">
-                                <br/>
-                                <div class="form-group">
-                                    <label>Present Address</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Present Address">
+                            <div class="col-md-12">
+                                <div class="row form-group row-padding-top-5">
+                                    <div class="col-md-5">
+                                        <label>Present Address</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label>Permanent Address</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control input-sm" placeholder="Present Address">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control input-sm" placeholder="Present Address">
+                                    </div>
+                                    <div class="col-md-5 row-space-top-1">
+                                        <label>GovernmentID Type</label>
+                                    </div>
+                                    <div class="col-md-5 row-space-top-1">
+                                        <label>ID Number</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select class="form-control input-sm">
+                                            <option value="PANCard">PAN Card</option>
+                                            <option value="VoterIDCard">Voter ID Card</option>
+                                            <option value="DrivingLicense">Driving License</option>
+                                            <option value="AadharCard">Aadhar Card</option>
+                                            <option value="Passport">Passport</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control input-sm" placeholder="Identity Proof Number">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary btn-circle" type="button">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-5 row-space-top-1">
+                                        <label>Profession</label>
+                                    </div>
+                                    <div class="col-md-5 row-space-top-1">
+                                        <label>Office Address</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="radio" name="Profession" value="SelfEmployed">Self-Employed
+                                        <input type="radio" name="Profession" value="Salaried">Salaried
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control input-sm" placeholder="Employee Address">
+                                    </div>
+                                    <div class="col-md-5 row-space-top-1">
+                                        <label>Current Employer</label>
+                                    </div>
+                                    <div class="col-md-5 row-space-top-1">
+                                        <label>Employee ID</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control input-sm" placeholder="Current Employer Name">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control input-sm" placeholder="Employer ID">
+                                    </div>
+                                   
+                                    <div class="col-md-5 row-space-top-1">
+                                        <label>Highest Education</label>
+                                    </div>
+                                    <div class="col-md-5 row-space-top-1">
+                                        <label>Institution Name</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select class="form-control input-sm">
+                                            <option value="PostGraduate">Post Graduate</option>
+                                            <option value="Graduate">Graduate</option>
+                                            <option value="UnderGraduate">Under Graduate</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control input-sm" placeholder="Institution Name">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Permanent Address</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Permanent Address">
-                                </div>
-                                <div class="form-group">
-                                    <label>GovernmentID Type</label>
-                                    <select class="form-control input-sm">
-                                        <option value="PANCard">PAN Card</option>
-                                        <option value="VoterIDCard">Voter ID Card</option>
-                                        <option value="DrivingLicense">Driving License</option>
-                                        <option value="AadharCard">Aadhar Card</option>
-                                        <option value="Passport">Passport</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>ID Number</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Identity Proof Number">
-                                </div>
-                                <div class="form-group">
-                                    <label>Profession</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Enter Profession">
-                                </div>
-                                <div class="form-group">
-                                    <label>Current Employer</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Current Employer Name">
-                                </div>
-                                <div class="form-group">
-                                    <label>Office Address</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Employee Address">
-                                </div>
-                                <div class="form-group">
-                                    <label>Employee ID</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Employer ID">
-                                </div>
-                                <div class="form-group">
-                                    <label>Highest Education</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Highest Education">
-                                </div>
-                                <div class="form-group">
-                                    <label>Institution Name</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Institution Name">
-                                </div>
+                               
                                 <div class="form-group row-padding-top-5">
-                                    <div class="pull-right">
+                                    <div>
                                         <button id="btnSave" class="btn btn-primary" type="button" tabindex="5">Save</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -143,4 +220,55 @@
     </div>
 </div>
 
+@section scripts{
+@Scripts.Render("~/plugins/imagecropper")
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var $image = $(".image-crop > img")
+            $($image).cropper({
+                aspectRatio: 1.618,
+                preview: ".img-preview",
+                done: function (data) {
+                    // Output the result data for cropping image.
+                }
+            });
+
+            var $inputImage = $("#inputImage");
+            if (window.FileReader) {
+                $inputImage.change(function () {
+                    var fileReader = new FileReader(),
+                            files = this.files,
+                            file;
+
+                    if (!files.length) {
+                        return;
+                    }
+
+                    file = files[0];
+
+                    if (/^image\/\w+$/.test(file.type)) {
+                        fileReader.readAsDataURL(file);
+                        fileReader.onload = function () {
+                            $inputImage.val("");
+                            $image.cropper("reset", true).cropper("replace", this.result);
+                        };
+                    } else {
+                        showMessage("Please choose an image file.");
+                    }
+                });
+            } else {
+                $inputImage.addClass("hide");
+            }
+
+            $("#download").click(function () {
+                //window.open($image.cropper("getDataURL"));
+                //logic to display image in dp and save 
+                //the image in a folder and save path to db
+            });
+
+            
+        });      
+     </script>
+}
 
