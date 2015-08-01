@@ -60,7 +60,16 @@ namespace LYSAdmin.Domain.UserManagement
             modelUser.UserDetails = (from p in userDetailRepository.Get(p => p.UserID == dbUser.UserID)
                                      select new Model.UserDetail
                                      {
-
+                                        PresentAddress = p.PresentAddress
+                                      ,PermanentAddress = p.PermanentAddress
+                                      ,GovtIDType = p.GovtIDType
+                                      ,GovtID = p.GovtID
+                                      ,UserProfession = p.UserProfession
+                                      ,CurrentEmployer = p.CurrentEmployer
+                                      ,OfficeLocation = p.OfficeLocation
+                                      ,EmployeeID = p.EmployeeID
+                                      ,HighestEducation = p.HighestEducation
+                                      ,InstitutionName = p.InstitutionName 
                                      }).ToList();//Check in DB through repository
             return modelUser;
         }
