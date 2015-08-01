@@ -1,7 +1,9 @@
-﻿@{
+﻿@using LYSAdmin.Model;
+@{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
-   
+    var User = (User)Session["User"];
+    var UserDetails = User.UserDetails.ElementAt(0);
 }
 
 @Styles.Render("~/Content/Custom/ViewProfile.css")
@@ -33,7 +35,7 @@
                                 <br/>
                                 <div class="form-group">
                                     <label>UserName</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Enter Username">
+                                    <input type="text" class="form-control input-sm" placeholder="Enter Username" value="@User.Username">
                                 </div>
                                 <div class="form-group">
                                     <label>Change Password</label>                          
@@ -41,10 +43,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mobile Number</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Enter Mobile Number">
+                                    <input type="text" class="form-control input-sm" placeholder="Enter Mobile Number" value="@User.Password">
                                     <div class="pull-right">
                                         <label><i class="fa fa-check"></i>Verified</label>
-                                        <a id="VerifyMobile" href="#">Verify</a>
+                                        <a id="verifyMobile" href="#">Verify</a>
                                     </div>
                                 </div>
                                 <div class="form-group row-padding-top-5">
@@ -62,15 +64,16 @@
                                 <br />
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control input-sm" placeholder="First Name">
+                                    <input type="text" class="form-control input-sm" placeholder="First Name" value="@User.FirstName">
                                 </div>
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control input-sm" placeholder="Last Name">
+                                    <input type="text" class="form-control input-sm" placeholder="Last Name" value="@User.LastName">
                                 </div>
                                 <div class="form-group">
                                     <label>I am</label>
                                     <select class="form-control input-sm">
+                                        <option value="" disabled selected>Select Gender</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
@@ -133,10 +136,10 @@
                                         <label>Permanent Address</label>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control input-sm" placeholder="Present Address">
+                                        <input type="text" class="form-control input-sm" placeholder="Present Address" value="@UserDetails.PresentAddress">
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control input-sm" placeholder="Present Address">
+                                        <input type="text" class="form-control input-sm" placeholder="Present Address" value="@UserDetails.PermanentAddress">
                                     </div>
                                     <div class="col-md-5 row-space-top-1">
                                         <label>GovernmentID Type</label>
@@ -146,6 +149,7 @@
                                     </div>
                                     <div class="col-md-5">
                                         <select class="form-control input-sm">
+                                            <option value="" disabled selected>Select ID Type</option>
                                             <option value="PANCard">PAN Card</option>
                                             <option value="VoterIDCard">Voter ID Card</option>
                                             <option value="DrivingLicense">Driving License</option>
@@ -154,7 +158,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control input-sm" placeholder="Identity Proof Number">
+                                        <input type="text" class="form-control input-sm" placeholder="Identity Proof Number" value="@UserDetails.GovtID">
                                     </div>
                                     <div class="col-md-2">
                                         <button class="btn btn-primary btn-circle" type="button">
@@ -172,7 +176,7 @@
                                         <input type="radio" name="Profession" value="Salaried">Salaried
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control input-sm" placeholder="Employee Address">
+                                        <input type="text" class="form-control input-sm" placeholder="Employee Address" value="@UserDetails.OfficeLocation">
                                     </div>
                                     <div class="col-md-5 row-space-top-1">
                                         <label>Current Employer</label>
@@ -181,10 +185,10 @@
                                         <label>Employee ID</label>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control input-sm" placeholder="Current Employer Name">
+                                        <input type="text" class="form-control input-sm" placeholder="Current Employer Name" value="@UserDetails.CurrentEmployer">
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control input-sm" placeholder="Employer ID">
+                                        <input type="text" class="form-control input-sm" placeholder="Employer ID" value="@UserDetails.EmployeeID">
                                     </div>
                                    
                                     <div class="col-md-5 row-space-top-1">
@@ -195,13 +199,14 @@
                                     </div>
                                     <div class="col-md-5">
                                         <select class="form-control input-sm">
+                                            <option value="" disabled selected>Select Highest Education</option>
                                             <option value="PostGraduate">Post Graduate</option>
                                             <option value="Graduate">Graduate</option>
                                             <option value="UnderGraduate">Under Graduate</option>
                                         </select>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control input-sm" placeholder="Institution Name">
+                                        <input type="text" class="form-control input-sm" placeholder="Institution Name" value="@UserDetails.InstitutionName">
                                     </div>
                                 </div>
                                
@@ -215,6 +220,34 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*modal for changing password*@
+<div class="modal inmodal" id="modalChangePassword" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <h4 class="modal-title">Change Password</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <input type="password" class="form-control" placeholder="Current Password"/>
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" class="form-control" placeholder="New Password" />
+                </div>
+                <div class="form-group">
+                    <label>Retype Password</label>
+                    <input type="password" class="form-control" placeholder="Retype Password" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveLocation">Save changes</button>
             </div>
         </div>
     </div>
@@ -267,7 +300,13 @@
                 //the image in a folder and save path to db
             });
 
-            
+            $("#changePassword").click(function () {
+                $("#modalChangePassword").modal({ backdrop: 'static', keyboard: false });
+                //show the modal
+                $('#modalChangePassword').modal('show');
+
+            });
+
         });      
      </script>
 }

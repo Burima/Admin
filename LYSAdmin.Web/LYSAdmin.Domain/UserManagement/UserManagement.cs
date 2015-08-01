@@ -7,6 +7,7 @@ using LYSAdmin.Data.DBEntity;
 using LYSAdmin.Data.DBRepository;
 using LYSAdmin.Model;
 using AutoMapper;
+using System.Collections;
 
 namespace LYSAdmin.Domain.UserManagement
 {
@@ -14,12 +15,13 @@ namespace LYSAdmin.Domain.UserManagement
     {
         private IUnitOfWork unitOfWork = null;
         private IBaseRepository<Data.DBEntity.User> userRepository = null;
+        private IBaseRepository<Data.DBEntity.UserDetail> userDetailRepository = null;
 
         public UserManagement()
         {
             unitOfWork = new UnitOfWork();
             userRepository = new BaseRepository<Data.DBEntity.User>(unitOfWork);//Initializing userRepository through BaseRepository
-
+            userDetailRepository = new BaseRepository<Data.DBEntity.UserDetail>(unitOfWork);//Initializing userRepository through BaseRepository
             Mapper.CreateMap<Data.DBEntity.User, Model.User>();//Initilizing Mapper S:Data.DBEntity.User, D:Model.User
             Mapper.CreateMap<Model.User, Data.DBEntity.User>();
         }
@@ -54,9 +56,14 @@ namespace LYSAdmin.Domain.UserManagement
             modelUser.CreatedOn = dbUser.CreatedOn;
             modelUser.LastUpdatedOn = dbUser.LastUpdatedOn;
             modelUser.Status = dbUser.Status;
-            modelUser.Photo = dbUser.Photo;            
+            modelUser.Photo = dbUser.Photo;
+            modelUser.UserDetails = (from p in userDetailRepository.Get(p => p.UserID == dbUser.UserID)
+                                     select new Model.UserDetail
+                                     {
 
+                                     }).ToList();//Check in DB through repository
             return modelUser;
         }
+
     }
 }
