@@ -81,7 +81,21 @@ namespace LYSAdmin.Domain.UserManagement
 
             var dbUser = userRepository.FirstOrDefault(m =>m.UserID==userViewModel.User.UserID);
             dbUser.Username = userViewModel.User.Username;
+            dbUser.MobileNumber = userViewModel.User.MobileNumber;
             dbUser.FirstName = userViewModel.User.FirstName;
+            dbUser.LastName = userViewModel.User.LastName;
+            dbUser.Sex = userViewModel.User.Sex;
+            dbUser.Photo = dbUser.Photo;
+            dbUser.UserDetails.FirstOrDefault().PresentAddress = userViewModel.UserDetail.PresentAddress;
+            dbUser.UserDetails.FirstOrDefault().PermanentAddress = userViewModel.UserDetail.PermanentAddress;
+            dbUser.UserDetails.FirstOrDefault().GovtIDType = userViewModel.UserDetail.GovtIDType;
+            dbUser.UserDetails.FirstOrDefault().GovtID = userViewModel.UserDetail.GovtID;
+            dbUser.UserDetails.FirstOrDefault().UserProfession = userViewModel.UserDetail.UserProfession;
+            dbUser.UserDetails.FirstOrDefault().OfficeLocation = userViewModel.UserDetail.OfficeLocation;
+            dbUser.UserDetails.FirstOrDefault().CurrentEmployer = userViewModel.UserDetail.CurrentEmployer;
+            dbUser.UserDetails.FirstOrDefault().EmployeeID = userViewModel.UserDetail.EmployeeID;
+            dbUser.UserDetails.FirstOrDefault().HighestEducation = userViewModel.UserDetail.HighestEducation;
+            dbUser.UserDetails.FirstOrDefault().InstitutionName = userViewModel.UserDetail.InstitutionName;
             //var dbUser = Mapper.Map<LYSAdmin.Model.User, LYSAdmin.Data.DBEntity.User>(userViewModel.User);
             //var dbUserDetails = Mapper.Map<LYSAdmin.Model.UserDetail, LYSAdmin.Data.DBEntity.UserDetail>(userViewModel.UserDetail);
             userRepository.Update(dbUser);

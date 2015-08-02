@@ -13,7 +13,7 @@ namespace LYSAdmin.Web.Controllers
     {
 
         private IUserManagement userManagement;
-
+        UserViewModel userViewModel = new UserViewModel();
         public AccountController(UserManagement userManagement)
         {
             this.userManagement = userManagement;//Initializing UserManageManagement
@@ -79,7 +79,12 @@ namespace LYSAdmin.Web.Controllers
         //GET : Account/ProfileView
         public ActionResult ViewProfile()
         {
-            return View();
+            if (Session["User"] != null) {
+               
+                userViewModel.User = (User)Session["User"];
+                userViewModel.UserDetail = ((User)Session["User"]).UserDetails.FirstOrDefault();
+            }
+            return View(userViewModel);
         }
 
         //Edit View
@@ -91,10 +96,23 @@ namespace LYSAdmin.Web.Controllers
             userViewModel.User.Status = true;
             userViewModel.User.LastUpdatedOn = DateTime.Now;
             userViewModel.User.UserID = TempData["UserID"] != null ? Convert.ToInt32(TempData["UserID"]) : 0;
-            //userViewModel.UserDetail.LastUpdatedOn = DateTime.Now;
-            userManagement.UpdateUser(userViewModel);
 
-            TempData["message"] = "Profile updated successfully!";
+            if (userViewModel.User.UserID == 0)
+            {
+                Logout();
+                
+            }
+            //if userid = 0 then logout
+            //userViewModel.UserDetail.LastUpdatedOn = DateTime.Now;
+            int count = userManagement.UpdateUser(userViewModel);
+            if (count > 0)
+            {
+                TempData["message"] = "Profile updated successfully!";
+            }
+            else
+            {
+                TempData["message"] = "Error in updating your profile.Please try again later";
+            }
             return View("ViewProfile");
         }
 
