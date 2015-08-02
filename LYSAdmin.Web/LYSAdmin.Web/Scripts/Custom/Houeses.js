@@ -12,6 +12,9 @@ $(document).ready(function () {
     $('#addNewPG').click(function () {
         fnEnableNewPGInsertion();
     });
+    $('#showAllPGs').click(function () {
+        fnEnableShowingAllPGs();
+    });
     //if area is not selected show modal
     //for select City and fnOpenBasicAmenities()
     if (AreaID == 0) {
@@ -377,11 +380,7 @@ $('input[name=IsPGorHostel]').click(function () {
             success: function (response, textStatus, XMLHttpRequest) {
                 var pgList = $.parseJSON(response);
                 if (pgList.length > 0) {
-                    $('#addNewPG').removeClass('hidden');//make add new PG icon visible
-                    $('#lblSelectPG').text("Select PG or Hostel in your Saved Area");//set label text
-                    $('#ddlSelectPG').removeClass('hidden');//make ddlSelectPG visible if PG is found
-                    $('#txtPGName').val("");//make new PGName empty (if we are selecting the pg PGName should be empty)
-                    $('#txtPGName').addClass('hidden');//hide txtPGName
+                    fnEnableShowingAllPGs();
                     $('#ddlSelectPG').empty();//Restart the Areas in a City
                     $('#ddlSelectPG').append(
                                   $('<option value="0" disabled selected></option>').html("--Select PG--")
@@ -403,6 +402,7 @@ $('input[name=IsPGorHostel]').click(function () {
         });
     } else {
         $('#addNewPG').addClass('hidden');//make add new PG icon invisible
+        $('#showAllPGs').addClass('hidden');
         $('#lblSelectPG').addClass('hidden');
         $('#ddlSelectPG').addClass('hidden');
         $('#txtPGName').addClass('hidden');
@@ -412,10 +412,21 @@ $('input[name=IsPGorHostel]').click(function () {
 //this funtion enables new PG insetion inputbox and hides the selectPG ddl
 function fnEnableNewPGInsertion() {
     $('#addNewPG').addClass('hidden');//make add new PG icon invisible
+    $('#showAllPGs').removeClass('hidden');
     $("#ddlSelectPG").val("0");//reset seleted value 
     $('#lblSelectPG').text("Enter new PG or Hostel Name");//customize the text
     $('#ddlSelectPG').addClass('hidden');//make ddl selectPG invisible
-    $('#txtPGName').removeClass('hidden');//make the input box for new pg visible
+    $('#txtPGName').removeClass('hidden');//make the input box for new pg visible    
+}
+
+//this funtion enables selectPG ddl  and hides the new PG insetion inputbox
+function fnEnableShowingAllPGs() {   
+    $('#addNewPG').removeClass('hidden');//make add new PG icon visible
+    $('#showAllPGs').addClass('hidden');
+    $('#lblSelectPG').text("Select PG or Hostel in your Saved Area");//set label text
+    $('#ddlSelectPG').removeClass('hidden');//make ddlSelectPG visible if PG is found
+    $('#txtPGName').val("");//make new PGName empty (if we are selecting the pg PGName should be empty)
+    $('#txtPGName').addClass('hidden');//hide txtPGName
 }
 
 

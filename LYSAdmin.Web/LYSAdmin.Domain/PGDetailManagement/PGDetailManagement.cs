@@ -22,7 +22,7 @@ namespace LYSAdmin.Domain.PGDetailManagement
             List<Model.PGDetail> allPGs = (from p in pgDetailRepository.Get(p => p.OwnerID == OwnerID && p.AreaID == AreaID, q => q.OrderByDescending(p => p.PGName))
                                          select new Model.PGDetail
                                          {
-                                             PGDetailID = p.PGDetailID,
+                                            PGDetailID = p.PGDetailID,
                                             PGName=p.PGName,
                                             AreaID=p.AreaID,
                                             OwnerID=p.OwnerID
