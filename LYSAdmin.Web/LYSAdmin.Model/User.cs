@@ -27,8 +27,8 @@ namespace LYSAdmin.Model
         public virtual ICollection<Apartment> Apartments { get; set; }
         public virtual ICollection<Bed> Beds { get; set; }
         public virtual ICollection<HouseReview> HouseReviews { get; set; }
+        public virtual ICollection<PGDetail> PGDetails { get; set; }
         public virtual Role Role { get; set; }
         public virtual ICollection<UserDetail> UserDetails { get; set; }
-        public virtual ICollection<PGDetail> PGDetails { get; set; }
     }
 }

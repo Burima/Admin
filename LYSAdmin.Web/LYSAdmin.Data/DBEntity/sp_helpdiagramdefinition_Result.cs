@@ -10,18 +10,10 @@
 namespace LYSAdmin.Data.DBEntity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class HouseReview
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int HouseReviewID { get; set; }
-        public int UserID { get; set; }
-        public int HouseID { get; set; }
-        public string Comments { get; set; }
-        public Nullable<decimal> Rating { get; set; }
-        public Nullable<System.DateTime> CommentTime { get; set; }
-    
-        public virtual House House { get; set; }
-        public virtual User User { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace LYSAdmin.Model
         public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
         public virtual ICollection<HouseImage> HouseImages { get; set; }
         public virtual ICollection<HouseReview> HouseReviews { get; set; }
-        public virtual ICollection<Room> Rooms { get; set; }
         public virtual PGDetail PGDetail { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

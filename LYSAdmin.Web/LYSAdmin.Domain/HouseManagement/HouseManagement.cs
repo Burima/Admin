@@ -281,11 +281,13 @@ namespace LYSAdmin.Domain.HouseManagement
             #region RoomInsertion
             if (houseViewModel.House.Rooms.Count > 0)
             {
+                int roomnumber = 1;
                 foreach (var room in houseViewModel.House.Rooms)
-                {
-
+                {  
                     var dbRoom = new Data.DBEntity.Room();
                     dbRoom.HouseID = dbHouse.HouseID;
+                    dbRoom.RoomNumber = roomnumber;
+                    roomnumber++;
                 }
             }
             #endregion RoomInsertion
