@@ -74,5 +74,14 @@ namespace LYSAdmin.Domain.UserManagement
             return modelUser;
         }
 
+
+        public int UpdateUser(LYSAdmin.Model.UserViewModel userViewModel)
+        {
+            var dbUser = Mapper.Map<LYSAdmin.Model.User, LYSAdmin.Data.DBEntity.User>(userViewModel.User);
+            //var dbUserDetails = Mapper.Map<LYSAdmin.Model.UserDetail, LYSAdmin.Data.DBEntity.UserDetail>(userViewModel.UserDetail);
+            userRepository.Update(dbUser);
+            //userDetailRepository.Update(dbUserDetails);
+            return unitOfWork.SaveChanges();
+        }
     }
 }

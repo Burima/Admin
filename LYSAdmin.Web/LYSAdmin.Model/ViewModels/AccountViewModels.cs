@@ -24,4 +24,12 @@ namespace LYSAdmin.Model
         public string Password { get; set; }
        
     }
+
+    public class UserViewModel
+    {
+        public User User { get; set; }
+
+        public UserDetail UserDetail { get; set; }
+
+    }
 }

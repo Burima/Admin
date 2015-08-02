@@ -80,5 +80,16 @@ namespace LYSAdmin.Web.Controllers
             return View();
         }
 
+        //Edit View
+        [HttpPost]
+        public void EditUser(UserViewModel userViewModel)
+        {
+            userViewModel.User.Status = true;
+            userViewModel.User.LastUpdatedOn = DateTime.Now;
+            //userViewModel.UserDetail.LastUpdatedOn = DateTime.Now;
+            userManagement.UpdateUser(userViewModel);
+            
+        }
+
     }
 }
