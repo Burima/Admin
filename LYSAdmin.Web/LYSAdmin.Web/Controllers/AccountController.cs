@@ -13,7 +13,7 @@ namespace LYSAdmin.Web.Controllers
     {
 
         private IUserManagement userManagement;
-        
+
         public AccountController(UserManagement userManagement)
         {
             this.userManagement = userManagement;//Initializing UserManageManagement
@@ -34,12 +34,12 @@ namespace LYSAdmin.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
-           
+
             if (ModelState.IsValid)
             {
 
                 var user_Check = userManagement.ValidateUser(loginViewModel);//Sending form values to UserManagement Service to check the credentials
-                if (user_Check != null && user_Check.UserID>0)
+                if (user_Check != null && user_Check.UserID > 0)
                 {
                     //Return To Home Page
                     Session["User"] = user_Check;
@@ -73,7 +73,9 @@ namespace LYSAdmin.Web.Controllers
             return RedirectToAction("Login", "Account"); //Redirect to login page
         }
 
+
         [LYSAdminAuthorize]
+        [HttpGet]
         //GET : Account/ProfileView
         public ActionResult ViewProfile()
         {
@@ -81,14 +83,19 @@ namespace LYSAdmin.Web.Controllers
         }
 
         //Edit View
+        [LYSAdminAuthorize]
         [HttpPost]
-        public void EditUser(UserViewModel userViewModel)
+
+        public ActionResult ViewProfile(UserViewModel userViewModel)
         {
             userViewModel.User.Status = true;
             userViewModel.User.LastUpdatedOn = DateTime.Now;
+            userViewModel.User.UserID = TempData["UserID"] != null ? Convert.ToInt32(TempData["UserID"]) : 0;
             //userViewModel.UserDetail.LastUpdatedOn = DateTime.Now;
             userManagement.UpdateUser(userViewModel);
-            
+
+            TempData["message"] = "Profile updated successfully!";
+            return View("ViewProfile");
         }
 
     }

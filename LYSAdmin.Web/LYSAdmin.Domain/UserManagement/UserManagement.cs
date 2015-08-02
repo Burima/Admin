@@ -77,7 +77,12 @@ namespace LYSAdmin.Domain.UserManagement
 
         public int UpdateUser(LYSAdmin.Model.UserViewModel userViewModel)
         {
-            var dbUser = Mapper.Map<LYSAdmin.Model.User, LYSAdmin.Data.DBEntity.User>(userViewModel.User);
+            //getting the lates data from DB
+
+            var dbUser = userRepository.FirstOrDefault(m =>m.UserID==userViewModel.User.UserID);
+            dbUser.Username = userViewModel.User.Username;
+            dbUser.FirstName = userViewModel.User.FirstName;
+            //var dbUser = Mapper.Map<LYSAdmin.Model.User, LYSAdmin.Data.DBEntity.User>(userViewModel.User);
             //var dbUserDetails = Mapper.Map<LYSAdmin.Model.UserDetail, LYSAdmin.Data.DBEntity.UserDetail>(userViewModel.UserDetail);
             userRepository.Update(dbUser);
             //userDetailRepository.Update(dbUserDetails);

@@ -5,11 +5,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var User = (User)Session["User"];
     var UserDetails = User.UserDetails.ElementAt(0);
+    TempData["UserID"] = User.UserID;
+    
 }
 
 @Styles.Render("~/Content/Custom/ViewProfile.css")
 @Styles.Render("~/plugins/imagecropperStyles")
-@using (Html.BeginForm("EditUser", "Account", FormMethod.Post, new { role = "form", id = "view-profile-form", style = "min-height:420px" }))
+
+<!-- Show message -->
+<div class="modal inmodal" id="modalShowMessage" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>                
+                <h4 class="modal-title">Information</h4>
+                
+            </div>
+            <div class="modal-body">
+                <p>
+                    <strong>@TempData["message"]</strong>
+                </p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("ViewProfile", "Account", FormMethod.Post, new { role = "form", id = "view-profile-form", style = "min-height:420px" }))
 {
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row  border-bottom white-bg dashboard-header">
@@ -34,13 +60,13 @@
                         <div id="tab-1" class="tab-pane active">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <br/>
+                                    <br />
                                     <div class="form-group">
                                         <label>UserName</label>
                                         <input type="text" class="form-control input-sm" placeholder="Enter Username" value="@User.Username" name="User.Username">
                                     </div>
                                     <div class="form-group">
-                                        <label>Change Password</label>                          
+                                        <label>Change Password</label>
                                         <a id="changePassword" href="#">Update</a>
                                     </div>
                                     <div class="form-group">
@@ -90,42 +116,42 @@
                         </div>
                         @*tab 3 content*@
                         <div id="tab-3" class="tab-pane">
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-title  back-change">
-                                                <h5>Profile Picture</h5>
-                                            </div>
-                                            <div class="ibox-content">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Crop image</label>
-                                                        <div class="image-crop">
-                                                            <img />
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title  back-change">
+                                            <h5>Profile Picture</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Crop image</label>
+                                                    <div class="image-crop">
+                                                        <img />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Preview image</label>
+                                                    <div class="img-preview img-preview-sm"></div>
+                                                    <div class="row row-padding-top-5">
+                                                        <div class="col-md-5">
+                                                            <label title="Upload image file" for="inputImage" class="btn btn-primary">
+                                                                <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+                                                                Upload new image
+                                                            </label>
+
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <button id="btnSave" class="btn btn-primary" type="submit">Save</button>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label>Preview image</label>
-                                                        <div class="img-preview img-preview-sm"></div>
-                                                        <div class="row row-padding-top-5">
-                                                            <div class="col-md-5">
-                                                                <label title="Upload image file" for="inputImage" class="btn btn-primary">
-                                                                    <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
-                                                                    Upload new image
-                                                                </label>
-
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <button id="btnSave" class="btn btn-primary" type="submit">Save</button>
-                                                            </div>
-                                                        </div>
-                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         @*tab 4 content*@
                         <div id="tab-4" class="tab-pane">
                             <div class="row">
@@ -192,7 +218,7 @@
                                         <div class="col-md-5">
                                             <input type="text" class="form-control input-sm" placeholder="Employer ID" value="@UserDetails.EmployeeID" name="UserDetails.EmployeeID">
                                         </div>
-                                   
+
                                         <div class="col-md-5 row-space-top-1">
                                             <label>Highest Education</label>
                                         </div>
@@ -211,7 +237,7 @@
                                             <input type="text" class="form-control input-sm" placeholder="Institution Name" value="@UserDetails.InstitutionName" name="UserDetails.InstitutionName">
                                         </div>
                                     </div>
-                               
+
                                     <div class="form-group row-padding-top-5">
                                         <div>
                                             <button id="btnSave" class="btn btn-primary" type="submit" tabindex="5">Save</button>
@@ -238,7 +264,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Current Password</label>
-                    <input type="password" class="form-control" placeholder="Current Password"/>
+                    <input type="password" class="form-control" placeholder="Current Password" />
                 </div>
                 <div class="form-group">
                     <label>New Password</label>
@@ -257,9 +283,19 @@
 </div>
 
 @section scripts{
-@Scripts.Render("~/plugins/imagecropper")
+
+    <script>
+        var message = '@TempData["message"]';
+    </script>
+    @Scripts.Render("~/plugins/imagecropper")
     <script type="text/javascript">
         $(document).ready(function () {
+
+            //if message show in  modal
+            if (message != "") {
+                
+                $('#modalShowMessage').modal('show');
+            }
 
             var $image = $(".image-crop > img")
             $($image).cropper({
@@ -299,7 +335,7 @@
 
             $("#download").click(function () {
                 //window.open($image.cropper("getDataURL"));
-                //logic to display image in dp and save 
+                //logic to display image in dp and save
                 //the image in a folder and save path to db
             });
 
@@ -310,7 +346,7 @@
 
             });
 
-        });      
-     </script>
+        });
+    </script>
 }
 
