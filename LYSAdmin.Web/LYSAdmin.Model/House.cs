@@ -23,7 +23,7 @@ namespace LYSAdmin.Model
         public Nullable<int> CreatedBy { get; set; }
         public string DisplayName { get; set; }
         public bool IsPg { get; set; }
-        public Nullable<int> PgInfoId { get; set; }
+        public Nullable<int> PGDetailID { get; set; }
         public Nullable<decimal> Latitude { get; set; }
         public Nullable<decimal> Longitude { get; set; }
 
@@ -32,5 +32,6 @@ namespace LYSAdmin.Model
         public virtual ICollection<HouseImage> HouseImages { get; set; }
         public virtual ICollection<HouseReview> HouseReviews { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
+        public virtual PGDetail PGDetail { get; set; }
     }
 }

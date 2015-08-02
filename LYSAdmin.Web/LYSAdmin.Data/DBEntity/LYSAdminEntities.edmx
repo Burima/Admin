@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LYSAdmin.Data.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LYSAdmin.Data.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Apartments">
           <Key>
             <PropertyRef Name="ApartmentID" />
@@ -188,15 +188,15 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="DisplayName" Type="varchar" MaxLength="50" />
           <Property Name="IsPg" Type="bit" Nullable="false" />
-          <Property Name="PgInfoId" Type="int" />
+          <Property Name="PGDetailID" Type="int" />
           <Property Name="Latitude" Type="decimal" Precision="30" Scale="25" />
           <Property Name="Longitude" Type="decimal" Precision="30" Scale="25" />
         </EntityType>
         <EntityType Name="PGDetails">
           <Key>
-            <PropertyRef Name="PGdetailID" />
+            <PropertyRef Name="PGDetailID" />
           </Key>
-          <Property Name="PGdetailID" Type="int" Nullable="false" />
+          <Property Name="PGDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PGName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AreaID" Type="int" Nullable="false" />
           <Property Name="OwnerID" Type="int" Nullable="false" />
@@ -419,6 +419,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Houses_PGDetailID">
+          <End Role="PGDetails" Type="Self.PGDetails" Multiplicity="0..1" />
+          <End Role="Houses" Type="Self.Houses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PGDetails">
+              <PropertyRef Name="PGDetailID" />
+            </Principal>
+            <Dependent Role="Houses">
+              <PropertyRef Name="PGDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PGDetails_AreaID">
           <End Role="Areas" Type="Self.Areas" Multiplicity="1" />
           <End Role="PGDetails" Type="Self.PGDetails" Multiplicity="*" />
@@ -536,6 +548,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="HouseReviews" EntitySet="HouseReviews" />
           </AssociationSet>
+          <AssociationSet Name="FK_Houses_PGDetailID" Association="Self.FK_Houses_PGDetailID">
+            <End Role="PGDetails" EntitySet="PGDetails" />
+            <End Role="Houses" EntitySet="Houses" />
+          </AssociationSet>
           <AssociationSet Name="FK_PGDetails_AreaID" Association="Self.FK_PGDetails_AreaID">
             <End Role="Areas" EntitySet="Areas" />
             <End Role="PGDetails" EntitySet="PGDetails" />
@@ -553,8 +569,7 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LYSAdmin.Data" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -590,7 +605,7 @@
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Apartments" Relationship="Self.FK_Apartments_AreaID" FromRole="Areas" ToRole="Apartments" />
           <NavigationProperty Name="City" Relationship="Self.FK_Areas_CityID" FromRole="Areas" ToRole="Cities" />
-          <NavigationProperty Name="PGDetails" Relationship="Self.FK_PGDetails_AreaID" FromRole="Areas" ToRole="PGDetails" />
+          <NavigationProperty Name="PGDetails" Relationship="LYSAdmin.Data.FK_PGDetails_AreaID" FromRole="Area" ToRole="PGDetail" />
         </EntityType>
         <EntityType Name="Bed">
           <Key>
@@ -696,7 +711,7 @@
           <Property Name="NoBoysEntry" Type="Boolean" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="House" Relationship="Self.FK__House_Amenities__Houses" FromRole="HouseAmenities" ToRole="Houses" />
+          <NavigationProperty Name="House" Relationship="LYSAdmin.Data.FK__House_Amenities__Houses" FromRole="HouseAmenity" ToRole="House" />
         </EntityType>
         <EntityType Name="HouseDescription">
           <Key>
@@ -713,7 +728,7 @@
           <Property Name="NoOfBalconnies" Type="Int32" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="House" Relationship="Self.FK_HouseDescriptions_HouseID" FromRole="HouseDescriptions" ToRole="Houses" />
+          <NavigationProperty Name="House" Relationship="LYSAdmin.Data.FK_HouseDescriptions_HouseID" FromRole="HouseDescription" ToRole="House" />
         </EntityType>
         <EntityType Name="HouseImage">
           <Key>
@@ -724,7 +739,7 @@
           <Property Name="HouseID" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="House" Relationship="Self.FK_HouseImages_HouseID" FromRole="HouseImages" ToRole="Houses" />
+          <NavigationProperty Name="House" Relationship="LYSAdmin.Data.FK_HouseImages_HouseID" FromRole="HouseImage" ToRole="House" />
         </EntityType>
         <EntityType Name="HouseReview">
           <Key>
@@ -736,47 +751,8 @@
           <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Rating" Type="Decimal" Precision="3" Scale="2" />
           <Property Name="CommentTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="House" Relationship="Self.FK_HouseReviews_HouseID" FromRole="HouseReviews" ToRole="Houses" />
           <NavigationProperty Name="User" Relationship="Self.FK_HouseReviews_UserID" FromRole="HouseReviews" ToRole="Users" />
-        </EntityType>
-        <EntityType Name="House">
-          <Key>
-            <PropertyRef Name="HouseID" />
-          </Key>
-          <Property Name="HouseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HouseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="OwnerID" Type="Int32" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="LinkID" Type="Int32" />
-          <Property Name="LinkTypeID" Type="Int32" />
-          <Property Name="isDeleted" Type="Boolean" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsPg" Type="Boolean" Nullable="false" />
-          <Property Name="PgInfoId" Type="Int32" />
-          <Property Name="Latitude" Type="Decimal" Precision="30" Scale="25" />
-          <Property Name="Longitude" Type="Decimal" Precision="30" Scale="25" />
-          <NavigationProperty Name="HouseAmenities" Relationship="Self.FK__House_Amenities__Houses" FromRole="Houses" ToRole="HouseAmenities" />
-          <NavigationProperty Name="HouseDescriptions" Relationship="Self.FK_HouseDescriptions_HouseID" FromRole="Houses" ToRole="HouseDescriptions" />
-          <NavigationProperty Name="HouseImages" Relationship="Self.FK_HouseImages_HouseID" FromRole="Houses" ToRole="HouseImages" />
-          <NavigationProperty Name="HouseReviews" Relationship="Self.FK_HouseReviews_HouseID" FromRole="Houses" ToRole="HouseReviews" />
-          <NavigationProperty Name="Rooms" Relationship="Self.FK__Rooms__HouseID" FromRole="Houses" ToRole="Rooms" />
-        </EntityType>
-        <EntityType Name="PGDetail">
-          <Key>
-            <PropertyRef Name="PGdetailID" />
-          </Key>
-          <Property Name="PGdetailID" Type="Int32" Nullable="false" />
-          <Property Name="PGName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AreaID" Type="Int32" Nullable="false" />
-          <Property Name="OwnerID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Area" Relationship="Self.FK_PGDetails_AreaID" FromRole="PGDetails" ToRole="Areas" />
-          <NavigationProperty Name="User" Relationship="Self.FK_PGDetails_OwnerID" FromRole="PGDetails" ToRole="Users" />
+          <NavigationProperty Name="House" Relationship="LYSAdmin.Data.FK_HouseReviews_HouseID" FromRole="HouseReview" ToRole="House" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -802,7 +778,7 @@
           <Property Name="NoOfBeds" Type="Int32" Nullable="false" />
           <Property Name="Deposit" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Beds" Relationship="Self.FK_Beds_RoomID" FromRole="Rooms" ToRole="Beds" />
-          <NavigationProperty Name="House" Relationship="Self.FK__Rooms__HouseID" FromRole="Rooms" ToRole="Houses" />
+          <NavigationProperty Name="House" Relationship="LYSAdmin.Data.FK__Rooms__HouseID" FromRole="Room" ToRole="House" />
         </EntityType>
         <EntityType Name="UserDetail">
           <Key>
@@ -846,9 +822,9 @@
           <NavigationProperty Name="Apartments" Relationship="Self.FK_Apartments_OwnerID" FromRole="Users" ToRole="Apartments" />
           <NavigationProperty Name="Beds" Relationship="Self.FK_Beds_UserID" FromRole="Users" ToRole="Beds" />
           <NavigationProperty Name="HouseReviews" Relationship="Self.FK_HouseReviews_UserID" FromRole="Users" ToRole="HouseReviews" />
-          <NavigationProperty Name="PGDetails" Relationship="Self.FK_PGDetails_OwnerID" FromRole="Users" ToRole="PGDetails" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Users_RoleID" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="UserDetails" Relationship="Self.PK_UserDetails_UserID" FromRole="Users" ToRole="UserDetails" />
+          <NavigationProperty Name="PGDetails" Relationship="LYSAdmin.Data.FK_PGDetails_OwnerID" FromRole="User" ToRole="PGDetail" />
         </EntityType>
         <Association Name="FK_Apartments_AreaID">
           <End Role="Areas" Type="Self.Area" Multiplicity="0..1" />
@@ -898,18 +874,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PGDetails_AreaID">
-          <End Role="Areas" Type="Self.Area" Multiplicity="1" />
-          <End Role="PGDetails" Type="Self.PGDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Areas">
-              <PropertyRef Name="AreaID" />
-            </Principal>
-            <Dependent Role="PGDetails">
-              <PropertyRef Name="AreaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Beds_RoomID">
           <End Role="Rooms" Type="Self.Room" Multiplicity="1" />
           <End Role="Beds" Type="Self.Bed" Multiplicity="*" />
@@ -946,54 +910,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__House_Amenities__Houses">
-          <End Role="Houses" Type="Self.House" Multiplicity="1" />
-          <End Role="HouseAmenities" Type="Self.HouseAmenity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Houses">
-              <PropertyRef Name="HouseID" />
-            </Principal>
-            <Dependent Role="HouseAmenities">
-              <PropertyRef Name="HouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HouseDescriptions_HouseID">
-          <End Role="Houses" Type="Self.House" Multiplicity="1" />
-          <End Role="HouseDescriptions" Type="Self.HouseDescription" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Houses">
-              <PropertyRef Name="HouseID" />
-            </Principal>
-            <Dependent Role="HouseDescriptions">
-              <PropertyRef Name="HouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HouseImages_HouseID">
-          <End Role="Houses" Type="Self.House" Multiplicity="1" />
-          <End Role="HouseImages" Type="Self.HouseImage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Houses">
-              <PropertyRef Name="HouseID" />
-            </Principal>
-            <Dependent Role="HouseImages">
-              <PropertyRef Name="HouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HouseReviews_HouseID">
-          <End Role="Houses" Type="Self.House" Multiplicity="1" />
-          <End Role="HouseReviews" Type="Self.HouseReview" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Houses">
-              <PropertyRef Name="HouseID" />
-            </Principal>
-            <Dependent Role="HouseReviews">
-              <PropertyRef Name="HouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_HouseReviews_UserID">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="HouseReviews" Type="Self.HouseReview" Multiplicity="*" />
@@ -1003,30 +919,6 @@
             </Principal>
             <Dependent Role="HouseReviews">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Rooms__HouseID">
-          <End Role="Houses" Type="Self.House" Multiplicity="1" />
-          <End Role="Rooms" Type="Self.Room" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Houses">
-              <PropertyRef Name="HouseID" />
-            </Principal>
-            <Dependent Role="Rooms">
-              <PropertyRef Name="HouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PGDetails_OwnerID">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="PGDetails" Type="Self.PGDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="PGDetails">
-              <PropertyRef Name="OwnerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1065,8 +957,6 @@
           <EntitySet Name="HouseDescriptions" EntityType="Self.HouseDescription" />
           <EntitySet Name="HouseImages" EntityType="Self.HouseImage" />
           <EntitySet Name="HouseReviews" EntityType="Self.HouseReview" />
-          <EntitySet Name="Houses" EntityType="Self.House" />
-          <EntitySet Name="PGDetails" EntityType="Self.PGDetail" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
@@ -1087,10 +977,6 @@
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Areas" EntitySet="Areas" />
           </AssociationSet>
-          <AssociationSet Name="FK_PGDetails_AreaID" Association="Self.FK_PGDetails_AreaID">
-            <End Role="Areas" EntitySet="Areas" />
-            <End Role="PGDetails" EntitySet="PGDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_Beds_RoomID" Association="Self.FK_Beds_RoomID">
             <End Role="Rooms" EntitySet="Rooms" />
             <End Role="Beds" EntitySet="Beds" />
@@ -1103,33 +989,9 @@
             <End Role="Countries" EntitySet="Countries" />
             <End Role="Cities" EntitySet="Cities" />
           </AssociationSet>
-          <AssociationSet Name="FK__House_Amenities__Houses" Association="Self.FK__House_Amenities__Houses">
-            <End Role="Houses" EntitySet="Houses" />
-            <End Role="HouseAmenities" EntitySet="HouseAmenities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HouseDescriptions_HouseID" Association="Self.FK_HouseDescriptions_HouseID">
-            <End Role="Houses" EntitySet="Houses" />
-            <End Role="HouseDescriptions" EntitySet="HouseDescriptions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HouseImages_HouseID" Association="Self.FK_HouseImages_HouseID">
-            <End Role="Houses" EntitySet="Houses" />
-            <End Role="HouseImages" EntitySet="HouseImages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HouseReviews_HouseID" Association="Self.FK_HouseReviews_HouseID">
-            <End Role="Houses" EntitySet="Houses" />
-            <End Role="HouseReviews" EntitySet="HouseReviews" />
-          </AssociationSet>
           <AssociationSet Name="FK_HouseReviews_UserID" Association="Self.FK_HouseReviews_UserID">
             <End Role="Users" EntitySet="Users" />
             <End Role="HouseReviews" EntitySet="HouseReviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Rooms__HouseID" Association="Self.FK__Rooms__HouseID">
-            <End Role="Houses" EntitySet="Houses" />
-            <End Role="Rooms" EntitySet="Rooms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PGDetails_OwnerID" Association="Self.FK_PGDetails_OwnerID">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="PGDetails" EntitySet="PGDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_RoleID" Association="Self.FK_Users_RoleID">
             <End Role="Roles" EntitySet="Roles" />
@@ -1139,7 +1001,178 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
+          <EntitySet Name="Houses" EntityType="LYSAdmin.Data.House" />
+          <EntitySet Name="PGDetails" EntityType="LYSAdmin.Data.PGDetail" />
+          <AssociationSet Name="FK_PGDetails_AreaID" Association="LYSAdmin.Data.FK_PGDetails_AreaID">
+            <End Role="Area" EntitySet="Areas" />
+            <End Role="PGDetail" EntitySet="PGDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__House_Amenities__Houses" Association="LYSAdmin.Data.FK__House_Amenities__Houses">
+            <End Role="House" EntitySet="Houses" />
+            <End Role="HouseAmenity" EntitySet="HouseAmenities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HouseDescriptions_HouseID" Association="LYSAdmin.Data.FK_HouseDescriptions_HouseID">
+            <End Role="House" EntitySet="Houses" />
+            <End Role="HouseDescription" EntitySet="HouseDescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HouseImages_HouseID" Association="LYSAdmin.Data.FK_HouseImages_HouseID">
+            <End Role="House" EntitySet="Houses" />
+            <End Role="HouseImage" EntitySet="HouseImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HouseReviews_HouseID" Association="LYSAdmin.Data.FK_HouseReviews_HouseID">
+            <End Role="House" EntitySet="Houses" />
+            <End Role="HouseReview" EntitySet="HouseReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rooms__HouseID" Association="LYSAdmin.Data.FK__Rooms__HouseID">
+            <End Role="House" EntitySet="Houses" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Houses_PGDetailID" Association="LYSAdmin.Data.FK_Houses_PGDetailID">
+            <End Role="PGDetail" EntitySet="PGDetails" />
+            <End Role="House" EntitySet="Houses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PGDetails_OwnerID" Association="LYSAdmin.Data.FK_PGDetails_OwnerID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PGDetail" EntitySet="PGDetails" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="House">
+          <Key>
+            <PropertyRef Name="HouseID" />
+          </Key>
+          <Property Name="HouseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HouseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="OwnerID" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="LinkID" Type="Int32" />
+          <Property Name="LinkTypeID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsPg" Type="Boolean" Nullable="false" />
+          <Property Name="PGDetailID" Type="Int32" />
+          <Property Name="Latitude" Type="Decimal" Precision="30" Scale="25" />
+          <Property Name="Longitude" Type="Decimal" Precision="30" Scale="25" />
+          <NavigationProperty Name="HouseAmenities" Relationship="LYSAdmin.Data.FK__House_Amenities__Houses" FromRole="House" ToRole="HouseAmenity" />
+          <NavigationProperty Name="HouseDescriptions" Relationship="LYSAdmin.Data.FK_HouseDescriptions_HouseID" FromRole="House" ToRole="HouseDescription" />
+          <NavigationProperty Name="HouseImages" Relationship="LYSAdmin.Data.FK_HouseImages_HouseID" FromRole="House" ToRole="HouseImage" />
+          <NavigationProperty Name="HouseReviews" Relationship="LYSAdmin.Data.FK_HouseReviews_HouseID" FromRole="House" ToRole="HouseReview" />
+          <NavigationProperty Name="Rooms" Relationship="LYSAdmin.Data.FK__Rooms__HouseID" FromRole="House" ToRole="Room" />
+          <NavigationProperty Name="PGDetail" Relationship="LYSAdmin.Data.FK_Houses_PGDetailID" FromRole="House" ToRole="PGDetail" />
+        </EntityType>
+        <EntityType Name="PGDetail">
+          <Key>
+            <PropertyRef Name="PGDetailID" />
+          </Key>
+          <Property Name="PGDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PGName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AreaID" Type="Int32" Nullable="false" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Area" Relationship="LYSAdmin.Data.FK_PGDetails_AreaID" FromRole="PGDetail" ToRole="Area" />
+          <NavigationProperty Name="Houses" Relationship="LYSAdmin.Data.FK_Houses_PGDetailID" FromRole="PGDetail" ToRole="House" />
+          <NavigationProperty Name="User" Relationship="LYSAdmin.Data.FK_PGDetails_OwnerID" FromRole="PGDetail" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_PGDetails_AreaID">
+          <End Type="LYSAdmin.Data.Area" Role="Area" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.PGDetail" Role="PGDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="AreaID" />
+            </Principal>
+            <Dependent Role="PGDetail">
+              <PropertyRef Name="AreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__House_Amenities__Houses">
+          <End Type="LYSAdmin.Data.House" Role="House" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.HouseAmenity" Role="HouseAmenity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="HouseAmenity">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HouseDescriptions_HouseID">
+          <End Type="LYSAdmin.Data.House" Role="House" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.HouseDescription" Role="HouseDescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="HouseDescription">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HouseImages_HouseID">
+          <End Type="LYSAdmin.Data.House" Role="House" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.HouseImage" Role="HouseImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="HouseImage">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HouseReviews_HouseID">
+          <End Type="LYSAdmin.Data.House" Role="House" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.HouseReview" Role="HouseReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="HouseReview">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rooms__HouseID">
+          <End Type="LYSAdmin.Data.House" Role="House" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.Room" Role="Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="HouseID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Houses_PGDetailID">
+          <End Type="LYSAdmin.Data.PGDetail" Role="PGDetail" Multiplicity="0..1" />
+          <End Type="LYSAdmin.Data.House" Role="House" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PGDetail">
+              <PropertyRef Name="PGDetailID" />
+            </Principal>
+            <Dependent Role="House">
+              <PropertyRef Name="PGDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PGDetails_OwnerID">
+          <End Type="LYSAdmin.Data.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.PGDetail" Role="PGDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PGDetail">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1320,40 +1353,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Houses">
-            <EntityTypeMapping TypeName="LYSAdmin.Data.House">
-              <MappingFragment StoreEntitySet="Houses">
-                <ScalarProperty Name="HouseID" ColumnName="HouseID" />
-                <ScalarProperty Name="HouseName" ColumnName="HouseName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
-                <ScalarProperty Name="LinkID" ColumnName="LinkID" />
-                <ScalarProperty Name="LinkTypeID" ColumnName="LinkTypeID" />
-                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="IsPg" ColumnName="IsPg" />
-                <ScalarProperty Name="PgInfoId" ColumnName="PgInfoId" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PGDetails">
-            <EntityTypeMapping TypeName="LYSAdmin.Data.PGDetail">
-              <MappingFragment StoreEntitySet="PGDetails">
-                <ScalarProperty Name="PGdetailID" ColumnName="PGdetailID" />
-                <ScalarProperty Name="PGName" ColumnName="PGName" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="LYSAdmin.Data.Role">
               <MappingFragment StoreEntitySet="Roles">
@@ -1417,6 +1416,40 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Houses">
+            <EntityTypeMapping TypeName="LYSAdmin.Data.House">
+              <MappingFragment StoreEntitySet="Houses">
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="PGDetailID" ColumnName="PGDetailID" />
+                <ScalarProperty Name="IsPg" ColumnName="IsPg" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="LinkTypeID" ColumnName="LinkTypeID" />
+                <ScalarProperty Name="LinkID" ColumnName="LinkID" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="HouseName" ColumnName="HouseName" />
+                <ScalarProperty Name="HouseID" ColumnName="HouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PGDetails">
+            <EntityTypeMapping TypeName="LYSAdmin.Data.PGDetail">
+              <MappingFragment StoreEntitySet="PGDetails">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="PGName" ColumnName="PGName" />
+                <ScalarProperty Name="PGDetailID" ColumnName="PGDetailID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
