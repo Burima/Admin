@@ -194,7 +194,13 @@ namespace LYSAdmin.Web.Controllers
         [HttpPost]
         public ActionResult AddHouse(HouseViewModel houseViewModel)
         {
-            return View("Houses", houseViewModel);
+            houseViewModel.AreaID = GetAreaID();
+            houseViewModel.OwnerID = GetOwnerID();
+            houseViewModel.House.CreatedOn = DateTime.Now;
+            houseViewModel.House.CreatedBy = ((User)Session["User"]).UserID;
+            int count = houseManagement.AddHouse(houseViewModel);
+
+            return RedirectToAction("Houses", "Estate");
         }
 
         #endregion Houses

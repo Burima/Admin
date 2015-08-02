@@ -29,7 +29,8 @@ namespace LYSAdmin.Model
         public int CityID { get; set; }
         public int AreaID { get; set; }
         public int ApartmentID { get; set; }
-        public int BlockID { get; set; }
+        public int BlockID { get; set; }        
+        public int OwnerID { get; set; }
 
         public PGDetail PGdetail { get; set; }
 

@@ -13,100 +13,103 @@ namespace LYSAdmin.Domain.HouseManagement
     {
         private IUnitOfWork unitOfWork = null;
         private IBaseRepository<Data.DBEntity.House> houseRepository = null;
+        private IBaseRepository<Data.DBEntity.PGDetail> pgDetailRepository = null;
         public HouseManagement()
         {
             unitOfWork = new UnitOfWork();
             houseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
+            pgDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
         }
         public IList<Model.House> GetHouses(int OwnerID)
         {
             IList<Model.House> houses = (from p in houseRepository.Get(p => p.isDeleted == false && p.OwnerID == OwnerID, q => q.OrderByDescending(p => p.LastUpdatedOn))
-                                                 select new Model.House
-                                                 {
-                                                     HouseID = p.HouseID,
-                                                     HouseName = p.HouseName,
-                                                     Description = p.Description,
-                                                     LastUpdatedOn = p.LastUpdatedOn,
-                                                     HouseAmenities = (from g in p.HouseAmenities
-                                                                       select new LYSAdmin.Model.HouseAmenity
-                                                               {
-                                                                   AminityID = g.AminityID,
-                                                                   AC = g.AC,
-                                                                   Aquaguard = g.Aquaguard,
-                                                                   AttachBathrooms = g.AttachBathrooms,
-                                                                   BreakFastGiven = g.BreakFastGiven,
-                                                                   Clubhouse = g.Clubhouse,
-                                                                   CommonTV = g.CommonTV,
-                                                                   CreatedOn = g.CreatedOn,
-                                                                   DinnerGiven = g.DinnerGiven,
-                                                                   EmergencyMedicalServices = g.EmergencyMedicalServices,
-                                                                   FourWheelerCloseParking = g.FourWheelerCloseParking,
-                                                                   FourWheelerOpenParking = g.FourWheelerOpenParking,
-                                                                   Fridge = g.Fridge,
-                                                                   GuardianEntry = g.GuardianEntry,
-                                                                   GYM = g.GYM,
-                                                                   HotColdWaterSupply = g.HotColdWaterSupply,
-                                                                   Housekeeping = g.Housekeeping,
-                                                                   IndividualTV =g.IndividualTV,
-                                                                  IntercomFacility = g.IntercomFacility,
-                                                                   IroningWashingServices = g.IroningWashingServices,
-                                                                   KitchenFacilityWithGas = g.KitchenFacilityWithGas,
-                                                                   LCDTVCableConnection = g.LCDTVCableConnection,
-                                                                  Lift = g.Lift,
-                                                                  Lockers = g.Lockers,
-                                                                   LunchGiven = g.LunchGiven,
-                                                                   MineralDrinkingWater = g.MineralDrinkingWater,
-                                                                  Newspaper = g.Newspaper,
-                                                                   NoBoysEntry = g.NoBoysEntry,
-                                                                   NoDrinking = g.NoDrinking,
-                                                                   NoSmoking = g.NoSmoking,
-                                                                   NonVegAllowed = g.NonVegAllowed,
-                                                                   Partyhall = g.Partyhall,
-                                                                  Playground = g.Playground,
-                                                                   Powerbackup = g.Powerbackup,
-                                                                   RoomService = g.RoomService,
-                                                                  Security = g.Security,
-                                                                   SwimmingPool = g.SwimmingPool,
-                                                                   TwoWheelerCloseParking = g.TwoWheelerCloseParking,
-                                                                   TwoWheelerOpenParking = g.TwoWheelerOpenParking,
-                                                                  VideoSurveillance = g.VideoSurveillance,
-                                                                  Wardrobes = g.Wardrobes,
-                                                                  Washingmachine = g.Washingmachine,
-                                                                  WaterSupply = g.WaterSupply,
-                                                                  Wifi = g.Wifi                                                             
-                                                                   
-                                                               }).ToList(),
-                                                     HouseDescriptions = (from h in p.HouseDescriptions
-                                                                          select new LYSAdmin.Model.HouseDescription{
-                                                                             DescrID = h.DescrID,
-                                                                             Description = h.Description,
-                                                                             Address = h.Address,
-                                                                            Gender = h.Gender,
-                                                                            Landmark = h.Landmark,
-                                                                             NoOfBalconnies = h.NoOfBalconnies,
-                                                                             NoOfBathrooms = h.NoOfBathrooms,
-                                                                             NoOfRooms = h.NoOfRooms
-                                                             } ).ToList(),
+                                         select new Model.House
+                                         {
+                                             HouseID = p.HouseID,
+                                             HouseName = p.HouseName,
+                                             Description = p.Description,
+                                             LastUpdatedOn = p.LastUpdatedOn,
+                                             HouseAmenities = (from g in p.HouseAmenities
+                                                               select new LYSAdmin.Model.HouseAmenity
+                                                       {
+                                                           AminityID = g.AminityID,
+                                                           AC = g.AC,
+                                                           Aquaguard = g.Aquaguard,
+                                                           AttachBathrooms = g.AttachBathrooms,
+                                                           BreakFastGiven = g.BreakFastGiven,
+                                                           Clubhouse = g.Clubhouse,
+                                                           CommonTV = g.CommonTV,
+                                                           CreatedOn = g.CreatedOn,
+                                                           DinnerGiven = g.DinnerGiven,
+                                                           EmergencyMedicalServices = g.EmergencyMedicalServices,
+                                                           FourWheelerCloseParking = g.FourWheelerCloseParking,
+                                                           FourWheelerOpenParking = g.FourWheelerOpenParking,
+                                                           Fridge = g.Fridge,
+                                                           GuardianEntry = g.GuardianEntry,
+                                                           GYM = g.GYM,
+                                                           HotColdWaterSupply = g.HotColdWaterSupply,
+                                                           Housekeeping = g.Housekeeping,
+                                                           IndividualTV = g.IndividualTV,
+                                                           IntercomFacility = g.IntercomFacility,
+                                                           IroningWashingServices = g.IroningWashingServices,
+                                                           KitchenFacilityWithGas = g.KitchenFacilityWithGas,
+                                                           LCDTVCableConnection = g.LCDTVCableConnection,
+                                                           Lift = g.Lift,
+                                                           Lockers = g.Lockers,
+                                                           LunchGiven = g.LunchGiven,
+                                                           MineralDrinkingWater = g.MineralDrinkingWater,
+                                                           Newspaper = g.Newspaper,
+                                                           NoBoysEntry = g.NoBoysEntry,
+                                                           NoDrinking = g.NoDrinking,
+                                                           NoSmoking = g.NoSmoking,
+                                                           NonVegAllowed = g.NonVegAllowed,
+                                                           Partyhall = g.Partyhall,
+                                                           Playground = g.Playground,
+                                                           Powerbackup = g.Powerbackup,
+                                                           RoomService = g.RoomService,
+                                                           Security = g.Security,
+                                                           SwimmingPool = g.SwimmingPool,
+                                                           TwoWheelerCloseParking = g.TwoWheelerCloseParking,
+                                                           TwoWheelerOpenParking = g.TwoWheelerOpenParking,
+                                                           VideoSurveillance = g.VideoSurveillance,
+                                                           Wardrobes = g.Wardrobes,
+                                                           Washingmachine = g.Washingmachine,
+                                                           WaterSupply = g.WaterSupply,
+                                                           Wifi = g.Wifi
 
-                                                     HouseImages = (from i in p.HouseImages
-                                                                    select new LYSAdmin.Model.HouseImage
-                                                                    {
-                                                                        HouseImageID = i.HouseImageID,
-                                                                        ImagePath = i.ImagePath
-                                                                    }).ToList(),
+                                                       }).ToList(),
+                                             HouseDescriptions = (from h in p.HouseDescriptions
+                                                                  select new LYSAdmin.Model.HouseDescription
+                                                                  {
+                                                                      DescrID = h.DescrID,
+                                                                      Description = h.Description,
+                                                                      Address = h.Address,
+                                                                      Gender = h.Gender,
+                                                                      Landmark = h.Landmark,
+                                                                      NoOfBalconnies = h.NoOfBalconnies,
+                                                                      NoOfBathrooms = h.NoOfBathrooms,
+                                                                      NoOfRooms = h.NoOfRooms
+                                                                  }).ToList(),
 
-                                                    Rooms = (from r in p.Rooms
-                                                             select new LYSAdmin.Model.Room
-                                                             {
-                                                                 RoomID = r.RoomID,
-                                                                 RoomNumber = r.RoomNumber,
-                                                                 MonthlyRent = r.MonthlyRent,
-                                                                 Deposit = r.Deposit,
-                                                                 NoOfBeds = r.NoOfBeds
-                                                             } ).ToList()
+                                             HouseImages = (from i in p.HouseImages
+                                                            select new LYSAdmin.Model.HouseImage
+                                                            {
+                                                                HouseImageID = i.HouseImageID,
+                                                                ImagePath = i.ImagePath
+                                                            }).ToList(),
 
-                                                 }).ToList();
-                                                        
+                                             Rooms = (from r in p.Rooms
+                                                      select new LYSAdmin.Model.Room
+                                                      {
+                                                          RoomID = r.RoomID,
+                                                          RoomNumber = r.RoomNumber,
+                                                          MonthlyRent = r.MonthlyRent,
+                                                          Deposit = r.Deposit,
+                                                          NoOfBeds = r.NoOfBeds
+                                                      }).ToList()
+
+                                         }).ToList();
+
 
 
             return houses;
@@ -167,7 +170,7 @@ namespace LYSAdmin.Domain.HouseManagement
                                                    Wardrobes = g.Wardrobes,
                                                    Washingmachine = g.Washingmachine,
                                                    WaterSupply = g.WaterSupply,
-                                                   Wifi = g.Wifi      
+                                                   Wifi = g.Wifi
 
                                                }).ToList(),
                              HouseDescriptions = (from h in p.HouseDescriptions
@@ -206,8 +209,89 @@ namespace LYSAdmin.Domain.HouseManagement
 
         public int AddHouse(HouseViewModel houseViewModel)
         {
+            #region LinkTypeIDandLinkIDFunctionality
+
+            //block selected, so as apartment
+            if (houseViewModel.BlockID > 0)
+            {
+                houseViewModel.House.LinkTypeID = 1;
+                houseViewModel.House.LinkID = houseViewModel.BlockID;
+            }
+            else
+            {
+                //block not selected but apartment selected
+                if (houseViewModel.ApartmentID > 0)
+                {
+                    houseViewModel.House.LinkTypeID = 2;
+                    houseViewModel.House.LinkID = houseViewModel.ApartmentID;
+                }
+                //block and apartment both not selected
+                else
+                {
+                    houseViewModel.House.LinkTypeID = 3;
+                    houseViewModel.House.LinkID = houseViewModel.AreaID;
+                }
+            }
+
+            #endregion LinkTypeIDandLinkIDFunctionality
+
+            /*-------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+            #region PGSelectioFunctionality
+            //PG is selected existing PGs n dropdown
+            if (houseViewModel.PGdetail.PGDetailID > 0)
+            {
+                houseViewModel.House.PGDetailID = houseViewModel.PGdetail.PGDetailID;
+                houseViewModel.House.IsPg = true;
+            }
+            else
+            {
+                if (houseViewModel.PGdetail.PGName != null && houseViewModel.PGdetail.PGName != String.Empty)
+                {
+                    //set details to inserta new PG
+                    var pgDetail = new Data.DBEntity.PGDetail();
+                    pgDetail.PGName = houseViewModel.PGdetail.PGName;
+                    pgDetail.AreaID = houseViewModel.AreaID;
+                    pgDetail.OwnerID = houseViewModel.OwnerID;
+                    //Insert into DB
+                    pgDetailRepository.Insert(pgDetail);
+
+                    //set PGDetailID for House Table
+                    houseViewModel.House.PGDetailID = pgDetail.PGDetailID;
+                    houseViewModel.House.IsPg = true;
+
+                }
+                else
+                {
+                    //is not a PG type House
+                    houseViewModel.House.PGDetailID = 0;
+                    houseViewModel.House.IsPg = false;
+                   
+                }
+            }
+            #endregion PGSelectioFunctionality
+
+            /*----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
             var dbHouse = Mapper.Map<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>(houseViewModel.House);//Converting Model.Apartment to Data.Apartment
             houseRepository.Insert(dbHouse);//Inserting new lead
+
+            /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+            #region RoomInsertion
+            if (houseViewModel.House.Rooms.Count > 0)
+            {
+                foreach (var room in houseViewModel.House.Rooms)
+                {
+
+                    var dbRoom = new Data.DBEntity.Room();
+                    dbRoom.HouseID = dbHouse.HouseID;
+                }
+            }
+            #endregion RoomInsertion
+
+
+
             return unitOfWork.SaveChanges();//Saving the changes to DB
 
         }
@@ -218,6 +302,6 @@ namespace LYSAdmin.Domain.HouseManagement
             return unitOfWork.SaveChanges();
         }
 
-       
+
     }
 }
