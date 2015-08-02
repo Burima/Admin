@@ -11,5 +11,6 @@ namespace LYSAdmin.Domain.UserManagement
     public interface IUserManagement
     {
         Model.User ValidateUser(Model.LoginViewModel user);
+        int UpdateUser(UserViewModel userViewModel);
     }
 }
