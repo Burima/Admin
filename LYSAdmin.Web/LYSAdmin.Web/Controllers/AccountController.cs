@@ -113,7 +113,7 @@ namespace LYSAdmin.Web.Controllers
             {
                 TempData["message"] = "Error in updating your profile.Please try again later";
             }
-            return View("ViewProfile");
+            return View(userViewModel);
         }
 
     }
