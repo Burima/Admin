@@ -142,7 +142,7 @@
 
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <label title="Download image" id="download" class="btn btn-primary">Download</label>
+                                                            <label title="Save image" id="saveImage" class="btn btn-primary">Save</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -331,14 +331,34 @@
                 $inputImage.addClass("hide");
             }
 
-            $("#download").click(function () {
-                //alert($image.cropper("getDataURL"));
-                var image = document.getElementById("profileImage");
-                var url = image.src.replace($image.cropper("getDataURL"), 'data:application/octet-stream');
-                window.open(url);
-                //window.open($image.cropper("getDataURL"));
-                //logic to display image in dp and save
-                //the image in a folder and save path to db
+            $("#saveImage").click(function () {
+                var image_data = atob($image.cropper("getDataURL").split(',')[1]);
+                // Use typed arrays to convert the binary data to a Blob
+                var arraybuffer = new ArrayBuffer(image_data.length);
+                var view = new Uint8Array(arraybuffer);
+                for (var i = 0; i < image_data.length; i++) {
+                    view[i] = image_data.charCodeAt(i) & 0xff;
+                }
+                try {
+                    // This is the recommended method:
+                    var blob = new Blob([arraybuffer], { type: 'application/octet-stream' });
+                } catch (e) {
+                    // The BlobBuilder API has been deprecated in favour of Blob, but older
+                    // browsers don't know about the Blob constructor
+                    // IE10 also supports BlobBuilder, but since the `Blob` constructor
+                    //  also works, there's no need to add `MSBlobBuilder`.
+                    var bb = new (window.WebKitBlobBuilder || window.MozBlobBuilder);
+                    bb.append(arraybuffer);
+                    var blob = bb.getBlob('application/octet-stream'); // <-- Here's the Blob
+                }
+                
+                // Use the URL object to create a temporary URL
+                var url = (window.webkitURL || window.URL).createObjectURL(blob);
+                location.href = url; // <-- Download!
+                document.getElementById("profile").src = url;
+                //by default set width and height to 48px so the image size not increase
+                document.getElementById("profile").style.width = "48px";
+                document.getElementById("profile").style.height = "48px";
             });
 
             $("#changePassword").click(function () {
