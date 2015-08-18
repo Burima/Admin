@@ -127,7 +127,8 @@
                                                 <div class="col-md-6">
                                                     <label>Crop image</label>
                                                     <div class="image-crop">
-                                                        <img id="profileImage"src="~/Images/p3.jpg">
+                                                        <img id="profileImage" src="@Url.Content(Model.User.Photo)">
+                                                        <input type="hidden" name="User.Photo" id="profilePic" value=@Model.User.Photo />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -351,11 +352,13 @@
                     bb.append(arraybuffer);
                     var blob = bb.getBlob('application/octet-stream'); // <-- Here's the Blob
                 }
-                
+
                 // Use the URL object to create a temporary URL
-                var url = (window.webkitURL || window.URL).createObjectURL(blob);
+                var url = (window.URL || window.webkitURL).createObjectURL(blob);
                 location.href = url; // <-- Download!
                 document.getElementById("profile").src = url;
+                alert(url);
+                $('#profilePic').val(url);
                 //by default set width and height to 48px so the image size not increase
                 document.getElementById("profile").style.width = "48px";
                 document.getElementById("profile").style.height = "48px";

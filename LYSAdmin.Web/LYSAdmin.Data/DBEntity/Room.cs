@@ -29,7 +29,7 @@ namespace LYSAdmin.Data.DBEntity
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime LastUpdatedOn { get; set; }
     
-        public virtual ICollection<Bed> Beds { get; set; }
         public virtual House House { get; set; }
+        public virtual ICollection<Bed> Beds { get; set; }
     }
 }

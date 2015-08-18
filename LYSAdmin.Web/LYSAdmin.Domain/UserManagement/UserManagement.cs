@@ -85,7 +85,7 @@ namespace LYSAdmin.Domain.UserManagement
             dbUser.FirstName = userViewModel.User.FirstName;
             dbUser.LastName = userViewModel.User.LastName;
             dbUser.Sex = userViewModel.User.Sex;
-            dbUser.Photo = dbUser.Photo;
+            dbUser.Photo = userViewModel.User.Photo;
             dbUser.UserDetails.FirstOrDefault().PresentAddress = userViewModel.UserDetail.PresentAddress;
             dbUser.UserDetails.FirstOrDefault().PermanentAddress = userViewModel.UserDetail.PermanentAddress;
             dbUser.UserDetails.FirstOrDefault().GovtIDType = userViewModel.UserDetail.GovtIDType;
