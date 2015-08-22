@@ -37,7 +37,6 @@ namespace LYSAdmin.Data.DBEntity
         public virtual DbSet<PGDetail> PGDetails { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Bed> Beds { get; set; }
         public virtual DbSet<HouseReview> HouseReviews { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }

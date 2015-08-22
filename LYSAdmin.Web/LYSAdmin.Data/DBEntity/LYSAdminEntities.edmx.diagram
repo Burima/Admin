@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="LYSAdmin.Data.PGDetail" Width="1.5" PointX="5.25" PointY="20.25" />
         <EntityTypeShape EntityType="LYSAdmin.Data.Role" Width="1.5" PointX="0.75" PointY="20.375" />
         <EntityTypeShape EntityType="LYSAdmin.Data.Room" Width="1.5" PointX="9.75" PointY="39.875" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.sysdiagram" Width="1.75" PointX="3.625" PointY="0.75" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Apartments_AreaID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Blocks_ApartmentID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Areas_CityID" />

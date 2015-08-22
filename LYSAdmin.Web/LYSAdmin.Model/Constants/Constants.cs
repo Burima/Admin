@@ -31,5 +31,10 @@ namespace LYSAdmin.Model.Constants
             Block = 2,
             None = 3
         }
+        public enum Gender
+        {
+            Male = 1,
+            Female = 2
+        }
     }
 }

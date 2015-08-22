@@ -33,6 +33,7 @@ namespace LYSAdmin.Model
         public int BlockID { get; set; }        
         public int OwnerID { get; set; }
 
+        public int NoOfRooms { get; set; }
         public PGDetail PGdetail { get; set; }
 
 

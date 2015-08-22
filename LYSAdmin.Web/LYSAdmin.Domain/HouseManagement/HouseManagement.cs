@@ -13,7 +13,7 @@ namespace LYSAdmin.Domain.HouseManagement
     {
         private IUnitOfWork unitOfWork = null;
         private IBaseRepository<Data.DBEntity.House> houseRepository = null;
-        private IBaseRepository<Data.DBEntity.HouseAmenity> houseAmenityRepository = null;        
+        private IBaseRepository<Data.DBEntity.HouseAmenity> houseAmenityRepository = null;
         private IBaseRepository<Data.DBEntity.PGDetail> pgDetailRepository = null;
         private IBaseRepository<Data.DBEntity.Room> roomRepository = null;
         private IBaseRepository<Data.DBEntity.Bed> bedRepository = null;
@@ -21,14 +21,14 @@ namespace LYSAdmin.Domain.HouseManagement
         {
             unitOfWork = new UnitOfWork();
             houseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
-            houseAmenityRepository = new BaseRepository<Data.DBEntity.HouseAmenity>(unitOfWork);            
+            houseAmenityRepository = new BaseRepository<Data.DBEntity.HouseAmenity>(unitOfWork);
             pgDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
             roomRepository = new BaseRepository<Data.DBEntity.Room>(unitOfWork);
 
             //automapper 
             Mapper.CreateMap<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>();
             Mapper.CreateMap<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>();
-            
+
         }
         public IList<Model.House> GetHouses(int OwnerID)
         {
@@ -37,6 +37,14 @@ namespace LYSAdmin.Domain.HouseManagement
                                          {
                                              HouseID = p.HouseID,
                                              HouseName = p.HouseName,
+                                             Latitude=p.Latitude,
+                                             Longitude=p.Longitude,
+                                             Address = p.Address,                                            
+                                             Landmark = p.Landmark,
+                                             Gender = p.Gender,
+                                             NoOfBalconnies = p.NoOfBalconnies,
+                                             NoOfBathrooms = p.NoOfBathrooms,
+
                                              Description = p.Description,
                                              LastUpdatedOn = p.LastUpdatedOn,
                                              HouseAmenities = (from g in p.HouseAmenities
@@ -87,19 +95,7 @@ namespace LYSAdmin.Domain.HouseManagement
                                                            WaterSupply = g.WaterSupply,
                                                            Wifi = g.Wifi
 
-                                                       }).ToList(),
-                                             HouseDescriptions = (from h in p.HouseDescriptions
-                                                                  select new LYSAdmin.Model.HouseDescription
-                                                                  {
-                                                                      DescrID = h.DescrID,
-                                                                      Description = h.Description,
-                                                                      Address = h.Address,
-                                                                      Gender = h.Gender,
-                                                                      Landmark = h.Landmark,
-                                                                      NoOfBalconnies = h.NoOfBalconnies,
-                                                                      NoOfBathrooms = h.NoOfBathrooms,
-                                                                      NoOfRooms = h.NoOfRooms
-                                                                  }).ToList(),
+                                                       }).ToList(),                                            
 
                                              HouseImages = (from i in p.HouseImages
                                                             select new LYSAdmin.Model.HouseImage
@@ -132,8 +128,14 @@ namespace LYSAdmin.Domain.HouseManagement
                          {
                              HouseID = p.HouseID,
                              HouseName = p.HouseName,
-                             Description = p.Description,
-                             LastUpdatedOn = p.LastUpdatedOn,
+                             Latitude = p.Latitude,
+                             Longitude = p.Longitude,
+                             Address = p.Address,
+                             Landmark = p.Landmark,
+                             Gender = p.Gender,
+                             NoOfBalconnies = p.NoOfBalconnies,
+                             NoOfBathrooms = p.NoOfBathrooms,
+
                              HouseAmenities = (from g in p.HouseAmenities
                                                select new LYSAdmin.Model.HouseAmenity
                                                {
@@ -183,18 +185,7 @@ namespace LYSAdmin.Domain.HouseManagement
                                                    Wifi = g.Wifi
 
                                                }).ToList(),
-                             HouseDescriptions = (from h in p.HouseDescriptions
-                                                  select new LYSAdmin.Model.HouseDescription
-                                                  {
-                                                      DescrID = h.DescrID,
-                                                      Description = h.Description,
-                                                      Address = h.Address,
-                                                      Gender = h.Gender,
-                                                      Landmark = h.Landmark,
-                                                      NoOfBalconnies = h.NoOfBalconnies,
-                                                      NoOfBathrooms = h.NoOfBathrooms,
-                                                      NoOfRooms = h.NoOfRooms
-                                                  }).ToList(),
+                             
 
                              HouseImages = (from i in p.HouseImages
                                             select new LYSAdmin.Model.HouseImage
@@ -298,14 +289,11 @@ namespace LYSAdmin.Domain.HouseManagement
                 dbHouseAmenity.HouseID = dbHouse.HouseID;
                 dbHouseAmenity.CreatedOn = DateTime.Now;
                 dbHouseAmenity.LastUpdatedOn = DateTime.Now;
-                houseAmenityRepository.Insert(dbHouseAmenity);                
+                houseAmenityRepository.Insert(dbHouseAmenity);
 
                 //save houseamenities 
                 unitOfWork.SaveChanges();
                 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-
-
 
                 #region RoomInsertion
                 if (houseViewModel.Rooms.Count > 0)
@@ -324,7 +312,7 @@ namespace LYSAdmin.Domain.HouseManagement
                         dbRoom.LastUpdatedOn = DateTime.Now;
                         //insert room
                         roomRepository.Insert(dbRoom);
-                        int roomCount=unitOfWork.SaveChanges();
+                        int roomCount = unitOfWork.SaveChanges();
                         if (roomCount > 0)
                         {
                             if (room.NoOfBeds > 0)

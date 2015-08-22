@@ -108,9 +108,6 @@
     <Compile Include="DBEntity\sp_helpdiagrams_Result.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBEntity\sysdiagram.cs">
-      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DBEntity\User.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
