@@ -195,8 +195,7 @@ namespace LYSAdmin.Web.Controllers
         public ActionResult AddHouse(HouseViewModel houseViewModel)
         {
             houseViewModel.AreaID = GetAreaID();
-            houseViewModel.OwnerID = GetOwnerID();
-            houseViewModel.House.CreatedOn = DateTime.Now;
+            houseViewModel.House.OwnerID = GetOwnerID();            
             houseViewModel.House.CreatedBy = ((User)Session["User"]).UserID;
             int count = houseManagement.AddHouse(houseViewModel);
 

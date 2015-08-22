@@ -26,9 +26,13 @@ namespace LYSAdmin.Model
         public Nullable<int> PGDetailID { get; set; }
         public Nullable<decimal> Latitude { get; set; }
         public Nullable<decimal> Longitude { get; set; }
+        public string Address { get; set; }
+        public string Landmark { get; set; }
+        public Nullable<int> Gender { get; set; }
+        public Nullable<int> NoOfBathrooms { get; set; }
+        public Nullable<int> NoOfBalconnies { get; set; }
 
         public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
-        public virtual ICollection<HouseDescription> HouseDescriptions { get; set; }
         public virtual ICollection<HouseImage> HouseImages { get; set; }
         public virtual ICollection<HouseReview> HouseReviews { get; set; }
         public virtual PGDetail PGDetail { get; set; }

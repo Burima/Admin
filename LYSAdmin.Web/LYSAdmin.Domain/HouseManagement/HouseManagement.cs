@@ -13,12 +13,22 @@ namespace LYSAdmin.Domain.HouseManagement
     {
         private IUnitOfWork unitOfWork = null;
         private IBaseRepository<Data.DBEntity.House> houseRepository = null;
+        private IBaseRepository<Data.DBEntity.HouseAmenity> houseAmenityRepository = null;        
         private IBaseRepository<Data.DBEntity.PGDetail> pgDetailRepository = null;
+        private IBaseRepository<Data.DBEntity.Room> roomRepository = null;
+        private IBaseRepository<Data.DBEntity.Bed> bedRepository = null;
         public HouseManagement()
         {
             unitOfWork = new UnitOfWork();
             houseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
+            houseAmenityRepository = new BaseRepository<Data.DBEntity.HouseAmenity>(unitOfWork);            
             pgDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
+            roomRepository = new BaseRepository<Data.DBEntity.Room>(unitOfWork);
+
+            //automapper 
+            Mapper.CreateMap<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>();
+            Mapper.CreateMap<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>();
+            
         }
         public IList<Model.House> GetHouses(int OwnerID)
         {
@@ -209,6 +219,7 @@ namespace LYSAdmin.Domain.HouseManagement
 
         public int AddHouse(HouseViewModel houseViewModel)
         {
+            int count = 0;
             #region LinkTypeIDandLinkIDFunctionality
 
             //block selected, so as apartment
@@ -266,35 +277,82 @@ namespace LYSAdmin.Domain.HouseManagement
                     //is not a PG type House
                     houseViewModel.House.PGDetailID = 0;
                     houseViewModel.House.IsPg = false;
-                   
+
                 }
             }
             #endregion PGSelectioFunctionality
 
             /*----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-            var dbHouse = Mapper.Map<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>(houseViewModel.House);//Converting Model.Apartment to Data.Apartment
-            houseRepository.Insert(dbHouse);//Inserting new lead
-
-            /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-            #region RoomInsertion
-            if (houseViewModel.House.Rooms.Count > 0)
+            //insert House
+            var dbHouse = Mapper.Map<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>(houseViewModel.House);//Converting Model.House to Data.House
+            dbHouse.Status = true;
+            dbHouse.CreatedOn = DateTime.Now;
+            dbHouse.LastUpdatedOn = DateTime.Now;
+            houseRepository.Insert(dbHouse);//Inserting new house
+            count = unitOfWork.SaveChanges();
+            if (count > 0)
             {
-                int roomnumber = 1;
-                foreach (var room in houseViewModel.House.Rooms)
-                {  
-                    var dbRoom = new Data.DBEntity.Room();
-                    dbRoom.HouseID = dbHouse.HouseID;
-                    dbRoom.RoomNumber = roomnumber;
-                    roomnumber++;
+                //insert house amenity
+                var dbHouseAmenity = Mapper.Map<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>(houseViewModel.HouseAmenity);
+                dbHouseAmenity.HouseID = dbHouse.HouseID;
+                dbHouseAmenity.CreatedOn = DateTime.Now;
+                dbHouseAmenity.LastUpdatedOn = DateTime.Now;
+                houseAmenityRepository.Insert(dbHouseAmenity);                
+
+                //save houseamenities 
+                unitOfWork.SaveChanges();
+                /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+                #region RoomInsertion
+                if (houseViewModel.Rooms.Count > 0)
+                {
+                    int roomnumber = 1;
+                    foreach (var room in houseViewModel.Rooms)
+                    {
+                        var dbRoom = new Data.DBEntity.Room();
+                        dbRoom.HouseID = dbHouse.HouseID;
+                        dbRoom.RoomNumber = roomnumber;
+                        dbRoom.MonthlyRent = room.MonthlyRent;
+                        dbRoom.Deposit = room.Deposit;
+                        dbRoom.NoOfBeds = room.NoOfBeds;
+                        dbRoom.Status = true;
+                        dbRoom.CreatedOn = DateTime.Now;
+                        dbRoom.LastUpdatedOn = DateTime.Now;
+                        //insert room
+                        roomRepository.Insert(dbRoom);
+                        int roomCount=unitOfWork.SaveChanges();
+                        if (roomCount > 0)
+                        {
+                            if (room.NoOfBeds > 0)
+                            {
+                                for (int i = 1; i <= room.NoOfBeds; i++)
+                                {
+                                    var dbBed = new Data.DBEntity.Bed();
+                                    dbBed.BedStatus = 0;//empty
+                                    dbBed.CreatedOn = DateTime.Now;
+                                    dbBed.LastUpdatedOn = DateTime.Now;
+                                    dbBed.RoomID = dbRoom.RoomID;
+                                    dbBed.Status = true;//active
+                                    dbBed.StatusUpdateDate = DateTime.Now;
+                                    //insert Bed
+                                    bedRepository.Insert(dbBed);
+                                    unitOfWork.SaveChanges();
+                                }
+                            }
+                        }
+
+                        roomnumber++;
+                    }
                 }
+                #endregion RoomInsertion
+
             }
-            #endregion RoomInsertion
 
-
-
-            return unitOfWork.SaveChanges();//Saving the changes to DB
+            return count;//Saving the changes to DB
 
         }
         public int UpdateHouse(LYSAdmin.Model.HouseViewModel houseViewModel)

@@ -72,9 +72,6 @@
     <Compile Include="DBEntity\HouseAmenity.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBEntity\HouseDescription.cs">
-      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DBEntity\HouseImage.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
