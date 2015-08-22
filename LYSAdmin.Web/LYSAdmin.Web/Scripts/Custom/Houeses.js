@@ -59,7 +59,7 @@ $(document).ready(function () {
     });
 
     //on selecting number of rooms in houses
-    $("select[name='House.HouseDescriptions[0].NoOfRooms']").change(function () {
+    $("select[name='NoOfRooms']").change(function () {
         var val = $(this).find(':selected').attr('value');
         if (val > 0) {
             var divRoomDetails = $('#divRoomdetails');
@@ -70,7 +70,7 @@ $(document).ready(function () {
                 var newroom = '<div class="row margin-bottom-2-pc">' +
                                          '<label class="col-md-2">Room <span>' + i + '</span></label>' +
                                          '<div class="col-md-3">' +
-                                             '<select class="number-of-beds form-control" tabindex="1" name="House.Rooms[' + (i - 1) + '].NoOfBeds">' +
+                                             '<select class="number-of-beds form-control" tabindex="1" name="Rooms[' + (i - 1) + '].NoOfBeds">' +
                                                  '<option value="" disabled selected>Beds</option>' +
                                                  '<option value="0">0</option>' +
                                                  '<option value="1">1</option>' +
@@ -81,9 +81,9 @@ $(document).ready(function () {
                                                  '<option value="6">6</option>' +
                                              '</select>' +
                                          '</div>' +
-                                         '<input type="hidden" name="House.Rooms[' + (i - 1) + '].RoomID" value="' + i + '">' +
-                                         '<div class="col-md-3"><input type="text" placeholder="Mothly Rent" class="form-control monthly-rent" name="House.Rooms[' + (i - 1) + '].MonthlyRent" /></div>' +
-                                         '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit" name="House.Rooms[' + (i - 1) + '].Deposit"/></div></div>';
+                                         '<input type="hidden" name="Rooms[' + (i - 1) + '].RoomID" value="' + i + '">' +
+                                         '<div class="col-md-3"><input type="text" placeholder="Mothly Rent" class="form-control monthly-rent" name="Rooms[' + (i - 1) + '].MonthlyRent" /></div>' +
+                                         '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit" name="Rooms[' + (i - 1) + '].Deposit"/></div></div>';
 
                 divRoomDetails.append(newroom);
             }
@@ -379,16 +379,15 @@ $('input[name=IsPGorHostel]').click(function () {
             dataType: 'JSON',
             success: function (response, textStatus, XMLHttpRequest) {
                 var pgList = $.parseJSON(response);
+                
                 if (pgList.length > 0) {
                     fnEnableShowingAllPGs();
                     $('#ddlSelectPG').empty();//Restart the Areas in a City
                     $('#ddlSelectPG').append(
                                   $('<option value="0" disabled selected></option>').html("--Select PG--")
                               );//Appending default value
-                    $.each(pgList, function (i, pg) {
-                        $('#ddlSelectPG').append(
-                        $('<option></option>').val(pg.PGdetailID).html(pg.PGName)
-                       );
+                    $.each(pgList, function (i, pg) {                        
+                        $('#ddlSelectPG').append($('<option></option>').val(pg.PGDetailID).html(pg.PGName));
                     });
                 } else {
                     fnEnableNewPGInsertion();

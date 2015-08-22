@@ -5,39 +5,40 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="08ed83d26dcc4598989d908607a09785" Name="Diagram1">
-        <EntityTypeShape EntityType="LYSAdmin.Data.Apartment" Width="1.5" PointX="8.25" PointY="19.375" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.Area" Width="1.5" PointX="3" PointY="15.125" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.Block" Width="1.5" PointX="10.5" PointY="19.75" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.City" Width="1.5" PointX="0.75" PointY="15.25" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.Country" Width="1.5" PointX="1.5" PointY="11.375" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.HouseAmenity" Width="1.5" PointX="9.75" PointY="25" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.HouseImage" Width="1.5" PointX="9.75" PointY="43.75" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.PGDetail" Width="1.5" PointX="5.25" PointY="20.25" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.Role" Width="1.5" PointX="0.75" PointY="20.375" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.Room" Width="1.5" PointX="9.75" PointY="39.875" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.Apartment" Width="1.5" PointX="8.25" PointY="17.125" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.Area" Width="1.5" PointX="3" PointY="22.875" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.Bed" Width="1.5" PointX="5.25" PointY="13.75" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.Block" Width="1.5" PointX="10.5" PointY="17.5" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.City" Width="1.5" PointX="0.75" PointY="23" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.Country" Width="1.5" PointX="1.5" PointY="27.125" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.HouseAmenity" Width="1.5" PointX="9.75" PointY="22.75" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.HouseImage" Width="1.5" PointX="9.75" PointY="33.5" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.HouseReview" Width="1.5" PointX="5.25" PointY="17.875" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.House" Width="1.5" PointX="7.5" PointY="28" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.PGDetail" Width="1.5" PointX="5.25" PointY="22" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.Role" Width="1.5" PointX="0.75" PointY="18.125" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.Room" Width="1.5" PointX="9.75" PointY="36.5" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.UserDetail" Width="1.5" PointX="5.25" PointY="46.625" />
+        <EntityTypeShape EntityType="LYSAdmin.Data.User" Width="1.5" PointX="3" PointY="16.625" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Apartments_AreaID" />
+        <AssociationConnector Association="LYSAdmin.Data.FK_Apartments_OwnerID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Blocks_ApartmentID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Areas_CityID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_PGDetails_AreaID" />
-        <AssociationConnector Association="LYSAdmin.Data.FK_Cities_CountryID" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.Bed" Width="1.5" PointX="12" PointY="34" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.HouseReview" Width="1.5" PointX="12.75" PointY="29.75" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.UserDetail" Width="1.5" PointX="5.25" PointY="27.75" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.User" Width="1.5" PointX="3" PointY="23.875" />
-        <AssociationConnector Association="LYSAdmin.Data.FK_Apartments_OwnerID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Beds_RoomID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Beds_UserID" />
-        <AssociationConnector Association="LYSAdmin.Data.FK_HouseReviews_UserID" />
-        <AssociationConnector Association="LYSAdmin.Data.FK_PGDetails_OwnerID" />
-        <AssociationConnector Association="LYSAdmin.Data.FK_Users_RoleID" />
-        <AssociationConnector Association="LYSAdmin.Data.PK_UserDetails_UserID" />
-        <EntityTypeShape EntityType="LYSAdmin.Data.House" Width="1.5" PointX="7.5" PointY="24.25" />
+        <AssociationConnector Association="LYSAdmin.Data.FK_Cities_CountryID" />
         <AssociationConnector Association="LYSAdmin.Data.FK__House_Amenities__Houses" />
         <AssociationConnector Association="LYSAdmin.Data.FK_HouseImages_HouseID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_HouseReviews_HouseID" />
+        <AssociationConnector Association="LYSAdmin.Data.FK_HouseReviews_UserID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Houses_PGDetailID" />
         <AssociationConnector Association="LYSAdmin.Data.FK_Rooms_HouseID" />
-        </Diagram>
+        <AssociationConnector Association="LYSAdmin.Data.FK_PGDetails_OwnerID" />
+        <AssociationConnector Association="LYSAdmin.Data.FK_Users_RoleID" />
+        <AssociationConnector Association="LYSAdmin.Data.PK_UserDetails_UserID" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
