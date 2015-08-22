@@ -24,7 +24,7 @@ namespace LYSAdmin.Domain.HouseManagement
             houseAmenityRepository = new BaseRepository<Data.DBEntity.HouseAmenity>(unitOfWork);
             pgDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
             roomRepository = new BaseRepository<Data.DBEntity.Room>(unitOfWork);
-
+            bedRepository = new BaseRepository<Data.DBEntity.Bed>(unitOfWork);
             //automapper 
             Mapper.CreateMap<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>();
             Mapper.CreateMap<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>();
@@ -257,7 +257,7 @@ namespace LYSAdmin.Domain.HouseManagement
                     pgDetail.OwnerID = houseViewModel.OwnerID;
                     //Insert into DB
                     pgDetailRepository.Insert(pgDetail);
-
+                    unitOfWork.SaveChanges();
                     //set PGDetailID for House Table
                     houseViewModel.House.PGDetailID = pgDetail.PGDetailID;
                     houseViewModel.House.IsPg = true;
@@ -320,11 +320,12 @@ namespace LYSAdmin.Domain.HouseManagement
                                 for (int i = 1; i <= room.NoOfBeds; i++)
                                 {
                                     var dbBed = new Data.DBEntity.Bed();
-                                    dbBed.BedStatus = 0;//empty
+                                    dbBed.RoomID = dbRoom.RoomID;
+                                    dbBed.UserID = 0;
+                                    dbBed.Status = true;//active                                    
                                     dbBed.CreatedOn = DateTime.Now;
                                     dbBed.LastUpdatedOn = DateTime.Now;
-                                    dbBed.RoomID = dbRoom.RoomID;
-                                    dbBed.Status = true;//active
+                                    dbBed.BedStatus = 0;//empty
                                     dbBed.StatusUpdateDate = DateTime.Now;
                                     //insert Bed
                                     bedRepository.Insert(dbBed);
