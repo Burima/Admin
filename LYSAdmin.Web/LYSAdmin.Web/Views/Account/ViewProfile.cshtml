@@ -4,7 +4,6 @@
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var User = (User)Session["User"];
-    var UserDetails = User.UserDetails.ElementAt(0);
     TempData["UserID"] = User.UserID;
     
 }
@@ -138,18 +137,15 @@
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                            <label for="divFile">Profile Picture</label>
-                                        </div>
-                                        <div id="divFile" class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <div id="divFile" class="col-lg-8 col-md-8 col-sm-12 col-xs-12 row-padding-top-5">
                                             <label for="fileProfile" id="fileLabel">
                                                 <input class="txtFile" id="fileProfile" name="fileProfile" type="file" style="display:none">
-                                                <p class="fileBtn">Choose File</p>
+                                                <p class="btn btn-primary">Choose File</p>
                                             </label>
-                                            <div><div id="photoFilePath" class="filePath pull-left">No File Chosen</div>&emsp;<span id="spnRemove" onclick="fnRemove()" style="cursor:pointer; color:gray; display:none">x</span></div>
+                                            <div><div id="photoFilePath" class="filePath pull-left">No File Chosen</div><span id="spnRemove" onclick="fnRemove()" style="cursor:pointer; color:gray; display:none">x</span></div>
                                             <br />
-                                            <img draggable="false" id="imgProfile" style="display:inline-block; height:100px; width:100px; margin: 0 5px 0 10px;" src="~/Content/Images/empty_logo.png" />
-                                            @*<input type="file" data-buttonbefore="true" class="filestyle" id="fileProfile" name="fileProfile" /><span id="spnRemoveImg" onclick="fnRemoveIMG()" style="cursor:pointer; color:gray; display:none">x</span>*@
+                                            <img draggable="false" id="imgProfile" style="display:inline-block; height:100px; width:100px; margin: 0 5px 0 10px;" src="@Url.Action(Model.User.ProfilePicture)"/>
+                                            <input type="hidden" id="profilePic" name="User.ProfilePicture" />
                                         </div>
                                     </div>
                                     <div id="divErrorFileFormatIMG" style="display:none" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -252,16 +248,20 @@
                             </div>
 
                         </div>
+                       
+                        
+                    </div>
+                    @*Save button*@
+                    <div class="col-md-10 gray-bg">
+                        <div class="form-group row-padding-top-5 padding-left-3">
+                            <div>
+                                <button id="btnSave" class="btn btn-primary" type="submit" tabindex="5">Save</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
-                <div class="form-group row-padding-top-5 padding-left-3">
-                    <div>
-                        <button id="btnSave" class="btn btn-primary" type="submit" tabindex="5">Save</button>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 }
@@ -301,7 +301,7 @@
 <input type="hidden" id="hdnCropPointY" name="CropPointY" />
 <input type="hidden" id="hdnCropPointX2" name="CropPointX2" />
 <input type="hidden" id="hdnCropPointY2" name="CropPointY2" />
-<input type="hidden" id="hdnFileName" name="User.ProfilePicture" />
+<input type="hidden" id="hdnFileName" name="ImgFileName" />
 <input type="hidden" id="hdnIsImageCropped" name="IsCropped" value="0" />
 <input type="hidden" id="hdnImageSource" name="ImageSource" />
 

@@ -111,6 +111,8 @@ namespace LYSAdmin.Web.Controllers
             int count = userManagement.UpdateUser(userViewModel);
             if (count > 0)
             {
+                var user = (User)Session["User"];
+                user.ProfilePicture = userViewModel.User.ProfilePicture;
                 TempData["message"] = "Profile updated successfully!";
             }
             else

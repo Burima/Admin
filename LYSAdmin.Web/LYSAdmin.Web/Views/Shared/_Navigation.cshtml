@@ -1,4 +1,5 @@
 ﻿@using LYSAdmin.Model
+
 @{
     var User = (User)Session["User"];
 }
@@ -8,7 +9,7 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <span>
-                        @*<img id="profile" alt="image" class="img-circle" src="@Url.Content(User.ProfilePicture)" />*@
+                        <img id="profile" alt="image" class="img-circle" src="@Url.Content(User.ProfilePicture)" style="width:48px;height:48px;" />
                     </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
