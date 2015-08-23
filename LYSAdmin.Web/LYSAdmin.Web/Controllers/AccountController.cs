@@ -9,6 +9,7 @@ using LYSAdmin.Web.Utilities;
 using System.Net;
 using System.Web.Routing;
 using LYSAdmin.Domain;
+using System.Configuration;
 
 
 namespace LYSAdmin.Web.Controllers
@@ -106,8 +107,7 @@ namespace LYSAdmin.Web.Controllers
                 Logout();
                 
             }
-            //if userid = 0 then logout
-            //userViewModel.UserDetail.LastUpdatedOn = DateTime.Now;
+           
             int count = userManagement.UpdateUser(userViewModel);
             if (count > 0)
             {

@@ -38,7 +38,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="height:500px;">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" onclick="fnDismissModal()" aria-hidden="true">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" onclick="fnLoadImage()" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Crop Image</h4>
             </div>
             <div class="modal-body" style="padding: 5px; ">
@@ -48,22 +48,14 @@
                     </div>
                     <div class="col-lg-4">
                         <img id="demo3" alt="Jcrop Example" />
-                        @*<div id="preview-pane">
-                                <div class="preview-container">
-                                    <img id="imgPreview" class="jcrop-preview" alt="Preview" />
-                                </div>
-                            </div>*@
                     </div>
                     <div class="col-lg-4">
 
                     </div>
                 </div>
-
-
-
             </div>
             <div class="row" style="float:right; margin-right:5%;">
-                <input class="btn btn-success" type="button" onclick="fnDismissModal()" aria-hidden="true" value="Skip Cropping" style="margin-right:10px;" />
+                <input class="btn btn-success" type="button" onclick="fnLoadImage()" aria-hidden="true" value="Skip Cropping" style="margin-right:10px;" />
                 <input class="btn btn-success" type="button" value="Crop" onclick=" fnLoadImage() " />
             </div>
         </div>
@@ -145,36 +137,6 @@
                         <div id="tab-3" class="tab-pane">
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    @*<div class="ibox float-e-margins">
-                                        <div class="ibox-title  back-change">
-                                            <h5>Profile Picture</h5>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Crop image</label>
-                                                    <div class="image-crop">
-                                                        <img id="profileImage" src="@Url.Content(Model.User.Photo)">
-                                                        <input type="hidden" name="User.Photo" id="profilePic" value=@Model.User.Photo />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Preview image</label>
-                                                    <div class="img-preview img-preview-sm"></div>
-                                                    <div class="row row-padding-top-5">
-                                                        <div class="col-md-5">
-                                                            <label title="Upload image file" for="inputImage" class="btn btn-primary">
-                                                                <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
-                                                                Upload new image
-                                                            </label>
-
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>*@
                                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                             <label for="divFile">Profile Picture</label>
@@ -339,7 +301,7 @@
 <input type="hidden" id="hdnCropPointY" name="CropPointY" />
 <input type="hidden" id="hdnCropPointX2" name="CropPointX2" />
 <input type="hidden" id="hdnCropPointY2" name="CropPointY2" />
-<input type="hidden" id="hdnFileName" name="ImgFileName" />
+<input type="hidden" id="hdnFileName" name="User.ProfilePicture" />
 <input type="hidden" id="hdnIsImageCropped" name="IsCropped" value="0" />
 <input type="hidden" id="hdnImageSource" name="ImageSource" />
 

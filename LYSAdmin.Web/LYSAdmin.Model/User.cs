@@ -21,7 +21,7 @@ namespace LYSAdmin.Model
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
         public bool Status { get; set; }
         public int ManagerID { get; set; }
-        public byte[] ProfilePicture { get; set; }
+        public string ProfilePicture { get; set; }
         public Nullable<int> Gender { get; set; }
 
         public virtual ICollection<Apartment> Apartments { get; set; }

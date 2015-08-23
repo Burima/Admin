@@ -259,7 +259,7 @@
           <Property Name="LastUpdatedOn" Type="datetime" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="ManagerID" Type="int" Nullable="false" />
-          <Property Name="ProfilePicture" Type="varbinary(max)" />
+          <Property Name="ProfilePicture" Type="varchar" MaxLength="250" />
           <Property Name="Gender" Type="int" />
         </EntityType>
         <Association Name="FK__House_Amenities__Houses">
@@ -1128,7 +1128,7 @@
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="ManagerID" Type="Int32" Nullable="false" />
-          <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProfilePicture" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="Int32" />
           <NavigationProperty Name="Apartments" Relationship="LYSAdmin.Data.FK_Apartments_OwnerID" FromRole="User" ToRole="Apartment" />
           <NavigationProperty Name="Beds" Relationship="LYSAdmin.Data.FK_Beds_UserID" FromRole="User" ToRole="Bed" />
