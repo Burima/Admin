@@ -70,7 +70,7 @@ $(document).ready(function () {
                 var newroom = '<div class="row margin-bottom-2-pc">' +
                                          '<label class="col-md-2">Room <span>' + i + '</span></label>' +
                                          '<div class="col-md-3">' +
-                                             '<select class="number-of-beds form-control" tabindex="1" name="Rooms[' + (i - 1) + '].NoOfBeds">' +
+                                             '<select class="number-of-beds form-control " tabindex="1" name="Rooms[' + (i - 1) + '].NoOfBeds">' +
                                                  '<option value="" disabled selected>Beds</option>' +
                                                  '<option value="0">0</option>' +
                                                  '<option value="1">1</option>' +
@@ -82,8 +82,8 @@ $(document).ready(function () {
                                              '</select>' +
                                          '</div>' +
                                          '<input type="hidden" name="Rooms[' + (i - 1) + '].RoomID" value="' + i + '">' +
-                                         '<div class="col-md-3"><input type="text" placeholder="Mothly Rent" class="form-control monthly-rent" name="Rooms[' + (i - 1) + '].MonthlyRent" /></div>' +
-                                         '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit" name="Rooms[' + (i - 1) + '].Deposit"/></div></div>';
+                                         '<div class="col-md-3"><input type="text" placeholder="Mothly Rent" class="form-control monthly-rent required" id="Rooms' + i + '.MonthlyRent"    name="Rooms[' + (i - 1) + '].MonthlyRent"/></div>' +
+                                         '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit required" id="Rooms' + i  + '.Deposit" name="Rooms[' + (i - 1) + '].Deposit"/></div></div>';
 
                 divRoomDetails.append(newroom);
             }
@@ -103,23 +103,38 @@ $(document).ready(function () {
 
             //initialization of the map based on area and city
             initialize();
-            $('#collapseLocality').addClass('in');
+            $('#linkcollapseLocality').attr('href', '#collapseLocality'); //activate collapseable functionality through linking it with the target id 
+            $('#collapseLocality').addClass('in');//open Locality panel
         }
     });
 
     //btnNextLocality click event
     $('#btnNextLocality').click(function (e) {
-        e.preventDefault();
-        var address = document.getElementById('txtAddress').value;
-        address = address + " " + Area + " " + City;
-        updateMarker(address);
+        if ($('#txtAddress').val() != "") {
+            $('#txtAddress').css('border-color', '#e5e6e7');
+            e.preventDefault();
+            var address = document.getElementById('txtAddress').value;
+            address = address + " " + Area + " " + City;
+            updateMarker(address);
+        }
+        else {            
+            $('#txtAddress').css('border-color', 'red');
+        }
     });
+
 
     //btnNextAmenities
     $('#btnNextAmenities').click(function () {
         $('#collapseBasicAmenities').removeClass('in');
-        $('#collapseAddRooms').addClass('in');
+        $('#linkcollapseDetailInformation').attr('href', '#collapseDetailInformation');
+        $('#collapseDetailInformation').addClass('in');
     });
+
+    //btnSaveAllInformation click event
+    $('#btnSaveAllInformation').click(function () {
+        alert(fnValidateAllRequiredfield());
+    });
+
 
     /*---------------------- end button click events for every forms ----------------------------------------------------*/
 
@@ -159,7 +174,7 @@ $(document).ready(function () {
     var contentString = '<div id="form-group">'+
         '<div id="row">' +
         '<div class="col-md-8"><h4>Is this your final selected location?</h4></div>'+
-        '<div class="col-md-4"><button type="button" id= "btnYes" class="btn btn-primary" onclick="fnOpenBasicAmenities()">Yes</button></div>' +
+        '<div class="col-md-4"><button type="button" id= "btnLocationConfirmed" onclick=fnOpenBasicAmenities() class="btn btn-primary" >Yes</button></div>' +
       '</div>'+
         '</div>';
     var infowindow = new google.maps.InfoWindow({
@@ -256,6 +271,15 @@ $(document).ready(function () {
 });
 
 
+//btnLocationConfirmed click event     
+//This method is used to open Basic Amenities accordian on selecting area
+function fnOpenBasicAmenities() {
+    $('#collapseLocality').removeClass('in');
+    $('#linkcollapseBasicAmenities').attr('href', '#collapseBasicAmenities');
+    $('#collapseBasicAmenities').addClass('in');
+}
+
+
 //show change location modal
 function fnChangeLocation() {
     //prevent click outside and make all keyboard false 
@@ -288,7 +312,7 @@ function inputkeyup() {
 
 
 //Change Area when changing City
-$("select[name='CityID']").change(function () {
+$("select[name='CityID']").change(function () {   
     var ddlvalue = $('#ddlCity').val();//get the selected value of ddlCityID
     $('#divArea').removeClass('hidden');//make divArea visible
     $('#ddlArea').empty();//Restart the Areas in a City
@@ -360,11 +384,6 @@ function fnSaveLocation() {
         }
     });
 }
-//This method is used to open Basic Amenities accordian on selecting area
-function fnOpenBasicAmenities() {
-    $('#collapseLocality').removeClass('in');
-    $('#collapseBasicAmenities').addClass('in');
-}
 
 //on Selection of ISPG radio button ddlSelectPG txtPGName
 $('input[name=IsPGorHostel]').click(function () {
@@ -428,5 +447,28 @@ function fnEnableShowingAllPGs() {
     $('#txtPGName').addClass('hidden');//hide txtPGName
 }
 
+//this function will validate all required field value
+function fnValidateAllRequiredfield() {
+    var flag = false;
+    $("#collapseDetailInformation .required").each(function () {
+
+        var id = $(this).attr("id");
+        var value = $("#" + id).val();
+        alert($(this).html());
+        if (value.trim() == "") {
+            console.log("no value detected" + id + "----------" + value);
+            $("#" + id).css("border", "1px solid red");
+            flag = true;
+        }
+        else {
+            $("#" + id).css("border", "1px solid #e5e6e7");
+            flag = false;
+        }
+    });
+
+    if (flag) {
+        return false;
+    }
+}
 
 
