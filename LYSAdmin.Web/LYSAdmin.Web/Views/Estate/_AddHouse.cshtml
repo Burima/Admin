@@ -84,7 +84,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a class="locality " data-toggle="collapse" data-parent="#accordion" href="#collapseLocality">Locality</a>
+                                <a id="linkcollapseLocality" class="locality" data-toggle="collapse" data-parent="#accordion" href="#">Locality</a>
                             </h4>
                         </div>
                         <div id="collapseLocality" class="panel-collapse collapse">
@@ -104,7 +104,7 @@
                                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" required name="House.Landmark">
+                                        <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" name="House.Landmark">
                                         <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                                     </div>
                                     <div class="col-md-2">
@@ -123,7 +123,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseBasicAmenities">Amenities</a>
+                                <a id="linkcollapseBasicAmenities" data-toggle="collapse" data-parent="#accordion" href="#">Amenities</a>
                             </h4>
                         </div>
                         <div id="collapseBasicAmenities" class="panel-collapse collapse">
@@ -306,17 +306,17 @@
                     <div class="panel panel-default ">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseAddRooms">Detail Information</a>
+                                <a id="linkcollapseDetailInformation" data-toggle="collapse" data-parent="#accordion" href="#">Detail Information</a>
                             </h4>
                         </div>
-                        <div id="collapseAddRooms" class="panel-collapse collapse">
+                        <div id="collapseDetailInformation" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12"><h3>Tell us more about your property House</h3></div>
                                     <div class="col-md-12">
                                         <div><h4>Property Details</h4></div>
                                         <div class="col-md-4" style="padding-left:0px;">
-                                            <select name="NoOfRooms" class="form-control" tabindex="1">
+                                            <select id="ddlNoOfRooms" name="NoOfRooms" class="form-control " tabindex="1">
                                                 <option value="" disabled selected>Rooms</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -327,7 +327,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <select name="House.NoOfBathrooms" class="form-control" tabindex="1">
+                                            <select id="ddlNoOfBathrooms" name="House.NoOfBathrooms" class="form-control " tabindex="2">
                                                 <option value="" disabled selected>Bathrooms</option>
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
@@ -339,7 +339,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <select name="House.NoOfBalconnies" class="form-control" tabindex="1">
+                                            <select id="ddlNoOfBalconnies" name="House.NoOfBalconnies" class="form-control " tabindex="3">
                                                 <option value="" disabled selected>Balconies</option>
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
@@ -354,7 +354,7 @@
                                     <div class="col-md-12">
                                         <div><h4>Gender</h4></div>
                                         <div class="col-md-4" style="padding-left:0px;">
-                                            <select id="ddlGender" class="form-control" tabindex="1" required name="House.Gender">
+                                            <select id="ddlGender" class="form-control " tabindex="4" required name="House.Gender">
                                                 <option value="" disabled selected>Select Gender</option>
                                                 <option value="1">Male</option>
                                                 <option value="2">Female</option>
@@ -365,7 +365,7 @@
 
                                     </div>
                                     <div class="col-md-offset-7 col-md-5 row-padding-top-5">
-                                        <button id="btnSaveAllInformation" class="btn btn-primary pull-right" type="submit" tabindex="5">Done</button>
+                                        <button id="btnSaveAllInformation" class="btn btn-primary pull-right" type="button">Done</button>
                                     </div>
                                 </div>
                             </div>
