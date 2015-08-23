@@ -28,7 +28,6 @@ namespace LYSAdmin.Data.DBEntity
         public string LastName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Sex { get; set; }
         public int RoleID { get; set; }
         public string MobileNumber { get; set; }
         public bool IsBackGroundVerified { get; set; }
@@ -36,8 +35,9 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
         public bool Status { get; set; }
-        public string Photo { get; set; }
         public int ManagerID { get; set; }
+        public byte[] ProfilePicture { get; set; }
+        public Nullable<int> Gender { get; set; }
     
         public virtual ICollection<Apartment> Apartments { get; set; }
         public virtual ICollection<Bed> Beds { get; set; }

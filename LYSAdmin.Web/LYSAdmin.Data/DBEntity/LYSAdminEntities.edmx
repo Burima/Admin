@@ -251,7 +251,6 @@
           <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="Sex" Type="varchar" MaxLength="6" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="MobileNumber" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IsBackGroundVerified" Type="bit" Nullable="false" />
@@ -259,8 +258,9 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="LastUpdatedOn" Type="datetime" />
           <Property Name="Status" Type="bit" Nullable="false" />
-          <Property Name="Photo" Type="varchar" MaxLength="250" />
           <Property Name="ManagerID" Type="int" Nullable="false" />
+          <Property Name="ProfilePicture" Type="varbinary(max)" />
+          <Property Name="Gender" Type="int" />
         </EntityType>
         <Association Name="FK__House_Amenities__Houses">
           <End Role="Houses" Type="Self.Houses" Multiplicity="1" />
@@ -633,13 +633,8 @@
           <EntitySet Name="Rooms" EntityType="LYSAdmin.Data.Room" />
           <EntitySet Name="sysdiagrams" EntityType="LYSAdmin.Data.sysdiagram" />
           <EntitySet Name="UserDetails" EntityType="LYSAdmin.Data.UserDetail" />
-          <EntitySet Name="Users" EntityType="LYSAdmin.Data.User" />
           <AssociationSet Name="FK_Apartments_AreaID" Association="LYSAdmin.Data.FK_Apartments_AreaID">
             <End Role="Area" EntitySet="Areas" />
-            <End Role="Apartment" EntitySet="Apartments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Apartments_OwnerID" Association="LYSAdmin.Data.FK_Apartments_OwnerID">
-            <End Role="User" EntitySet="Users" />
             <End Role="Apartment" EntitySet="Apartments" />
           </AssociationSet>
           <AssociationSet Name="FK_Blocks_ApartmentID" Association="LYSAdmin.Data.FK_Blocks_ApartmentID">
@@ -658,10 +653,6 @@
             <End Role="Room" EntitySet="Rooms" />
             <End Role="Bed" EntitySet="Beds" />
           </AssociationSet>
-          <AssociationSet Name="FK_Beds_UserID" Association="LYSAdmin.Data.FK_Beds_UserID">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Bed" EntitySet="Beds" />
-          </AssociationSet>
           <AssociationSet Name="FK_Cities_CountryID" Association="LYSAdmin.Data.FK_Cities_CountryID">
             <End Role="Country" EntitySet="Countries" />
             <End Role="City" EntitySet="Cities" />
@@ -678,10 +669,6 @@
             <End Role="House" EntitySet="Houses" />
             <End Role="HouseReview" EntitySet="HouseReviews" />
           </AssociationSet>
-          <AssociationSet Name="FK_HouseReviews_UserID" Association="LYSAdmin.Data.FK_HouseReviews_UserID">
-            <End Role="User" EntitySet="Users" />
-            <End Role="HouseReview" EntitySet="HouseReviews" />
-          </AssociationSet>
           <AssociationSet Name="FK_Houses_PGDetailID" Association="LYSAdmin.Data.FK_Houses_PGDetailID">
             <End Role="PGDetail" EntitySet="PGDetails" />
             <End Role="House" EntitySet="Houses" />
@@ -689,6 +676,19 @@
           <AssociationSet Name="FK_Rooms_HouseID" Association="LYSAdmin.Data.FK_Rooms_HouseID">
             <End Role="House" EntitySet="Houses" />
             <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="LYSAdmin.Data.User" />
+          <AssociationSet Name="FK_Apartments_OwnerID" Association="LYSAdmin.Data.FK_Apartments_OwnerID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Apartment" EntitySet="Apartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Beds_UserID" Association="LYSAdmin.Data.FK_Beds_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Bed" EntitySet="Beds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HouseReviews_UserID" Association="LYSAdmin.Data.FK_HouseReviews_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="HouseReview" EntitySet="HouseReviews" />
           </AssociationSet>
           <AssociationSet Name="FK_PGDetails_OwnerID" Association="LYSAdmin.Data.FK_PGDetails_OwnerID">
             <End Role="User" EntitySet="Users" />
@@ -732,8 +732,8 @@
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="OwnerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Area" Relationship="LYSAdmin.Data.FK_Apartments_AreaID" FromRole="Apartment" ToRole="Area" />
-          <NavigationProperty Name="User" Relationship="LYSAdmin.Data.FK_Apartments_OwnerID" FromRole="Apartment" ToRole="User" />
           <NavigationProperty Name="Blocks" Relationship="LYSAdmin.Data.FK_Blocks_ApartmentID" FromRole="Apartment" ToRole="Block" />
+          <NavigationProperty Name="User" Relationship="LYSAdmin.Data.FK_Apartments_OwnerID" FromRole="Apartment" ToRole="User" />
         </EntityType>
         <EntityType Name="Area">
           <Key>
@@ -979,32 +979,6 @@
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="LYSAdmin.Data.PK_UserDetails_UserID" FromRole="UserDetail" ToRole="User" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IsBackGroundVerified" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="ManagerID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Apartments" Relationship="LYSAdmin.Data.FK_Apartments_OwnerID" FromRole="User" ToRole="Apartment" />
-          <NavigationProperty Name="Beds" Relationship="LYSAdmin.Data.FK_Beds_UserID" FromRole="User" ToRole="Bed" />
-          <NavigationProperty Name="HouseReviews" Relationship="LYSAdmin.Data.FK_HouseReviews_UserID" FromRole="User" ToRole="HouseReview" />
-          <NavigationProperty Name="PGDetails" Relationship="LYSAdmin.Data.FK_PGDetails_OwnerID" FromRole="User" ToRole="PGDetail" />
-          <NavigationProperty Name="Role" Relationship="LYSAdmin.Data.FK_Users_RoleID" FromRole="User" ToRole="Role" />
-          <NavigationProperty Name="UserDetails" Relationship="LYSAdmin.Data.PK_UserDetails_UserID" FromRole="User" ToRole="UserDetail" />
-        </EntityType>
         <Association Name="FK_Apartments_AreaID">
           <End Type="LYSAdmin.Data.Area" Role="Area" Multiplicity="0..1" />
           <End Type="LYSAdmin.Data.Apartment" Role="Apartment" Multiplicity="*" />
@@ -1014,18 +988,6 @@
             </Principal>
             <Dependent Role="Apartment">
               <PropertyRef Name="AreaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Apartments_OwnerID">
-          <End Type="LYSAdmin.Data.User" Role="User" Multiplicity="1" />
-          <End Type="LYSAdmin.Data.Apartment" Role="Apartment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Apartment">
-              <PropertyRef Name="OwnerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1077,18 +1039,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Beds_UserID">
-          <End Type="LYSAdmin.Data.User" Role="User" Multiplicity="1" />
-          <End Type="LYSAdmin.Data.Bed" Role="Bed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Bed">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Cities_CountryID">
           <End Type="LYSAdmin.Data.Country" Role="Country" Multiplicity="1" />
           <End Type="LYSAdmin.Data.City" Role="City" Multiplicity="*" />
@@ -1137,18 +1087,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HouseReviews_UserID">
-          <End Type="LYSAdmin.Data.User" Role="User" Multiplicity="1" />
-          <End Type="LYSAdmin.Data.HouseReview" Role="HouseReview" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="HouseReview">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Houses_PGDetailID">
           <End Type="LYSAdmin.Data.PGDetail" Role="PGDetail" Multiplicity="0..1" />
           <End Type="LYSAdmin.Data.House" Role="House" Multiplicity="*" />
@@ -1170,6 +1108,68 @@
             </Principal>
             <Dependent Role="Room">
               <PropertyRef Name="HouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IsBackGroundVerified" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="ManagerID" Type="Int32" Nullable="false" />
+          <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Gender" Type="Int32" />
+          <NavigationProperty Name="Apartments" Relationship="LYSAdmin.Data.FK_Apartments_OwnerID" FromRole="User" ToRole="Apartment" />
+          <NavigationProperty Name="Beds" Relationship="LYSAdmin.Data.FK_Beds_UserID" FromRole="User" ToRole="Bed" />
+          <NavigationProperty Name="HouseReviews" Relationship="LYSAdmin.Data.FK_HouseReviews_UserID" FromRole="User" ToRole="HouseReview" />
+          <NavigationProperty Name="PGDetails" Relationship="LYSAdmin.Data.FK_PGDetails_OwnerID" FromRole="User" ToRole="PGDetail" />
+          <NavigationProperty Name="Role" Relationship="LYSAdmin.Data.FK_Users_RoleID" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserDetails" Relationship="LYSAdmin.Data.PK_UserDetails_UserID" FromRole="User" ToRole="UserDetail" />
+        </EntityType>
+        <Association Name="FK_Apartments_OwnerID">
+          <End Type="LYSAdmin.Data.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.Apartment" Role="Apartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Apartment">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Beds_UserID">
+          <End Type="LYSAdmin.Data.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.Bed" Role="Bed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Bed">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HouseReviews_UserID">
+          <End Type="LYSAdmin.Data.User" Role="User" Multiplicity="1" />
+          <End Type="LYSAdmin.Data.HouseReview" Role="HouseReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="HouseReview">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1494,8 +1494,9 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="LYSAdmin.Data.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
                 <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -1503,7 +1504,6 @@
                 <ScalarProperty Name="IsBackGroundVerified" ColumnName="IsBackGroundVerified" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

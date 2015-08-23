@@ -48,7 +48,7 @@ namespace LYSAdmin.Domain.UserManagement
             modelUser.LastName = dbUser.LastName;
             modelUser.Username = dbUser.Username;
             modelUser.Password = dbUser.Password;
-            modelUser.Sex = dbUser.Sex;
+            modelUser.Gender = dbUser.Gender;
             modelUser.RoleID = dbUser.RoleID;
             modelUser.MobileNumber = dbUser.MobileNumber;
             modelUser.IsBackGroundVerified = dbUser.IsBackGroundVerified;
@@ -56,7 +56,7 @@ namespace LYSAdmin.Domain.UserManagement
             modelUser.CreatedOn = dbUser.CreatedOn;
             modelUser.LastUpdatedOn = dbUser.LastUpdatedOn;
             modelUser.Status = dbUser.Status;
-            modelUser.Photo = dbUser.Photo;
+            modelUser.ProfilePicture = dbUser.ProfilePicture;
             modelUser.UserDetails = (from p in userDetailRepository.Get(p => p.UserID == dbUser.UserID)
                                      select new Model.UserDetail
                                      {
@@ -84,8 +84,8 @@ namespace LYSAdmin.Domain.UserManagement
             dbUser.MobileNumber = userViewModel.User.MobileNumber;
             dbUser.FirstName = userViewModel.User.FirstName;
             dbUser.LastName = userViewModel.User.LastName;
-            dbUser.Sex = userViewModel.User.Sex;
-            dbUser.Photo = userViewModel.User.Photo;
+            dbUser.Gender = userViewModel.User.Gender;
+            dbUser.ProfilePicture = userViewModel.User.ProfilePicture;
             dbUser.UserDetails.FirstOrDefault().PresentAddress = userViewModel.UserDetail.PresentAddress;
             dbUser.UserDetails.FirstOrDefault().PermanentAddress = userViewModel.UserDetail.PermanentAddress;
             dbUser.UserDetails.FirstOrDefault().GovtIDType = userViewModel.UserDetail.GovtIDType;

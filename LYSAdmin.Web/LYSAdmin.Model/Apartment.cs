@@ -24,7 +24,7 @@ namespace LYSAdmin.Model
         public int OwnerID { get; set; }
 
         public virtual Area Area { get; set; }
-        public virtual User User { get; set; }
         public virtual ICollection<Block> Blocks { get; set; }
+        public virtual User User { get; set; }
     }
 }
