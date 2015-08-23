@@ -333,10 +333,28 @@
     </div>
 </div>
 
+<input type="hidden" id="hdnImageCropWidth" name="ImageCropWidth" />
+<input type="hidden" id="hdnImageCropHeight" name="ImageCropHeight" />
+<input type="hidden" id="hdnCropPointX" name="CropPointX" />
+<input type="hidden" id="hdnCropPointY" name="CropPointY" />
+<input type="hidden" id="hdnCropPointX2" name="CropPointX2" />
+<input type="hidden" id="hdnCropPointY2" name="CropPointY2" />
+<input type="hidden" id="hdnFileName" name="ImgFileName" />
+<input type="hidden" id="hdnIsImageCropped" name="IsCropped" value="0" />
+<input type="hidden" id="hdnImageSource" name="ImageSource" />
+
 @section scripts{
 
     <script>
         var message = '@TempData["message"]';
+        var CropImageUrl = '@Url.Action("CropImage","Account")';
+        document.getElementById("fileProfile").onchange = function () {
+
+            $("#photoFilePath").html(this.value.split('\\').pop());
+            $("#photoFilePath").attr("title", this.value.split('\\').pop());
+            $("#hdnFileName").val('@User.UserID' + '_' + this.value.split('\\').pop());
+
+        };
     </script>
     @Scripts.Render("~/plugins/imagecropper")
     
