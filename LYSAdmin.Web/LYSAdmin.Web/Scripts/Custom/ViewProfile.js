@@ -172,7 +172,7 @@ function fnLoadImage() {
     }
 
     $.ajax({
-        url: '@Url.Action("CropImage","Account")',
+        url: '@Url.Action("CropImage")',
         type: 'POST',
         data: {
             imagePath: $("#demo3").attr("src"),
