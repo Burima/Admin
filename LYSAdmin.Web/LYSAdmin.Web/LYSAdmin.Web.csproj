@@ -390,6 +390,7 @@
     <Content Include="fonts\font-awesome\scss\_variables.scss" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\inspinia.min.js" />
+    <Content Include="Scripts\app\jquery.timeago.js" />
     <Content Include="Scripts\app\skin.config.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -397,8 +398,11 @@
     <Content Include="Scripts\Custom\Apartment.js" />
     <Content Include="Scripts\Custom\Houeses.js" />
     <Content Include="Scripts\Custom\ViewProfile.js" />
+    <Content Include="Scripts\form-image-crop.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery.Jcrop.js" />
+    <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\plugins\blueimp\jquery.blueimp-gallery.min.js" />
     <Content Include="Scripts\plugins\chartJs\Chart.min.js" />
     <Content Include="Scripts\plugins\chosen\chosen.jquery.js" />

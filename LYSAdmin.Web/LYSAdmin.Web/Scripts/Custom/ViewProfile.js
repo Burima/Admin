@@ -1,33 +1,32 @@
 ﻿
-        $(document).ready(function () {
-            //if message show in  modal
-            if (message != "") {
-                $('#modalShowMessage').modal('show');
-               
-            }
-            $(".jcrop-holder").find("div").eq(0).addClass("formatDiv");
+$(document).ready(function () {
+    //if message show in  modal
+    if (message != "") {
+        $('#modalShowMessage').modal('show');               
+    }
+    $(".jcrop-holder").find("div").eq(0).addClass("formatDiv");
            
-            $("#fileProfile").change(function (e) {
+    $("#fileProfile").change(function (e) {
                
-                var file = $(this).val();
-                var ext = file.split('.').pop();
-                if (ext.toLowerCase() == "gif" || ext.toLowerCase() == "jpeg" || ext.toLowerCase() == "jpg" || ext.toLowerCase() == "png") {
-                    readURL(this);
-                    $('#spnRemove').show();
-                }
-                else {
-                    fnDismissModal();
-                }
-            });
+        var file = $(this).val();
+        var ext = file.split('.').pop();
+        if (ext.toLowerCase() == "gif" || ext.toLowerCase() == "jpeg" || ext.toLowerCase() == "jpg" || ext.toLowerCase() == "png") {
+            readURL(this);
+            $('#spnRemove').show();
+        }
+        else {
+            fnDismissModal();
+        }
+    });
            
-            $("#changePassword").click(function () {
-                $("#modalChangePassword").modal({ backdrop: 'static', keyboard: false });
-                //show the modal
-                $('#modalChangePassword').modal('show');
+    $("#changePassword").click(function () {
+        $("#modalChangePassword").modal({ backdrop: 'static', keyboard: false });
+        //show the modal
+        $('#modalChangePassword').modal('show');
 
-            });
+    });
 
-        });
+});
       
 $('#btnChangePassword').click(function () {
     fnSaveLocation();
@@ -62,7 +61,6 @@ function fnSaveLocation() {
 function fnRemove() {
     $('#fileProfile').val("");
     $('#spnRemove').hide();
-    //$('#imgProfile').attr('src', '../Content/Images/empty_logo.png');
     $("#photoFilePath").html("No File Chosen");//
 }
 
@@ -73,11 +71,9 @@ function readURL(input) {
 
             $("#divCropResizeImage").modal('show');
             $("#hdnImageSource").val(e.target.result);
-
             $('.jcrop-holder').replaceWith('');
             $("#divCropResizeImage .modal-body").empty();
             $("#divCropResizeImage .modal-body").append("<div class=\"row\" style=\"margin:5%;\">  <div class=\"col-lg-2\"></div><div class=\"col-lg-4\"><img id=\"demo3\" alt=\"Jcrop Example\" style=\"width: 100%\" /></div>");
-            //$("#divCropResizeImage .modal-body").append("<div class=\"col-md-6\"><div id=\"preview-pane\"><div class=\"preview-container\"><img id=\"imgPreview\"  class=\"jcrop-preview\" alt=\"Preview\" />");
             $("#divCropResizeImage .modal-body").append("</div></div></div></div>");
             $('#demo3').replaceWith('<img id="demo3" src="' + e.target.result + '"/>');
             FormImageCrop.init();
@@ -137,3 +133,14 @@ function fnDismissModal() {
         $("#divCropResizeImage .modal-body").append("</div></div></div></div>");
 }
 
+$('#btnCroplose').click(function () {
+    fnLoadImage();
+});
+
+$('#btnSkipCropping').click(function () {
+    fnLoadImage();
+});
+
+$('#btnCrop').click(function () {
+    fnLoadImage();
+});

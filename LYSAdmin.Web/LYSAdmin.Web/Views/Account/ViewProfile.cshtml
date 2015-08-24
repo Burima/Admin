@@ -35,12 +35,12 @@
 
 <div id="divCropResizeImage" class="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="height:500px;">
+        <div class="modal-content animated bounceInRight">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" onclick="fnLoadImage()" aria-hidden="true">&times;</button>
+                <button type="button" id="btnCropClose" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Crop Image</h4>
             </div>
-            <div class="modal-body" style="padding: 5px; ">
+            <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-4">
 
@@ -53,9 +53,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="float:right; margin-right:5%;">
-                <input class="btn btn-success" type="button" onclick="fnLoadImage()" aria-hidden="true" value="Skip Cropping" style="margin-right:10px;" />
-                <input class="btn btn-success" type="button" value="Crop" onclick=" fnLoadImage() " />
+            <div class="modal-footer">
+                <input class="btn btn-primary" id="btnSkipCropping" type="button" aria-hidden="true" value="Skip Cropping" />
+                <input class="btn btn-primary" id="btnCrop" type="button" value="Crop" />
             </div>
         </div>
     </div>
@@ -302,7 +302,6 @@
 <input type="hidden" id="hdnCropPointX2" name="CropPointX2" />
 <input type="hidden" id="hdnCropPointY2" name="CropPointY2" />
 <input type="hidden" id="hdnFileName" name="ImgFileName" />
-<input type="hidden" id="hdnIsImageCropped" name="IsCropped" value="0" />
 <input type="hidden" id="hdnImageSource" name="ImageSource" />
 
 @section scripts{
