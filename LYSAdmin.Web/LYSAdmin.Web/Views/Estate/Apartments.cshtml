@@ -8,19 +8,39 @@
     //get all the Areas from Application Variable
     var Areas = System.Web.HttpContext.Current.Application["Areas"] as List<Area>;
     //type of operation to be done(e.g. view,add)
-    var Operation = 0;
+
     //storing current user session
     var User = (User)Session["User"];
-    if (Session["AreaID"] != null)
-    {
-        Operation = Model.Operation;
-    }
+    
+    var showMessage = TempData["Message"] != null ? true : false;
 
 }
 
 <!-- Datatable Css-->
 @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
 
+
+@if (TempData["Message"] != null)
+{
+    <div class="modal inmodal fade in" id="modalShowMessage" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        @TempData["Message"]
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 <div class="modal inmodal" id="modalSelectCityAndArea" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -53,6 +73,27 @@
         </div>
     </div>
 </div>
+
+<!-- modal confirm deletion -->
+@*<div class="modal inmodal fade" id="modalConfirmDeletion" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Delete Apartment</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <span id="spnApartmentName-ConfirmDeletion"></span> Apartment ?
+                <input type="hidden" id="hdnApartmentID-ConfirmDeletion" value="0" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary btnSubmit">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
 @if (Session["AreaID"] != null)
 {
     <div class="wrapper wrapper-content animated fadeInRight" id="divApartments" style="display:none">
@@ -70,7 +111,7 @@
                                 <tr>
                                     <th>Apartment Name</th>
                                     <th>House No</th>
-                                    <th>Description</th>                                    
+                                    <th>Description</th>
                                     <th>Add Blocks</th>
                                     <th>Action</th>
                                 </tr>
@@ -97,7 +138,7 @@
                                 <tr>
                                     <th>Apartment Name</th>
                                     <th>House No</th>
-                                    <th>Description</th>                                    
+                                    <th>Description</th>
                                     <th>Add Block</th>
                                     <th>Action</th>
                                 </tr>
@@ -112,7 +153,7 @@
     </div>
 
     <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divAddApartment">
-        @Html.Partial("_AddApartment")
+        @Html.Partial("_AddApartment", Model)
     </div>
     <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divEditApartment">
         @Html.Partial("_EditApartment")
@@ -150,18 +191,20 @@
 @section scripts{
 
     <script>
-        //storing AreaID and all Areas in javascript variable
-        var AreaID = '@AreaID';
-        var Areas = '@Html.Raw(Json.Encode(Areas))';
-        //reference url
-        var ApartmentsUrl = '@Url.Action("Apartments","Estate")';
-        var AddApartmentUrl = '@Url.Action("AddApartment", "Estate")';
-        var GetApartmentByIDUrl = '@Url.Action("GetApartmentByID", "Estate")';
-        var EditApartmentUrl = '@Url.Action("EditApartment", "Estate")';
-        var SaveBlocskUrl = '@Url.Action("SaveBlocks", "Estate")';
-        //updating location
-        var UpdateLocationUrl = '@Url.Action("UpdateLocation", "Estate")';
-        var operation = '@Operation';
+    //storing AreaID and all Areas in javascript variable
+    var AreaID = '@AreaID';
+    var Areas = '@Html.Raw(Json.Encode(Areas))';
+    //reference url
+    var ApartmentsUrl = '@Url.Action("Apartments","Estate")';
+    var AddApartmentUrl = '@Url.Action("AddApartment", "Estate")';
+    var GetApartmentByIDUrl = '@Url.Action("GetApartmentByID", "Estate")';
+    var EditApartmentUrl = '@Url.Action("EditApartment", "Estate")';
+    var DeleteApartmentUrl = '@Url.Action("DeleteApartment", "Estate")';
+    var SaveBlocskUrl = '@Url.Action("SaveBlocks", "Estate")';
+    //updating location
+    var UpdateLocationUrl = '@Url.Action("UpdateLocation", "Estate")';
+
+    var showMessage = '@showMessage';
     </script>
 
     <!-- jQuery DataTable -->

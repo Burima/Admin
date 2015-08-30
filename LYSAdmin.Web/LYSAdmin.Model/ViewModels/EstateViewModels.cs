@@ -13,10 +13,7 @@ namespace LYSAdmin.Model
     {
         public Apartment Apartment { get; set; }
         public List<Apartment> Apartments { get; set; }
-
-        //operation is to specify which partial view to render
-        //1(View All Apartments), 2(Add new Apartment)
-        public int Operation { get; set; }
+        
     }
 
     public class HouseViewModel

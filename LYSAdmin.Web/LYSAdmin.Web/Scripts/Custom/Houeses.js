@@ -288,27 +288,7 @@ function fnChangeLocation() {
    $('#modalSelectCityAndArea').modal('show');
 }
 
-//show the limit of char left
-function charlimit() {
-    $("form :input").each(function () {
-        var input = $(this); // This is the jquery object of the input, do what you will
-        if (input.parent().find("span.span-char-left").length) {
-            input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
-        }
-    });
-};
 
-//keyup event for all inputs
-function inputkeyup() {
-    $("form :input").each(function () {
-        var input = $(this);
-        input.keyup(function () {
-            if (input.parent().find("span.span-char-left").length) {
-                input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
-            }
-        });
-    })
-};
 
 
 //Change Area when changing City

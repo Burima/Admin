@@ -86,9 +86,22 @@ namespace LYSAdmin.Domain.ApartmentManagement
 
         public int UpdateApartment(LYSAdmin.Model.ApartmentViewModel apartmentViewModel)
         {
-            var dbApartment = Mapper.Map<LYSAdmin.Model.Apartment,LYSAdmin.Data.DBEntity.Apartment>(apartmentViewModel.Apartment);
-            apartmentRepository.Update(dbApartment);
-            return unitOfWork.SaveChanges();
+            var dbApartment = (from p in apartmentRepository.Where(x => x.ApartmentID == apartmentViewModel.Apartment.ApartmentID)                                   
+                                select p).FirstOrDefault();
+            if (dbApartment != null)
+            {
+                dbApartment.ApartmentName = apartmentViewModel.Apartment.ApartmentName;
+                dbApartment.HouseNo = apartmentViewModel.Apartment.HouseNo;
+                dbApartment.Description = apartmentViewModel.Apartment.Description;
+                dbApartment.LastUpdatedOn = DateTime.Now;
+                apartmentRepository.Update(dbApartment);
+
+                return unitOfWork.SaveChanges();
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         /// <summary>

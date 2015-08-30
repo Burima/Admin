@@ -66,13 +66,13 @@ namespace LYSAdmin.Web.Controllers
         ///               
         /// </param>
         /// <returns></returns>
-        public ActionResult Apartments(int Operation = 1)
+        public ActionResult Apartments()
         {
             if (Session["AreaID"] != null)
             {
                 ApartmentViewModel apartmentViewModel = new ApartmentViewModel();
                 apartmentViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(GetOwnerID(), Convert.ToInt32(Session["AreaID"]));
-                apartmentViewModel.Operation = Operation;
+                
                 return View(apartmentViewModel);
             }
             else
@@ -89,39 +89,49 @@ namespace LYSAdmin.Web.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        public JsonResult AddApartment(string ApartmentName, string HouseNo, string Description)
+        public ActionResult AddApartment(ApartmentViewModel apartmentViewModel)
         {
-
-            var User = (User)Session["User"];
-            apartment.ApartmentName = JsonConvert.DeserializeObject<string>(ApartmentName);
-            apartment.HouseNo = JsonConvert.DeserializeObject<string>(HouseNo);
-            apartment.Description = JsonConvert.DeserializeObject<string>(Description);
-            apartment.Status = true;
-            apartment.CreatedOn = DateTime.Now;
-            apartment.LastUpdatedOn = DateTime.Now;
-            apartment.IsDeleted = false;
-            apartment.CreatedBy = User.UserID;
-            apartment.OwnerID = User.RoleID <= 3 ? User.UserID : User.ManagerID;
-            //Session["AreaID"] = 1;//test data
-            if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
+            if (ModelState.IsValid)
             {
-                apartment.AreaID = Convert.ToInt32(Session["AreaID"]);
-                int successCount = apartmentManagement.AddApartment(apartment);
-                if (successCount > 0)
+                var User = (User)Session["User"];
+                //apartment.ApartmentName = JsonConvert.DeserializeObject<string>(ApartmentName);
+                //apartment.HouseNo = JsonConvert.DeserializeObject<string>(HouseNo);
+                //apartment.Description = JsonConvert.DeserializeObject<string>(Description);
+                apartmentViewModel.Apartment.Status = true;
+                apartmentViewModel.Apartment.CreatedOn = DateTime.Now;
+                apartmentViewModel.Apartment.LastUpdatedOn = DateTime.Now;
+                apartmentViewModel.Apartment.IsDeleted = false;
+                apartmentViewModel.Apartment.CreatedBy = User.UserID;
+                apartmentViewModel.Apartment.OwnerID = User.RoleID <= 3 ? User.UserID : User.ManagerID;
+                //Session["AreaID"] = 1;//test data
+                if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
                 {
-                    //Apartment Inserted Successfully
-                    return Json("SUCCESS");
+                    apartmentViewModel.Apartment.AreaID = Convert.ToInt32(Session["AreaID"]);
+                    int successCount = apartmentManagement.AddApartment(apartmentViewModel.Apartment);
+                    if (successCount > 0)
+                    {
+                        //Apartment Inserted Successfully
+                        TempData["Message"] = "Apartment Added Successfully";                        
+                    }
+                    else
+                    {
+                        //Insertion failed
+                        TempData["Message"] = "Apartment couldn't be added. Please try again later.";   
+                    }
                 }
                 else
                 {
-                    //Insertion failed
-                    return Json("Failed");
+                    TempData["Message"] = "SelectArea"; //Area is not selected for session..Redirect to View to Selet the Area
                 }
             }
             else
             {
-                return Json("SelectArea");//Area is not selected for session..Redirect to View to Selet the Area
+                //Insertion failed
+                TempData["Message"] = "Apartment couldn't be added. Please try again later.";  
+                
             }
+
+            return RedirectToAction("Apartments", "Estate");
 
         }
 
@@ -137,10 +147,16 @@ namespace LYSAdmin.Web.Controllers
         [HttpPost]
         public ActionResult EditApartment(ApartmentViewModel apartmentViewModel)
         {
-            apartmentViewModel.Apartment.Status = true;
-            apartmentViewModel.Apartment.LastUpdatedOn = DateTime.Now;
             int count = apartmentManagement.UpdateApartment(apartmentViewModel);
-            return View(apartmentViewModel);
+            if (count > 0)
+            {
+                TempData["Message"] = "Apartment updated Successfully";     
+            }
+            else
+            {
+                TempData["Message"] = "Apartment couldn't be updated. Please try again later.";  
+            }
+            return RedirectToAction("Apartments", "Estate");
         }
 
         #endregion Apartment

@@ -10,6 +10,7 @@ namespace LYSAdmin.Model
     public class Apartment
     {
         public int ApartmentID { get; set; }
+        [Required]
         public string ApartmentName { get; set; }
         public string HouseNo { get; set; }
         public string Description { get; set; }

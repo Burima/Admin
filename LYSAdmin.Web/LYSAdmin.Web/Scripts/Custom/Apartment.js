@@ -4,26 +4,25 @@ eval("var areaList = " + Areas);
 
 $(document).ready(function () {
 
+    //char alone 
+    $(".charAlone").on(" keydown ", function (event) { return isCharField(event); });
+
     //if area is not selected show modal
     //for select City and Area
     if (AreaID == 0) {
         fnChangeLocation();
     }
-    
 
-    //filter view based on operation demand    
-    if (operation == 1) {
-        //view all apartments
-        $('#divApartments').show();
-        $('#divAddApartment').hide();
-        $('#divEditApartment').hide();
-    } else if (operation == 2) {
-        //add apartment 
-        $('#divApartments').hide();
-        $('#divAddApartment').show();
-        $('#divEditApartment').hide();
+    if (showMessage) {
+        $('#modalShowMessage').modal('show');
     }
-    
+
+
+    //view all apartments
+    $('#divApartments').show();
+    $('#divAddApartment').hide();
+    $('#divEditApartment').hide();
+
 
     //Initialize data table
     $('.dataTables-apartments').dataTable({
@@ -42,27 +41,49 @@ $(document).ready(function () {
     charlimit();
     inputkeyup();
 
+    //form validator
+    $("#form-add-an-apartment").validate();
+    $("#form-edit-apartment").validate();
     //Add Apartment button
     $('#btnAddApartment').click(function () {
-        if ($('#add-apartment-form').valid()) {
-            //on form valid do a ajax call to add apartment
-            fnAddApartment();
+        if ($("#form-add-an-apartment").valid() == true) {
+            showProgress(false, "Adding your Apartment...");
+            $("#form-add-an-apartment").submit();
         }
     });
+
+    //delete apartment
+    $('.btnDeleteApartment').click(function () {
+        var trId = $(this).closest('tr').attr('id');
+        var apartmentName = $(this).closest('tr:first a').html();
+        alert(apartmentName);
+
+        $('#spnApartmentName-ConfirmDeletion').html(apartmentName);
+        $('#hdnApartmentID-ConfirmDeletion').val(trId);
+        $('#modalConfirmDeletion').modal('show');
+        //fnDeleteApartment(trId);
+
+    });
+
+    $('modalConfirmDeletion .btnYes').click(function () {
+        alert($('#hdnApartmentID-ConfirmDeletion').val());
+    });
+
+
     //click on addblocks
 
     $('.btnShowModalBlocks').click(function () {
         // alert($(this).closest('tr').attr('id'));
         $('#divAddBlock').empty();
         $('#hdnApartmentID').val($(this).closest('tr').attr('id'));
-        var blocks= $(this).parent().find('.hdnBlocks').val(); //getting all the blocks from hidden field      
+        var blocks = $(this).parent().find('.hdnBlocks').val(); //getting all the blocks from hidden field      
         eval("var blockList = " + blocks); //asigning to a variable
         //iterationg each block and generating html for existing blocks
-        $.each(blockList, function (i, block) {           
+        $.each(blockList, function (i, block) {
             $("#divAddBlock").append("<div class='form-group input-group'><input type='text' class='form-control col-md-4 existing-block' name=" + "'" + this.BlockName + "'" + " value=" + "'" + this.BlockName + "'" + " disabled><a class='input-group-addon glyphicon glyphicon-edit anchoreditblock'></a><input type='hidden' class='hdnBlockID' value=" + this.BlockID + "></div>");
         });
 
-       //on click of edit icon of existing blog
+        //on click of edit icon of existing blog
         $('.anchoreditblock').click(function () {//edit button click
             $(this).parent().find(".existing-block").removeAttr('disabled');
             var SearchInput = $(this).parent().find(".existing-block");
@@ -81,15 +102,15 @@ $(document).ready(function () {
     });
 
     //add new block in Blocks modal
-    $("#addnewblock").click(function () {        
+    $("#addnewblock").click(function () {
         $("#divAddBlock").append("<div class='form-group input-group'><input type='text' class='form-control col-md-4 new-block ' ><a class='input-group-addon glyphicon glyphicon-plus-sign anchoreditblock'style=''></a></div>")
 
     });
-    
+
     //Save Blocks
     $("#modalblocksave").click(function () {
         var obj = new Array();//creating a new block array object 
-       //adding new blocks
+        //adding new blocks
         $('input.new-block[type="text"]').each(function () {
             var Block = new Object();
             Block.BlockName = $(this).val();
@@ -115,7 +136,7 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 if (response == "Success") {
-                    alert('blocks updated successfully');                    
+                    alert('blocks updated successfully');
                     $("#myModal").modal('hide');//Hide the modal
                     window.location = ApartmentsUrl;
                 } else {
@@ -123,68 +144,90 @@ $(document).ready(function () {
                     $("#myModal").modal('show');//Show the modal
                 }
             },
-
-
         });
         // $("#saveblockmodal").submit();
-    });   
+    });
 });
 
-
-
-//show the limit of char left
-function charlimit() {
-    $("form :input").each(function () {
-        var input = $(this); // This is the jquery object of the input, do what you will
-        if (input.parent().find("span.span-char-left").length) {
-            input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
-        }
-        //alert(input.attr("type"));
-    });
-};
-
-//keyup event for all inputs
-function inputkeyup() {
-    $("form :input").each(function () {
-        var input = $(this);
-        input.keyup(function () {
-            if (input.parent().find("span.span-char-left").length) {
-                input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
-            }
-        });
-    })
-};
-
-
-
-function fnAddApartment() {
-    var jmodel = { ApartmentName: JSON.stringify($("#txtApartmentName").val()), HouseNo: JSON.stringify($("#txtHouseNo").val()), Description: JSON.stringify($("#txtDescription").val()) };
-
-    showProgress(false, "Adding Apartment. Please wait...");
+//delete apartment
+function fnDeleteApartment(apartmentID) {
+    showProgress(false, "Deleting Apartment. Please wait...");
+    var jsonmodel = { Blocksarray: JSON.stringify(apartmentID) }
     $.ajax({
-        url: AddApartmentUrl,
+        url: DeleteApartmentUrl,
+        data: jsonmodel,
         type: 'POST',
-        data: jmodel,
-        dataType: 'JSON',
-        success: function (response, textStatus, XMLHttpRequest) {
-            if (response.toUpperCase() == "SUCCESS") {
-                alert('s');
-                location.href = ApartmentsUrl;
-            } else if (response.toUpperCase() == "FAILED") {
-                alert('f');
-                //Adding of new Apartment failed
-            } else if (response.toUpperCase() == "SelectArea") {
-                alert('a');
-                //Area is not selected
+        dataType: 'json',
+        success: function (response) {
+            if (response == "Success") {
+                alert('blocks updated successfully');
+                $("#myModal").modal('hide');//Hide the modal
+                window.location = ApartmentsUrl;
+            } else {
+                alert('Something went wrong. Please try again later !');
+                $("#myModal").modal('show');//Show the modal
             }
-            hideProgress();
         },
-        error: function (xhr, status) {
-            alert('error');
-            hideProgress();
-        }
+
+
     });
 }
+
+
+
+////show the limit of char left
+//function charlimit() {
+//    $("form :input").each(function () {
+//        var input = $(this); // This is the jquery object of the input, do what you will
+//        if (input.parent().find("span.span-char-left").length) {
+//            input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
+//        }
+//        //alert(input.attr("type"));
+//    });
+//};
+
+////keyup event for all inputs
+//function inputkeyup() {
+//    $("form :input").each(function () {
+//        var input = $(this);
+//        input.keyup(function () {
+//            if (input.parent().find("span.span-char-left").length) {
+//                input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
+//            }
+//        });
+//    })
+//};
+
+
+
+//function fnAddApartment() {
+//    var jmodel = { ApartmentName: JSON.stringify($("#txtApartmentName").val()), HouseNo: JSON.stringify($("#txtHouseNo").val()), Description: JSON.stringify($("#txtDescription").val()) };
+
+//    showProgress(false, "Adding Apartment. Please wait...");
+//    $.ajax({
+//        url: AddApartmentUrl,
+//        type: 'POST',
+//        data: jmodel,
+//        dataType: 'JSON',
+//        success: function (response, textStatus, XMLHttpRequest) {
+//            if (response.toUpperCase() == "SUCCESS") {
+//                alert('s');
+//                location.href = ApartmentsUrl;
+//            } else if (response.toUpperCase() == "FAILED") {
+//                alert('f');
+//                //Adding of new Apartment failed
+//            } else if (response.toUpperCase() == "SelectArea") {
+//                alert('a');
+//                //Area is not selected
+//            }
+//            hideProgress();
+//        },
+//        error: function (xhr, status) {
+//            alert('error');
+//            hideProgress();
+//        }
+//    });
+//}
 
 
 
@@ -202,8 +245,8 @@ function fnGetApartmentByID(element) {
         dataType: 'JSON',
         success: function (response, textStatus, XMLHttpRequest) {
             if (response != null) {
-                alert(response.CreatedOn);
-                var createdOnDateFromServer =response.CreatedOn;
+                //alert(response.CreatedOn);
+                var createdOnDateFromServer = response.CreatedOn;
                 if (createdOnDateFromServer != null) {
                     //Now let's convert it to js format
                     //Example: Fri Dec 03 2010 16:37:32 GMT+0530 (India Standard Time)
@@ -212,7 +255,7 @@ function fnGetApartmentByID(element) {
                     createdOn = (fnCheckNumber(jsDate.getMonth() + 1)) + "/" + fnCheckNumber(jsDate.getDate()) + "/" + fnCheckNumber(jsDate.getFullYear());
                 }
                 //var createdOn = new Date(parseInt(response.CreatedOn.substr(6), 10));
-                alert(createdOn);
+                //alert(createdOn);
                 $('#divApartments').hide();
                 $('#divAddApartment').hide();
                 $('#divEditApartment').show();
@@ -221,10 +264,10 @@ function fnGetApartmentByID(element) {
                 $('#txtEditApartmentName').val(response.ApartmentName);
                 $('#txtEditHouseNo').val(response.HouseNo);
                 $('#txtEditDescription').val(response.Description);
-                $('#hdnEditAreaID').val(response.AreaID);
-                $('#hdnEditCreatedOn').val(createdOn);
-                $('#hdnEditCreatedBy').val(response.CreatedBy);
-                $('#hdnEditOwnerID').val(response.OwnerID);
+                //$('#hdnEditAreaID').val(response.AreaID);
+                //$('#hdnEditCreatedOn').val(createdOn);
+                //$('#hdnEditCreatedBy').val(response.CreatedBy);
+                //$('#hdnEditOwnerID').val(response.OwnerID);
                 //set char limit 
                 charlimit();
             } else {
@@ -239,7 +282,17 @@ function fnGetApartmentByID(element) {
         }
     });
 }
-//
+//update apartment
+$('#btnEditApartment').click(function () {
+    if ($("#form-edit-apartment").valid() == true) {
+        showProgress(false, "Updating your Apartment...");
+        $('#form-edit-apartment').submit();
+    }
+});
+
+
+
+
 //fuction to check anumber and reconfigure date time to desire (eg: 1 as 01)
 function fnCheckNumber(number) {
     if (number < 10)

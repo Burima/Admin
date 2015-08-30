@@ -1,4 +1,6 @@
-﻿<div class="col-sm-9">
+﻿@model LYSAdmin.Model.ApartmentViewModel
+
+<div class="col-sm-9">
     <div class="row">
             <div class="col-md-12">
                 <button class="btn btn-primary pull-right" type="button" onclick="window.location.href='@Url.Action("Apartments", "Estate")'" tabindex="4">View All</button>
@@ -9,24 +11,24 @@
             <h3 class="m-t-none m-b">Add new Apartment</h3>
             @*<p>Add new Apartment today for more expirience.</p>*@
             <br />
-            @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "add-apartment-form", style = "min-height:420px" }))
+            @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "form-add-an-apartment", style = "min-height:420px", autocomplete = "off" }))
             {
                 <div class="saving-progress hidden"><h4>Saved!</h4></div>
                 <div class="form-group">
                     <label>Apartment Name</label>
-                    <input type="text" id="txtApartmentName" placeholder="Enter apartment name" class="form-control input-large" maxlength="50" tabindex="1" required name="Apartment.ApartmentName">
-                    @*@Html.TextBoxFor(m => m.ApartmentName, new { type = "text", placeholder = "Enter apartment name", @class = "form-control input-large", maxlength = "50", tabindex = "1" })*@
+                    <input type="text" id="txtApartmentName" placeholder="Enter apartment name" class="form-control input-large required charAlone" maxlength="50" tabindex="1" name="Apartment.ApartmentName" autocomplete="off" autofocus="autofocus">
+                    @*@Html.TextBoxFor(m => m.Apartment.ApartmentName, new { type = "text", placeholder = "Enter apartment name", @class = "form-control input-large", maxlength = "50", tabindex = "1" })*@
                     <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                 </div>
                 <div class="form-group">
                     <label>House No</label>
-                    <input type="text" id="txtHouseNo" placeholder="Enter house no" class="form-control input-large" maxlength="50" tabindex="2" name="Apartment.HouseNo">
+                    <input type="text" id="txtHouseNo" placeholder="Enter house no" class="form-control input-large" maxlength="50" tabindex="2" name="Apartment.HouseNo" autocomplete="off">
                     @*@Html.TextBoxFor(m => m.HouseNo, new { type = "text", placeholder = "Enter house no", @class = "form-control input-large", maxlength = "50", tabindex = "2" })*@
                     <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3" name="Apartment.Description"></textarea>
+                    <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="3" name="Apartment.Description" ></textarea>
                     @*@Html.TextAreaFor(m => m.Description, new { rows = "4", placeholder = "Description", @class = "form-control input-large", maxlength = "500", tabindex = "3" })*@
                     <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
                 </div>

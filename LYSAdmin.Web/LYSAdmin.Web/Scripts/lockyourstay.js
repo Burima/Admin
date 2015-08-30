@@ -1,9 +1,27 @@
-﻿/* START :  Custom select box */
+﻿
 $(document).ready(function () {
     //required field validator for all elements in the application
     jQuery.extend(jQuery.validator.messages, {
         required: "Required"
-    });   
+    });
+
+    $('.required').each(function (i) {
+        $(this).on('keydown keyup keypress', function () {
+            var id = $(this).attr("id");
+            var value = $("#" + id).val();
+            //alert($(this).html());
+            if (value.trim() == "") {
+                console.log("no value detected" + id + "----------" + value);
+                $("#" + id).css("border", "1px solid red");
+                flag = true;
+            }
+            else {
+                $("#" + id).css("border", "1px solid #e5e6e7");
+                flag = false;
+            }
+
+        });
+    });
 });
 
 
@@ -43,6 +61,26 @@ function addHyphen(obj, evt) {
     }
 }
 
+//show the limit of char left
+function charlimit() {
+    $("form :input").each(function () {
+        var input = $(this); // This is the jquery object of the input, do what you will
+        if (input.parent().find("span.span-char-left").length) {
+            input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
+        }
+    });
+};
 
+//keyup event for all inputs
+function inputkeyup() {
+    $("form :input").each(function () {
+        var input = $(this);
+        input.keyup(function () {
+            if (input.parent().find("span.span-char-left").length) {
+                input.parent().find("span.span-char-left").text((input.attr("maxlength")) - (input.val().trim().length));
+            }
+        });
+    })
+};
 //END: Number and character validation parts
 
