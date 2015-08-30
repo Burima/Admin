@@ -89,7 +89,7 @@
                                     <br />
                                     <div class="form-group">
                                         <label>UserName</label>
-                                        <input type="text" class="form-control input-sm" placeholder="Enter Username" value="@Model.User.Username" name="User.Username">
+                                        <input type="email" class="form-control input-sm" placeholder="Enter Username" value="@Model.User.Username" name="User.Username">
                                     </div>
                                     <div class="form-group">
                                         <label>Change Password</label>
@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Mobile Number</label>
-                                        <input type="text" class="form-control input-sm" placeholder="Enter Mobile Number" value="@Model.User.MobileNumber" name="User.MobileNumber">
+                                        <input class="form-control input-sm numbersAlone" maxlength="10" placeholder="Enter Mobile Number" value="@Model.User.MobileNumber" name="User.MobileNumber" required>
                                         <div class="pull-right">
                                             <label><i class="fa fa-check"></i>Verified</label>
                                             <a id="verifyMobile" href="#">Verify</a>
@@ -114,11 +114,11 @@
                                     <br />
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control input-sm" placeholder="First Name" value="@Model.User.FirstName" name="User.FirstName">
+                                        <input type="text" class="form-control input-sm charAlone" placeholder="First Name" value="@Model.User.FirstName" name="User.FirstName">
                                     </div>
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" class="form-control input-sm" placeholder="Last Name" value="@Model.User.LastName" name="User.LastName">
+                                        <input type="text" class="form-control input-sm charAlone" placeholder="Last Name" value="@Model.User.LastName" name="User.LastName">
                                     </div>
                                     <div class="form-group">
                                         <label>I am</label>
@@ -219,10 +219,10 @@
                                             <label>Employee ID</label>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm" placeholder="Current Employer Name" value="@Model.UserDetail.CurrentEmployer" name="UserDetail.CurrentEmployer">
+                                            <input type="text" class="form-control input-sm charAlone" placeholder="Current Employer Name" value="@Model.UserDetail.CurrentEmployer" name="UserDetail.CurrentEmployer">
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm" placeholder="Employer ID" value="@Model.UserDetail.EmployeeID" name="UserDetail.EmployeeID">
+                                            <input type="text" class="form-control input-sm numbersAlone" placeholder="Employer ID" value="@Model.UserDetail.EmployeeID" name="UserDetail.EmployeeID">
                                         </div>
 
                                         <div class="col-md-5 row-space-top-1">
@@ -240,7 +240,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm" placeholder="Institution Name" value="@Model.UserDetail.InstitutionName" name="UserDetail.InstitutionName">
+                                            <input type="text" class="form-control input-sm charAlone" placeholder="Institution Name" value="@Model.UserDetail.InstitutionName" name="UserDetail.InstitutionName">
                                         </div>
                                     </div>
 
@@ -319,10 +319,12 @@
     </script>
     @Scripts.Render("~/plugins/imagecropper")
     
-      <!--Custom Script for Apartment-->
+    
+<!--Custom Script for Apartment-->
     <script src='@Url.Content("~/Scripts/Custom/ViewProfile.js")'></script>
-    <script src="@Url.Content("~/Scripts/jquery.Jcrop.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/form-image-crop.js")"></script>
+    <script src='@Url.Content("~/Scripts/jquery.Jcrop.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/form-image-crop.js")'></script>
+
 
 
 }

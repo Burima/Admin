@@ -1,5 +1,7 @@
 ﻿
 $(document).ready(function () {
+    $(".numbersAlone").on("keyup keydown keypress", function (event) { return isNumberKey(event); });
+    $(".charAlone").on(" keydown ", function (event) { return isCharField(event); });
     //if message show in  modal
     if (message != "") {
         $('#modalShowMessage').modal('show');               
