@@ -40,7 +40,8 @@ namespace LYSAdmin.Web
             bundles.Add(new ScriptBundle("~/bundles/lockyourstay").Include(
                       "~/Scripts/plugins/metisMenu/metisMenu.min.js",
                       "~/Scripts/plugins/pace/pace.min.js",
-                      "~/Scripts/app/inspinia.min.js"));
+                      "~/Scripts/app/inspinia.min.js",
+                      "~/Scripts/lockyourstay.js"));
 
             // Inspinia skin config script
             bundles.Add(new ScriptBundle("~/bundles/skinConfig").Include(
