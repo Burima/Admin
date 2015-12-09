@@ -1,35 +1,89 @@
-﻿@{
-    ViewBag.Title = "Houses";
+﻿@model LYSAdmin.Model.HouseViewModel
+@using LYSAdmin.Model
+@using Newtonsoft.Json;
+@{
+    ViewBag.Title = "House";
+    var AreaID = Session["AreaID"] != null ? Convert.ToInt32(Session["AreaID"]) : 0;
+    var Areas = System.Web.HttpContext.Current.Application["Areas"] as List<Area>;
+
+    //cityname and areaname
+    var CityName = Session["CityName"] != null ? Convert.ToString(Session["CityName"]) : String.Empty;
+    var AreaName = Session["AreaName"] != null ? Convert.ToString(Session["AreaName"]) : String.Empty;
 }
+<link href='@Url.Content("~/Content/Custom/Houses.css")' rel="stylesheet" />
 
-<div class="row  border-bottom white-bg dashboard-header">
-    <!--Center Content-->
-    <div class="col-sm-9">
-        <h1>Apartments</h1>
-    </div>
-    <div class="col-sm-3">
-        <div class="statistic-box">
-            <h4>
-                Project Beta progress
-            </h4>
-            <p>
-                You have two project with not compleated task.
-            </p>
-            <div class="row text-center">
-                <div class="col-lg-6">
-                    <canvas id="polarChart" width="80" height="80"></canvas>
-                    <h5>Kolter</h5>
+<!-- check whether city and area is selected or not to do operations in Estate-->
+
+<div class="modal inmodal" id="modalSelectCityAndArea" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Location</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>City</label>
+                    <select id="ddlCity" name="CityID" class="form-control" required>
+                        <option value="" disabled selected>Select City</option>
+                        @foreach (var city in System.Web.HttpContext.Current.Application["Cities"] as IList<City>)
+                        {
+
+                            <option value="@city.CityID">@city.CityName</option>
+                        }
+                    </select>
+
                 </div>
-                <div class="col-lg-6">
-                    <canvas id="doughnutChart" width="78" height="78"></canvas>
-                    <h5>Maxtor</h5>
+                <div id="divArea" class="form-group hidden">
+                    <label>Area</label>
+                    <select id="ddlArea" name="AreaID" class="form-control" required></select>
                 </div>
             </div>
-            <div class="m-t">
-                <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveLocation">Save changes</button>
             </div>
-
         </div>
     </div>
-
 </div>
+
+@if (Session["AreaID"] != null)
+{
+    <!-- View Houses -->
+    <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divHouses">
+
+    </div><!-- End View Houses -->
+
+  <!-- Add House-->
+    <div class="row  border-bottom white-bg dashboard-header" id="divAddHouse">
+        @Html.Partial("_AddHouse", Model)
+    </div><!-- End Add House -->
+}
+@section Styles {
+    @Styles.Render("~/Content/plugins/dropzone/dropZoneStyles")
+}
+@section scripts{
+
+    <!-- variables -->
+    <script>
+        var AreaID = '@AreaID';
+        var Areas = '@Html.Raw(Json.Encode(Areas))';
+
+        //passing CityName and AreaName to Housees.js
+        var cityname = '@CityName';
+        var areaname = '@AreaName';
+
+        //reference url
+        var HousesUrl = '@Url.Action("Houses","Estate")';
+        var UpdateLocationUrl = '@Url.Action("UpdateLocation", "Estate")';
+        var GetPGsByOwnerIDandAreaIDUrl = '@Url.Action("GetPGsByOwnerIDandAreaID", "Estate")';
+    </script>
+
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places" type="text/javascript"></script>
+    <script src='@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.js")'></script>
+
+    @Scripts.Render("~/plugins/dropZone")
+
+    <!-- Custom javascript of Houses -->
+    <script src='@Url.Content("~/Scripts/Custom/Houeses.js")'></script>
+
+}

@@ -3,17 +3,22 @@
         <div class="spin-icon">
             <i class="fa fa-cogs fa-spin"></i>
         </div>
-        <div class="skin-setttings">            
-            <div class="title">City</div>
-            <div class="setings-item default-skin">
+        <div class="skin-setttings">         
+            <div class="title">City :@Session["CityName"]</div>
+            @*<div class="setings-item default-skin">
                 <span class="skin-name ">                   
-                        City                    
-                </span>
+                     City : @Session["CityName"].ToString()                   
+                </span>                
             </div>
-            <div class="title">Area</div>
+            <div class="setings-item default-skin">
+                <span class="skin-name ">
+                    Area : @Session["AreaName"].ToString()
+                </span>
+            </div>*@
+            <div class="title">Area :@Session["AreaName"]</div>
             <div class="setings-item default-skin">
                 <span class="skin-name ">                   
-                        Area                   
+                    <input type="button" value="Change Location" id="btnChangeLocationSkin" style="width:100%"/>              
                 </span>
             </div>            
         </div>

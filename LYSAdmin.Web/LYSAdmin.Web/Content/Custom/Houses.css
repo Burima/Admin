@@ -1,0 +1,31 @@
+﻿#accordion-1 li ul {
+        list-style-type:none;
+        padding-left:0px;
+    }
+
+#map-canvas {
+    height: 350px;
+    margin: 0px;
+    padding: 0px
+}
+
+#accordion-1{
+    list-style-type:none;
+    padding:0px;
+}
+
+.ddRooms {
+  padding: 0;
+  position: relative;
+  display: inline-block;
+  border-radius: 5px 5px 0 0;
+}
+
+.margin-bottom-2-pc {
+    margin-bottom:1%;
+}
+
+.padding-botton-5-pc {
+    padding-bottom:5%;
+}
+

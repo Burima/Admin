@@ -1,0 +1,331 @@
+﻿@using LYSAdmin.Model;
+@model LYSAdmin.Model.UserViewModel
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var User = (User)Session["User"];
+    TempData["UserID"] = User.UserID;
+    
+}
+
+@Styles.Render("~/Content/Custom/ViewProfile.css")
+@Styles.Render("~/plugins/imagecropperStyles")
+
+<!-- Show message -->
+<div class="modal inmodal" id="modalShowMessage" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>                
+                <h4 class="modal-title">Information</h4>
+                
+            </div>
+            <div class="modal-body">
+                <p>
+                    <strong>@TempData["message"]</strong>
+                </p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divCropResizeImage" class="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" id="btnCropClose" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Crop Image</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4">
+
+                    </div>
+                    <div class="col-lg-4">
+                        <img id="demo3" alt="Jcrop Example" />
+                    </div>
+                    <div class="col-lg-4">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-primary" id="btnSkipCropping" type="button" aria-hidden="true" value="Skip Cropping" />
+                <input class="btn btn-primary" id="btnCrop" type="button" value="Crop" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("ViewProfile", "User", FormMethod.Post, new { role = "form", id = "view-profile-form", style = "min-height:420px" }))
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row  border-bottom white-bg dashboard-header">
+            <div class="col-md-10">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-1">Settings</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab-2">Basic Information</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab-3">Photo</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab-4">Background Verification Details</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content gray-bg padding-left-3">
+                        @*tab 1 content*@
+                        <div id="tab-1" class="tab-pane active">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br />
+                                    <div class="form-group">
+                                        <label>UserName</label>
+                                        <input type="email" class="form-control input-sm" placeholder="Enter Username" value="@Model.User.Username" name="User.Username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Change Password</label>
+                                        <a id="changePassword" href="#">Update</a>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mobile Number</label>
+                                        <input class="form-control input-sm numbersAlone" maxlength="10" placeholder="Enter Mobile Number" value="@Model.User.MobileNumber" name="User.MobileNumber" required>
+                                        <div class="pull-right">
+                                            <label><i class="fa fa-check"></i>Verified</label>
+                                            <a id="verifyMobile" href="#">Verify</a>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        @*tab 2 content*@
+                        <div id="tab-2" class="tab-pane">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br />
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control input-sm charAlone" placeholder="First Name" value="@Model.User.FirstName" name="User.FirstName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control input-sm charAlone" placeholder="Last Name" value="@Model.User.LastName" name="User.LastName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>I am</label>
+                                        <select class="form-control input-sm" name="User.Sex">
+                                            <option value="" disabled>Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        @*tab 3 content*@
+                        <div id="tab-3" class="tab-pane">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div id="divFile" class="col-lg-8 col-md-8 col-sm-12 col-xs-12 row-padding-top-5">
+                                            <label for="fileProfile" id="fileLabel">
+                                                <input class="txtFile" id="fileProfile" name="fileProfile" type="file" style="display:none">
+                                                <p class="btn btn-primary">Choose File</p>
+                                            </label>
+                                            <div><div id="photoFilePath" class="filePath pull-left">No File Chosen</div><span id="spnRemove" onclick="fnRemove()" style="cursor:pointer; color:gray; display:none">x</span></div>
+                                            <br />
+                                            <img draggable="false" id="imgProfile" style="display:inline-block; height:100px; width:100px; margin: 0 5px 0 10px;" src="@Url.Action(Model.User.ProfilePicture)"/>
+                                            <input type="hidden" id="profilePic" name="User.ProfilePicture" />
+                                        </div>
+                                    </div>
+                                    <div id="divErrorFileFormatIMG" style="display:none" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <span id="spnErrorFileFormatIMG" class="error" style="display:none;color:red;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*tab 4 content*@
+                        <div id="tab-4" class="tab-pane">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row form-group row-padding-top-5">
+                                        <div class="col-md-5">
+                                            <label>Present Address</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label>Permanent Address</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control input-sm" placeholder="Present Address" value="@Model.UserDetail.PresentAddress" name="UserDetail.PresentAddress">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control input-sm" placeholder="Present Address" value="@Model.UserDetail.PermanentAddress" name="UserDetail.PermanentAddress">
+                                        </div>
+                                        <div class="col-md-5 row-space-top-1">
+                                            <label>GovernmentID Type</label>
+                                        </div>
+                                        <div class="col-md-5 row-space-top-1">
+                                            <label>ID Number</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <select class="form-control input-sm" name="UserDetail.GovtIDType">
+                                                <option value="" disabled>Select ID Type</option>
+                                                <option value="1">PAN Card</option>
+                                                <option value="2">Voter ID Card</option>
+                                                <option value="3">Driving License</option>
+                                                <option value="4">Aadhar Card</option>
+                                                <option value="5">Passport</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control input-sm" placeholder="Identity Proof Number" value="@Model.UserDetail.GovtID" name="UserDetail.GovtID">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-primary btn-circle" type="button">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-5 row-space-top-1">
+                                            <label>Profession</label>
+                                        </div>
+                                        <div class="col-md-5 row-space-top-1">
+                                            <label>Office Address</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="radio" name="UserDetail.UserProfession" value="1">Self-Employed
+                                            <input type="radio" name="UserDetail.UserProfession" value="2">Salaried
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control input-sm" placeholder="Employee Address" value="@Model.UserDetail.OfficeLocation" name="UserDetail.OfficeLocation">
+                                        </div>
+                                        <div class="col-md-5 row-space-top-1">
+                                            <label>Current Employer</label>
+                                        </div>
+                                        <div class="col-md-5 row-space-top-1">
+                                            <label>Employee ID</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control input-sm charAlone" placeholder="Current Employer Name" value="@Model.UserDetail.CurrentEmployer" name="UserDetail.CurrentEmployer">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control input-sm numbersAlone" placeholder="Employer ID" value="@Model.UserDetail.EmployeeID" name="UserDetail.EmployeeID">
+                                        </div>
+
+                                        <div class="col-md-5 row-space-top-1">
+                                            <label>Highest Education</label>
+                                        </div>
+                                        <div class="col-md-5 row-space-top-1">
+                                            <label>Institution Name</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <select class="form-control input-sm" name="UserDetail.HighestEducation">
+                                                <option value="" disabled>Select Highest Education</option>
+                                                <option value="PostGraduate">Post Graduate</option>
+                                                <option value="Graduate">Graduate</option>
+                                                <option value="UnderGraduate">Under Graduate</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control input-sm charAlone" placeholder="Institution Name" value="@Model.UserDetail.InstitutionName" name="UserDetail.InstitutionName">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                       
+                        
+                    </div>
+                    @*Save button*@
+                    <div class="col-md-10 gray-bg">
+                        <div class="form-group row-padding-top-5 padding-left-3">
+                            <div>
+                                <button id="btnSave" class="btn btn-primary" type="submit" tabindex="5">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+}
+@*modal for changing password*@
+<div class="modal inmodal" id="modalChangePassword" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <h4 class="modal-title">Change Password</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <input id="txtCurrentPassword" type="password" class="form-control" placeholder="Current Password" />
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input id="txtNewPassword" type="password" class="form-control" placeholder="New Password" name="User.
+                           Password" />
+                </div>
+                <div class="form-group">
+                    <label>Retype Password</label>
+                    <input id="txtRetypePassword" type="password" class="form-control" placeholder="Retype Password" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnChangePassword">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hdnImageCropWidth" name="ImageCropWidth" />
+<input type="hidden" id="hdnImageCropHeight" name="ImageCropHeight" />
+<input type="hidden" id="hdnCropPointX" name="CropPointX" />
+<input type="hidden" id="hdnCropPointY" name="CropPointY" />
+<input type="hidden" id="hdnCropPointX2" name="CropPointX2" />
+<input type="hidden" id="hdnCropPointY2" name="CropPointY2" />
+<input type="hidden" id="hdnFileName" name="ImgFileName" />
+<input type="hidden" id="hdnImageSource" name="ImageSource" />
+
+@section scripts{
+
+    <script>
+        var message = '@TempData["message"]';
+        var CropImageUrl = '@Url.Action("CropImage","Account")';
+        document.getElementById("fileProfile").onchange = function () {
+
+            $("#photoFilePath").html(this.value.split('\\').pop());
+            $("#photoFilePath").attr("title", this.value.split('\\').pop());
+            $("#hdnFileName").val('@User.UserID' + '_' + this.value.split('\\').pop());
+
+        };
+    </script>
+    @Scripts.Render("~/plugins/imagecropper")
+    
+    
+<!--Custom Script for Apartment-->
+    <script src='@Url.Content("~/Scripts/Custom/ViewProfile.js")'></script>
+    <script src='@Url.Content("~/Scripts/jquery.Jcrop.min.js")'></script>
+    <script src='@Url.Content("~/Scripts/form-image-crop.js")'></script>
+
+
+
+}
+

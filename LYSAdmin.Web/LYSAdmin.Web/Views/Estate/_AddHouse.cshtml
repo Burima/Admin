@@ -1,0 +1,404 @@
+﻿@model LYSAdmin.Model.HouseViewModel
+@using Newtonsoft.Json;
+
+
+<!--Center Content-->
+<div class="col-sm-9">
+    <h3 class="m-t-none m-b">Add new House</h3>
+    <hr />
+    @using (Html.BeginForm("AddHouse", "Estate", FormMethod.Post, new { role = "form", id = "add-house-information-form", style = "min-height:420px" }))
+    {
+        <div class="ibox-content no-padding">
+            <div class="panel-body no-padding">
+                <div class="panel-group padding-botton-5-pc" id="accordion">
+                    <!-- Start Basic Information -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseBasicInformation">Basic Information</a>
+                            </h5>
+                        </div>
+                        <div id="collapseBasicInformation" class="panel-collapse collapse in">
+                            <div class="panel-body ">
+                                <div class="form-group">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-6">PG or Hostel?</label>                                    
+                                    <input type="radio" name="IsPGorHostel" value="1" /><span class="standard-font">Yes</span> 
+                                    <input type="radio" name="IsPGorHostel" value="0" class="margin-left-2pc" checked="checked" /><span class="standard-font">No</span>                                                                   
+                                </div>
+                                <div class="form-group">
+                                    <label id="lblSelectPG" class="hidden">Select PG or Hostel in your Saved Area</label>
+                                    <a class="pull-right hidden" id="addNewPG"><i class="fa fa-plus"></i></a>
+                                    <a class="pull-right hidden" id="showAllPGs"><i class="fa fa-list"></i></a>
+                                    <select id="ddlSelectPG" name="PGdetail.PGDetailID" class="form-control hidden"></select>
+                                    <input type="text" id="txtPGName" placeholder="Enter pg or hostel name" class="form-control hidden" maxlength="50" tabindex="1" required name="PGdetail.PGName">
+                                </div>
+                                <div class="form-group">                                   
+                                    @if (Model.Apartments.Count > 0)
+                                    {
+                                        <label>Apartment</label>
+                                        <select name="ApartmentID" class="form-control">
+                                            <option value="" disabled selected>Select Apartment</option>
+                                            @foreach (var apartment in Model.Apartments.OrderBy(m => m.ApartmentID))
+                                            {
+
+                                                <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
+                                            }
+
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <h4>No Aparment present in this Area. Click <a href='@Url.Action("Apartments", "Estate", new {Operation=2 })'>here</a> to Add New.</h4>
+                                    }
+                                </div>
+                                <div id="divBlocks" class="form-group hidden">
+                                    <label>Block</label>
+                                    @*<input type="text" id="txtBlock" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
+                                    <span id="spnNoBlockFound" class="hidden"><br />You do not have any Block for this Apartment. Click <a>here</a> to add Block</span>
+                                    <select id="ddlBlocks" name="BlockID" class="form-control"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>House Name</label>
+                                    <input type="text" id="txtHouseName" placeholder="Enter house name" class="form-control" maxlength="50" tabindex="1" required name="House.HouseName">
+                                    <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Display Name</label>
+                                    <input type="text" id="txtDisplayName" placeholder="Enter display name" class="form-control" maxlength="50" tabindex="1" required name="House.DisplayName">
+                                    <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control" maxlength="500" tabindex="3" name="House.Description"></textarea>
+                                    <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
+                                </div>
+                                <div class="row-padding-top-5">
+                                    <div class="pull-right">
+                                        <button id="btnNextBasicInformation" class="btn btn-primary" type="button" tabindex="5">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Basic Information -->
+                    <!-- Start Locality -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a id="linkcollapseLocality" class="locality" data-toggle="collapse" data-parent="#accordion" href="#">Locality</a>
+                            </h4>
+                        </div>
+                        <div id="collapseLocality" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label>Address <span  id="spnLatitude" class="label label-default"></span> <span  id="spnLongitude" class="label label-default"></span></label>
+                                        <!--hidden fields to store Lat n Long in Model-->
+                                        <input id="hdnLatitude" type="hidden" name="House.Latitude" value="0"/>
+                                        <input id="hdnLongitude" type="hidden" name="House.Longitude" value="0"/>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label>Landmark</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="100" tabindex="1" required name="House.Address" autocomplete="off">
+                                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" name="House.Landmark">
+                                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button id="btnNextLocality" class="btn btn-primary" type="button" tabindex="5" value="Geocode">Next</button>
+                                    </div>
+                                </div>
+                               
+                                <div class="row row-padding-top-5">
+                                    <div id="map-canvas" class="col-md-12"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Locality -->
+                    <!-- Start Basic Amenities -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a id="linkcollapseBasicAmenities" data-toggle="collapse" data-parent="#accordion" href="#">Amenities</a>
+                            </h4>
+                        </div>
+                        <div id="collapseBasicAmenities" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <!-- House Ammenities -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="hidden" value="0" name="HouseAmenity.HouseID">
+                                        <input type="checkbox" value="true" name="HouseAmenity.AC">AC
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Fridge">Fridge
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Wifi">Wifi
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Washingmachine">Washing Machine
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.AttachedBathrooms">Attached Bathrooms
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.KitchenFacilityWithGas">Kitchen Facility with gas connection
+                                    </div>
+                                </div>
+                                <!-- TV -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.CommonTV">Common TV
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.IndividualTV">Individual TV
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.LCDTVCableConnection">LCD TV with cable connection
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Wardrobes">Wardrobes
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.IntercomFacility">Intercom Facility
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.IroningWashingServices">Ironing and washing services
+                                    </div>
+                                </div>
+                                <!-- Food Facility-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.LunchGiven">Lunch Given
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.BreakFastGiven">BreakFast Given
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.DinnerGiven">Dinner Given
+                                    </div>
+                                </div><!-- End Food Facility-->
+                                <!-- Water Supply-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.WaterSupply">Water Supply
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.HotAndColdWaterSupply">Hot and Cold Water Supply
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.MinaralWater">Mineral water
+                                    </div>
+                                </div><!-- End Water Supply-->
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Aquaguard">Aqua Guard
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.HouseKeeping">House Keeping
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.RoomService">Room Service
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Newspaper">Newspaper
+                                    </div> <!-- House Ammenities -->
+                                    <!-- Society Ammenities-->
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.TwoWheelerOpenParking">Two Wheeler Open Parking
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.TwoWheelerClosedParking">Two wheeler closed parking
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.FourWheelerOpenParking">Four Wheeler Open Parking
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.FourWheelerCloseParking">Four wheeler closed parking
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Lockers"> Lockers
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.GYM">GYM
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Lift">Lift
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Playground">Playground
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Clubhouse">Club house
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Partyhall">Party Hall
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Security">Security
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.SwimingPool">Swimming Pool
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.VideoSurveillance">Video Survillience
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.Powerbackup">Power Backup
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.EmergencyMedicalService">Emergency Medical Services
+                                    </div><!-- End Society Ammenities-->
+                                    <!-- Restriction -->
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.NonVegAllowed">Non Veg allowed
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.GuardianEntry">Parents allowed
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.NoSmoking">No Smoking
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.NoDrinking">No Drinking
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" value="true" name="HouseAmenity.NoBoysEntry">No Boys Entry
+                                    </div>
+                                </div><!-- End Restriction -->
+
+                                <div class="row">
+                                    <div class="col-md-12 row-padding-top-5">
+                                        <button id="btnNextAmenities" class="btn btn-primary pull-right" type="button" tabindex="5">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Basic Amenities -->
+                   
+                    <!-- Start Detail Information -->
+                    <div class="panel panel-default ">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a id="linkcollapseDetailInformation" data-toggle="collapse" data-parent="#accordion" href="#">Detail Information</a>
+                            </h4>
+                        </div>
+                        <div id="collapseDetailInformation" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12"><h3>Tell us more about your property House</h3></div>
+                                    <div class="col-md-12">
+                                        <div><h4>Property Details</h4></div>
+                                        <div class="col-md-4" style="padding-left:0px;">
+                                            <select id="ddlNoOfRooms" name="NoOfRooms" class="form-control " tabindex="1">
+                                                <option value="" disabled selected>Rooms</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select id="ddlNoOfBathrooms" name="House.NoOfBathrooms" class="form-control " tabindex="2">
+                                                <option value="" disabled selected>Bathrooms</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select id="ddlNoOfBalconnies" name="House.NoOfBalconnies" class="form-control " tabindex="3">
+                                                <option value="" disabled selected>Balconies</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div><h4>Gender</h4></div>
+                                        <div class="col-md-4" style="padding-left:0px;">
+                                            <select id="ddlGender" class="form-control " tabindex="4" required name="House.Gender">
+                                                <option value="" disabled selected>Select Gender</option>
+                                                <option value="1">Male</option>
+                                                <option value="2">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 hidden" id="divRoomdetails">
+
+                                    </div>
+                                    <div class="col-md-offset-7 col-md-5 row-padding-top-5">
+                                        <button id="btnSaveAllInformation" class="btn btn-primary pull-right" type="button">Done</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Detail Information -->
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="col-sm-3">
+    <div class="statistic-box">
+        <h4>
+            Project Beta progress
+        </h4>
+        <p>
+            You have two project with not compleated task.
+        </p>
+        <div class="row text-center">
+            <div class="col-lg-6">
+                <canvas id="polarChart" width="80" height="80"></canvas>
+                <h5>Kolter</h5>
+            </div>
+            <div class="col-lg-6">
+                <canvas id="doughnutChart" width="78" height="78"></canvas>
+                <h5>Maxtor</h5>
+            </div>
+        </div>
+        <div class="m-t">
+            <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+        </div>
+
+    </div>
+</div>

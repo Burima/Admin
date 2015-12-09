@@ -1,0 +1,25 @@
+﻿body {
+}
+
+.room{
+    list-style:none;
+    position:relative;
+    float:left;
+    background-color:white;
+    padding-top:10px;
+    height :116px;
+}
+
+.bed_inactive{
+    padding-bottom:10px;
+    color:#f3f3f4;
+}
+
+.bed_active{
+    padding-bottom:10px;
+    color:#1ab394;
+}
+
+.margin_4_pc{
+    margin-left:4%;
+}

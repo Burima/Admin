@@ -16,5 +16,6 @@ namespace LYSAdmin.Model
 
         public virtual ICollection<Apartment> Apartments { get; set; }
         public virtual City City { get; set; }
+        public virtual ICollection<PGDetail> PGDetails { get; set; }
     }
 }

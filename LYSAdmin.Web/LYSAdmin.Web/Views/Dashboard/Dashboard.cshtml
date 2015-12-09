@@ -1,0 +1,523 @@
+﻿@using Newtonsoft.Json
+@using LYSAdmin.Model
+@model LYSAdmin.Model.DashboardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    var User = (User)Session["User"];
+}
+<link href="~/Content/Custom/Dashboard.css" rel="stylesheet" />
+<div class="row  border-bottom white-bg dashboard-header">
+
+    <div class="col-sm-3">
+        <h2>Welcome @User.FirstName</h2>
+    </div>
+@using (Html.BeginForm("Dashboard", "Dashboard", FormMethod.Get))
+{
+    
+    <div class="col-md-12">
+        <div class="statistic-box">
+            <h4>
+                Project Beta progress
+            </h4>
+            <p>
+                You have two project with not compleated task.
+            </p>
+            <div class="row text-center">
+                <div class="col-lg-4">
+                    <canvas id="doughnutChart1"></canvas>
+                    <h5>Vacancy Status</h5>
+                </div>
+                <div class="col-lg-4">
+                    <canvas id="doughnutChart2"></canvas>
+                    <h5>Recently Joined Status</h5>
+                </div>
+                <div class="col-lg-4">
+                    <canvas id="doughnutChart3"></canvas>
+                    <h5>Recently Leaving Status</h5>
+                </div>
+            </div>
+            <div class="m-t">
+                <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+            </div>
+
+        </div>
+    </div>
+}
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Read below comments and tweets</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a href="#">Config option 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content no-padding">
+                            <ul id="ulHouseComments" class="list-group">
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Your PG Rating</h5>
+                            <div class="ibox-tools">
+                                <span class="label label-warning-light">10 Messages</span>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <ul id="ulHouseRatings" class="list-group"></ul> 
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Alpha project</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a href="#">Config option 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content ibox-heading">
+                            <h3>You have meeting today!</h3>
+                            <small><i class="fa fa-map-marker"></i> Meeting is on 6:00am. Check your schedule to see detail.</small>
+                        </div>
+                        <div class="ibox-content inspinia-timeline">
+
+                            <div class="timeline-item">
+                                <div class="row">
+                                    <div class="col-xs-3 date">
+                                        <i class="fa fa-briefcase"></i>
+                                        6:00 am
+                                        <br />
+                                        <small class="text-navy">2 hour ago</small>
+                                    </div>
+                                    <div class="col-xs-7 content no-top-border">
+                                        <p class="m-b-xs"><strong>Meeting</strong></p>
+
+                                        <p>
+                                            Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the
+                                            sale.
+                                        </p>
+
+                                        <p><span data-diameter="40" class="updating-chart">5,3,9,6,5,9,7,3,5,2,5,3,9,6,5,9,4,7,3,2,9,8,7,4,5,1,2,9,5,4,7,2,7,7,3,5,2</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="row">
+                                    <div class="col-xs-3 date">
+                                        <i class="fa fa-file-text"></i>
+                                        7:00 am
+                                        <br />
+                                        <small class="text-navy">3 hour ago</small>
+                                    </div>
+                                    <div class="col-xs-7 content">
+                                        <p class="m-b-xs"><strong>Send documents to Mike</strong></p>
+                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="row">
+                                    <div class="col-xs-3 date">
+                                        <i class="fa fa-coffee"></i>
+                                        8:00 am
+                                        <br />
+                                    </div>
+                                    <div class="col-xs-7 content">
+                                        <p class="m-b-xs"><strong>Coffee Break</strong></p>
+                                        <p>
+                                            Go to shop and find some products.
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="row">
+                                    <div class="col-xs-3 date">
+                                        <i class="fa fa-phone"></i>
+                                        11:00 am
+                                        <br />
+                                        <small class="text-navy">21 hour ago</small>
+                                    </div>
+                                    <div class="col-xs-7 content">
+                                        <p class="m-b-xs"><strong>Phone with Jeronimo</strong></p>
+                                        <p>
+                                            Lorem Ipsum has been the industry's standard dummy text ever since.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="row">
+                                    <div class="col-xs-3 date">
+                                        <i class="fa fa-user-md"></i>
+                                        09:00 pm
+                                        <br />
+                                        <small>21 hour ago</small>
+                                    </div>
+                                    <div class="col-xs-7 content">
+                                        <p class="m-b-xs"><strong>Go to the doctor dr Smith</strong></p>
+                                        <p>
+                                            Find some issue and go to doctor.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="row">
+                                    <div class="col-xs-3 date">
+                                        <i class="fa fa-comments"></i>
+                                        12:50 pm
+                                        <br />
+                                        <small class="text-navy">48 hour ago</small>
+                                    </div>
+                                    <div class="col-xs-7 content">
+                                        <p class="m-b-xs"><strong>Chat with Monica and Sandra</strong></p>
+                                        <p>
+                                            Web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+                10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+                <strong>Copyright</strong> Example Company &copy; 2014-2015
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="small-chat-box fadeInRight animated">
+
+    <div class="heading" draggable="true">
+        <small class="chat-date pull-right">
+            02.19.2015
+        </small>
+        Small chat
+    </div>
+
+    <div class="content">
+
+        <div class="left">
+            <div class="author-name">
+                Monica Jackson <small class="chat-date">
+                    10:02 am
+                </small>
+            </div>
+            <div class="chat-message active">
+                Lorem Ipsum is simply dummy text input.
+            </div>
+
+        </div>
+        <div class="right">
+            <div class="author-name">
+                Mick Smith
+                <small class="chat-date">
+                    11:24 am
+                </small>
+            </div>
+            <div class="chat-message">
+                Lorem Ipsum is simpl.
+            </div>
+        </div>
+        <div class="left">
+            <div class="author-name">
+                Alice Novak
+                <small class="chat-date">
+                    08:45 pm
+                </small>
+            </div>
+            <div class="chat-message active">
+                Check this stock char.
+            </div>
+        </div>
+        <div class="right">
+            <div class="author-name">
+                Anna Lamson
+                <small class="chat-date">
+                    11:24 am
+                </small>
+            </div>
+            <div class="chat-message">
+                The standard chunk of Lorem Ipsum
+            </div>
+        </div>
+        <div class="left">
+            <div class="author-name">
+                Mick Lane
+                <small class="chat-date">
+                    08:45 pm
+                </small>
+            </div>
+            <div class="chat-message active">
+                I belive that. Lorem Ipsum is simply dummy text.
+            </div>
+        </div>
+
+
+    </div>
+    <div class="form-chat">
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control"> <span class="input-group-btn">
+                <button class="btn btn-primary" type="button">
+                    Send
+                </button>
+            </span>
+        </div>
+    </div>
+
+</div>
+<div id="small-chat">
+
+    <span class="badge badge-warning pull-right">5</span>
+    <a class="open-small-chat">
+        <i class="fa fa-comments"></i>
+
+    </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/plugins/flot")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/chartJs")
+    @Scripts.Render("~/plugins/peity")
+
+@*added timeago script to display time differences of the comments given*@
+<script src='@Url.Content("~/Scripts/app/jquery.timeago.js")'></script> 
+
+   <script>
+       var comments = '@Html.Raw(Json.Encode(Model.HouseComments))'
+       var ratings = '@Html.Raw(Json.Encode(Model.HouseRatings))'
+    </script>
+
+    <script type="text/javascript">
+    @Html.Raw("var occupied = " + Json.Encode(this.Model.DonughtChart.Occupied) + ";")
+    @Html.Raw("var empty = " +  Json.Encode(this.Model.DonughtChart.Empty) + ";" )
+    @Html.Raw("var newJoined = " +  Json.Encode(this.Model.DonughtChart.NewEntered) + ";" )
+    @Html.Raw("var existing = " +  Json.Encode(this.Model.DonughtChart.Existing) + ";" )
+    @Html.Raw("var noticeGiven = " +  Json.Encode(this.Model.DonughtChart.Leaving) + ";" )
+    @Html.Raw("var staying = " + Json.Encode(this.Model.DonughtChart.Staying) + ";")
+
+
+    $(document).ready(function () {
+
+        $(".bar_dashboard").peity("bar", {
+            fill: ["#1ab394", "#d7d7d7"],
+            width: 100
+        })
+
+        $("#sparkline8").sparkline([5, 6, 7, 2, 0, 4, 2, 4, 5, 7, 2, 4, 12, 14, 4, 2, 14, 12, 7], {
+            type: 'bar',
+            barWidth: 8,
+            height: '150px',
+            barColor: '#1ab394',
+            negBarColor: '#c6c6c6'
+        });
+
+        var updatingChart = $(".updating-chart").peity("line", { fill: '#1ab394', stroke: '#169c81', width: 64 })
+
+        setInterval(function () {
+            var random = Math.round(Math.random() * 10)
+            var values = updatingChart.text().split(",")
+            values.shift()
+            values.push(random)
+
+            updatingChart
+                .text(values.join(","))
+                .change()
+        }, 1000);
+
+
+        var data1 = [
+            [0, 4], [1, 8], [2, 5], [3, 10], [4, 4], [5, 16], [6, 5], [7, 11], [8, 6], [9, 11], [10, 30], [11, 10], [12, 13], [13, 4], [14, 3], [15, 3], [16, 6]
+        ];
+        var data2 = [
+            [0, 1], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3], [6, 1], [7, 5], [8, 2], [9, 3], [10, 2], [11, 1], [12, 0], [13, 2], [14, 8], [15, 0], [16, 0]
+        ];
+        $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
+            data1, data2
+        ],
+                {
+                    series: {
+                        lines: {
+                            show: false,
+                            fill: true
+                        },
+                        splines: {
+                            show: true,
+                            tension: 0.4,
+                            lineWidth: 1,
+                            fill: 0.4
+                        },
+                        points: {
+                            radius: 0,
+                            show: true
+                        },
+                        shadowSize: 2
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        tickColor: "#d5d5d5",
+                        borderWidth: 1,
+                        color: '#d5d5d5'
+                    },
+                    colors: ["#1ab394", "#464f88"],
+                    xaxis: {
+                    },
+                    yaxis: {
+                        ticks: 4
+                    },
+                    tooltip: false
+                }
+        );
+
+
+        var doughnutData_1 = [
+            {
+                value: occupied,
+                color: "#a3e1d4",
+                highlight: "#1ab394",
+                label: "Occupied"
+            },
+            {
+                value: empty,
+                color: "#dedede",
+                highlight: "#1ab394",
+                label: "Vacant"
+            },
+
+        ];
+        var doughnutData_2 = [
+            {
+                value: newJoined,
+                color: "#a3e1d4",
+                highlight: "#1ab394",
+                label: "NewJoined"
+            },
+            {
+                value: existing,
+                color: "#dedede",
+                highlight: "#1ab394",
+                label: "Existing"
+            },
+
+        ];
+
+        var doughnutData_3 = [
+           {
+               value: noticeGiven,
+               color: "#a3e1d4",
+               highlight: "#1ab394",
+               label: "Leaving"
+           },
+           {
+               value: staying,
+               color: "#dedede",
+               highlight: "#1ab394",
+               label: "Staying"
+           },
+
+        ];
+
+        var doughnutOptions = {
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            percentageInnerCutout: 45, // This is 0 for Pie charts
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: false,
+
+        };
+
+        var DoughnutChart_1 = new Chart(document.getElementById("doughnutChart1").getContext("2d")).Doughnut(doughnutData_1, doughnutOptions);
+        var DoughnutChart_2 = new Chart(document.getElementById("doughnutChart2").getContext("2d")).Doughnut(doughnutData_2, doughnutOptions);
+        var DoughnutChart_3 = new Chart(document.getElementById("doughnutChart3").getContext("2d")).Doughnut(doughnutData_3, doughnutOptions);
+
+        //fill house comments
+        fnFillHouseComments();
+        fnFillHouseRatings();
+    });
+
+    function fnFillHouseComments() {
+        eval("var houseComments = " + comments);        
+        $.each(houseComments, function (i, comment) {
+
+            var data = '<li class="list-group-item">' +
+                          '<p><a class="text-info" href="#">' + comment.UserName + '</a>&nbsp;&nbsp;' + comment.Message + '</p>' +
+                          '<small class="block text-muted"><i class="fa fa-home"></i>&nbsp;' + comment.HouseName + '</small>' +
+                          '<small class="block text-muted"><i class="fa fa-clock-o"></i>&nbsp;' + $.timeago(comment.FeedbackTime) + '</small>' +
+                      '</li>';
+            $('#ulHouseComments').append(data);
+        });
+    }
+
+    function fnFillHouseRatings() {
+       
+        eval("var houseRatings = " + ratings);
+        $.each(houseRatings, function (i, houseRating) {
+
+            var data = '<li class="list-group-item">' +
+                          '<i class="fa fa-home"></i>&nbsp;' + houseRating.DisplayName +                          
+                          '<p id = "pHouseRating"><span class="stars"><span style="width:' + (houseRating.AverageRating * 20) + '%;"></span></span></p>'
+            '</li>';
+            
+            $('#ulHouseRatings').append(data);
+        });
+    }  
+   
+</script>
+}

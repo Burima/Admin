@@ -40,6 +40,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc">
+      <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -92,6 +101,9 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -155,12 +167,14 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\StaticContentConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\EstateController.cs" />
-    <Compile Include="Controllers\PropertiesController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -170,6 +184,7 @@
     <Compile Include="Models\ScaffoldingContext.cs" />
     <Compile Include="Models\ScaffoldingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\LYSAdminAuthorize.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
@@ -177,6 +192,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom\Dashboard.css" />
+    <Content Include="Content\Custom\Houses.css" />
+    <Content Include="Content\Custom\Rooms.css" />
+    <Content Include="Content\Custom\ViewProfile.css" />
     <Content Include="Content\email.css" />
     <Content Include="Content\lockyourstay.css" />
     <Content Include="Content\patterns\congruent_pentagon.png" />
@@ -226,6 +245,7 @@
     <Content Include="Content\plugins\images\bootstrap-colorpicker\saturation.png" />
     <Content Include="Content\plugins\images\sort.png" />
     <Content Include="Content\plugins\images\sort_asc.png" />
+    <Content Include="Content\plugins\images\sort_both.png" />
     <Content Include="Content\plugins\images\sort_desc.png" />
     <Content Include="Content\plugins\images\sprite-skin-flat.png" />
     <Content Include="Content\plugins\images\sprite-skin-flat2.png" />
@@ -330,6 +350,7 @@
     <Content Include="Images\p_big1.jpg" />
     <Content Include="Images\p_big2.jpg" />
     <Content Include="Images\p_big3.jpg" />
+    <Content Include="Images\spinner01.gif" />
     <Content Include="Images\zender_logo.png" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -370,12 +391,20 @@
     <Content Include="fonts\font-awesome\scss\_variables.scss" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\inspinia.min.js" />
+    <Content Include="Scripts\app\jquery.timeago.js" />
     <Content Include="Scripts\app\skin.config.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\Custom\Apartment.js" />
+    <Content Include="Scripts\Custom\Houeses.js" />
+    <Content Include="Scripts\Custom\ViewProfile.js" />
+    <Content Include="Scripts\form-image-crop.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery.Jcrop.js" />
+    <Content Include="Scripts\jquery.Jcrop.min.js" />
+    <Content Include="Scripts\lockyourstay.js" />
     <Content Include="Scripts\plugins\blueimp\jquery.blueimp-gallery.min.js" />
     <Content Include="Scripts\plugins\chartJs\Chart.min.js" />
     <Content Include="Scripts\plugins\chosen\chosen.jquery.js" />
@@ -772,7 +801,9 @@
     <Content Include="Scripts\plugins\switchery\switchery.js" />
     <Content Include="Scripts\plugins\tinycon\tinycon.min.js" />
     <Content Include="Scripts\plugins\toastr\toastr.min.js" />
+    <None Include="Scripts\plugins\validate\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\plugins\validate\jquery.validate.min.js" />
+    <Content Include="Scripts\plugins\validate\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\plugins\velocity\velocity.min.js" />
     <Content Include="Scripts\plugins\velocity\velocity.ui.min.js" />
     <Content Include="Scripts\plugins\video\responsible-video.js" />
@@ -798,20 +829,24 @@
     <Content Include="Views\Shared\_TopNavbar2.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_1.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_2.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_3.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_4.cshtml" />
-    <Content Include="Views\Dashboard\Dashboard_4_1.cshtml" />
-    <Content Include="Views\Properties\Apartments.cshtml" />
-    <Content Include="Views\Properties\Blocks.cshtml" />
-    <Content Include="Views\Properties\Houses.cshtml" />
-    <Content Include="Views\Properties\Rooms.cshtml" />
     <Content Include="Views\Employee\Employee.cshtml" />
     <Content Include="Views\Estate\Apartments.cshtml" />
     <Content Include="Views\Estate\Blocks.cshtml" />
     <Content Include="Views\Estate\Houses.cshtml" />
     <Content Include="Views\Estate\Rooms.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Shared\_LayoutAccount.cshtml" />
+    <Content Include="Views\Estate\_AddApartment.cshtml" />
+    <Content Include="Views\Estate\_EditApartment.cshtml" />
+    <Content Include="Views\Estate\_AddBlock.cshtml" />
+    <Content Include="Views\Estate\_EditBlock.cshtml" />
+    <Content Include="Views\Estate\_AddHouse.cshtml" />
+    <Content Include="Views\Estate\_EditHouse.cshtml" />
+    <Content Include="Views\Estate\_AddRoom.cshtml" />
+    <Content Include="Views\Estate\_EditRoom.cshtml" />
+    <Content Include="Views\Shared\_ShowAndHideProgress.cshtml" />
+    <Content Include="Views\Dashboard\Dashboard.cshtml" />
+    <Content Include="Views\User\ViewProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -849,7 +884,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1056</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1090/</IISUrl>
+          <IISUrl>http://localhost:5151/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

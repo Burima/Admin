@@ -1,7 +1,7 @@
 ﻿
 /*make the input large*/
 .input-large {
-  font-size: 1.2em;
+  font-size: 1.1em;
   padding-top: 4%;
   padding-bottom: 4%;
 }
@@ -13,8 +13,9 @@
 }
 /*remove bold for label inside form-group*/
 .form-group label{
-    font-weight:500;
-    font-size: 1.2em;
+    font-weight:300;
+    font-size: 1.1em;
+    padding-left:0px;
 }
 
 /*row space*/
@@ -23,8 +24,16 @@
 }
 
 /*validation error*/
-.validation-error {
-  color: #ff5a5f;
+.error {
+  /*color: #ff5a5f;*/
+  border: 1px solid red;
+}
+.input-validation-error{
+    border: 1px solid red;
+}
+
+.has-error{
+    border: 1px solid red;
 }
 
 /* maximum character for a control*/
@@ -47,5 +56,14 @@ textarea.error,.form-control.error {
 label.error {
     display:none !important;
 }
+/*------------- radio button------------*/
+.margin-left-2pc{
+    margin-left:2% !important;
+}
 
+
+.standard-font{
+     font-weight: 500 !important;
+    font-size: 1.2em !important;
+}
 

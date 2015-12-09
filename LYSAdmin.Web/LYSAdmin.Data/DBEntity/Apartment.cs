@@ -27,8 +27,14 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<int> AreaID { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public int OwnerID { get; set; }
     
         public virtual Area Area { get; set; }
         public virtual ICollection<Block> Blocks { get; set; }
+        public virtual User User { get; set; }
     }
 }
