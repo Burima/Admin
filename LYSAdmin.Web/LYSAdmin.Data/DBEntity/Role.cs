@@ -19,10 +19,8 @@ namespace LYSAdmin.Data.DBEntity
             this.Users = new HashSet<User>();
         }
     
-        public int RoleID { get; set; }
-        public string RoleName { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-        public Nullable<System.DateTime> LastUpdatedOn { get; set; }
+        public long RoleID { get; set; }
+        public string Name { get; set; }
     
         public virtual ICollection<User> Users { get; set; }
     }

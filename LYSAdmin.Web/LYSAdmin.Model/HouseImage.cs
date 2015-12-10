@@ -8,7 +8,6 @@ namespace LYSAdmin.Model
 {
     public class HouseImage
     {
-
         public int HouseImageID { get; set; }
         public string ImagePath { get; set; }
         public int HouseID { get; set; }

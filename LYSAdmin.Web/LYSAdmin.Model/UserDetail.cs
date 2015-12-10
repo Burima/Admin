@@ -9,7 +9,7 @@ namespace LYSAdmin.Model
     public class UserDetail
     {
         public int UserDetailsID { get; set; }
-        public int UserID { get; set; }
+        public long UserID { get; set; }
         public string PresentAddress { get; set; }
         public string PermanentAddress { get; set; }
         public int GovtIDType { get; set; }

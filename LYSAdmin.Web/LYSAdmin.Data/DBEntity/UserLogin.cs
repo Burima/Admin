@@ -10,10 +10,14 @@
 namespace LYSAdmin.Data.DBEntity
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class UserLogin
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
+        public long UserID { get; set; }
+    
+        public virtual User User { get; set; }
     }
 }

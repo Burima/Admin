@@ -16,34 +16,40 @@ namespace LYSAdmin.Data.DBEntity
     {
         public User()
         {
-            this.Apartments = new HashSet<Apartment>();
             this.Beds = new HashSet<Bed>();
-            this.HouseReviews = new HashSet<HouseReview>();
-            this.PGDetails = new HashSet<PGDetail>();
+            this.PGReviews = new HashSet<PGReview>();
+            this.UserClaims = new HashSet<UserClaim>();
             this.UserDetails = new HashSet<UserDetail>();
+            this.UserLogins = new HashSet<UserLogin>();
+            this.Roles = new HashSet<Role>();
         }
     
-        public int UserID { get; set; }
+        public long UserID { get; set; }
+        public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public int RoleID { get; set; }
-        public string MobileNumber { get; set; }
         public bool IsBackGroundVerified { get; set; }
-        public int CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
-        public bool Status { get; set; }
-        public int ManagerID { get; set; }
         public string ProfilePicture { get; set; }
         public Nullable<int> Gender { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PasswordHash { get; set; }
+        public string SecurityStamp { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public int AccessFailedCount { get; set; }
+        public int Status { get; set; }
     
-        public virtual ICollection<Apartment> Apartments { get; set; }
         public virtual ICollection<Bed> Beds { get; set; }
-        public virtual ICollection<HouseReview> HouseReviews { get; set; }
-        public virtual ICollection<PGDetail> PGDetails { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual ICollection<PGReview> PGReviews { get; set; }
+        public virtual ICollection<UserClaim> UserClaims { get; set; }
         public virtual ICollection<UserDetail> UserDetails { get; set; }
+        public virtual ICollection<UserLogin> UserLogins { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

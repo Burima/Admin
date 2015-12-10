@@ -14,6 +14,11 @@ namespace LYSAdmin.Data.DBEntity
     
     public partial class Block
     {
+        public Block()
+        {
+            this.Houses = new HashSet<House>();
+        }
+    
         public int BlockID { get; set; }
         public string BlockName { get; set; }
         public string Description { get; set; }
@@ -27,5 +32,6 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<int> CreatedBy { get; set; }
     
         public virtual Apartment Apartment { get; set; }
+        public virtual ICollection<House> Houses { get; set; }
     }
 }

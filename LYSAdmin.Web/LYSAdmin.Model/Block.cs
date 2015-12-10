@@ -10,7 +10,6 @@ namespace LYSAdmin.Model
     public class Block
     {
         public int BlockID { get; set; }
-
         [Required]
         public string BlockName { get; set; }
         public string Description { get; set; }
@@ -24,5 +23,6 @@ namespace LYSAdmin.Model
         public Nullable<int> CreatedBy { get; set; }
 
         public virtual Apartment Apartment { get; set; }
+        public virtual ICollection<House> Houses { get; set; }
     }
 }

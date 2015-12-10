@@ -14,7 +14,6 @@ namespace LYSAdmin.Model
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
 
-        public virtual ICollection<Apartment> Apartments { get; set; }
         public virtual City City { get; set; }
         public virtual ICollection<PGDetail> PGDetails { get; set; }
     }

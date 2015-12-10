@@ -75,9 +75,6 @@
     <Compile Include="DBEntity\HouseImage.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBEntity\HouseReview.cs">
-      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DBEntity\LYSAdminEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,25 +93,25 @@
     <Compile Include="DBEntity\PGDetail.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBEntity\PGReview.cs">
+      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBEntity\Role.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DBEntity\Room.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBEntity\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBEntity\sp_helpdiagrams_Result.cs">
-      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBEntity\sysdiagram.cs">
-      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DBEntity\User.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBEntity\UserClaim.cs">
+      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBEntity\UserDetail.cs">
+      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBEntity\UserLogin.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DBRepository\BaseRepository.cs" />

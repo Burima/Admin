@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace LYSAdmin.Model
 {
     
-    public class HouseReview
+    public class PGReview
     {
-        public int HouseReviewID { get; set; }
-        public int UserID { get; set; }
-        public int HouseID { get; set; }
+        public int PGReviewID { get; set; }
+        public long UserID { get; set; }
         public string Comments { get; set; }
         public Nullable<decimal> Rating { get; set; }
         public Nullable<System.DateTime> CommentTime { get; set; }
+        public int PGDetailID { get; set; }
 
-        public virtual House House { get; set; }
+        public virtual PGDetail PGDetail { get; set; }
         public virtual User User { get; set; }
     }
 }

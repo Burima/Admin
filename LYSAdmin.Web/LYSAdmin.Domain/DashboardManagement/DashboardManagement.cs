@@ -90,7 +90,7 @@ namespace LYSAdmin.Domain.DashboardManagement
                           HouseID = p.HouseID,
                           DisplayName = p.DisplayName,
                           HouseReviews = (from g in p.HouseReviews
-                                          select new LYSAdmin.Model.HouseReview
+                                          select new LYSAdmin.Model.PGReview
                                           {
                                               HouseID = g.HouseID,
                                               Comments = g.Comments,
@@ -113,7 +113,7 @@ namespace LYSAdmin.Domain.DashboardManagement
                 houseRating.DisplayName = house.DisplayName;
                 houseRating.AverageRating = (decimal)house.HouseReviews.Average(p => p.Rating);
                 houseRatings.Add(houseRating);
-                foreach (Model.HouseReview houseReview in house.HouseReviews)
+                foreach (Model.PGReview houseReview in house.HouseReviews)
                 {
                     Model.HouseComment comment = new Model.HouseComment();
                     comment.Message = houseReview.Comments;
