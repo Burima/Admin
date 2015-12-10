@@ -32,20 +32,22 @@ namespace LYSAdmin.Domain.HouseManagement
         }
         public IList<Model.House> GetHouses(int OwnerID)
         {
-            IList<Model.House> houses = (from p in houseRepository.Get(p => p.isDeleted == false && p.OwnerID == OwnerID, q => q.OrderByDescending(p => p.LastUpdatedOn))
+            IList<Model.House> houses = (from p in houseRepository.Get(p => p.isDeleted == false //&& p.OwnerID == OwnerID /****commented due to identity or DB update****/
+                                             , q => q.OrderByDescending(p => p.LastUpdatedOn))
                                          select new Model.House
                                          {
                                              HouseID = p.HouseID,
                                              HouseName = p.HouseName,
-                                             Latitude=p.Latitude,
-                                             Longitude=p.Longitude,
-                                             Address = p.Address,                                            
-                                             Landmark = p.Landmark,
+                                             /****commented due to identity or DB update****/
+                                             //Latitude=p.Latitude,
+                                             //Longitude=p.Longitude,
+                                             //Address = p.Address,                                            
+                                             //Landmark = p.Landmark,
                                              Gender = p.Gender,
                                              NoOfBalconnies = p.NoOfBalconnies,
                                              NoOfBathrooms = p.NoOfBathrooms,
-
-                                             Description = p.Description,
+                                             /****commented due to identity or DB update****/
+                                             //Description = p.Description,
                                              LastUpdatedOn = p.LastUpdatedOn,
                                              HouseAmenities = (from g in p.HouseAmenities
                                                                select new LYSAdmin.Model.HouseAmenity
@@ -123,15 +125,17 @@ namespace LYSAdmin.Domain.HouseManagement
 
         public Model.House GetHouseByID(int LinkTypeID)
         {
-            var house = (from p in houseRepository.Get(p => p.isDeleted == false && p.LinkTypeID == LinkTypeID)
+            var house = (from p in houseRepository.Get(p => p.isDeleted == false //&& p.LinkTypeID == LinkTypeID /****commented due to identity or DB update****/
+                             )
                          select new Model.House
                          {
                              HouseID = p.HouseID,
                              HouseName = p.HouseName,
-                             Latitude = p.Latitude,
-                             Longitude = p.Longitude,
-                             Address = p.Address,
-                             Landmark = p.Landmark,
+                             /****commented due to identity or DB update****/
+                             //Latitude = p.Latitude,
+                             //Longitude = p.Longitude,
+                             //Address = p.Address,
+                             //Landmark = p.Landmark,
                              Gender = p.Gender,
                              NoOfBalconnies = p.NoOfBalconnies,
                              NoOfBathrooms = p.NoOfBathrooms,
@@ -216,22 +220,25 @@ namespace LYSAdmin.Domain.HouseManagement
             //block selected, so as apartment
             if (houseViewModel.BlockID > 0)
             {
-                houseViewModel.House.LinkTypeID = 1;
-                houseViewModel.House.LinkID = houseViewModel.BlockID;
+                /****commented due to identity or DB update****/
+                //houseViewModel.House.LinkTypeID = 1;
+                //houseViewModel.House.LinkID = houseViewModel.BlockID;
             }
             else
             {
                 //block not selected but apartment selected
                 if (houseViewModel.ApartmentID > 0)
                 {
-                    houseViewModel.House.LinkTypeID = 2;
-                    houseViewModel.House.LinkID = houseViewModel.ApartmentID;
+                    /****commented due to identity or DB update****/
+                    //houseViewModel.House.LinkTypeID = 2;
+                    //houseViewModel.House.LinkID = houseViewModel.ApartmentID;
                 }
                 //block and apartment both not selected
                 else
                 {
-                    houseViewModel.House.LinkTypeID = 3;
-                    houseViewModel.House.LinkID = houseViewModel.AreaID;
+                    /****commented due to identity or DB update****/
+                    //houseViewModel.House.LinkTypeID = 3;
+                    //houseViewModel.House.LinkID = houseViewModel.AreaID;
                 }
             }
 
@@ -244,7 +251,8 @@ namespace LYSAdmin.Domain.HouseManagement
             if (houseViewModel.PGdetail.PGDetailID > 0)
             {
                 houseViewModel.House.PGDetailID = houseViewModel.PGdetail.PGDetailID;
-                houseViewModel.House.IsPg = true;
+                /****commented due to identity or DB update****/
+                //houseViewModel.House.IsPg = true;
             }
             else
             {
@@ -254,20 +262,22 @@ namespace LYSAdmin.Domain.HouseManagement
                     var pgDetail = new Data.DBEntity.PGDetail();
                     pgDetail.PGName = houseViewModel.PGdetail.PGName;
                     pgDetail.AreaID = houseViewModel.AreaID;
-                    pgDetail.OwnerID = houseViewModel.OwnerID;
+                    pgDetail.UserID = houseViewModel.OwnerID;
                     //Insert into DB
                     pgDetailRepository.Insert(pgDetail);
                     unitOfWork.SaveChanges();
                     //set PGDetailID for House Table
                     houseViewModel.House.PGDetailID = pgDetail.PGDetailID;
-                    houseViewModel.House.IsPg = true;
+                    /****commented due to identity or DB update****/
+                   // houseViewModel.House.IsPg = true;
 
                 }
                 else
                 {
                     //is not a PG type House
                     houseViewModel.House.PGDetailID = 0;
-                    houseViewModel.House.IsPg = false;
+                    /****commented due to identity or DB update****/
+                    //houseViewModel.House.IsPg = false;
 
                 }
             }

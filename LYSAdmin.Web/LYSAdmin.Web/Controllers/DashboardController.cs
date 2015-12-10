@@ -54,7 +54,8 @@ namespace LYSAdmin.Web.Controllers
             int ownerID = 0;
             if (user != null)
             {
-                ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID;
+                /****commented due to identity or DB update****/
+                //ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID;
                 return ownerID;
             }
             else

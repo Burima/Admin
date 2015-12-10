@@ -25,7 +25,8 @@ namespace LYSAdmin.Domain.ApartmentManagement
 
         public IList<Model.Apartment> GetApartments(int OwnerID)
         {
-            IList<Model.Apartment> apartments = (from p in apartmentRepository.Get(p => p.IsDeleted==false && p.OwnerID==OwnerID,q=>q.OrderByDescending(p=>p.LastUpdatedOn))
+            IList<Model.Apartment> apartments = (from p in apartmentRepository.Get(p => p.IsDeleted == false //&& p.OwnerID==OwnerID /****commented due to identity or DB update****/
+                                                     ,q=>q.OrderByDescending(p=>p.LastUpdatedOn))
                                                  select new Model.Apartment
                                                         {
                                                             ApartmentID=p.ApartmentID,
@@ -68,10 +69,10 @@ namespace LYSAdmin.Domain.ApartmentManagement
                                  ApartmentName = p.ApartmentName,
                                  HouseNo = p.HouseNo,
                                  Description = p.Description,
-                                 AreaID=p.AreaID,
+                                 // AreaID=p.AreaID,  /****commented due to identity or DB update****/
                                  CreatedOn=p.CreatedOn,
                                  CreatedBy=p.CreatedBy,
-                                 OwnerID=p.OwnerID,
+                                 //OwnerID=p.OwnerID,  /****commented due to identity or DB update****/
                                  LastUpdatedOn = p.LastUpdatedOn,
                                  Blocks = (from g in p.Blocks
                                            select new LYSAdmin.Model.Block
@@ -112,7 +113,8 @@ namespace LYSAdmin.Domain.ApartmentManagement
         /// <returns>IList of apartment</returns>
         public IList<Model.Apartment> GetApartmentsByAreaID(int OwnerID,int AreaID)
         {
-            IList<Model.Apartment> apartments = (from p in apartmentRepository.Get(p => p.IsDeleted == false && p.OwnerID == OwnerID && p.AreaID==AreaID, q => q.OrderByDescending(p => p.LastUpdatedOn))
+            IList<Model.Apartment> apartments = (from p in apartmentRepository.Get(p => p.IsDeleted == false //&& p.OwnerID == OwnerID && p.AreaID==AreaID  /****commented due to identity or DB update****/ 
+                                                     , q => q.OrderByDescending(p => p.LastUpdatedOn))
                                                  select new Model.Apartment
                                                  {
                                                      ApartmentID = p.ApartmentID,

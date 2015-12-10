@@ -8,6 +8,6 @@ namespace LYSAdmin.Domain.PGDetailManagement
 {
     public interface IPGDetailManagement
     {
-        List<Model.PGDetail> GetPGsByOwnerIDandAreaID(int OwnerID, int AreaID);
+        List<Model.PGDetail> GetPGsByOwnerIDandAreaID(long OwnerID, int AreaID);
     }
 }

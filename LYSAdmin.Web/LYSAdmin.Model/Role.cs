@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LYSAdmin.Model
 {
-    public class Role
+    public class Role : IdentityRole<long, UserRole>
     {
-        public long RoleID { get; set; }
-        public string Name { get; set; }
-
-        public virtual ICollection<User> Users { get; set; }
     }
 }

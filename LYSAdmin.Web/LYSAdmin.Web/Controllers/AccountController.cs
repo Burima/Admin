@@ -39,29 +39,30 @@ namespace LYSAdmin.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
+            /****commented due to identity or DB update****/
+            //if (ModelState.IsValid)
+            //{
 
-            if (ModelState.IsValid)
-            {
+            //    var user_Check = userManagement.ValidateUser(loginViewModel);//Sending form values to UserManagement Service to check the credentials
+            //    if (user_Check != null && user_Check.UserID > 0)
+            //    {
+            //        //Return To Home Page
+            //        Session["User"] = user_Check;
+            //        return RedirectToAction("Dashboard", "Dashboard");
+            //    }
+            //    else
+            //    {
+            //        //Invalid Credentials
+            //        ViewBag.Error = "Invalid Username or Password";
+            //        return View(loginViewModel);
+            //    }
 
-                var user_Check = userManagement.ValidateUser(loginViewModel);//Sending form values to UserManagement Service to check the credentials
-                if (user_Check != null && user_Check.UserID > 0)
-                {
-                    //Return To Home Page
-                    Session["User"] = user_Check;
-                    return RedirectToAction("Dashboard", "Dashboard");
-                }
-                else
-                {
-                    //Invalid Credentials
-                    ViewBag.Error = "Invalid Username or Password";
-                    return View(loginViewModel);
-                }
-
-            }
-            else
-            {
-                return View(loginViewModel);
-            }
+            //}
+            //else
+            //{
+            //    return View(loginViewModel);
+            //}
+            return View(loginViewModel);
         }
 
         //GET: Account/ForgotPassword
@@ -85,9 +86,9 @@ namespace LYSAdmin.Web.Controllers
         public ActionResult ViewProfile()
         {
             if (Session["User"] != null) {
-               
-                userViewModel.User = (User)Session["User"];
-                userViewModel.UserDetail = ((User)Session["User"]).UserDetails.FirstOrDefault();
+                /****commented due to identity or DB update****/
+                //userViewModel.User = (User)Session["User"];
+                //userViewModel.UserDetail = ((User)Session["User"]).UserDetails.FirstOrDefault();
             }
             return View(userViewModel);
         }
@@ -98,11 +99,11 @@ namespace LYSAdmin.Web.Controllers
 
         public ActionResult ViewProfile(UserViewModel userViewModel)
         {
-            userViewModel.User.Status = true;
-            userViewModel.User.LastUpdatedOn = DateTime.Now;
-            userViewModel.User.UserID = TempData["UserID"] != null ? Convert.ToInt32(TempData["UserID"]) : 0;
+            userViewModel.Status = 1;
+            userViewModel.LastUpdatedOn = DateTime.Now;
+            userViewModel.UserID = TempData["UserID"] != null ? Convert.ToInt32(TempData["UserID"]) : 0;
 
-            if (userViewModel.User.UserID == 0)
+            if (userViewModel.UserID == 0)
             {
                 Logout();
                 
@@ -112,7 +113,7 @@ namespace LYSAdmin.Web.Controllers
             if (count > 0)
             {
                 var user = (User)Session["User"];
-                user.ProfilePicture = userViewModel.User.ProfilePicture;
+                user.ProfilePicture = userViewModel.ProfilePicture;
                 TempData["message"] = "Profile updated successfully!";
             }
             else

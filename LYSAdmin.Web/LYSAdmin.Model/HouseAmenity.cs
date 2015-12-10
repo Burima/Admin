@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace LYSAdmin.Model
 {
     public class HouseAmenity
     {
+        [Key]
         public int AminityID { get; set; }
         public int HouseID { get; set; }
         public bool AC { get; set; }

@@ -101,12 +101,12 @@ namespace LYSAdmin.Web.Controllers
                 apartmentViewModel.Apartment.CreatedOn = DateTime.Now;
                 apartmentViewModel.Apartment.LastUpdatedOn = DateTime.Now;
                 apartmentViewModel.Apartment.IsDeleted = false;
-                apartmentViewModel.Apartment.CreatedBy = User.UserID;
-                apartmentViewModel.Apartment.OwnerID = User.RoleID <= 3 ? User.UserID : User.ManagerID;
+                //apartmentViewModel.Apartment.CreatedBy = User.Id; /****commented due to identity or DB update****/
+                //apartmentViewModel.Apartment.OwnerID = User.RoleID <= 3 ? User.UserID : User.ManagerID; /****commented due to identity or DB update****/
                 //Session["AreaID"] = 1;//test data
                 if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
                 {
-                    apartmentViewModel.Apartment.AreaID = Convert.ToInt32(Session["AreaID"]);
+                    //apartmentViewModel.Apartment.AreaID = Convert.ToInt32(Session["AreaID"]);/****commented due to identity or DB update****/
                     int successCount = apartmentManagement.AddApartment(apartmentViewModel.Apartment);
                     if (successCount > 0)
                     {
@@ -211,8 +211,8 @@ namespace LYSAdmin.Web.Controllers
         public ActionResult AddHouse(HouseViewModel houseViewModel)
         {
             houseViewModel.AreaID = GetAreaID();
-            houseViewModel.House.OwnerID = GetOwnerID();            
-            houseViewModel.House.CreatedBy = ((User)Session["User"]).UserID;
+            //houseViewModel.House.OwnerID = GetOwnerID();     /****commented due to identity or DB update****/     
+            //houseViewModel.House.CreatedBy = ((User)Session["User"]).Id; /****commented due to identity or DB update****/
             int count = houseManagement.AddHouse(houseViewModel);
 
             return RedirectToAction("Houses", "Estate");
@@ -231,7 +231,7 @@ namespace LYSAdmin.Web.Controllers
             int ownerID = 0;
             if (user != null)
             {
-                ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID;
+                //ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID; /****commented due to identity or DB update****/
                 return ownerID;
             }
             else

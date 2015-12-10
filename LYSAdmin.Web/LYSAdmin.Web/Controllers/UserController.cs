@@ -29,9 +29,9 @@ namespace LYSAdmin.Web.Controllers
         {
             if (Session["User"] != null)
             {
-
-                userViewModel.User = (User)Session["User"];
-                userViewModel.UserDetail = ((User)Session["User"]).UserDetails.FirstOrDefault();
+                /****commented due to identity or DB update****/
+                //userViewModel.User = (User)Session["User"];
+                //userViewModel.UserDetail = ((User)Session["User"]).UserDetails.FirstOrDefault();
             }
             return View(userViewModel);
         }
@@ -42,11 +42,11 @@ namespace LYSAdmin.Web.Controllers
 
         public ActionResult ViewProfile(UserViewModel userViewModel)
         {
-            userViewModel.User.Status = true;
-            userViewModel.User.LastUpdatedOn = DateTime.Now;
-            userViewModel.User.UserID = TempData["UserID"] != null ? Convert.ToInt32(TempData["UserID"]) : 0;
+            userViewModel.Status = 1;
+            userViewModel.LastUpdatedOn = DateTime.Now;
+            userViewModel.UserID = TempData["UserID"] != null ? Convert.ToInt32(TempData["UserID"]) : 0;
 
-            if (userViewModel.User.UserID == 0)
+            if (userViewModel.UserID == 0)
             {
                 AccountController accountController = new AccountController((UserManagement)userManagement);
                 accountController.Logout();
@@ -57,7 +57,7 @@ namespace LYSAdmin.Web.Controllers
             if (count > 0)
             {
                 var user = (User)Session["User"];
-                user.ProfilePicture = userViewModel.User.ProfilePicture;
+                user.ProfilePicture = userViewModel.ProfilePicture;
                 TempData["message"] = "Profile updated successfully!";
             }
             else
