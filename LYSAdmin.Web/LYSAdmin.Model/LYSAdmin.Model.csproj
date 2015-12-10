@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HouseAmenity.cs" />
-    <Compile Include="HouseReview.cs" />
+    <Compile Include="PGReview.cs" />
     <Compile Include="PGDetail.cs" />
+    <Compile Include="UserClaim.cs" />
+    <Compile Include="UserLogin.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Apartment.cs" />
     <Compile Include="Area.cs" />
