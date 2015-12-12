@@ -107,11 +107,15 @@
                     </li>
                 </ul>
             </li>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav navbar-top-links navbar-right" }))
+            {
+            @Html.AntiForgeryToken()
             <li>
-                <a href="@Url.Action("Logout", "Account")">
+                <a href="javascript:document.getElementById('logoutForm').submit()">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>
+            }
             <li>
                 <a class="right-sidebar-toggle">
                     <i class="fa fa-tasks"></i>

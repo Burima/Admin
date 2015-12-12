@@ -222,8 +222,7 @@ namespace LYSAdmin.Web.Controllers
                     await SignInAsync(user, model.LoginViewModel.RememberMe);
                     //sessionize user
                     SessionManager.SessionizeUser(user);
-                    return RedirectToLocal(returnUrl);
-
+                    return RedirectToAction("Dashboard", "Dashboard");
 
                 }
                 else

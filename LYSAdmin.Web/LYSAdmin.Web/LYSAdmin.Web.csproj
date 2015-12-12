@@ -188,6 +188,7 @@
     <Compile Include="Sevices\Common\LYSConfig.cs" />
     <Compile Include="Sevices\Security\TripleDES.cs" />
     <Compile Include="Sevices\SessionManager.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Utilities\LYSAdminAuthorize.cs" />
   </ItemGroup>
   <ItemGroup>
