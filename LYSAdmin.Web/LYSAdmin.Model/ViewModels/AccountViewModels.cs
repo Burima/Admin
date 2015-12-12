@@ -7,23 +7,119 @@ using System.Threading.Tasks;
 
 namespace LYSAdmin.Model
 {
-    public class AccountViewModels
+    public class ExternalLoginConfirmationViewModel
     {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
+
+    public class ExternalLoginListViewModel
+    {
+        public string Action { get; set; }
+        public string ReturnUrl { get; set; }
+    }
+
+    public class ManageUserViewModel
+    {
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current password")]
+        public string OldPassword { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "User Name")]
-        public string Username { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-       
+
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
+
+        public string LoginError { get; set; }
     }
+
+    public class RegisterViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+        public string RegisterError { get; set; }
+    }
+
+    public class ResetPasswordViewModel
+    {
+
+        public string UserID { get; set; }
+        public string Code { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+
+    }
+
+    public class ForgotPasswordViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
+
+    public class AccountViewModel
+    {
+        public RegisterViewModel RegisterViewModel { get; set; }
+        public LoginViewModel LoginViewModel { get; set; }
+        public ResetPasswordViewModel ResetPasswordViewModel { get; set; }
+        public ExternalLoginConfirmationViewModel ExternalLoginConfirmationViewModel { get; set; }
+
+    }
+  
 
     public class UserViewModel
     {
@@ -51,6 +147,8 @@ namespace LYSAdmin.Model
         public int Status { get; set; }
 
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
+
+        public ManageUserViewModel ManageUserViewModel { get; set; }
 
     }
 }

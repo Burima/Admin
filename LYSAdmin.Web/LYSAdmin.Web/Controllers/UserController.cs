@@ -48,8 +48,8 @@ namespace LYSAdmin.Web.Controllers
 
             if (userViewModel.UserID == 0)
             {
-                AccountController accountController = new AccountController((UserManagement)userManagement);
-                accountController.Logout();
+                AccountController accountController = new AccountController();
+                accountController.LogOff();
 
             }
 
