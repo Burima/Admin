@@ -1,7 +1,7 @@
 ﻿@using LYSAdmin.Model
-
+@using LYSAdmin.Web.Services;
 @{
-    var User = (User)Session["User"];
+    var User = SessionManager.GetSessionUser();
 }
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
@@ -9,7 +9,7 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <span>
-                        <img id="profile" alt="image" class="img-circle" src="@Url.Content(User.ProfilePicture)" style="width:48px;height:48px;" />
+                        <img id="profile" alt="image" class="img-circle" src='@Url.Content(User.ProfilePicture != null && User.ProfilePicture != String.Empty ? User.ProfilePicture : "~/Images/default_profile_pic.jpg")' style="width:48px;height:48px;" />
                     </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">

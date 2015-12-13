@@ -551,7 +551,7 @@ namespace LYSAdmin.Web.Controllers
                 }
             }
 
-            return PartialView("_Verification", userViewModel);
+            return RedirectToAction("ViewProfile","User");
         }
 
         //

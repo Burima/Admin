@@ -311,6 +311,7 @@
     <Content Include="Images\angular_logo.png" />
     <Content Include="Images\dashbard4_1.jpg" />
     <Content Include="Images\dashbard4_2.jpg" />
+    <Content Include="Images\default_profile_pic.jpg" />
     <Content Include="Images\email_1.jpg" />
     <Content Include="Images\email_2.jpg" />
     <Content Include="Images\email_3.jpg" />

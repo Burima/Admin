@@ -10,6 +10,7 @@ using System.Net;
 using System.Web.Routing;
 using LYSAdmin.Domain;
 using System.Configuration;
+using LYSAdmin.Web.Services;
 
 namespace LYSAdmin.Web.Controllers
 {
@@ -27,11 +28,42 @@ namespace LYSAdmin.Web.Controllers
         //GET : Account/ProfileView
         public ActionResult ViewProfile()
         {
-            if (Session["User"] != null)
+            var user = SessionManager.GetSessionUser();
+            if (user != null)
             {
-                /****commented due to identity or DB update****/
-                //userViewModel.User = (User)Session["User"];
-                //userViewModel.UserDetail = ((User)Session["User"]).UserDetails.FirstOrDefault();
+                userViewModel.ManageUserViewModel = new ManageUserViewModel();
+                //userViewModel.HouseReviewModel = new HouseReviewModel();
+                userViewModel.UserID = user.Id;
+                userViewModel.PhoneNumber = user.PhoneNumber;
+                userViewModel.FirstName = user.FirstName;
+                userViewModel.LastName = user.LastName;
+                userViewModel.Gender = user.Gender;
+                userViewModel.ProfilePicture = user.ProfilePicture;
+                userViewModel.ManageUserViewModel.OldPassword = user.PasswordHash;
+                userViewModel.Email = user.Email;
+                userViewModel.EmailConfirmed = user.EmailConfirmed;
+                userViewModel.PhoneNumber = user.PhoneNumber;
+                userViewModel.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
+                userViewModel.UserName = user.UserName;
+              //  userViewModel.HouseReviewModel.HouseID = userManagement.GetHouseID(user.Id);
+                if (user.UserDetails != null && user.UserDetails.Count > 0)
+                {
+                    userViewModel.PresentAddress = user.UserDetails.FirstOrDefault().PresentAddress;
+                    userViewModel.PermanentAddress = user.UserDetails.FirstOrDefault().PermanentAddress;
+                    userViewModel.GovtIDType = user.UserDetails.FirstOrDefault().GovtIDType;
+                    userViewModel.GovtID = user.UserDetails.FirstOrDefault().GovtID;
+                    userViewModel.UserProfession = user.UserDetails.FirstOrDefault().UserProfession;
+                    userViewModel.OfficeLocation = user.UserDetails.FirstOrDefault().OfficeLocation;
+                    userViewModel.CurrentEmployer = user.UserDetails.FirstOrDefault().CurrentEmployer;
+                    userViewModel.EmployeeID = user.UserDetails.FirstOrDefault().EmployeeID;
+                    userViewModel.HighestEducation = user.UserDetails.FirstOrDefault().HighestEducation;
+                    userViewModel.InstitutionName = user.UserDetails.FirstOrDefault().InstitutionName;
+                }
+
+                //if (user.PGReviews != null && user.PGReviews.Count > 0)
+                //{
+                //    userViewModel.pgReviews = user.PGReviews.ToList();
+                //}
             }
             return View(userViewModel);
         }
@@ -45,6 +77,7 @@ namespace LYSAdmin.Web.Controllers
             userViewModel.Status = 1;
             userViewModel.LastUpdatedOn = DateTime.Now;
             userViewModel.UserID = TempData["UserID"] != null ? Convert.ToInt32(TempData["UserID"]) : 0;
+            userViewModel.UserName = userViewModel.Email;
 
             if (userViewModel.UserID == 0)
             {

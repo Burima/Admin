@@ -4,7 +4,7 @@
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var User = (User)Session["User"];
-    TempData["UserID"] = User.UserID;
+    TempData["UserID"] = User.Id;
     
 }
 
@@ -88,8 +88,19 @@
                                 <div class="col-md-6">
                                     <br />
                                     <div class="form-group">
-                                        <label>UserName</label>
-                                        <input type="email" class="form-control input-sm" placeholder="Enter Username" value="@Model.User.Username" name="User.Username">
+                                        <label>Email ID</label>
+                                        <input type="email" class="form-control input-sm" placeholder="Enter Username" value="@Model.Email" name="Email">
+                                        <div class="pull-right">
+                                            @if (Model.EmailConfirmed)
+                                            {
+                                                <label><i class="fa fa-check"></i>Verified</label>
+                                            }
+                                            else
+                                            {
+                                                <a id="verifyMobile" href="#">Verify</a>
+                                            }
+
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Change Password</label>
@@ -97,10 +108,17 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Mobile Number</label>
-                                        <input class="form-control input-sm numbersAlone" maxlength="10" placeholder="Enter Mobile Number" value="@Model.User.MobileNumber" name="User.MobileNumber" required>
+                                        <input class="form-control input-sm numbersAlone" maxlength="10" placeholder="Enter Mobile Number" value="@Model.PhoneNumber" name="PhoneNumber" required>
                                         <div class="pull-right">
-                                            <label><i class="fa fa-check"></i>Verified</label>
-                                            <a id="verifyMobile" href="#">Verify</a>
+                                            @if (Model.PhoneNumberConfirmed)
+                                            {
+                                                <label><i class="fa fa-check"></i>Verified</label>
+                                            }
+                                            else
+                                            {  
+                                                 <a id="verifyMobile" href="#">Verify</a>
+                                            }
+                                          
                                         </div>
                                     </div>
                                    
@@ -114,18 +132,18 @@
                                     <br />
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control input-sm charAlone" placeholder="First Name" value="@Model.User.FirstName" name="User.FirstName">
+                                        <input type="text" class="form-control input-sm charAlone" placeholder="First Name" value="@Model.FirstName" name="FirstName">
                                     </div>
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" class="form-control input-sm charAlone" placeholder="Last Name" value="@Model.User.LastName" name="User.LastName">
+                                        <input type="text" class="form-control input-sm charAlone" placeholder="Last Name" value="@Model.LastName" name="LastName">
                                     </div>
                                     <div class="form-group">
                                         <label>I am</label>
-                                        <select class="form-control input-sm" name="User.Sex">
+                                        <select class="form-control input-sm" name="Gender">
                                             <option value="" disabled>Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                            <option @(Model.Gender == 1 ? "selected" : "") value="1">Male</option>
+                                            <option @(Model.Gender == 2 ? "selected" : "") value="2">Female</option>
                                         </select>
                                     </div>
                                     
@@ -144,8 +162,8 @@
                                             </label>
                                             <div><div id="photoFilePath" class="filePath pull-left">No File Chosen</div><span id="spnRemove" onclick="fnRemove()" style="cursor:pointer; color:gray; display:none">x</span></div>
                                             <br />
-                                            <img draggable="false" id="imgProfile" style="display:inline-block; height:100px; width:100px; margin: 0 5px 0 10px;" src="@Url.Action(Model.User.ProfilePicture)"/>
-                                            <input type="hidden" id="profilePic" name="User.ProfilePicture" />
+                                            <img draggable="false" id="imgProfile" style="display:inline-block; height:100px; width:100px; margin: 0 5px 0 10px;" src="@Url.Action(Model.ProfilePicture)"/>
+                                            <input type="hidden" id="profilePic" name="ProfilePicture" />
                                         </div>
                                     </div>
                                     <div id="divErrorFileFormatIMG" style="display:none" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -170,10 +188,10 @@
                                             <label>Permanent Address</label>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm" placeholder="Present Address" value="@Model.UserDetail.PresentAddress" name="UserDetail.PresentAddress">
+                                            <input type="text" class="form-control input-sm" placeholder="Present Address" value="@Model.PresentAddress" name="PresentAddress">
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm" placeholder="Present Address" value="@Model.UserDetail.PermanentAddress" name="UserDetail.PermanentAddress">
+                                            <input type="text" class="form-control input-sm" placeholder="Present Address" value="@Model.PermanentAddress" name="PermanentAddress">
                                         </div>
                                         <div class="col-md-5 row-space-top-1">
                                             <label>GovernmentID Type</label>
@@ -182,17 +200,17 @@
                                             <label>ID Number</label>
                                         </div>
                                         <div class="col-md-5">
-                                            <select class="form-control input-sm" name="UserDetail.GovtIDType">
+                                            <select class="form-control input-sm" name="GovtIDType">
                                                 <option value="" disabled>Select ID Type</option>
-                                                <option value="1">PAN Card</option>
-                                                <option value="2">Voter ID Card</option>
-                                                <option value="3">Driving License</option>
-                                                <option value="4">Aadhar Card</option>
-                                                <option value="5">Passport</option>
+                                                <option @(Model.GovtIDType == 1 ? "selected" : "") value="1" >PAN Card</option>
+                                                <option @(Model.GovtIDType == 2 ? "selected" : "") value="2">Voter ID Card</option>
+                                                <option @(Model.GovtIDType == 3 ? "selected" : "") value="3">Driving License</option>
+                                                <option @(Model.GovtIDType == 4 ? "selected" : "") value="4">Aadhar Card</option>
+                                                <option @(Model.GovtIDType == 5 ? "selected" : "") value="5">Passport</option>
                                             </select>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm" placeholder="Identity Proof Number" value="@Model.UserDetail.GovtID" name="UserDetail.GovtID">
+                                            <input type="text" class="form-control input-sm" placeholder="Identity Proof Number" value="@Model.GovtID" name="GovtID">
                                         </div>
                                         <div class="col-md-2">
                                             <button class="btn btn-primary btn-circle" type="button">
@@ -206,11 +224,11 @@
                                             <label>Office Address</label>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="radio" name="UserDetail.UserProfession" value="1">Self-Employed
-                                            <input type="radio" name="UserDetail.UserProfession" value="2">Salaried
+                                            <input type="radio" name="UserProfession" value="1" @(Model.UserProfession == 1 ? "checked" : "")>Self-Employed
+                                            <input type="radio" name="UserProfession" value="2" @(Model.UserProfession == 2 ? "checked" : "")>Salaried
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm" placeholder="Employee Address" value="@Model.UserDetail.OfficeLocation" name="UserDetail.OfficeLocation">
+                                            <input type="text" class="form-control input-sm" placeholder="Employee Address" value="@Model.OfficeLocation" name="OfficeLocation">
                                         </div>
                                         <div class="col-md-5 row-space-top-1">
                                             <label>Current Employer</label>
@@ -219,10 +237,10 @@
                                             <label>Employee ID</label>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm charAlone" placeholder="Current Employer Name" value="@Model.UserDetail.CurrentEmployer" name="UserDetail.CurrentEmployer">
+                                            <input type="text" class="form-control input-sm charAlone" placeholder="Current Employer Name" value="@Model.CurrentEmployer" name="CurrentEmployer">
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm numbersAlone" placeholder="Employer ID" value="@Model.UserDetail.EmployeeID" name="UserDetail.EmployeeID">
+                                            <input type="text" class="form-control input-sm numbersAlone" placeholder="Employer ID" value="@Model.EmployeeID" name="EmployeeID">
                                         </div>
 
                                         <div class="col-md-5 row-space-top-1">
@@ -232,15 +250,15 @@
                                             <label>Institution Name</label>
                                         </div>
                                         <div class="col-md-5">
-                                            <select class="form-control input-sm" name="UserDetail.HighestEducation">
+                                            <select class="form-control input-sm" name="HighestEducation">
                                                 <option value="" disabled>Select Highest Education</option>
-                                                <option value="PostGraduate">Post Graduate</option>
-                                                <option value="Graduate">Graduate</option>
-                                                <option value="UnderGraduate">Under Graduate</option>
+                                                <option @(Model.HighestEducation == "PostGraduate" ? "selected" : "") value="PostGraduate">Post Graduate</option>
+                                                <option @(Model.HighestEducation == "Graduate" ? "selected" : "") value="Graduate">Graduate</option>
+                                                <option @(Model.HighestEducation == "UnderGraduate" ? "selected" : "") value="UnderGraduate">Under Graduate</option>
                                             </select>
                                         </div>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control input-sm charAlone" placeholder="Institution Name" value="@Model.UserDetail.InstitutionName" name="UserDetail.InstitutionName">
+                                            <input type="text" class="form-control input-sm charAlone" placeholder="Institution Name" value="@Model.InstitutionName" name="InstitutionName">
                                         </div>
                                     </div>
 
@@ -271,26 +289,29 @@
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
                 <h4 class="modal-title">Change Password</h4>
-
+                <button type="button" id="btnVerificationClose" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Current Password</label>
-                    <input id="txtCurrentPassword" type="password" class="form-control" placeholder="Current Password" />
+            @using (Ajax.BeginForm("ChangePassword", "Account", FormMethod.Post, new AjaxOptions { HttpMethod = "POST" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input id="txtCurrentPassword" type="password" class="form-control" placeholder="Current Password" name="ManageUserViewModel.OldPassword" />
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input id="txtNewPassword" type="password" class="form-control" placeholder="New Password" name="ManageUserViewModel.NewPassword" />
+                    </div>
+                    <div class="form-group">
+                        <label>Retype Password</label>
+                        <input id="txtRetypePassword" type="password" class="form-control" placeholder="Retype Password" name="ManageUserViewModel.ConfirmPassword" />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>New Password</label>
-                    <input id="txtNewPassword" type="password" class="form-control" placeholder="New Password" name="User.
-                           Password" />
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnChangePassword">Save changes</button>
                 </div>
-                <div class="form-group">
-                    <label>Retype Password</label>
-                    <input id="txtRetypePassword" type="password" class="form-control" placeholder="Retype Password" />
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnChangePassword">Save changes</button>
-            </div>
+            }
         </div>
     </div>
 </div>
@@ -313,7 +334,7 @@
 
             $("#photoFilePath").html(this.value.split('\\').pop());
             $("#photoFilePath").attr("title", this.value.split('\\').pop());
-            $("#hdnFileName").val('@User.UserID' + '_' + this.value.split('\\').pop());
+            $("#hdnFileName").val('@User.Id' + '_' + this.value.split('\\').pop());
 
         };
     </script>
