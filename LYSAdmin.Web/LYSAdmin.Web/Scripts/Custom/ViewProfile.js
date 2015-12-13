@@ -146,3 +146,4 @@ $('#btnSkipCropping').click(function () {
 $('#btnCrop').click(function () {
     fnLoadImage();
 });
+

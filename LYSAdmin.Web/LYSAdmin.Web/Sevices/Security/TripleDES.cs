@@ -5,11 +5,11 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LYSApp.Web.Services.Security
+namespace LYSAdmin.Web.Services.Security
 {
     public class TripleDES
     {
-        string key = LYSApp.Web.Services.Common.LYSConfig.EncryptionKey;
+        string key = LYSAdmin.Web.Services.Common.LYSConfig.EncryptionKey;
         public string Encrypt(string input)
         {
             byte[] inputArray = UTF8Encoding.UTF8.GetBytes(input);

@@ -11,10 +11,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
-//using LYSAdmin.Domain.NotificationManagement;
-using LYSApp.Web.Services.Security;
+using LYSAdmin.Domain.NotificationManagement;
+using LYSAdmin.Web.Services.Security;
 using System.Configuration;
-//using LYSAdmin.Web.Services.Common;
+using LYSAdmin.Web.Services.Common;
 using LYSAdmin.Web.Services;
 
 namespace LYSAdmin.Web.Controllers
@@ -166,7 +166,7 @@ namespace LYSAdmin.Web.Controllers
     {
         private UserManager _userManager;
         AccountViewModel accountViewModel = new AccountViewModel();
-       // MandrillMailer mandrillMailer = new MandrillMailer();
+        MandrillMailer mandrillMailer = new MandrillMailer();
         TripleDES tripleDES = new TripleDES();
 
 
@@ -236,36 +236,36 @@ namespace LYSAdmin.Web.Controllers
             return View("Login", model);
         }
 
-        //
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public ActionResult Register()
-        //{
-        //    return View("Index");
-        //}
 
-        //
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
+
+        
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(AccountViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = new User()
                 {
-                    FirstName = model.RegisterViewModel.FirstName,
-                    LastName = model.RegisterViewModel.LastName,
-                    UserName = model.RegisterViewModel.Email.ToUpper(),
-                    Email = model.RegisterViewModel.Email.ToUpper(),
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    UserName = model.Email.ToUpper(),
+                    Email = model.Email.ToUpper(),
                     CreatedOn = DateTime.Now,
                     LastUpdatedOn = DateTime.Now,
                     Status = 1,
                     LockoutEndDateUtc = DateTime.Now.AddDays(60),
                     LockoutEnabled = true
                 };
-                IdentityResult result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
@@ -274,10 +274,10 @@ namespace LYSAdmin.Web.Controllers
                     SessionManager.SessionizeUser(user);
                     //save to mailchimp subscription list
                     //enables for production only
-                    //if (LYSConfig.EnvironmentName == "Production")
-                    //{
-                    //    mandrillMailer.SaveToMailChimpList(user.Email, user.FirstName, user.LastName);
-                    //}
+                    if (LYSConfig.EnvironmentName == "Production")
+                    {
+                        mandrillMailer.SaveToMailChimpList(user.Email, user.FirstName, user.LastName);
+                    }
 
                     //Send Activation emai
                     await SendAccountActivationMail(user);
@@ -286,7 +286,7 @@ namespace LYSAdmin.Web.Controllers
                 }
                 else
                 {
-                    model.RegisterViewModel.RegisterError = result.Errors.FirstOrDefault();
+                    model.RegisterError = result.Errors.FirstOrDefault();
                     AddErrors(result);
                 }
             }
@@ -360,9 +360,9 @@ namespace LYSAdmin.Web.Controllers
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = tripleDES.Encrypt((user.Id).ToString()), code = tripleDES.Encrypt(code) }, protocol: Request.Url.Scheme);
                 //send Reset Password link
-                //mandrillMailer.SendEmailForUser(user.Email, callbackUrl, "Activate Your Account", "Reset Your Password");
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");                
+                mandrillMailer.SendEmailForUser(user.Email, callbackUrl, "Activate Your Account", "Reset Your Password");
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");                
                 return Content("A link to reset your password has been sent to " + email);
             }
 
@@ -755,7 +755,7 @@ namespace LYSAdmin.Web.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = tripleDES.Encrypt((user.Id).ToString()), code = tripleDES.Encrypt(code) }, protocol: Request.Url.Scheme);
 
                 //send email activation link
-              //  mandrillMailer.SendEmailForUser(user.Email, callbackUrl, "Activate Your Account", "Activate Your Account | Lockyourstay");
+                mandrillMailer.SendEmailForUser(user.Email, callbackUrl, "Activate Your Account", "Activate Your Account | Lockyourstay");
 
                 return true;
             }

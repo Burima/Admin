@@ -36,7 +36,13 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\.NETFramework\v4.0\4.3.0.0\FSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MailChimp" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -57,6 +63,7 @@
     <Compile Include="HouseManagement\HouseManagement.cs" />
     <Compile Include="HouseManagement\IHouseManagement.cs" />
     <Compile Include="ImageHelper.cs" />
+    <Compile Include="NotificationManagement\MandrillMailer.cs" />
     <Compile Include="PGDetailManagement\IPGDetailManagement.cs" />
     <Compile Include="PGDetailManagement\PGDetailManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +73,7 @@
     <Compile Include="UserManagement\UserManagement.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
