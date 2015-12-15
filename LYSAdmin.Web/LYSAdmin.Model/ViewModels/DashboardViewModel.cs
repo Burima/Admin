@@ -9,9 +9,8 @@ namespace LYSAdmin.Model
     public class DashboardViewModel
     {
         public DonughtChart DonughtChart { get; set; }
-        public IList<HouseComment> HouseComments { get; set; }
+        public IList<PGReviews> PGReviewList { get; set; }
 
-        public IList<HouseRating> HouseRatings { get; set; }
     }
 
     public class DonughtChart
@@ -29,26 +28,22 @@ namespace LYSAdmin.Model
         public int Staying { get; set; }
     }
 
-    public class HouseComment
+    public class PGReviews
+    {
+        public int PGDetailID { get; set; }
+        public String PGName { get; set; }
+        public IList<PGComments> PGCommentList { get; set; }
+        public Nullable<decimal> AverageRating { get; set; }
+    }
+
+    public class PGComments
     {
         public String Message { get; set; }
 
+        public String PGName { get; set; }
+
         public String UserName { get; set; }
-
-        public string FeedbackTime { get; set; }
-
-        public String HouseName { get; set; }
-
-        public decimal Rating { get; set; }
-
+        public Nullable<DateTime> CommentTime { get; set; }
     }
 
-    public class HouseRating
-    {
-        public int HouseID { get; set; }
-
-        public string DisplayName { get; set; }
-
-        public decimal AverageRating { get; set; }
-    }
-}
+ }

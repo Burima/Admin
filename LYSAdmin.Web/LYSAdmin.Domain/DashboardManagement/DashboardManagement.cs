@@ -13,20 +13,21 @@ namespace LYSAdmin.Domain.DashboardManagement
     {
         private IUnitOfWork unitOfWork = null;
 
-        private IBaseRepository<Data.DBEntity.Bed> bedRepository = null;
-        private IBaseRepository<Data.DBEntity.Room> roomRepository = null;
-        private IBaseRepository<Data.DBEntity.House> houseRepository = null;
-        private IBaseRepository<Data.DBEntity.PGReview> houseReviewRepository = null;
-        private IBaseRepository<Data.DBEntity.User> userRepository = null;
-
+        private IBaseRepository<Data.DBEntity.Bed> BedRepository = null;
+        private IBaseRepository<Data.DBEntity.Room> RoomRepository = null;
+        private IBaseRepository<Data.DBEntity.House> HouseRepository = null;
+        private IBaseRepository<Data.DBEntity.PGReview> PGReviewRepository = null;
+        private IBaseRepository<Data.DBEntity.User> UserRepository = null;
+        private IBaseRepository<Data.DBEntity.PGDetail> PGDetailRepository = null;
         public DashboardManagement()
         {
             unitOfWork = new UnitOfWork();
-            bedRepository = new BaseRepository<Data.DBEntity.Bed>(unitOfWork);
-            roomRepository = new BaseRepository<Data.DBEntity.Room>(unitOfWork);
-            houseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
-            houseReviewRepository = new BaseRepository<Data.DBEntity.PGReview>(unitOfWork);
-            userRepository = new BaseRepository<Data.DBEntity.User>(unitOfWork);
+            BedRepository = new BaseRepository<Data.DBEntity.Bed>(unitOfWork);
+            RoomRepository = new BaseRepository<Data.DBEntity.Room>(unitOfWork);
+            HouseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
+            PGReviewRepository = new BaseRepository<Data.DBEntity.PGReview>(unitOfWork);
+            UserRepository = new BaseRepository<Data.DBEntity.User>(unitOfWork);
+            PGDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
         }
 
         public DonughtChart GetDonught(int OwnerID)
@@ -80,59 +81,75 @@ namespace LYSAdmin.Domain.DashboardManagement
 
         public DashboardViewModel GetCommentsAndRating(int OwnerID)
         {
-            DashboardViewModel dashboardViewModel = new DashboardViewModel();
-            IList<Model.HouseComment> houseComments = new List<Model.HouseComment>();
-            IList<Model.HouseRating> houseRatings = new List<Model.HouseRating>();
-            IList<Model.House> houses = new List<Model.House>();
+            DashboardViewModel DashboardViewModel = new DashboardViewModel();
+            IList<Model.PGReviews> PGReviewList = new List<Model.PGReviews>();
+            IList<Model.PGReview> pgReviews = new List<Model.PGReview>();
+            IList<Model.PGDetail> pgDetails = new List<Model.PGDetail>();
+            PGReviewList = (from p in PGDetailRepository.Get(p => p.UserID == OwnerID)
+                           select new Model.PGReviews
+                             {
+                                 PGDetailID = p.PGDetailID,
+                                 PGName = p.PGName,
+                                 PGCommentList = (from g in PGReviewRepository.Where(g=> g.PGDetailID == p.PGDetailID).OrderBy(g=> g.CommentTime)
+                                                  select new Model.PGComments
+                                                  {
 
-            houses = (from p in houseRepository.Get(p => p.isDeleted == false //&& p.OwnerID == OwnerID /****commented due to identity or DB update****/
-                          )
-                      select new Model.House
-                      {
-                          HouseID = p.HouseID,
-                          DisplayName = p.DisplayName,
-                          /****commented due to identity or DB update****/
-                          //HouseReviews = (from g in p.HouseReviews
-                          //                select new LYSAdmin.Model.PGReview
-                          //                {
-                          //                    HouseID = g.HouseID,
-                          //                    Comments = g.Comments,
-                          //                    CommentTime = g.CommentTime,
-                          //                    Rating = g.Rating,
-                          //                    User = (from u in userRepository.Get(u => u.UserID == g.UserID)
-                          //                            select new LYSAdmin.Model.User
-                          //                            {
-                          //                                FirstName = u.FirstName,
-                          //                                LastName = u.LastName
-                          //                            }).FirstOrDefault()
+                                                  Message = g.Comments,
+                                                  CommentTime = g.CommentTime,
+                                                  PGName = p.PGName,
+                                                  UserName = UserRepository.Get(u => u.UserID == g.UserID).Select(u=> u.FirstName+u.LastName).FirstOrDefault()
 
-                          //                }).OrderBy(g => g.CommentTime).ToList()
-                      }).ToList();
+                                                  }).ToList(),
+                                 AverageRating = PGReviewRepository.Where(g => g.PGDetailID == p.PGDetailID).Average(g=> g.Rating)
+                            }).ToList();
            
-            foreach (House house in houses)
-            {
-                HouseRating houseRating = new HouseRating();
-                houseRating.HouseID = house.HouseID;
-                houseRating.DisplayName = house.DisplayName;
-                //houseRating.AverageRating = (decimal)house.HouseReviews.Average(p => p.Rating); /****commented due to identity or DB update****/
-                houseRatings.Add(houseRating);
-                /****commented due to identity or DB update****/
-                //foreach (Model.PGReview houseReview in house.HouseReviews)
-                //{
-                //    Model.HouseComment comment = new Model.HouseComment();
-                //    comment.Message = houseReview.Comments;
-                //    comment.FeedbackTime = ((DateTime)houseReview.CommentTime).ToString("o");
-                //    comment.HouseName = house.DisplayName;
-                //    comment.Rating = (decimal)houseReview.Rating;
-                //    comment.UserName = houseReview.User.FirstName +" "+ houseReview.User.LastName;
-                //    houseComments.Add(comment);
-                //}
-            }
-            dashboardViewModel.HouseComments = houseComments;
-            dashboardViewModel.HouseRatings = houseRatings;
-            dashboardViewModel.DonughtChart = GetDonught(OwnerID);
+            //houses = (from p in houseRepository.Get(p => p.isDeleted == false //&& p.OwnerID == OwnerID /****commented due to identity or DB update****/
+            //              )
+            //          select new Model.House
+            //          {
+            //              HouseID = p.HouseID,
+            //              DisplayName = p.DisplayName,
+            //              /****commented due to identity or DB update****/
+            //              PGReviews = (from g in p.HouseReviews
+            //                              select new LYSAdmin.Model.PGReview
+            //                              {
+            //                                  HouseID = g.HouseID,
+            //                                  Comments = g.Comments,
+            //                                  CommentTime = g.CommentTime,
+            //                                  Rating = g.Rating,
+            //                                  User = (from u in userRepository.Get(u => u.UserID == g.UserID)
+            //                                          select new LYSAdmin.Model.User
+            //                                          {
+            //                                              FirstName = u.FirstName,
+            //                                              LastName = u.LastName
+            //                                          }).FirstOrDefault()
 
-            return dashboardViewModel;
+            //                              }).OrderBy(g => g.CommentTime).ToList()
+            //          }).ToList();
+           
+            //foreach (House house in houses)
+            //{
+            //    HouseRating houseRating = new HouseRating();
+            //    houseRating.HouseID = house.HouseID;
+            //    houseRating.DisplayName = house.DisplayName;
+            //    //houseRating.AverageRating = (decimal)house.HouseReviews.Average(p => p.Rating); /****commented due to identity or DB update****/
+            //    houseRatings.Add(houseRating);
+            //    /****commented due to identity or DB update****/
+            //    //foreach (Model.PGReview houseReview in house.HouseReviews)
+            //    //{
+            //    //    Model.HouseComment comment = new Model.HouseComment();
+            //    //    comment.Message = houseReview.Comments;
+            //    //    comment.FeedbackTime = ((DateTime)houseReview.CommentTime).ToString("o");
+            //    //    comment.HouseName = house.DisplayName;
+            //    //    comment.Rating = (decimal)houseReview.Rating;
+            //    //    comment.UserName = houseReview.User.FirstName +" "+ houseReview.User.LastName;
+            //    //    houseComments.Add(comment);
+            //    //}
+            //}
+            DashboardViewModel.PGReviewList = PGReviewList;
+            DashboardViewModel.DonughtChart = GetDonught(OwnerID);
+
+            return DashboardViewModel;
         }
 
     }
