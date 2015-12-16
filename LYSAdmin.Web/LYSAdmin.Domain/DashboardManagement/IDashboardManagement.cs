@@ -9,6 +9,6 @@ namespace LYSAdmin.Domain.DashboardManagement
 {
     public interface IDashboardManagement
     {
-        DonughtChart GetDonught(int OwnerID);
+        DonughtChart GetDonught(long OwnerID);
     }
 }

@@ -87,7 +87,19 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <ul id="ulHouseRatings" class="list-group"></ul> 
+                            <ul id="ulHouseRatings" class="list-group">
+                                @foreach (var pgReview in Model.PGReviewList)
+                                {
+                                    foreach (var comment in pgReview.PGCommentList)
+                                    {
+                                          <li class="list-group-item">                                
+                                            <p><a class="text-info" href="#">comment.UserName</a>comment.Message</p>
+                                            <small class="block text-muted"><i class="fa fa-home"></i>comment.PGName</small>
+                                            <small class="block text-muted"><i class="fa fa-clock-o"></i>$.timeago(comment.FeedbackTime)</small>
+                                         </li>
+                                    }
+                                }
+                            </ul> 
                         </div>
                     </div>
 
@@ -337,8 +349,8 @@
 <script src='@Url.Content("~/Scripts/app/jquery.timeago.js")'></script> 
 
    <script>
-       var comments = '@Html.Raw(Json.Encode(Model.HouseComments))'
-       var ratings = '@Html.Raw(Json.Encode(Model.HouseRatings))'
+       @*var comments = '@Html.Raw(Json.Encode(Model.PGReviewList.))'*@
+       var pgRatings = '@Html.Raw(Json.Encode(Model.PGReviewList))'
     </script>
 
     <script type="text/javascript">
@@ -488,7 +500,7 @@
         var DoughnutChart_3 = new Chart(document.getElementById("doughnutChart3").getContext("2d")).Doughnut(doughnutData_3, doughnutOptions);
 
         //fill house comments
-        fnFillHouseComments();
+        //fnFillHouseComments();
         fnFillHouseRatings();
     });
 
@@ -507,12 +519,12 @@
 
     function fnFillHouseRatings() {
        
-        eval("var houseRatings = " + ratings);
-        $.each(houseRatings, function (i, houseRating) {
+        eval("var houseRatings = " + pgRatings);
+        $.each(pgRatings, function (i, pgRating) {
 
             var data = '<li class="list-group-item">' +
-                          '<i class="fa fa-home"></i>&nbsp;' + houseRating.DisplayName +                          
-                          '<p id = "pHouseRating"><span class="stars"><span style="width:' + (houseRating.AverageRating * 20) + '%;"></span></span></p>'
+                          '<i class="fa fa-home"></i>&nbsp;' + pgRating.PGName +
+                          '<p id = "pHouseRating"><span class="stars"><span style="width:' + (pgRating.AverageRating * 20) + '%;"></span></span></p>'
             '</li>';
             
             $('#ulHouseRatings').append(data);

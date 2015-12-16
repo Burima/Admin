@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using LYSAdmin.Web.Utilities;
 using LYSAdmin.Domain.DashboardManagement;
 using LYSAdmin.Model;
+using LYSAdmin.Web.Services;
 
 namespace LYSAdmin.Web.Controllers
 {
@@ -25,7 +26,7 @@ namespace LYSAdmin.Web.Controllers
          [HttpGet]
         public ActionResult Dashboard()
         {
-            return View("Dashboard", dashboardManagement.GetCommentsAndRating(GetOwnerID()));
+            return View("Dashboard", dashboardManagement.GetCommentsAndRating(SessionManager.GetSessionUser().Id));
         }
 
         public ActionResult Dashboard_2()
