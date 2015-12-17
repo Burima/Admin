@@ -42,8 +42,8 @@ namespace LYSAdmin.Model
 
         public String PGName { get; set; }
 
-        public String UserName { get; set; }
-        public Nullable<DateTime> CommentTime { get; set; }
+        public User User { get; set; }
+        public string CommentTime { get; set; }
     }
 
  }

@@ -93,9 +93,9 @@
                                     foreach (var comment in pgReview.PGCommentList)
                                     {
                                           <li class="list-group-item">                                
-                                            <p><a class="text-info" href="#">comment.UserName</a>comment.Message</p>
-                                            <small class="block text-muted"><i class="fa fa-home"></i>comment.PGName</small>
-                                            <small class="block text-muted"><i class="fa fa-clock-o"></i>$.timeago(comment.FeedbackTime)</small>
+                                            <p><a class="text-info" href="#">@comment.User.FirstName</a>&nbsp;&nbsp;@comment.Message</p>
+                                            <small class="block text-muted"><i class="fa fa-home"></i>@comment.PGName</small>
+                                            <small class="block text-muted"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;@comment.CommentTime</small>
                                          </li>
                                     }
                                 }
@@ -349,7 +349,7 @@
 <script src='@Url.Content("~/Scripts/app/jquery.timeago.js")'></script> 
 
    <script>
-       @*var comments = '@Html.Raw(Json.Encode(Model.PGReviewList.))'*@
+       var pgCommentList = '@Html.Raw(Json.Encode(Model.PGReviewList))'
        var pgRatings = '@Html.Raw(Json.Encode(Model.PGReviewList))'
     </script>
 
@@ -505,15 +505,21 @@
     });
 
     function fnFillHouseComments() {
-        eval("var houseComments = " + comments);        
-        $.each(houseComments, function (i, comment) {
-
-            var data = '<li class="list-group-item">' +
-                          '<p><a class="text-info" href="#">' + comment.UserName + '</a>&nbsp;&nbsp;' + comment.Message + '</p>' +
-                          '<small class="block text-muted"><i class="fa fa-home"></i>&nbsp;' + comment.HouseName + '</small>' +
-                          '<small class="block text-muted"><i class="fa fa-clock-o"></i>&nbsp;' + $.timeago(comment.FeedbackTime) + '</small>' +
-                      '</li>';
-            $('#ulHouseComments').append(data);
+        eval("var pgCommentList = " + pgCommentList);
+        alert(pgCommentList);
+        $.each(pgCommentList, function (i, pgComments) {
+            if (pgComments != null && pgComments.length > 0) {
+                
+                //$.each(pgComments, function (j, comment) {
+                //    var data = '<li class="list-group-item">' +
+                //                  '<p><a class="text-info" href="#">' + comment.UserName + '</a>&nbsp;&nbsp;' + comment.Message + '</p>' +
+                //                  '<small class="block text-muted"><i class="fa fa-home"></i>&nbsp;' + comment.HouseName + '</small>' +
+                //                  '<small class="block text-muted"><i class="fa fa-clock-o"></i>&nbsp;' + $.timeago(comment.FeedbackTime) + '</small>' +
+                //              '</li>';
+                //    $('#ulHouseComments').append(data);
+                //});
+            }
+           
         });
     }
 

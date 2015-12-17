@@ -10,5 +10,9 @@ namespace LYSAdmin.Domain.DashboardManagement
     public interface IDashboardManagement
     {
         DonughtChart GetDonught(long OwnerID);
+
+        DashboardViewModel GetCommentsAndRating(long OwnerID);
+
+        string TimeAgo(DateTime date);
     }
 }
