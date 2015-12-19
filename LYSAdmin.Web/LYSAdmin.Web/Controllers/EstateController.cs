@@ -56,6 +56,22 @@ namespace LYSAdmin.Web.Controllers
 
         }
 
+        #region PGDetails
+        public ActionResult Hostels()
+        {
+            if (Session["AreaID"] != null)
+            {
+                PGDetailsViewModel pgDetailsViewModel = new PGDetailsViewModel();
+                pgDetailsViewModel.PGDetails = pgDetailManagement.GetPGsByOwnerIDandAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, Convert.ToInt32(Session["AreaID"]));
+                return View(pgDetailsViewModel);
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
         #region Apartment
         /// <summary>
         /// Show List of All Apatments

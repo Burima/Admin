@@ -25,11 +25,13 @@ namespace LYSAdmin.Domain.PGDetailManagement
                                             PGDetailID = p.PGDetailID,
                                             PGName=p.PGName,
                                             AreaID=p.AreaID,
-                                            UserID=p.UserID
+                                            UserID=p.UserID,
+                                            Landmark = p.Landmark,
+                                            Latitude = p.Latitude,
+                                            Longitude = p.Longitude,
+                                            Address = p.Address,
+                                            Description = p.Description
                                          }).ToList();
-
-
-
             return allPGs;
         }
     }

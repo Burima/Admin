@@ -39,6 +39,7 @@
             <li class="@Html.IsSelected(controller: "Properties")">
                 <a href="@Url.Action("Houses", "Estate")"><i class="fa fa-diamond"></i> <span class="nav-label">Estate</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
+                    <li class="@Html.IsSelected(action: "Hostels")"><a href="@Url.Action("Hostels", "Estate")">PGs/Hostels</a></li>
                     <li class="@Html.IsSelected(action: "Apartments")"><a href="@Url.Action("Apartments", "Estate")">Apartments</a></li>
                     <li class="@Html.IsSelected(action: "Blocks")"><a href="@Url.Action("Blocks", "Estate")">Blocks</a></li>
                     <li class="@Html.IsSelected(action: "Houses")"><a href="@Url.Action("Houses", "Estate")">Houses</a></li>
