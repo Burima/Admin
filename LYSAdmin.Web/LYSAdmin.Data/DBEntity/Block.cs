@@ -32,7 +32,7 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<int> CreatedBy { get; set; }
         public bool IsDefault { get; set; }
     
-        public virtual Apartment Apartment { get; set; }
         public virtual ICollection<House> Houses { get; set; }
+        public virtual Apartment Apartment { get; set; }
     }
 }

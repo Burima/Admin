@@ -9,7 +9,6 @@ namespace LYSAdmin.Model
 {
     public class Apartment
     {
-
         public int ApartmentID { get; set; }
         [Required]
         public string ApartmentName { get; set; }
@@ -21,7 +20,7 @@ namespace LYSAdmin.Model
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<long> CreatedBy { get; set; }
         public int PGDetailID { get; set; }
         public bool IsDefault { get; set; }
 

@@ -70,6 +70,47 @@ namespace LYSAdmin.Web.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        public ActionResult AddHostel(PGDetailsViewModel pgDetailsViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var User = (User)Session["User"];
+                pgDetailsViewModel.PGDetail.Status = true;
+                pgDetailsViewModel.PGDetail.IsPg = true;
+                pgDetailsViewModel.PGDetail.CreatedBy = User.Id; /****commented due to identity or DB update****/
+                pgDetailsViewModel.PGDetail.UserID = User.Id;//User.RoleID <= 3 ? User.Id : User.ManagerID; /****commented due to identity or DB update****/
+                if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
+                {
+                    pgDetailsViewModel.PGDetail.AreaID = Convert.ToInt32(Session["AreaID"]);
+                    int successCount = pgDetailManagement.AddHostel(pgDetailsViewModel.PGDetail);
+                    if (successCount > 0)
+                    {
+                        //Apartment Inserted Successfully
+                        TempData["Message"] = "Hostel Added Successfully";
+                    }
+                    else
+                    {
+                        //Insertion failed
+                        TempData["Message"] = "Hostel couldn't be added. Please try again later.";
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = "SelectArea"; //Area is not selected for session..Redirect to View to Selet the Area
+                }
+            }
+            else
+            {
+                //Insertion failed
+                TempData["Message"] = "Apartment couldn't be added. Please try again later.";
+
+            }
+
+            return RedirectToAction("Apartments", "Estate");
+
+        }
         #endregion
 
         #region Apartment
@@ -110,9 +151,6 @@ namespace LYSAdmin.Web.Controllers
             if (ModelState.IsValid)
             {
                 var User = (User)Session["User"];
-                //apartment.ApartmentName = JsonConvert.DeserializeObject<string>(ApartmentName);
-                //apartment.HouseNo = JsonConvert.DeserializeObject<string>(HouseNo);
-                //apartment.Description = JsonConvert.DeserializeObject<string>(Description);
                 apartmentViewModel.Apartment.Status = true;
                 apartmentViewModel.Apartment.CreatedOn = DateTime.Now;
                 apartmentViewModel.Apartment.LastUpdatedOn = DateTime.Now;
@@ -155,7 +193,6 @@ namespace LYSAdmin.Web.Controllers
         public JsonResult GetApartmentByID(string apartmentID)
         {
             apartment = apartmentManagement.GetApartmentByID(JsonConvert.DeserializeObject<int>(apartmentID));
-
             return Json(apartment);
         }
 

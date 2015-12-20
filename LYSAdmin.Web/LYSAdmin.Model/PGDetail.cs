@@ -18,6 +18,8 @@ namespace LYSAdmin.Model
         public string Landmark { get; set; }
         public bool IsPg { get; set; }
         public string Description { get; set; }
+        public Nullable<bool> Status { get; set; }
+        public Nullable<long> CreatedBy { get; set; }
 
         public virtual ICollection<Apartment> Apartments { get; set; }
         public virtual Area Area { get; set; }

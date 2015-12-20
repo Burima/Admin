@@ -21,7 +21,7 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<System.DateTime> CommentTime { get; set; }
         public int PGDetailID { get; set; }
     
-        public virtual PGDetail PGDetail { get; set; }
         public virtual User User { get; set; }
+        public virtual PGDetail PGDetail { get; set; }
     }
 }

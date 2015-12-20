@@ -22,10 +22,9 @@ namespace LYSAdmin.Data.DBEntity
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
+           
         }
     
-        public virtual DbSet<Apartment> Apartments { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Bed> Beds { get; set; }
         public virtual DbSet<Block> Blocks { get; set; }
@@ -34,7 +33,6 @@ namespace LYSAdmin.Data.DBEntity
         public virtual DbSet<HouseAmenity> HouseAmenities { get; set; }
         public virtual DbSet<HouseImage> HouseImages { get; set; }
         public virtual DbSet<House> Houses { get; set; }
-        public virtual DbSet<PGDetail> PGDetails { get; set; }
         public virtual DbSet<PGReview> PGReviews { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
@@ -42,5 +40,7 @@ namespace LYSAdmin.Data.DBEntity
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Apartment> Apartments { get; set; }
+        public virtual DbSet<PGDetail> PGDetails { get; set; }
     }
 }

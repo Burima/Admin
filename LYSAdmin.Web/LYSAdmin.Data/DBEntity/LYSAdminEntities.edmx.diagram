@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f8b0d89dc7e740febca3a1730a36b86c" Name="Diagram1">
-        <EntityTypeShape EntityType="LYSAdminModel.Apartment" Width="1.5" PointX="10.5" PointY="17.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.Area" Width="1.5" PointX="6" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.Bed" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.Block" Width="1.5" PointX="12.75" PointY="17.75" IsExpanded="true" />
@@ -14,7 +13,6 @@
         <EntityTypeShape EntityType="LYSAdminModel.HouseAmenity" Width="1.5" PointX="17.25" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.HouseImage" Width="1.5" PointX="17.25" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.House" Width="1.5" PointX="15" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LYSAdminModel.PGDetail" Width="1.5" PointX="8.25" PointY="17.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.PGReview" Width="1.5" PointX="10.5" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.Role" Width="1.5" PointX="0.75" PointY="18.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.Room" Width="1.5" PointX="17.25" PointY="24.875" IsExpanded="true" />
@@ -22,10 +20,7 @@
         <EntityTypeShape EntityType="LYSAdminModel.UserDetail" Width="1.5" PointX="5.25" PointY="39.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.UserLogin" Width="1.5" PointX="5.25" PointY="44.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LYSAdminModel.User" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
-        <AssociationConnector Association="LYSAdminModel.FK_Apartments_PGDetailID" ManuallyRouted="false" />
-        <AssociationConnector Association="LYSAdminModel.FK_Blocks_ApartmentID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_Areas_CityID" ManuallyRouted="false" />
-        <AssociationConnector Association="LYSAdminModel.FK_PGDetails_AreaID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_Beds_RoomID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_Beds_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_Houses_BlockID" ManuallyRouted="false" />
@@ -33,13 +28,18 @@
         <AssociationConnector Association="LYSAdminModel.FK__HouseAmenities__HouseID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_HouseImages_HouseID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_Rooms_HouseID" ManuallyRouted="false" />
-        <AssociationConnector Association="LYSAdminModel.FK_PGDetails_UserID" ManuallyRouted="false" />
-        <AssociationConnector Association="LYSAdminModel.FK_PGReviews_PGDetailID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_PGReviews_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_dbo_UserClaim_dbo_User_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_UserDetails_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.FK_dbo_UserLogin_dbo_User_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="LYSAdminModel.UserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LYSAdminModel.Apartment" Width="1.5" PointX="10.5" PointY="18.625" />
+        <EntityTypeShape EntityType="LYSAdminModel.PGDetail" Width="1.5" PointX="8.25" PointY="15.5" />
+        <AssociationConnector Association="LYSAdminModel.FK_Apartments_PGDetailID" />
+        <AssociationConnector Association="LYSAdminModel.FK_Blocks_ApartmentID" />
+        <AssociationConnector Association="LYSAdminModel.FK_PGDetails_AreaID" />
+        <AssociationConnector Association="LYSAdminModel.FK_PGDetails_UserID" />
+        <AssociationConnector Association="LYSAdminModel.FK_PGReviews_PGDetailID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

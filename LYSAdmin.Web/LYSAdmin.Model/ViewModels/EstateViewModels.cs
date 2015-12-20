@@ -38,6 +38,7 @@ namespace LYSAdmin.Model
 
     public class PGDetailsViewModel
     {
+        public PGDetail PGDetail { get; set; }
         public IList<PGDetail> PGDetails { get; set; } 
     }
 }

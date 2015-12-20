@@ -8,7 +8,7 @@ var InitialLatitude, InitialLongitude;
 eval("var areaList = " + Areas);
 
 $(document).ready(function () {
-
+    btnNextBasicInformation
     $('#addNewPG').click(function () {
         fnEnableNewPGInsertion();
     });
@@ -102,9 +102,9 @@ $(document).ready(function () {
             //google api function
 
             //initialization of the map based on area and city
-            initialize();
-            $('#linkcollapseLocality').attr('href', '#collapseLocality'); //activate collapseable functionality through linking it with the target id 
-            $('#collapseLocality').addClass('in');//open Locality panel
+           // initialize();
+            $('#linkcollapseBasicAmenities').attr('href', '#collapseBasicAmenities'); //activate collapseable functionality through linking it with the target id 
+            $('#collapseBasicAmenities').addClass('in');//open Locality panel
         }
     });
 

@@ -56,7 +56,6 @@ namespace LYSAdmin.Domain.ApartmentManagement
             var dbApartment = Mapper.Map<LYSAdmin.Model.Apartment, LYSAdmin.Data.DBEntity.Apartment>(apartment);//Converting Model.Apartment to Data.Apartment
             apartmentRepository.Insert(dbApartment);//Inserting new lead
             return unitOfWork.SaveChanges();//Saving the changes to DB
-            
         }
 
         public LYSAdmin.Model.Apartment GetApartmentByID(int apartmentID)
