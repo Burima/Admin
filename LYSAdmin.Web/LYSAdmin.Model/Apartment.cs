@@ -22,7 +22,10 @@ namespace LYSAdmin.Model
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
+        public int PGDetailID { get; set; }
+        public bool IsDefault { get; set; }
 
+        public virtual PGDetail PGDetail { get; set; }
         public virtual ICollection<Block> Blocks { get; set; }
     }
 }

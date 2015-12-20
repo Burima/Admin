@@ -21,6 +21,7 @@ namespace LYSAdmin.Model
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
+        public bool IsDefault { get; set; }
 
         public virtual Apartment Apartment { get; set; }
         public virtual ICollection<House> Houses { get; set; }

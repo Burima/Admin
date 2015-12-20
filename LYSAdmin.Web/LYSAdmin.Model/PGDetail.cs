@@ -19,8 +19,9 @@ namespace LYSAdmin.Model
         public bool IsPg { get; set; }
         public string Description { get; set; }
 
+        public virtual ICollection<Apartment> Apartments { get; set; }
         public virtual Area Area { get; set; }
-        public virtual ICollection<House> Houses { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<PGReview> PGReviews { get; set; }
     }
 }

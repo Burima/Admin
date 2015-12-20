@@ -31,7 +31,6 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public string DisplayName { get; set; }
-        public int PGDetailID { get; set; }
         public Nullable<int> Gender { get; set; }
         public Nullable<int> NoOfBathrooms { get; set; }
         public Nullable<int> NoOfBalconnies { get; set; }
@@ -41,7 +40,6 @@ namespace LYSAdmin.Data.DBEntity
         public virtual Block Block { get; set; }
         public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
         public virtual ICollection<HouseImage> HouseImages { get; set; }
-        public virtual PGDetail PGDetail { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace LYSAdmin.Data.DBEntity
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           
+            
         }
     
         public virtual DbSet<Apartment> Apartments { get; set; }
