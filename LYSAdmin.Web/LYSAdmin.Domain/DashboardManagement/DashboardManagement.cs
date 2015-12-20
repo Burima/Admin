@@ -37,47 +37,48 @@ namespace LYSAdmin.Domain.DashboardManagement
             IList<int> houses = new List<int>();
             IList<int> rooms = new List<int>();
             DateTime matchedDate = DateTime.Today.AddDays(-15);
-            rooms = (from pg in PGDetailRepository.Get(pg => pg.UserID == OwnerID)
-                     join h in HouseRepository.Get() on pg.PGDetailID equals h.PGDetailID
-                     join r in RoomRepository.Get() on h.HouseID equals r.HouseID
-                     select r.RoomID).ToList();
             /****commented due to identity or DB update****/
-            //houses = (from p in houseRepository
-            //          //where p.OwnerID == OwnerID
-            //         select p.HouseID).ToList();
-
-            //rooms = (from r in roomRepository
-            //         where houses.Contains(r.HouseID)
+            //rooms = (from pg in PGDetailRepository.Get(pg => pg.UserID == OwnerID)
+            //         join h in HouseRepository.Get() on pg.PGDetailID equals h.PGDetailID
+            //         join r in RoomRepository.Get() on h.HouseID equals r.HouseID
             //         select r.RoomID).ToList();
+           
+            ////houses = (from p in houseRepository
+            ////          //where p.OwnerID == OwnerID
+            ////         select p.HouseID).ToList();
 
-            donughtChart.Empty = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Vacant)
-                                  select new Bed { }
-                                     ).Count();
+            ////rooms = (from r in roomRepository
+            ////         where houses.Contains(r.HouseID)
+            ////         select r.RoomID).ToList();
 
-            donughtChart.Occupied = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Booked)
-                                     select new Bed { }
-                                     ).Count();
+            //donughtChart.Empty = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Vacant)
+            //                      select new Bed { }
+            //                         ).Count();
 
-            donughtChart.NewEntered = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Staying
-                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
-                                       select new Bed { }
-                                     ).Count();
+            //donughtChart.Occupied = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Booked)
+            //                         select new Bed { }
+            //                         ).Count();
 
-            donughtChart.Existing = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Staying
-                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
-                                     select new Bed { }
-                                     ).Count();
+            //donughtChart.NewEntered = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Staying
+            //                               && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
+            //                           select new Bed { }
+            //                         ).Count();
 
-            donughtChart.Leaving = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.NoticeGiven
-                                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
-                                    select new Bed { }
-                                     ).Count();
+            //donughtChart.Existing = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.Staying
+            //                               && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
+            //                         select new Bed { }
+            //                         ).Count();
 
-            donughtChart.Staying = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && (b.BedStatus == (int)Constants.Bed_Status.NoticeGiven
-                                       || b.BedStatus == (int)Constants.Bed_Status.Staying)
-                                       && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
-                                    select new Bed { }
-                                     ).Count();
+            //donughtChart.Leaving = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && b.BedStatus == (int)Constants.Bed_Status.NoticeGiven
+            //                               && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) > 0)
+            //                        select new Bed { }
+            //                         ).Count();
+
+            //donughtChart.Staying = (from b in BedRepository.Get(b => rooms.Contains(b.RoomID) && (b.BedStatus == (int)Constants.Bed_Status.NoticeGiven
+            //                           || b.BedStatus == (int)Constants.Bed_Status.Staying)
+            //                           && DateTime.Compare(b.StatusUpdateDate.Value, matchedDate) <= 0)
+            //                        select new Bed { }
+            //                         ).Count();
 
 
             return donughtChart;

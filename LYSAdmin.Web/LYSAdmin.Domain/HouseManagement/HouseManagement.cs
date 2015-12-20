@@ -250,8 +250,9 @@ namespace LYSAdmin.Domain.HouseManagement
             //PG is selected existing PGs n dropdown
             if (houseViewModel.PGdetail.PGDetailID > 0)
             {
-                houseViewModel.House.PGDetailID = houseViewModel.PGdetail.PGDetailID;
                 /****commented due to identity or DB update****/
+               // houseViewModel.House.PGDetailID = houseViewModel.PGdetail.PGDetailID;
+              
                 //houseViewModel.House.IsPg = true;
             }
             else
@@ -267,16 +268,18 @@ namespace LYSAdmin.Domain.HouseManagement
                     pgDetailRepository.Insert(pgDetail);
                     unitOfWork.SaveChanges();
                     //set PGDetailID for House Table
-                    houseViewModel.House.PGDetailID = pgDetail.PGDetailID;
                     /****commented due to identity or DB update****/
+                    //houseViewModel.House.PGDetailID = pgDetail.PGDetailID;
+                   
                    // houseViewModel.House.IsPg = true;
 
                 }
                 else
                 {
                     //is not a PG type House
-                    houseViewModel.House.PGDetailID = 0;
                     /****commented due to identity or DB update****/
+
+                    //houseViewModel.House.PGDetailID = 0;
                     //houseViewModel.House.IsPg = false;
 
                 }
