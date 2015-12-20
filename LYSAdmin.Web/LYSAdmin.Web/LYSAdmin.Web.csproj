@@ -410,6 +410,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\Custom\Apartment.js" />
+    <Content Include="Scripts\Custom\Hostel.js" />
     <Content Include="Scripts\Custom\Houeses.js" />
     <Content Include="Scripts\Custom\ViewProfile.js" />
     <Content Include="Scripts\form-image-crop.js" />
@@ -860,6 +861,9 @@
     <Content Include="Views\Shared\_ShowAndHideProgress.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\User\ViewProfile.cshtml" />
+    <Content Include="Views\Estate\Hostels.cshtml" />
+    <Content Include="Views\Estate\_AddHostel.cshtml" />
+    <Content Include="Views\Estate\_EditHostel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
