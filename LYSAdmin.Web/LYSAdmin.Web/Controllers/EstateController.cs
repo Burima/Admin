@@ -108,7 +108,7 @@ namespace LYSAdmin.Web.Controllers
 
             }
 
-            return RedirectToAction("Apartments", "Estate");
+            return RedirectToAction("Hostels", "Estate");
 
         }
         #endregion

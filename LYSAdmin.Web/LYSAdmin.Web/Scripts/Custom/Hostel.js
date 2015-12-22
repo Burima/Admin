@@ -36,7 +36,7 @@ $(document).ready(function () {
         $('#divHostels').hide();
         $('#divAddHostel').show();
         $('#divEditHostel').hide();
-
+        initialize();
     });
 
     //Char Limit function
@@ -54,15 +54,16 @@ $(document).ready(function () {
         }
     });
    
-    initialize();
+   
 });
 
-$('#txtAddress').mouseout(function () {
+$('#txtAddress').blur(function () {
     if ($('#txtAddress').val() != "") {
+        alert("Hi2")
         $('#txtAddress').css('border-color', '#e5e6e7');
-        e.preventDefault();
-        var address = document.getElementById('txtAddress').value;
+        var address = $('#txtAddress').val();
         address = address + " " + Area + " " + City;
+        alert(address);
         updateMarker(address);
     }
     else {
@@ -125,7 +126,6 @@ function updateMarker(address) {
 
 //initialize the map
 function initialize() {
-    //fnUpdateLocation();
     var address = Area + " " + City;
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': address }, function (results, status) {
