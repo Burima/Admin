@@ -21,6 +21,7 @@ namespace LYSAdmin.Web.Controllers
         private IHouseManagement houseManagement;
         private IPGDetailManagement pgDetailManagement;
         Apartment apartment = new Apartment();
+        PGDetail pgDetail = new PGDetail();
         HouseViewModel houseViewModel = new HouseViewModel();
         public EstateController(ApartmentManagement apartmentManagement, BlockManagement blockManagement, HouseManagement houseManagement, PGDetailManagement pgDetailManagement)
         {
@@ -111,6 +112,30 @@ namespace LYSAdmin.Web.Controllers
             return RedirectToAction("Hostels", "Estate");
 
         }
+
+        [HttpPost]
+        public JsonResult GetHostelByID(string pgDetailID)
+        {
+            pgDetail = pgDetailManagement.GetHostelByID(JsonConvert.DeserializeObject<int>(pgDetailID));
+            return Json(pgDetail);
+        }
+
+        //Edit Apartment
+        [HttpPost]
+        public ActionResult EditHostel(PGDetailsViewModel pgDetailsViewModel)
+        {
+            int count = pgDetailManagement.UpdateHostel(pgDetailsViewModel);
+            if (count > 0)
+            {
+                TempData["Message"] = "Hostel updated Successfully";
+            }
+            else
+            {
+                TempData["Message"] = "Hostel couldn't be updated. Please try again later.";
+            }
+            return RedirectToAction("Hostels", "Estate");
+        }
+
         #endregion
 
         #region Apartment

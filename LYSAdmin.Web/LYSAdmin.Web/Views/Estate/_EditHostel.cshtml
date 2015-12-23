@@ -1,17 +1,82 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@model LYSAdmin.Model.PGDetailsViewModel
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>_EditHostel</title>
-</head>
-<body>
-    <div> 
+<div class="col-sm-9">
+    <div class="row">
+        <div class="col-lg-1 col-lg-offset-9 col-md-1 col-md-offset-9 col-sm-5 col-sm-offset-1 col-xs-5 col-xs-offset-1 ">
+            <button class="btn btn-primary pull-right btn-show-add-hostel" type="button" tabindex="4">Add New</button>
+        </div>
+        <div class="col-lg-1 col-lg-offset-1 col-md-1 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-5 col-xs-offset-1">
+            <button class="btn btn-primary pull-right" type="button" onclick="window.location.href='@Url.Action("Hostels", "Estate")'" tabindex="4">View All</button>
+        </div>
     </div>
-</body>
-</html>
+    <div class="row">
+        <div class="col-sm-8">
+            <h3 class="m-t-none m-b">Update Hostel Info</h3>
+            @*<p>Add new Apartment today for more expirience.</p>*@
+            <br />
+            @using (Html.BeginForm("EditHostel", "Estate", FormMethod.Post, new { role = "form", id = "form-edit-hostel", style = "min-height:420px" }))
+            {
+
+                <input id="hdnEditHostelID" type="hidden" name="PGDetail.PGDetailID" />
+             
+                <div class="form-group">
+                    <label>PG/Hostel Name</label>
+                    <input type="text" id="txtEditHostelName" placeholder="Enter PG/Hostel name" class="form-control input-large required charAlone" maxlength="50" tabindex="1" required name="PGDetail.PGName" autocomplete="off" autofocus="autofocus">
+                   <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea rows="4" id="txtEditDescription" placeholder="Description" class="form-control input-large" maxlength="500" tabindex="2" name="PGDetail.Description"></textarea>
+                    <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
+                </div>
+                 <div class="form-group">
+                    <label>Address<span id="spnLatitude" class="label label-default"></span> <span id="spnLongitude" class="label label-default"></span></label>
+                    <!--hidden fields to store Lat n Long in Model-->
+                    <input id="hdnEditLatitude" type="hidden" name="PGDetail.Latitude" value="0" />
+                    <input id="hdnEditLongitude" type="hidden" name="PGDetail.Longitude" value="0" />
+                    <input type="text" id="txtEditAddress" placeholder="Enter Address" class="form-control input-large" maxlength="50" tabindex="3" name="PGDetail.Address" autocomplete="off">
+                    <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                </div>
+                <div class="form-group">
+                    <label>Landmark</label>
+                    <input type="text" id="txtEditLandmark" placeholder="Enter nearest Landmark" class="form-control input-large" maxlength="50" tabindex="4" name="PGDetail.Landmark" autocomplete="off">
+                    <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
+                </div>
+                <div class="form-group row-space-top-1">
+                    <div id="map-canvas"></div>
+                </div>
+                <div class="form-group row-padding-top-5">
+                    <div class="pull-right">
+                        <button id="btnEditCancel" class="btn btn-white" onclick="window.location.href='@Url.Action("Hostels", "Estate")'" type="button" tabindex="5">Cancel</button>
+                        <button id="btnEditHostel" class="btn btn-primary" type="button" tabindex="5">Save</button>
+                    </div>
+                </div>
+               
+            }
+        </div>
+    </div>
+</div>
+<div class="col-sm-3">
+    <div class="statistic-box">
+        <h4>
+            Project Beta progress
+        </h4>
+        <p>
+            You have two project with not compleated task.
+        </p>
+        <div class="row text-center">
+            <div class="col-lg-6">
+                <canvas id="polarChart" width="80" height="80"></canvas>
+                <h5>Kolter</h5>
+            </div>
+            <div class="col-lg-6">
+                <canvas id="doughnutChart" width="78" height="78"></canvas>
+                <h5>Maxtor</h5>
+            </div>
+        </div>
+        <div class="m-t">
+            <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+        </div>
+
+    </div>
+</div>

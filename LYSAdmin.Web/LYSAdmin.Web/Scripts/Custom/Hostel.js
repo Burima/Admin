@@ -45,7 +45,7 @@ $(document).ready(function () {
 
     //form validator
     $("#form-add-a-hostel").validate();
-    $("#form-edit-apartment").validate();
+    $("#form-edit-hostel").validate();
     //Add Apartment button
     $('#btnAddHostel').click(function () {
         if ($("#form-add-a-hostel").valid() == true) {
@@ -240,6 +240,62 @@ function fnSaveLocation() {
             hideProgress();
         }
     });
+}
+
+//update apartment
+$('#btnEditHostel').click(function () {
+    if ($("#form-edit-apartment").valid() == true) {
+        showProgress(false, "Updating your Apartment...");
+        $('#form-edit-apartment').submit();
+    }
+});
+
+function fnGetHostelByID(element) {
+    var trId = $(element).closest('tr').attr('id');
+    var jmodel = { pgDetailID: JSON.stringify(trId) };
+    alert(trId);
+    showProgress(false, "Getting Apartment Details. Please wait...");
+    $.ajax({
+        url: GetHostelByIDUrl,
+        type: 'POST',
+        data: jmodel,
+        dataType: 'JSON',
+        success: function (response, textStatus, XMLHttpRequest) {
+            if (response != null) {
+                //alert(response.CreatedOn);
+                $('#divHostels').hide();
+                $('#divAddHostel').hide();
+                $('#divEditHostel').show();
+                //Fill apartment details
+                $('#hdnEditHostelID').val(response.PGDetailID);
+                $('#txtEditHostelName').val(response.PGName);
+                $('#txtEditDescription').val(response.Description);
+                $('#txtEditAddress').val(response.Address);
+                $('#txtEditLandmark').val(response.Landmark);
+                $('#hdnEditLatitude').val(response.Latitude);
+                $('#hdnEditLongitude').val(response.Longitude);
+                //set char limit 
+               // charlimit();
+            } else {
+                alert("Error! Please try again later...");
+            }
+
+            hideProgress();
+        },
+        error: function (xhr, status) {
+            alert("Error! Please try again later...");
+            hideProgress();
+        }
+    });
+}
+
+
+//fuction to check anumber and reconfigure date time to desire (eg: 1 as 01)
+function fnCheckNumber(number) {
+    if (number < 10)
+        return "0" + number;
+    else
+        return number;
 }
 
 

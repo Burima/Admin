@@ -12,5 +12,9 @@ namespace LYSAdmin.Domain.PGDetailManagement
         List<Model.PGDetail> GetPGsByOwnerIDandAreaID(long OwnerID, int AreaID);
 
         int AddHostel(PGDetail pgDetail);
+
+        int UpdateHostel(LYSAdmin.Model.PGDetailsViewModel pgDetailsViewModel);
+
+        LYSAdmin.Model.PGDetail GetHostelByID(int pgDetailID);
     }
 }

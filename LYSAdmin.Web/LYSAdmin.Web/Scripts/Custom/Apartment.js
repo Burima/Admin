@@ -107,8 +107,8 @@ $(document).ready(function () {
 
     });
 
-    //Save Blocks
-    $("#modalblocksave").click(function () {
+//Save Blocks
+$("#modalblocksave").click(function () {
         var obj = new Array();//creating a new block array object 
         //adding new blocks
         $('input.new-block[type="text"]').each(function () {

@@ -126,7 +126,7 @@
                                     foreach (var pgDetail in Model.PGDetails)
                                     {
                                         <tr class="gradeX" id="@pgDetail.PGDetailID">
-                                            <td><a onclick="fnGetApartmentByID(this)" style="cursor:pointer;">@pgDetail.PGName</a></td>
+                                            <td><a onclick="fnGetHostelByID(this)" style="cursor:pointer;">@pgDetail.PGName</a></td>
                                             <td>@pgDetail.Description</td>
                                             <td>@pgDetail.Address</td>
                                             <td>@pgDetail.Landmark</td>
@@ -204,7 +204,7 @@
     //reference url
     var HostelsUrl = '@Url.Action("Hostels","Estate")';
     var AddApartmentUrl = '@Url.Action("AddHostel", "Estate")';
-    var GetApartmentByIDUrl = '@Url.Action("GetApartmentByID", "Estate")';
+    var GetHostelByIDUrl = '@Url.Action("GetHostelByID", "Estate")';
     var EditApartmentUrl = '@Url.Action("EditHostel", "Estate")';
     var DeleteApartmentUrl = '@Url.Action("DeleteApartment", "Estate")';
     var SaveBlocskUrl = '@Url.Action("SaveBlocks", "Estate")';

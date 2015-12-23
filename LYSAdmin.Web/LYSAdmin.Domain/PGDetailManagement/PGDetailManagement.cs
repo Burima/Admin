@@ -44,5 +44,51 @@ namespace LYSAdmin.Domain.PGDetailManagement
             pgDetailRepository.Insert(dbPGDetail);//Inserting new lead
             return unitOfWork.SaveChanges();//Saving the changes to DB
         }
+
+        public int UpdateHostel(LYSAdmin.Model.PGDetailsViewModel pgDetailsViewModel)
+        {
+            var dbPGDetail = (from p in pgDetailRepository.Where(x => x.PGDetailID == pgDetailsViewModel.PGDetail.PGDetailID)
+                               select p).FirstOrDefault();
+            if (dbPGDetail != null)
+            {
+                dbPGDetail.PGName = pgDetailsViewModel.PGDetail.PGName;
+                dbPGDetail.Landmark = pgDetailsViewModel.PGDetail.Landmark;
+                dbPGDetail.Description = pgDetailsViewModel.PGDetail.Description;
+                dbPGDetail.Latitude = pgDetailsViewModel.PGDetail.Latitude;
+                dbPGDetail.Longitude = pgDetailsViewModel.PGDetail.Longitude;
+                dbPGDetail.Address = pgDetailsViewModel.PGDetail.Address;
+                pgDetailRepository.Update(dbPGDetail);
+
+                return unitOfWork.SaveChanges();
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public LYSAdmin.Model.PGDetail GetHostelByID(int pgDetailID)
+        {
+
+            var pgDetail = (from p in pgDetailRepository.Where(x => x.PGDetailID == pgDetailID)
+                            select new LYSAdmin.Model.PGDetail
+                            {
+                                PGDetailID = p.PGDetailID,
+                                PGName = p.PGName,
+                                AreaID = p.AreaID,
+                                Description = p.Description,
+                                Address = p.Address,
+                                IsPg = p.IsPg,
+                                Landmark = p.Landmark,
+                                Latitude = p.Latitude,
+                                Longitude = p.Longitude,
+                                Status = p.Status,
+                                UserID = p.UserID,
+                                CreatedBy = p.CreatedBy
+                            }).FirstOrDefault();
+                                
+            return pgDetail;
+
+        }
     }
 }
