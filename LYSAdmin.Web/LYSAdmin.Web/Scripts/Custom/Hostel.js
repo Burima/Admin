@@ -36,7 +36,7 @@ $(document).ready(function () {
         $('#divHostels').hide();
         $('#divAddHostel').show();
         $('#divEditHostel').hide();
-        initialize();
+        initialize(false);
     });
 
     //Char Limit function
@@ -59,20 +59,32 @@ $(document).ready(function () {
 
 $('#txtAddress').blur(function () {
     if ($('#txtAddress').val() != "") {
-        alert("Hi2")
+        
         $('#txtAddress').css('border-color', '#e5e6e7');
         var address = $('#txtAddress').val();
         address = address + " " + Area + " " + City;
-        alert(address);
-        updateMarker(address);
+        updateMarker(address,false);
     }
     else {
         $('#txtAddress').css('border-color', 'red');
     }
 });
+
+$('#txtEditAddress').blur(function () {
+    if ($('#txtEditAddress').val() != "") {
+
+        $('#txtEditAddress').css('border-color', '#e5e6e7');
+        var address = $('#txtEditAddress').val();
+        address = address + " " + Area + " " + City;
+        updateMarker(address,true);
+    }
+    else {
+        $('#txtEditAddress').css('border-color', 'red');
+    }
+});
 var geocoder;
-var map;
-function updateMarker(address) {
+function updateMarker(address, bEdit) {
+    var map;
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -80,7 +92,11 @@ function updateMarker(address) {
                 zoom: 15,
             }
             var image = '../Images/marker-green.png';
-            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            if (bEdit) {
+                map = new google.maps.Map(document.getElementById('map-edit-canvas'), mapOptions);
+            } else {
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            }
             map.setCenter(results[0].geometry.location);
             Latitude = results[0].geometry.location.lat();
             Longitude = results[0].geometry.location.lng();
@@ -91,11 +107,17 @@ function updateMarker(address) {
                 draggable: true,
                 icon: image
             });
-
-            $('#spnLatitude').text(Latitude);
-            $('#spnLongitude').text(Longitude);
-            $('#hdnLatitude').val(Latitude);
-            $('#hdnLongitude').val(Longitude);
+            if (bEdit) {
+                $('#spnEditLatitude').text(Latitude);
+                $('#spnEditLongitude').text(Longitude);
+                $('#hdnEditLatitude').val(Latitude);
+                $('#hdnEditLongitude').val(Longitude);
+            } else {
+                $('#spnLatitude').text(Latitude);
+                $('#spnLongitude').text(Longitude);
+                $('#hdnLatitude').val(Latitude);
+                $('#hdnLongitude').val(Longitude);
+            }
             (function (marker) {
                 google.maps.event.addListener(marker, "dragend", function (e) {
                     var lat, lng, address;
@@ -104,10 +126,18 @@ function updateMarker(address) {
                             lat = marker.getPosition().lat();
                             lng = marker.getPosition().lng();
                             address = results[0].formatted_address;
-                            $('#spnLatitude').text(lat);
-                            $('#spnLongitude').text(lng);
-                            $('#hdnLatitude').val(lat);
-                            $('#hdnLongitude').val(lng);
+                            if (bEdit) {
+                                $('#spnEditLatitude').text(lat);
+                                $('#spnEditLongitude').text(lng);
+                                $('#hdnEditLatitude').val(lat);
+                                $('#hdnEditLongitude').val(lng);
+                            } else {
+                                $('#spnLatitude').text(lat);
+                                $('#spnLongitude').text(lng);
+                                $('#hdnLatitude').val(lat);
+                                $('#hdnLongitude').val(lng);
+                            }
+                           
                         }
                     });
                 });
@@ -125,8 +155,10 @@ function updateMarker(address) {
 }
 
 //initialize the map
-function initialize() {
+function initialize(bEdit) {
+   
     var address = Area + " " + City;
+    var map;
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -134,7 +166,12 @@ function initialize() {
                 zoom: 15,
             }
             var image = '/Images/marker-green.png';
-            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            if (bEdit) {
+                map = new google.maps.Map(document.getElementById('map-edit-canvas'), mapOptions);
+            }else{
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            }
+             
             map.setCenter(results[0].geometry.location);
             InitialLatitude = results[0].geometry.location.lat();
             InitialLongitude = results[0].geometry.location.lng();
@@ -152,10 +189,18 @@ function initialize() {
                     infowindow.open(map, marker);
                 });
             })(marker);
-            $('#spnLatitude').text(marker.getPosition().lat());
-            $('#spnLongitude').text(marker.getPosition().lng());
-            $('#hdnLatitude').val(marker.getPosition().lat());
-            $('#hdnLongitude').val(marker.getPosition().lng());
+
+            if (bEdit) {
+                $('#spnEditLatitude').text(marker.getPosition().lat());
+                $('#spnEditLongitude').text(marker.getPosition().lng());
+                $('#hdnEditLatitude').val(marker.getPosition().lat());
+                $('#hdnEditLongitude').val(marker.getPosition().lng());
+            } else {
+                $('#spnLatitude').text(marker.getPosition().lat());
+                $('#spnLongitude').text(marker.getPosition().lng());
+                $('#hdnLatitude').val(marker.getPosition().lat());
+                $('#hdnLongitude').val(marker.getPosition().lng());
+            }
         }
     });
 }
@@ -244,17 +289,17 @@ function fnSaveLocation() {
 
 //update apartment
 $('#btnEditHostel').click(function () {
-    if ($("#form-edit-apartment").valid() == true) {
-        showProgress(false, "Updating your Apartment...");
-        $('#form-edit-apartment').submit();
+    if ($('#form-edit-hostel').valid() == true) {
+        showProgress(false, "Updating your Hostel...");
+        $('#form-edit-hostel').submit();
     }
 });
 
 function fnGetHostelByID(element) {
     var trId = $(element).closest('tr').attr('id');
     var jmodel = { pgDetailID: JSON.stringify(trId) };
-    alert(trId);
-    showProgress(false, "Getting Apartment Details. Please wait...");
+   
+    showProgress(false, "Getting Hostel Details. Please wait...");
     $.ajax({
         url: GetHostelByIDUrl,
         type: 'POST',
@@ -274,6 +319,8 @@ function fnGetHostelByID(element) {
                 $('#txtEditLandmark').val(response.Landmark);
                 $('#hdnEditLatitude').val(response.Latitude);
                 $('#hdnEditLongitude').val(response.Longitude);
+
+                initialize(true);
                 //set char limit 
                // charlimit();
             } else {
