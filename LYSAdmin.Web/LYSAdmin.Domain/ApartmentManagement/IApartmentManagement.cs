@@ -10,12 +10,12 @@ namespace LYSAdmin.Domain.ApartmentManagement
     public interface IApartmentManagement
     {
         int AddApartment(Apartment apartmentViewModel);
-        IList<Model.Apartment> GetApartments(int OwnerID);
+        IList<Model.Apartment> GetApartmentsbyPGID(int PGDetailID);
 
         LYSAdmin.Model.Apartment GetApartmentByID(int apartmentID);
 
         int UpdateApartment(LYSAdmin.Model.ApartmentViewModel apartmentViewModel);
 
-        IList<Model.Apartment> GetApartmentsByAreaID(int OwnerID, int AreaID);
+        IList<Model.Apartment> GetApartmentsByAreaID(long OwnerID, int AreaID);
     }
 }

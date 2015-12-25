@@ -38,16 +38,9 @@ namespace LYSAdmin.Domain.HouseManagement
                                          {
                                              HouseID = p.HouseID,
                                              HouseName = p.HouseName,
-                                             /****commented due to identity or DB update****/
-                                             //Latitude=p.Latitude,
-                                             //Longitude=p.Longitude,
-                                             //Address = p.Address,                                            
-                                             //Landmark = p.Landmark,
                                              Gender = p.Gender,
                                              NoOfBalconnies = p.NoOfBalconnies,
                                              NoOfBathrooms = p.NoOfBathrooms,
-                                             /****commented due to identity or DB update****/
-                                             //Description = p.Description,
                                              LastUpdatedOn = p.LastUpdatedOn,
                                              HouseAmenities = (from g in p.HouseAmenities
                                                                select new LYSAdmin.Model.HouseAmenity
@@ -131,11 +124,6 @@ namespace LYSAdmin.Domain.HouseManagement
                          {
                              HouseID = p.HouseID,
                              HouseName = p.HouseName,
-                             /****commented due to identity or DB update****/
-                             //Latitude = p.Latitude,
-                             //Longitude = p.Longitude,
-                             //Address = p.Address,
-                             //Landmark = p.Landmark,
                              Gender = p.Gender,
                              NoOfBalconnies = p.NoOfBalconnies,
                              NoOfBathrooms = p.NoOfBathrooms,

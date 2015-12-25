@@ -153,7 +153,8 @@ namespace LYSAdmin.Web.Controllers
             if (Session["AreaID"] != null)
             {
                 ApartmentViewModel apartmentViewModel = new ApartmentViewModel();
-                apartmentViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(GetOwnerID(), Convert.ToInt32(Session["AreaID"]));
+                apartmentViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(
+                    LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, Convert.ToInt32(Session["AreaID"]));
                 
                 return View(apartmentViewModel);
             }

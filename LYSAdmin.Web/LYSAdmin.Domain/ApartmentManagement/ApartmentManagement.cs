@@ -14,19 +14,21 @@ namespace LYSAdmin.Domain.ApartmentManagement
         private IUnitOfWork unitOfWork = null;
         private IBaseRepository<Data.DBEntity.Apartment> apartmentRepository = null;
         private IBaseRepository<Data.DBEntity.Block> blockRepository = null;
+        private IBaseRepository<Data.DBEntity.PGDetail> pgDetailRepository = null;
         public ApartmentManagement()
         {
             unitOfWork = new UnitOfWork();
             apartmentRepository = new BaseRepository<Data.DBEntity.Apartment>(unitOfWork);//Initializing apartmentRepository through BaseRepository
             blockRepository = new BaseRepository<Data.DBEntity.Block>(unitOfWork);
-
+            pgDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
             Mapper.CreateMap<LYSAdmin.Model.Apartment, LYSAdmin.Data.DBEntity.Apartment>();
         }
 
-        public IList<Model.Apartment> GetApartments(int OwnerID)
+       /********non-used method***********/
+        public IList<Model.Apartment> GetApartmentsbyPGID(int PGDetailID)
         {
-            IList<Model.Apartment> apartments = (from p in apartmentRepository.Get(p => p.IsDeleted == false //&& p.OwnerID==OwnerID /****commented due to identity or DB update****/
-                                                     ,q=>q.OrderByDescending(p=>p.LastUpdatedOn))
+            IList<Model.Apartment> apartments = (from p in apartmentRepository.Get(p => p.IsDeleted == false && p.PGDetailID == PGDetailID
+                                                     ,q=>q.OrderByDescending(p=>p.LastUpdatedOn)) 
                                                  select new Model.Apartment
                                                         {
                                                             ApartmentID=p.ApartmentID,
@@ -68,10 +70,8 @@ namespace LYSAdmin.Domain.ApartmentManagement
                                  ApartmentName = p.ApartmentName,
                                  HouseNo = p.HouseNo,
                                  Description = p.Description,
-                                 // AreaID=p.AreaID,  /****commented due to identity or DB update****/
                                  CreatedOn=p.CreatedOn,
                                  CreatedBy=p.CreatedBy,
-                                 //OwnerID=p.OwnerID,  /****commented due to identity or DB update****/
                                  LastUpdatedOn = p.LastUpdatedOn,
                                  Blocks = (from g in p.Blocks
                                            select new LYSAdmin.Model.Block
@@ -110,10 +110,11 @@ namespace LYSAdmin.Domain.ApartmentManagement
         /// <param name="OwnerID">Apartments will be Owner specific</param>
         /// <param name="AreaID">Apartments will be Area specific</param>
         /// <returns>IList of apartment</returns>
-        public IList<Model.Apartment> GetApartmentsByAreaID(int OwnerID,int AreaID)
+        public IList<Model.Apartment> GetApartmentsByAreaID(long OwnerID,int AreaID)
         {
-            IList<Model.Apartment> apartments = (from p in apartmentRepository.Get(p => p.IsDeleted == false //&& p.OwnerID == OwnerID && p.AreaID==AreaID  /****commented due to identity or DB update****/ 
-                                                     , q => q.OrderByDescending(p => p.LastUpdatedOn))
+            IList<Model.Apartment> apartments = (from pg in pgDetailRepository.Get(pg => pg.UserID == OwnerID && pg.AreaID == AreaID)
+                                                 join p in apartmentRepository.Get(p => p.IsDeleted == false && p.IsDefault == false
+                                                        , q => q.OrderByDescending(p => p.LastUpdatedOn)) on pg.PGDetailID equals p.PGDetailID
                                                  select new Model.Apartment
                                                  {
                                                      ApartmentID = p.ApartmentID,
