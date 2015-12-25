@@ -73,6 +73,7 @@ namespace LYSAdmin.Domain.ApartmentManagement
                                  CreatedOn=p.CreatedOn,
                                  CreatedBy=p.CreatedBy,
                                  LastUpdatedOn = p.LastUpdatedOn,
+                                 PGDetailID = p.PGDetailID,
                                  Blocks = (from g in p.Blocks
                                            select new LYSAdmin.Model.Block
                                            {
@@ -94,6 +95,7 @@ namespace LYSAdmin.Domain.ApartmentManagement
                 dbApartment.HouseNo = apartmentViewModel.Apartment.HouseNo;
                 dbApartment.Description = apartmentViewModel.Apartment.Description;
                 dbApartment.LastUpdatedOn = DateTime.Now;
+                dbApartment.PGDetailID = apartmentViewModel.Apartment.PGDetailID;
                 apartmentRepository.Update(dbApartment);
 
                 return unitOfWork.SaveChanges();
@@ -110,9 +112,12 @@ namespace LYSAdmin.Domain.ApartmentManagement
         /// <param name="OwnerID">Apartments will be Owner specific</param>
         /// <param name="AreaID">Apartments will be Area specific</param>
         /// <returns>IList of apartment</returns>
-        public IList<Model.Apartment> GetApartmentsByAreaID(long OwnerID,int AreaID)
+        public ApartmentViewModel GetApartmentsByAreaID(long OwnerID,int AreaID)
         {
-            IList<Model.Apartment> apartments = (from pg in pgDetailRepository.Get(pg => pg.UserID == OwnerID && pg.AreaID == AreaID)
+            ApartmentViewModel apartmentViewModel = new ApartmentViewModel();
+
+            apartmentViewModel.PGDetails = new PGDetailManagement.PGDetailManagement().GetPGsByOwnerIDandAreaID(OwnerID, AreaID);
+            apartmentViewModel.Apartments = (from pg in pgDetailRepository.Get(pg => pg.UserID == OwnerID && pg.AreaID == AreaID)
                                                  join p in apartmentRepository.Get(p => p.IsDeleted == false && p.IsDefault == false
                                                         , q => q.OrderByDescending(p => p.LastUpdatedOn)) on pg.PGDetailID equals p.PGDetailID
                                                  select new Model.Apartment
@@ -122,6 +127,12 @@ namespace LYSAdmin.Domain.ApartmentManagement
                                                      HouseNo = p.HouseNo,
                                                      Description = p.Description,
                                                      LastUpdatedOn = p.LastUpdatedOn,
+                                                     PGDetail = (from h in pgDetailRepository.Get(h => h.PGDetailID == p.PGDetailID)
+                                                                 select new Model.PGDetail
+                                                                 {
+                                                                     PGName = h.PGName
+                                                                 }).FirstOrDefault(),
+                                                     
                                                      Blocks = (from g in p.Blocks
                                                                select new LYSAdmin.Model.Block
                                                                {
@@ -131,7 +142,7 @@ namespace LYSAdmin.Domain.ApartmentManagement
                                                  }).ToList();
 
 
-            return apartments;
+            return apartmentViewModel;
         }
     }
 }

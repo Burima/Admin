@@ -13,6 +13,8 @@ namespace LYSAdmin.Model
     {
         public Apartment Apartment { get; set; }
         public IList<Apartment> Apartments { get; set; }
+
+        public IList<PGDetail> PGDetails { get; set; } 
         
     }
 

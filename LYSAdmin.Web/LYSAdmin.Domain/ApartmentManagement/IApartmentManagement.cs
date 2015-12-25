@@ -16,6 +16,6 @@ namespace LYSAdmin.Domain.ApartmentManagement
 
         int UpdateApartment(LYSAdmin.Model.ApartmentViewModel apartmentViewModel);
 
-        IList<Model.Apartment> GetApartmentsByAreaID(long OwnerID, int AreaID);
+        ApartmentViewModel GetApartmentsByAreaID(long OwnerID, int AreaID);
     }
 }

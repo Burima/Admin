@@ -109,7 +109,8 @@
                         <table class="table table-striped table-bordered table-hover dataTables-apartments">
                             <thead>
                                 <tr>
-                                    <th>Apartment Name</th>
+                                   <th>Apartment Name</th>
+                                    <th>PG/Hostel Name</th>
                                     <th>House No</th>
                                     <th>Description</th>
                                     <th>Add Blocks</th>
@@ -123,6 +124,7 @@
                                     {
                                         <tr class="gradeX" id="@apartment.ApartmentID">
                                             <td><a onclick="fnGetApartmentByID(this)" style="cursor:pointer;">@apartment.ApartmentName</a></td>
+                                            <td>@apartment.PGDetail.PGName</td>
                                             <td>@apartment.HouseNo</td>
                                             <td>@apartment.Description</td>
                                             <td>
@@ -137,6 +139,7 @@
                             <tfoot>
                                 <tr>
                                     <th>Apartment Name</th>
+                                    <th>PG/Hostel Name</th>
                                     <th>House No</th>
                                     <th>Description</th>
                                     <th>Add Block</th>

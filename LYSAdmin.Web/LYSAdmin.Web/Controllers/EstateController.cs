@@ -152,8 +152,7 @@ namespace LYSAdmin.Web.Controllers
         {
             if (Session["AreaID"] != null)
             {
-                ApartmentViewModel apartmentViewModel = new ApartmentViewModel();
-                apartmentViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(
+                ApartmentViewModel apartmentViewModel = apartmentManagement.GetApartmentsByAreaID(
                     LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, Convert.ToInt32(Session["AreaID"]));
                 
                 return View(apartmentViewModel);
@@ -181,12 +180,10 @@ namespace LYSAdmin.Web.Controllers
                 apartmentViewModel.Apartment.CreatedOn = DateTime.Now;
                 apartmentViewModel.Apartment.LastUpdatedOn = DateTime.Now;
                 apartmentViewModel.Apartment.IsDeleted = false;
-                //apartmentViewModel.Apartment.CreatedBy = User.Id; /****commented due to identity or DB update****/
-                //apartmentViewModel.Apartment.OwnerID = User.RoleID <= 3 ? User.UserID : User.ManagerID; /****commented due to identity or DB update****/
-                //Session["AreaID"] = 1;//test data
+                apartmentViewModel.Apartment.CreatedBy = User.Id; 
                 if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
                 {
-                    //apartmentViewModel.Apartment.AreaID = Convert.ToInt32(Session["AreaID"]);/****commented due to identity or DB update****/
+                   
                     int successCount = apartmentManagement.AddApartment(apartmentViewModel.Apartment);
                     if (successCount > 0)
                     {

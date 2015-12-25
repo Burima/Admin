@@ -264,6 +264,8 @@ function fnGetApartmentByID(element) {
                 $('#txtEditApartmentName').val(response.ApartmentName);
                 $('#txtEditHouseNo').val(response.HouseNo);
                 $('#txtEditDescription').val(response.Description);
+                $('#selectPG').val(response.PGDetailID);
+                
                 //$('#hdnEditAreaID').val(response.AreaID);
                 //$('#hdnEditCreatedOn').val(createdOn);
                 //$('#hdnEditCreatedBy').val(response.CreatedBy);

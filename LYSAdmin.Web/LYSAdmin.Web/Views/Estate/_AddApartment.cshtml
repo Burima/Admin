@@ -1,4 +1,5 @@
 ﻿@model LYSAdmin.Model.ApartmentViewModel
+@using Newtonsoft.Json;
 
 <div class="col-sm-9">
     <div class="row">
@@ -14,6 +15,19 @@
             @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "form-add-an-apartment", style = "min-height:420px", autocomplete = "off" }))
             {
                 <div class="saving-progress hidden"><h4>Saved!</h4></div>
+                <div class="form-group">
+                    <label>PG/Hostel Name</label>
+                    <select name="Apartment.PGDetailID" class="form-control">
+                        <option value="" disabled selected>Select PG/Hostel</option>
+                        @foreach (var pgDetail in Model.PGDetails.OrderBy(m => m.PGDetailID))
+                        {
+
+                            <option apartments="@JsonConvert.SerializeObject(pgDetail.Apartments)" value="@pgDetail.PGDetailID">@pgDetail.PGName</option>
+                        }
+
+                    </select>
+
+                </div>
                 <div class="form-group">
                     <label>Apartment Name</label>
                     <input type="text" id="txtApartmentName" placeholder="Enter apartment name" class="form-control input-large required charAlone" maxlength="50" tabindex="1" name="Apartment.ApartmentName" autocomplete="off" autofocus="autofocus">
