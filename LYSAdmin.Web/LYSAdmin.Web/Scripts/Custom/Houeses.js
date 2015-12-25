@@ -8,13 +8,13 @@ var InitialLatitude, InitialLongitude;
 eval("var areaList = " + Areas);
 
 $(document).ready(function () {
-    btnNextBasicInformation
-    $('#addNewPG').click(function () {
-        fnEnableNewPGInsertion();
-    });
-    $('#showAllPGs').click(function () {
-        fnEnableShowingAllPGs();
-    });
+   
+    //$('#addNewPG').click(function () {
+    //    fnEnableNewPGInsertion();
+    //});
+    //$('#showAllPGs').click(function () {
+    //    fnEnableShowingAllPGs();
+    //});
     //if area is not selected show modal
     //for select City and fnOpenBasicAmenities()
     if (AreaID == 0) {
@@ -169,104 +169,106 @@ $(document).ready(function () {
     $(".locality").click(function (e) {
         e.preventDefault();
     });
-    var geocoder;
-    var map;
-    var contentString = '<div id="form-group">'+
-        '<div id="row">' +
-        '<div class="col-md-8"><h4>Is this your final selected location?</h4></div>'+
-        '<div class="col-md-4"><button type="button" id= "btnLocationConfirmed" onclick=fnOpenBasicAmenities() class="btn btn-primary" >Yes</button></div>' +
-      '</div>'+
-        '</div>';
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-    function updateMarker(address) {
-        geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ 'address': address }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                var mapOptions = {
-                    zoom: 15,
-                }
-                var image = '/Images/marker-green.png';
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                map.setCenter(results[0].geometry.location);
-                Latitude = results[0].geometry.location.lat();
-                Longitude = results[0].geometry.location.lng();
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location,
-                    animation: google.maps.Animation.DROP,
-                    draggable: true,
-                    icon: image
-                });
+    //var geocoder;
+    //var map;
+    //var contentString = '<div id="form-group">'+
+    //    '<div id="row">' +
+    //    '<div class="col-md-8"><h4>Is this your final selected location?</h4></div>'+
+    //    '<div class="col-md-4"><button type="button" id= "btnLocationConfirmed" onclick=fnOpenBasicAmenities() class="btn btn-primary" >Yes</button></div>' +
+    //  '</div>'+
+    //    '</div>';
+    //var infowindow = new google.maps.InfoWindow({
+    //    content: contentString
+    //});
+    //function updateMarker(address) {
+    //    geocoder = new google.maps.Geocoder();
+    //    geocoder.geocode({ 'address': address }, function (results, status) {
+    //        if (status == google.maps.GeocoderStatus.OK) {
+    //            var mapOptions = {
+    //                zoom: 15,
+    //            }
+    //            var image = '/Images/marker-green.png';
+    //            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    //            map.setCenter(results[0].geometry.location);
+    //            Latitude = results[0].geometry.location.lat();
+    //            Longitude = results[0].geometry.location.lng();
+    //            var marker = new google.maps.Marker({
+    //                map: map,
+    //                position: results[0].geometry.location,
+    //                animation: google.maps.Animation.DROP,
+    //                draggable: true,
+    //                icon: image
+    //            });
                 
-                $('#spnLatitude').text(Latitude);
-                $('#spnLongitude').text(Longitude);
-                $('#hdnLatitude').val(Latitude);
-                $('#hdnLongitude').val(Longitude);
-                (function (marker) {
-                    google.maps.event.addListener(marker, "dragend", function (e) {
-                        var lat, lng, address;
-                        geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                lat = marker.getPosition().lat();
-                                lng = marker.getPosition().lng();
-                                address = results[0].formatted_address;
-                                $('#spnLatitude').text(lat);
-                                $('#spnLongitude').text(lng);
-                                $('#hdnLatitude').val(lat);
-                                $('#hdnLongitude').val(lng);
-                            }
-                        });
-                    });
-                    google.maps.event.addListener(marker, "click", function (e) {
-                        infowindow.open(map,marker);
-                    });
-                })(marker);
+    //            $('#spnLatitude').text(Latitude);
+    //            $('#spnLongitude').text(Longitude);
+    //            $('#hdnLatitude').val(Latitude);
+    //            $('#hdnLongitude').val(Longitude);
+    //            (function (marker) {
+    //                google.maps.event.addListener(marker, "dragend", function (e) {
+    //                    var lat, lng, address;
+    //                    geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+    //                        if (status == google.maps.GeocoderStatus.OK) {
+    //                            lat = marker.getPosition().lat();
+    //                            lng = marker.getPosition().lng();
+    //                            address = results[0].formatted_address;
+    //                            $('#spnLatitude').text(lat);
+    //                            $('#spnLongitude').text(lng);
+    //                            $('#hdnLatitude').val(lat);
+    //                            $('#hdnLongitude').val(lng);
+    //                        }
+    //                    });
+    //                });
+    //                google.maps.event.addListener(marker, "click", function (e) {
+    //                    infowindow.open(map,marker);
+    //                });
+    //            })(marker);
 
-            } else {
-                alert('Geocode was not successful for the following reason: ' + status);
-            }
-        });
+    //        } else {
+    //            alert('Geocode was not successful for the following reason: ' + status);
+    //        }
+    //    });
 
 
-    }
+    //}
     //initialize the map
-    function initialize() {
-        //fnUpdateLocation();
-        var address = Area + " " + City;
-        geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ 'address': address }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                var mapOptions = {
-                    zoom: 15,
-                }
-                var image = '/Images/marker-green.png';
-                var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                map.setCenter(results[0].geometry.location);
-                InitialLatitude = results[0].geometry.location.lat();
-                InitialLongitude = results[0].geometry.location.lng();
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location,
-                    animation: google.maps.Animation.DROP,
-                    draggable: false,
-                    icon: image
-                });
+    //function initialize() {
+    //    //fnUpdateLocation();
+    //    var address = Area + " " + City;
+    //    geocoder = new google.maps.Geocoder();
+    //    geocoder.geocode({ 'address': address }, function (results, status) {
+    //        if (status == google.maps.GeocoderStatus.OK) {
+    //            var mapOptions = {
+    //                zoom: 15,
+    //            }
+    //            var image = '/Images/marker-green.png';
+    //            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    //            map.setCenter(results[0].geometry.location);
+    //            InitialLatitude = results[0].geometry.location.lat();
+    //            InitialLongitude = results[0].geometry.location.lng();
+    //            var marker = new google.maps.Marker({
+    //                map: map,
+    //                position: results[0].geometry.location,
+    //                animation: google.maps.Animation.DROP,
+    //                draggable: false,
+    //                icon: image
+    //            });
                
-                (function (marker) {
-                    google.maps.event.addListener(marker, 'click', function () {
+    //            (function (marker) {
+    //                google.maps.event.addListener(marker, 'click', function () {
                       
-                        infowindow.open(map, marker);
-                    });
-                })(marker);
-                $('#spnLatitude').text(marker.getPosition().lat());
-                $('#spnLongitude').text(marker.getPosition().lng());
-                $('#hdnLatitude').val(marker.getPosition().lat());
-                $('#hdnLongitude').val(marker.getPosition().lng());
-            }
-        });
-    }
+    //                    infowindow.open(map, marker);
+    //                });
+    //            })(marker);
+    //            $('#spnLatitude').text(marker.getPosition().lat());
+    //            $('#spnLongitude').text(marker.getPosition().lng());
+    //            $('#hdnLatitude').val(marker.getPosition().lat());
+    //            $('#hdnLongitude').val(marker.getPosition().lng());
+    //        }
+    //    });
+    //}
+
+    fnGetAllPGs();
 
 });
 
@@ -366,10 +368,7 @@ function fnSaveLocation() {
 }
 
 //on Selection of ISPG radio button ddlSelectPG txtPGName
-$('input[name=IsPGorHostel]').click(function () {
-
-    if ($('input:radio[name=IsPGorHostel]:checked').val()==1) {
-        $('#lblSelectPG').removeClass('hidden');
+function fnGetAllPGs() {
         //get all PG in the same Area under same owner
         showProgress(false, "Getting PGs. Please wait...");
         $.ajax({
@@ -380,7 +379,7 @@ $('input[name=IsPGorHostel]').click(function () {
                 var pgList = $.parseJSON(response);
                 
                 if (pgList.length > 0) {
-                    fnEnableShowingAllPGs();
+                   
                     $('#ddlSelectPG').empty();//Restart the Areas in a City
                     $('#ddlSelectPG').append(
                                   $('<option value="0" disabled selected></option>').html("--Select PG--")
@@ -389,7 +388,7 @@ $('input[name=IsPGorHostel]').click(function () {
                         $('#ddlSelectPG').append($('<option></option>').val(pg.PGDetailID).html(pg.PGName));
                     });
                 } else {
-                    fnEnableNewPGInsertion();
+                    fnShowModalNewPGInsertion();
                 }
                 hideProgress();
             },
@@ -398,34 +397,28 @@ $('input[name=IsPGorHostel]').click(function () {
                 hideProgress();
             }
         });
-    } else {
-        $('#addNewPG').addClass('hidden');//make add new PG icon invisible
-        $('#showAllPGs').addClass('hidden');
-        $('#lblSelectPG').addClass('hidden');
-        $('#ddlSelectPG').addClass('hidden');
-        $('#txtPGName').addClass('hidden');
-    }
-});
+   
+}
 
 //this funtion enables new PG insetion inputbox and hides the selectPG ddl
-function fnEnableNewPGInsertion() {
-    $('#addNewPG').addClass('hidden');//make add new PG icon invisible
-    $('#showAllPGs').removeClass('hidden');
-    $("#ddlSelectPG").val("0");//reset seleted value 
-    $('#lblSelectPG').text("Enter new PG or Hostel Name");//customize the text
-    $('#ddlSelectPG').addClass('hidden');//make ddl selectPG invisible
-    $('#txtPGName').removeClass('hidden');//make the input box for new pg visible    
+function fnShowModalNewPGInsertion() {
+    //$('#addNewPG').addClass('hidden');//make add new PG icon invisible
+    //$('#showAllPGs').removeClass('hidden');
+    //$("#ddlSelectPG").val("0");//reset seleted value 
+    //$('#lblSelectPG').text("Enter new PG or Hostel Name");//customize the text
+    //$('#ddlSelectPG').addClass('hidden');//make ddl selectPG invisible
+    //$('#txtPGName').removeClass('hidden');//make the input box for new pg visible    
 }
 
-//this funtion enables selectPG ddl  and hides the new PG insetion inputbox
-function fnEnableShowingAllPGs() {   
-    $('#addNewPG').removeClass('hidden');//make add new PG icon visible
-    $('#showAllPGs').addClass('hidden');
-    $('#lblSelectPG').text("Select PG or Hostel in your Saved Area");//set label text
-    $('#ddlSelectPG').removeClass('hidden');//make ddlSelectPG visible if PG is found
-    $('#txtPGName').val("");//make new PGName empty (if we are selecting the pg PGName should be empty)
-    $('#txtPGName').addClass('hidden');//hide txtPGName
-}
+////this funtion enables selectPG ddl  and hides the new PG insetion inputbox
+//function fnEnableShowingAllPGs() {   
+//    $('#addNewPG').removeClass('hidden');//make add new PG icon visible
+//    $('#showAllPGs').addClass('hidden');
+//    $('#lblSelectPG').text("Select PG or Hostel in your Saved Area");//set label text
+//    $('#ddlSelectPG').removeClass('hidden');//make ddlSelectPG visible if PG is found
+//    $('#txtPGName').val("");//make new PGName empty (if we are selecting the pg PGName should be empty)
+//    $('#txtPGName').addClass('hidden');//hide txtPGName
+//}
 
 //this function will validate all required field value
 function fnValidateAllRequiredfield() {

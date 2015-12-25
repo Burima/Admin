@@ -268,7 +268,7 @@ namespace LYSAdmin.Web.Controllers
         [HttpGet]
         public JsonResult GetPGsByOwnerIDandAreaID()
         {
-            houseViewModel.PGDetails = pgDetailManagement.GetPGsByOwnerIDandAreaID(GetOwnerID(), GetAreaID());
+            houseViewModel.PGDetails = pgDetailManagement.GetPGsByOwnerIDandAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
 
             return Json(JsonConvert.SerializeObject(houseViewModel.PGDetails), JsonRequestBehavior.AllowGet);
         }
@@ -277,7 +277,7 @@ namespace LYSAdmin.Web.Controllers
         [HttpGet]
         public ActionResult Houses()
         {
-            houseViewModel.Apartments = apartmentManagement.GetApartmentsByAreaID(GetOwnerID(), GetAreaID());
+            houseViewModel.apartmentViewModel = apartmentManagement.GetApartmentsByAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
             return View("Houses", houseViewModel);
 
         }
