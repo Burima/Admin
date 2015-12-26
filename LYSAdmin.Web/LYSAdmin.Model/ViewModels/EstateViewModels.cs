@@ -23,7 +23,6 @@ namespace LYSAdmin.Model
         public House House { get; set; }
         public HouseAmenity HouseAmenity { get; set; }               
         public IList<House> Houses { get; set; }
-        public ApartmentViewModel apartmentViewModel { get; set; }
         public IList<Room> Rooms { get; set; }
         public IList<PGDetail> PGDetails { get; set; }
         public int CityID { get; set; }

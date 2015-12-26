@@ -33,7 +33,18 @@ namespace LYSAdmin.Domain.PGDetailManagement
                                             Latitude = p.Latitude,
                                             Longitude = p.Longitude,
                                             Address = p.Address,
-                                            Description = p.Description
+                                            Description = p.Description,
+                                            Apartments = (from a in p.Apartments
+                                                              select new LYSAdmin.Model.Apartment{
+                                                                  ApartmentID = a.ApartmentID,
+                                                                  ApartmentName = a.ApartmentName,
+                                                                  Blocks = (from b in a.Blocks
+                                                                            select new LYSAdmin.Model.Block
+                                                                            {
+                                                                                BlockID = b.BlockID,
+                                                                                BlockName = b.BlockName
+                                                                            }).ToList()
+                                                              }).ToList(),
                                          }).ToList();
             return allPGs;
         }

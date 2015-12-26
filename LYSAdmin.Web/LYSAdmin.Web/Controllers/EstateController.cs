@@ -277,7 +277,8 @@ namespace LYSAdmin.Web.Controllers
         [HttpGet]
         public ActionResult Houses()
         {
-            houseViewModel.apartmentViewModel = apartmentManagement.GetApartmentsByAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
+            //houseViewModel.apartmentViewModel = apartmentManagement.GetApartmentsByAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
+            houseViewModel.PGDetails = pgDetailManagement.GetPGsByOwnerIDandAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
             return View("Houses", houseViewModel);
 
         }
