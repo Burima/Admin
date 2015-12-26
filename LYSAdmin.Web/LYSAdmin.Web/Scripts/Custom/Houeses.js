@@ -3,19 +3,13 @@ var City = cityname;
 var Area = areaname;
 var Latitude, Longitude;
 var InitialLatitude, InitialLongitude;
-
+var blocks;
 //converting all the areas in json list
 eval("var areaList = " + Areas);
 
 $(document).ready(function () {
    
-    //$('#addNewPG').click(function () {
-    //    fnEnableNewPGInsertion();
-    //});
-    //$('#showAllPGs').click(function () {
-    //    fnEnableShowingAllPGs();
-    //});
-    //if area is not selected show modal
+     //if area is not selected show modal
     //for select City and fnOpenBasicAmenities()
     if (AreaID == 0) {
         fnChangeLocation();
@@ -55,6 +49,39 @@ $(document).ready(function () {
         } else {
             $('#spnNoBlockFound').removeClass("hidden");
             $('#ddlBlocks').addClass('hidden');
+        }
+    });
+
+    //modify for PGDetail
+    $("select[name='PGDetailID']").change(function () {
+        //visible div block
+        $('#divApartments').removeClass('hidden');
+
+        var apartments = $(this).find(':selected').attr('apartments');
+        eval("var apartmentList = " + apartments);
+
+        /* number of items in features array
+           by default it will contain [] so length will two if there is no blocks
+        */
+        if (Object.keys(apartments).length > 2) {
+            //make no block found invisible
+            $('#spnNoApartmentFound').addClass("hidden");
+            $('#ddlApartments').removeClass('hidden');
+            //add all the block to the ddl for the selected apartment
+            //default option
+            $('#ddlApartments').empty();
+            $('#ddlApartments').append(
+                   $('<option value="" disabled selected ></option>').html("--Select Apartment--")
+               );
+            $.each(apartmentList, function (i, apartment) {
+                blocks = 
+                $('#ddlApartments').append(
+                $('<option></option>').val(apartment.ApartmentID).html(apartment.ApartmentName)
+               );
+            });
+        } else {
+            $('#spnNoApartmentFound').removeClass("hidden");
+            $('#ddlApartments').addClass('hidden');
         }
     });
 
@@ -268,7 +295,7 @@ $(document).ready(function () {
     //    });
     //}
 
-    fnGetAllPGs();
+    //fnGetAllPGs();
 
 });
 
