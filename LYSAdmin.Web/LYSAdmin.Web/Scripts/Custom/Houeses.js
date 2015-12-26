@@ -27,7 +27,7 @@ $(document).ready(function () {
 
         var blocks = $(this).find(':selected').attr('blocks');
         eval("var blockList = " + blocks);
-
+       
         /* number of items in features array
            by default it will contain [] so length will two if there is no blocks
         */
@@ -58,8 +58,9 @@ $(document).ready(function () {
         $('#divApartments').removeClass('hidden');
 
         var apartments = $(this).find(':selected').attr('apartments');
+        //apartments=JSON.parse(apartments)
         eval("var apartmentList = " + apartments);
-
+        //alert(apartments.jsonApartments.length);
         /* number of items in features array
            by default it will contain [] so length will two if there is no blocks
         */
@@ -73,10 +74,11 @@ $(document).ready(function () {
             $('#ddlApartments').append(
                    $('<option value="" disabled selected ></option>').html("--Select Apartment--")
                );
+            
             $.each(apartmentList, function (i, apartment) {
-                blocks = 
+                alert(JSON.stringify(apartment));
                 $('#ddlApartments').append(
-                $('<option></option>').val(apartment.ApartmentID).html(apartment.ApartmentName)
+                $('<option></option>').val(apartment.ApartmentID).html(apartment.ApartmentName).attr('blocks', JSON.stringify(apartment.Blocks))
                );
             });
         } else {
