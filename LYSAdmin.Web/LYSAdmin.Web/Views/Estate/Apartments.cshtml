@@ -118,21 +118,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Model != null && Model.Apartments != null && Model.Apartments.Count > 0)
+                                @if (Model != null && Model.PGDetails != null && Model.PGDetails.Count > 0)
                                 {
-                                    foreach (var apartment in Model.Apartments)
-                                    {
-                                        <tr class="gradeX" id="@apartment.ApartmentID">
-                                            <td><a onclick="fnGetApartmentByID(this)" style="cursor:pointer;">@apartment.ApartmentName</a></td>
-                                            <td>@apartment.PGDetail.PGName</td>
-                                            <td>@apartment.HouseNo</td>
-                                            <td>@apartment.Description</td>
-                                            <td>
-                                                <input type="button" class="btnShowModalBlocks" value="Add Blocks">
-                                                <input type="hidden" class="hdnBlocks" value="@JsonConvert.SerializeObject(apartment.Blocks)">
-                                            </td>
-                                            <td><input type="button" class="btnDeleteApartment" value="Delete"></td>
-                                        </tr>
+                                    foreach (var pgDetails in Model.PGDetails) {
+                                        if (pgDetails.Apartments != null && pgDetails.Apartments.Count > 0)
+                                        { 
+                                            foreach (var apartment in pgDetails.Apartments)
+                                            {
+                                                <tr class="gradeX" id="@apartment.ApartmentID">
+                                                    <td><a onclick="fnGetApartmentByID(this)" style="cursor:pointer;">@apartment.ApartmentName</a></td>
+                                                    <td>@apartment.PGDetail.PGName</td>
+                                                    <td>@apartment.HouseNo</td>
+                                                    <td>@apartment.Description</td>
+                                                    <td>
+                                                        <input type="button" class="btnShowModalBlocks" value="Add Blocks">
+                                                        <input type="hidden" class="hdnBlocks" value="@JsonConvert.SerializeObject(apartment.Blocks)">
+                                                    </td>
+                                                    <td><input type="button" class="btnDeleteApartment" value="Delete"></td>
+                                                </tr>
+                                            }
+                                        }
                                     }
                                 }
                             </tbody>

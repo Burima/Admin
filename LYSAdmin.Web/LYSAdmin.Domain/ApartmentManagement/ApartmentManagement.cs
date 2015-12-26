@@ -116,31 +116,64 @@ namespace LYSAdmin.Domain.ApartmentManagement
         {
             ApartmentViewModel apartmentViewModel = new ApartmentViewModel();
 
-            apartmentViewModel.PGDetails = new PGDetailManagement.PGDetailManagement().GetPGsByOwnerIDandAreaID(OwnerID, AreaID);
-            apartmentViewModel.Apartments = (from pg in pgDetailRepository.Get(pg => pg.UserID == OwnerID && pg.AreaID == AreaID)
-                                                 join p in apartmentRepository.Get(p => p.IsDeleted == false && p.IsDefault == false
-                                                        , q => q.OrderByDescending(p => p.LastUpdatedOn)) on pg.PGDetailID equals p.PGDetailID
-                                                 select new Model.Apartment
-                                                 {
-                                                     ApartmentID = p.ApartmentID,
-                                                     ApartmentName = p.ApartmentName,
-                                                     HouseNo = p.HouseNo,
-                                                     Description = p.Description,
-                                                     LastUpdatedOn = p.LastUpdatedOn,
-                                                     PGDetail = (from h in pgDetailRepository.Get(h => h.PGDetailID == p.PGDetailID)
-                                                                 select new Model.PGDetail
-                                                                 {
-                                                                     PGName = h.PGName
-                                                                 }).FirstOrDefault(),
+            //apartmentViewModel.PGDetails = new PGDetailManagement.PGDetailManagement().GetPGsByOwnerIDandAreaID(OwnerID, AreaID);
+            //apartmentViewModel.Apartments = (from pg in pgDetailRepository.Get(pg => pg.UserID == OwnerID && pg.AreaID == AreaID)
+            //                                     join p in apartmentRepository.Get(p => p.IsDeleted == false && p.IsDefault == false
+            //                                            , q => q.OrderByDescending(p => p.LastUpdatedOn)) on pg.PGDetailID equals p.PGDetailID
+            //                                     select new Model.Apartment
+            //                                     {
+            //                                         ApartmentID = p.ApartmentID,
+            //                                         ApartmentName = p.ApartmentName,
+            //                                         HouseNo = p.HouseNo,
+            //                                         Description = p.Description,
+            //                                         LastUpdatedOn = p.LastUpdatedOn,
+            //                                         PGDetail = (from h in pgDetailRepository.Get(h => h.PGDetailID == p.PGDetailID)
+            //                                                     select new Model.PGDetail
+            //                                                     {
+            //                                                         PGName = h.PGName
+            //                                                     }).FirstOrDefault(),
                                                      
-                                                     Blocks = (from g in p.Blocks
-                                                               select new LYSAdmin.Model.Block
-                                                               {
-                                                                   BlockID = g.BlockID,
-                                                                   BlockName = g.BlockName
-                                                               }).ToList()
-                                                 }).ToList();
+            //                                         Blocks = (from g in p.Blocks
+            //                                                   select new LYSAdmin.Model.Block
+            //                                                   {
+            //                                                       BlockID = g.BlockID,
+            //                                                       BlockName = g.BlockName
+            //                                                   }).ToList()
+            //                                     }).ToList();
+            apartmentViewModel.PGDetails = (from p in pgDetailRepository.Get(p => p.UserID == OwnerID && p.AreaID == AreaID, q => q.OrderByDescending(p => p.PGName))
+                                             select new Model.PGDetail
+                                             {
+                                                 PGDetailID = p.PGDetailID,
+                                                 PGName = p.PGName,
+                                                 AreaID = p.AreaID,
+                                                 UserID = p.UserID,
+                                                 Landmark = p.Landmark,
+                                                 Latitude = p.Latitude,
+                                                 Longitude = p.Longitude,
+                                                 Address = p.Address,
+                                                 Description = p.Description,
 
+                                                 Apartments = (from a in p.Apartments
+                                                               select new LYSAdmin.Model.Apartment
+                                                               {
+                                                                   ApartmentID = a.ApartmentID,
+                                                                   ApartmentName = a.ApartmentName,
+                                                                   HouseNo = a.HouseNo,
+                                                                   Description = a.Description,
+                                                                   LastUpdatedOn = a.LastUpdatedOn,
+                                                                   PGDetail = (from h in pgDetailRepository.Get(h => h.PGDetailID == p.PGDetailID)
+                                                                     select new Model.PGDetail
+                                                                     {
+                                                                        PGName = h.PGName
+                                                                    }).FirstOrDefault(),
+                                                                   Blocks = (from b in a.Blocks
+                                                                             select new LYSAdmin.Model.Block
+                                                                             {
+                                                                                 BlockID = b.BlockID,
+                                                                                 BlockName = b.BlockName
+                                                                             }).ToList()
+                                                               }).ToList(),
+                                             }).ToList();
 
             return apartmentViewModel;
         }

@@ -25,8 +25,7 @@
                                     <label id="lblSelectPG">Select PG or Hostel in your Saved Area</label>
                                     @if (Model.PGDetails.Count > 0)
                                         {
-                                            <label>Apartment</label>
-                                            <select name="PGDetailID" class="form-control">
+                                                <select name="PGDetailID" class="form-control">
                                                 <option value="" disabled selected>Select PG/Hostel</option>
                                                 @foreach (var pgDetail in Model.PGDetails.OrderBy(m => m.PGDetailID))
                                                 {
@@ -44,24 +43,7 @@
                                     @*<input type="text" id="txtBlock" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
                                     <span id="spnNoApartmentFound" class="hidden"><br />You do not have any Apartment for this PG/Hostel. Click <a>here</a> to add Apartment</span>
                                     <select id="ddlApartments" name="ApartmentID" class="form-control"></select>                                  
-                                    @*@if (Model.apartmentViewModel.Apartments.Count > 0)
-                                    {
-                                        <label>Apartment</label>
-                                        <select name="ApartmentID" class="form-control">
-                                            <option value="" disabled selected>Select Apartment</option>
-                                            @foreach (var apartment in Model.apartmentViewModel.Apartments.OrderBy(m => m.ApartmentID))
-                                            {
-
-                                                <option blocks="@JsonConvert.SerializeObject(apartment.Blocks)" value="@apartment.ApartmentID">@apartment.ApartmentName</option>
-                                            }
-
-                                        </select>
-                                    }*@
-                                    @*else
-                                    {
-                                        <h4>No Aparment present in this Area. Click <a href='@Url.Action("Apartments", "Estate", new {Operation=2 })'>here</a> to Add New.</h4>
-                                    }*@
-                                </div>
+                                  </div>
                                 <div id="divBlocks" class="form-group hidden">
                                     <label>Block</label>
                                     @*<input type="text" id="txtBlock" placeholder="Enter house name" class="form-control input-large" maxlength="50" tabindex="1" required name="House.HouseName">*@
@@ -70,22 +52,22 @@
                                 </div>
                                 <div class="form-group">
                                     <label>House Name</label>
-                                    <input type="text" id="txtHouseName" placeholder="Enter house name" class="form-control" maxlength="50" tabindex="1" required name="House.HouseName">
+                                    <input type="text" id="txtHouseName" placeholder="Enter house name" class="form-control" maxlength="50" tabindex="1" required name="House.HouseName" readonly>
                                     <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Display Name</label>
-                                    <input type="text" id="txtDisplayName" placeholder="Enter display name" class="form-control" maxlength="50" tabindex="1" required name="House.DisplayName">
+                                    <input type="text" id="txtDisplayName" placeholder="Enter display name" class="form-control" maxlength="50" tabindex="1" required name="House.DisplayName" readonly>
                                     <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control" maxlength="500" tabindex="3" name="House.Description"></textarea>
+                                    <textarea rows="4" id="txtDescription" placeholder="Description" class="form-control" maxlength="500" tabindex="3" name="House.Description" readonly></textarea>
                                     <div class="row-space-top-1 max-character-entered"><span class="span-char-left">500</span> characters left</div>
                                 </div>
                                 <div class="row-padding-top-5">
                                     <div class="pull-right">
-                                        <button id="btnNextBasicInformation" class="btn btn-primary" type="button" tabindex="5">Next</button>
+                                        <button id="btnNextBasicInformation" class="btn btn-primary" type="button" tabindex="5" disabled>Next</button>
                                     </div>
                                 </div>
                             </div>

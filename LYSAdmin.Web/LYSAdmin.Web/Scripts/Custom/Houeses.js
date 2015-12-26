@@ -56,9 +56,12 @@ $(document).ready(function () {
     $("select[name='PGDetailID']").change(function () {
         //visible div block
         $('#divApartments').removeClass('hidden');
-
+        $('#txtHouseName').attr("readonly", false);
+        $('#txtDisplayName').attr("readonly", false);
+        $('#txtDescription').attr("readonly", false);
+        $('#btnNextBasicInformation').attr("disabled", false);
         var apartments = $(this).find(':selected').attr('apartments');
-        //apartments=JSON.parse(apartments)
+        
         eval("var apartmentList = " + apartments);
         //alert(apartments.jsonApartments.length);
         /* number of items in features array
@@ -76,7 +79,6 @@ $(document).ready(function () {
                );
             
             $.each(apartmentList, function (i, apartment) {
-                alert(JSON.stringify(apartment));
                 $('#ddlApartments').append(
                 $('<option></option>').val(apartment.ApartmentID).html(apartment.ApartmentName).attr('blocks', JSON.stringify(apartment.Blocks))
                );
