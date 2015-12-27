@@ -203,34 +203,34 @@ namespace LYSAdmin.Domain.HouseManagement
         public int AddHouse(HouseViewModel houseViewModel)
         {
             int count = 0;
-            #region LinkTypeIDandLinkIDFunctionality
+            //#region LinkTypeIDandLinkIDFunctionality
 
-            //block selected, so as apartment
-            if (houseViewModel.BlockID > 0)
-            {
-                /****commented due to identity or DB update****/
-                //houseViewModel.House.LinkTypeID = 1;
-                //houseViewModel.House.LinkID = houseViewModel.BlockID;
-            }
-            else
-            {
-                //block not selected but apartment selected
-                if (houseViewModel.ApartmentID > 0)
-                {
-                    /****commented due to identity or DB update****/
-                    //houseViewModel.House.LinkTypeID = 2;
-                    //houseViewModel.House.LinkID = houseViewModel.ApartmentID;
-                }
-                //block and apartment both not selected
-                else
-                {
-                    /****commented due to identity or DB update****/
-                    //houseViewModel.House.LinkTypeID = 3;
-                    //houseViewModel.House.LinkID = houseViewModel.AreaID;
-                }
-            }
+            ////block selected, so as apartment
+            //if (houseViewModel.BlockID > 0)
+            //{
+            //    /****commented due to identity or DB update****/
+            //    //houseViewModel.House.LinkTypeID = 1;
+            //    //houseViewModel.House.LinkID = houseViewModel.BlockID;
+            //}
+            //else
+            //{
+            //    //block not selected but apartment selected
+            //    if (houseViewModel.ApartmentID > 0)
+            //    {
+            //        /****commented due to identity or DB update****/
+            //        //houseViewModel.House.LinkTypeID = 2;
+            //        //houseViewModel.House.LinkID = houseViewModel.ApartmentID;
+            //    }
+            //    //block and apartment both not selected
+            //    else
+            //    {
+            //        /****commented due to identity or DB update****/
+            //        //houseViewModel.House.LinkTypeID = 3;
+            //        //houseViewModel.House.LinkID = houseViewModel.AreaID;
+            //    }
+            //}
 
-            #endregion LinkTypeIDandLinkIDFunctionality
+            //#endregion LinkTypeIDandLinkIDFunctionality
 
             /*-------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -245,32 +245,32 @@ namespace LYSAdmin.Domain.HouseManagement
             }
             else
             {
-                if (houseViewModel.PGdetail.PGName != null && houseViewModel.PGdetail.PGName != String.Empty)
-                {
-                    //set details to inserta new PG
-                    var pgDetail = new Data.DBEntity.PGDetail();
-                    pgDetail.PGName = houseViewModel.PGdetail.PGName;
-                    pgDetail.AreaID = houseViewModel.AreaID;
-                    pgDetail.UserID = houseViewModel.OwnerID;
-                    //Insert into DB
-                    pgDetailRepository.Insert(pgDetail);
-                    unitOfWork.SaveChanges();
-                    //set PGDetailID for House Table
-                    /****commented due to identity or DB update****/
-                    //houseViewModel.House.PGDetailID = pgDetail.PGDetailID;
+                //if (houseViewModel.PGdetail.PGName != null && houseViewModel.PGdetail.PGName != String.Empty)
+                //{
+                //    //set details to inserta new PG
+                //    var pgDetail = new Data.DBEntity.PGDetail();
+                //    pgDetail.PGName = houseViewModel.PGdetail.PGName;
+                //    pgDetail.AreaID = houseViewModel.AreaID;
+                //    pgDetail.UserID = houseViewModel.OwnerID;
+                //    //Insert into DB
+                //    pgDetailRepository.Insert(pgDetail);
+                //    unitOfWork.SaveChanges();
+                //    //set PGDetailID for House Table
+                //    /****commented due to identity or DB update****/
+                //    //houseViewModel.House.PGDetailID = pgDetail.PGDetailID;
                    
-                   // houseViewModel.House.IsPg = true;
+                //   // houseViewModel.House.IsPg = true;
 
-                }
-                else
-                {
-                    //is not a PG type House
-                    /****commented due to identity or DB update****/
+                //}
+                //else
+                //{
+                //    //is not a PG type House
+                //    /****commented due to identity or DB update****/
 
-                    //houseViewModel.House.PGDetailID = 0;
-                    //houseViewModel.House.IsPg = false;
+                //    //houseViewModel.House.PGDetailID = 0;
+                //    //houseViewModel.House.IsPg = false;
 
-                }
+                //}
             }
             #endregion PGSelectioFunctionality
 
@@ -286,11 +286,11 @@ namespace LYSAdmin.Domain.HouseManagement
             if (count > 0)
             {
                 //insert house amenity
-                var dbHouseAmenity = Mapper.Map<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>(houseViewModel.HouseAmenity);
-                dbHouseAmenity.HouseID = dbHouse.HouseID;
-                dbHouseAmenity.CreatedOn = DateTime.Now;
-                dbHouseAmenity.LastUpdatedOn = DateTime.Now;
-                houseAmenityRepository.Insert(dbHouseAmenity);
+                //var dbHouseAmenity = Mapper.Map<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>(houseViewModel.HouseAmenity);
+                //dbHouseAmenity.HouseID = dbHouse.HouseID;
+                //dbHouseAmenity.CreatedOn = DateTime.Now;
+                //dbHouseAmenity.LastUpdatedOn = DateTime.Now;
+                //houseAmenityRepository.Insert(dbHouseAmenity);
 
                 //save houseamenities 
                 unitOfWork.SaveChanges();

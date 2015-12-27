@@ -265,19 +265,18 @@ namespace LYSAdmin.Web.Controllers
         /// get all the PG/Hostel for a Area filter by OwnerID
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public JsonResult GetPGsByOwnerIDandAreaID()
-        {
-            houseViewModel.PGDetails = pgDetailManagement.GetPGsByOwnerIDandAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
+        //[HttpGet]
+        //public JsonResult GetPGsByOwnerIDandAreaID()
+        //{
+        //    houseViewModel.PGDetails = pgDetailManagement.GetPGsByOwnerIDandAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
 
-            return Json(JsonConvert.SerializeObject(houseViewModel.PGDetails), JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(JsonConvert.SerializeObject(houseViewModel.PGDetails), JsonRequestBehavior.AllowGet);
+        //}
 
         // GET: Estate/Houses
         [HttpGet]
         public ActionResult Houses()
         {
-            //houseViewModel.apartmentViewModel = apartmentManagement.GetApartmentsByAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
             houseViewModel.PGDetails = pgDetailManagement.GetPGsByOwnerIDandAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
             return View("Houses", houseViewModel);
 
@@ -287,15 +286,15 @@ namespace LYSAdmin.Web.Controllers
         [HttpPost]
         public ActionResult AddHouse(HouseViewModel houseViewModel)
         {
-            houseViewModel.AreaID = GetAreaID();
-            //houseViewModel.House.OwnerID = GetOwnerID();     /****commented due to identity or DB update****/     
-            //houseViewModel.House.CreatedBy = ((User)Session["User"]).Id; /****commented due to identity or DB update****/
+            //houseViewModel.AreaID = GetAreaID();
+            //houseViewModel.House.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
             int count = houseManagement.AddHouse(houseViewModel);
 
             return RedirectToAction("Houses", "Estate");
         }
 
         #endregion Houses
+
         public ActionResult Rooms()
         {
             return View();

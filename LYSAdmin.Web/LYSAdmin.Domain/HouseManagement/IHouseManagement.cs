@@ -12,5 +12,7 @@ namespace LYSAdmin.Domain.HouseManagement
         IList<Model.House> GetHouses(int OwnerID);
         Model.House GetHouseByID(int LinkTypeID);
         int AddHouse(HouseViewModel house);
+
+        //HouseViewModel GetHouseByOwnerIDAndAreaID(long OwnerID, int AreaID);
     }
 }

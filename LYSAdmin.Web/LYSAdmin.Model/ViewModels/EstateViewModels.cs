@@ -20,12 +20,12 @@ namespace LYSAdmin.Model
     public class HouseViewModel
     {
         public House House { get; set; }
-        public HouseAmenity HouseAmenity { get; set; }               
-        public IList<House> Houses { get; set; }
+        //public HouseAmenity HouseAmenity { get; set; }               
+        //public IList<House> Houses { get; set; }
         public IList<Room> Rooms { get; set; }
         public IList<PGDetail> PGDetails { get; set; }
-        public int CityID { get; set; }
-        public int AreaID { get; set; }
+
+        public int PGDetailID { get; set; }
         public int ApartmentID { get; set; }
         public int BlockID { get; set; }        
         public int OwnerID { get; set; }
