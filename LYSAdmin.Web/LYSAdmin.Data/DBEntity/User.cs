@@ -17,12 +17,13 @@ namespace LYSAdmin.Data.DBEntity
         public User()
         {
             this.Beds = new HashSet<Bed>();
+            this.PGDetails = new HashSet<PGDetail>();
             this.PGReviews = new HashSet<PGReview>();
+            this.Transactions = new HashSet<Transaction>();
             this.UserClaims = new HashSet<UserClaim>();
             this.UserDetails = new HashSet<UserDetail>();
             this.UserLogins = new HashSet<UserLogin>();
             this.Roles = new HashSet<Role>();
-            this.PGDetails = new HashSet<PGDetail>();
         }
     
         public long UserID { get; set; }
@@ -48,11 +49,12 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<long> CreatedBy { get; set; }
     
         public virtual ICollection<Bed> Beds { get; set; }
+        public virtual ICollection<PGDetail> PGDetails { get; set; }
         public virtual ICollection<PGReview> PGReviews { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual ICollection<UserClaim> UserClaims { get; set; }
         public virtual ICollection<UserDetail> UserDetails { get; set; }
         public virtual ICollection<UserLogin> UserLogins { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
-        public virtual ICollection<PGDetail> PGDetails { get; set; }
     }
 }

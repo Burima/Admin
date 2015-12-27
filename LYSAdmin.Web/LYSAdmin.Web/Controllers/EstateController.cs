@@ -287,7 +287,7 @@ namespace LYSAdmin.Web.Controllers
         public ActionResult AddHouse(HouseViewModel houseViewModel)
         {
             //houseViewModel.AreaID = GetAreaID();
-            //houseViewModel.House.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
+            houseViewModel.House.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
             int count = houseManagement.AddHouse(houseViewModel);
 
             return RedirectToAction("Houses", "Estate");

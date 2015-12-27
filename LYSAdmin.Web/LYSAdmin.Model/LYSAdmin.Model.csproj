@@ -80,6 +80,8 @@
     <Compile Include="HouseAmenity.cs" />
     <Compile Include="PGReview.cs" />
     <Compile Include="PGDetail.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionStatus.cs" />
     <Compile Include="UserClaim.cs" />
     <Compile Include="UserLogin.cs" />
     <Compile Include="UserRole.cs" />

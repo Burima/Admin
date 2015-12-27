@@ -20,7 +20,7 @@ namespace LYSAdmin.Model
     public class HouseViewModel
     {
         public House House { get; set; }
-        //public HouseAmenity HouseAmenity { get; set; }               
+        public HouseAmenity HouseAmenity { get; set; }               
         //public IList<House> Houses { get; set; }
         public IList<Room> Rooms { get; set; }
         public IList<PGDetail> PGDetails { get; set; }
@@ -33,6 +33,7 @@ namespace LYSAdmin.Model
         public int NoOfRooms { get; set; }
         public PGDetail PGdetail { get; set; }
 
+        public bool HasApartment { get; set; }
 
     }
 

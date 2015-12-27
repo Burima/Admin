@@ -36,5 +36,11 @@ namespace LYSAdmin.Model.Constants
             Male = 1,
             Female = 2
         }
+
+        public static string DEFAULT_APARTMENT = "Default_Apartment_";
+
+        public static string DEFAULT_BLOCK = "Default_Block_";
+
+        public static string HOUSE_NO = "Default_1";
     }
 }

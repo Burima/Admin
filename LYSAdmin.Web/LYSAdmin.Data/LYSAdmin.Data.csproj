@@ -102,6 +102,12 @@
     <Compile Include="DBEntity\Room.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBEntity\Transaction.cs">
+      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBEntity\TransactionStatus.cs">
+      <DependentUpon>LYSAdminEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBEntity\User.cs">
       <DependentUpon>LYSAdminEntities.tt</DependentUpon>
     </Compile>
@@ -121,7 +127,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="DBEntity\LYSAdminEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LYSAdminEntities.Designer.cs</LastGenOutput>

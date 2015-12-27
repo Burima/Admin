@@ -15,7 +15,7 @@ namespace LYSAdmin.Data.DBEntity
     public partial class HouseAmenity
     {
         [Key]
-        public int AminityID { get; set; }
+        public int HouseAmenityID { get; set; }
         public int HouseID { get; set; }
         public bool AC { get; set; }
         public bool Fridge { get; set; }

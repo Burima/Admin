@@ -17,6 +17,8 @@ namespace LYSAdmin.Domain.HouseManagement
         private IBaseRepository<Data.DBEntity.PGDetail> pgDetailRepository = null;
         private IBaseRepository<Data.DBEntity.Room> roomRepository = null;
         private IBaseRepository<Data.DBEntity.Bed> bedRepository = null;
+        private IBaseRepository<Data.DBEntity.Apartment> apartmentRepository = null;
+        private IBaseRepository<Data.DBEntity.Block> blockRepository = null;
         public HouseManagement()
         {
             unitOfWork = new UnitOfWork();
@@ -25,6 +27,8 @@ namespace LYSAdmin.Domain.HouseManagement
             pgDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
             roomRepository = new BaseRepository<Data.DBEntity.Room>(unitOfWork);
             bedRepository = new BaseRepository<Data.DBEntity.Bed>(unitOfWork);
+            apartmentRepository = new BaseRepository<Data.DBEntity.Apartment>(unitOfWork);
+            blockRepository = new BaseRepository<Data.DBEntity.Block>(unitOfWork);
             //automapper 
             Mapper.CreateMap<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>();
             Mapper.CreateMap<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>();
@@ -45,7 +49,7 @@ namespace LYSAdmin.Domain.HouseManagement
                                              HouseAmenities = (from g in p.HouseAmenities
                                                                select new LYSAdmin.Model.HouseAmenity
                                                        {
-                                                           AminityID = g.AminityID,
+                                                           HouseAmenityID = g.HouseAmenityID,
                                                            AC = g.AC,
                                                            Aquaguard = g.Aquaguard,
                                                            AttachBathrooms = g.AttachBathrooms,
@@ -131,7 +135,7 @@ namespace LYSAdmin.Domain.HouseManagement
                              HouseAmenities = (from g in p.HouseAmenities
                                                select new LYSAdmin.Model.HouseAmenity
                                                {
-                                                   AminityID = g.AminityID,
+                                                   HouseAmenityID = g.HouseAmenityID,
                                                    AC = g.AC,
                                                    Aquaguard = g.Aquaguard,
                                                    AttachBathrooms = g.AttachBathrooms,
@@ -203,78 +207,84 @@ namespace LYSAdmin.Domain.HouseManagement
         public int AddHouse(HouseViewModel houseViewModel)
         {
             int count = 0;
-            //#region LinkTypeIDandLinkIDFunctionality
+            int PGDetailID = houseViewModel.PGDetailID;
+            int OwnerID = houseViewModel.OwnerID;
+           
+            //create default apartment/block 
+             if(houseViewModel.ApartmentID <= 0){
+                  var defaultApartment =(from pg in pgDetailRepository.Get() join
+                                     a in apartmentRepository.Get(a=> a.IsDefault == true) on pg.PGDetailID equals a.PGDetailID
+                                     select new Model.Apartment{
+                                         ApartmentName = a.ApartmentName,
+                                         ApartmentID = a.ApartmentID,
+                                         Blocks = (from b in a.Blocks.Where(b=> b.IsDefault == true)
+                                                   select new Model.Block{
+                                                       BlockID = b.BlockID,
+                                                       BlockName = b.BlockName
+                                                   }).ToList(),
+                                     });
+                 if(defaultApartment == null){
+                    
+                     var apartment = new LYSAdmin.Data.DBEntity.Apartment();
+                     apartment.ApartmentName = LYSAdmin.Model.Constants.Constants.DEFAULT_APARTMENT + PGDetailID;
+                     apartment.HouseNo = LYSAdmin.Model.Constants.Constants.DEFAULT_APARTMENT + PGDetailID;
+                     apartment.Description = "Default Apartment";
+                     apartment.Status = true;
+                     apartment.CreatedOn = DateTime.Now;
+                     apartment.LastUpdatedOn = DateTime.Now;
+                     apartment.CreatedBy = houseViewModel.House.CreatedBy; 
+                     apartment.IsDefault = true;
+                     apartmentRepository.Insert(apartment);
+                     var block = new LYSAdmin.Data.DBEntity.Block();
+                     block.BlockName = LYSAdmin.Model.Constants.Constants.DEFAULT_BLOCK + houseViewModel.ApartmentID;
+                     block.ApartmentID = apartment.ApartmentID;
+                     block.CreatedBy = houseViewModel.House.CreatedBy;
+                     block.CreatedOn = DateTime.Now;
+                     block.IsDefault = true;
+                     block.LastUpdatedOn = DateTime.Now;
+                     block.Description = "Default Block";
+                     block.Status = true;
 
-            ////block selected, so as apartment
-            //if (houseViewModel.BlockID > 0)
-            //{
-            //    /****commented due to identity or DB update****/
-            //    //houseViewModel.House.LinkTypeID = 1;
-            //    //houseViewModel.House.LinkID = houseViewModel.BlockID;
-            //}
-            //else
-            //{
-            //    //block not selected but apartment selected
-            //    if (houseViewModel.ApartmentID > 0)
-            //    {
-            //        /****commented due to identity or DB update****/
-            //        //houseViewModel.House.LinkTypeID = 2;
-            //        //houseViewModel.House.LinkID = houseViewModel.ApartmentID;
-            //    }
-            //    //block and apartment both not selected
-            //    else
-            //    {
-            //        /****commented due to identity or DB update****/
-            //        //houseViewModel.House.LinkTypeID = 3;
-            //        //houseViewModel.House.LinkID = houseViewModel.AreaID;
-            //    }
-            //}
+                     blockRepository.Insert(block);
 
-            //#endregion LinkTypeIDandLinkIDFunctionality
+                     unitOfWork.SaveChanges();
 
-            /*-------------------------------------------------------------------------------------------------------------------------------------------------*/
+                     houseViewModel.House.BlockID = block.BlockID;
+                 }
+                 
 
-            #region PGSelectioFunctionality
-            //PG is selected existing PGs n dropdown
-            if (houseViewModel.PGdetail.PGDetailID > 0)
-            {
-                /****commented due to identity or DB update****/
-               // houseViewModel.House.PGDetailID = houseViewModel.PGdetail.PGDetailID;
-              
-                //houseViewModel.House.IsPg = true;
-            }
-            else
-            {
-                //if (houseViewModel.PGdetail.PGName != null && houseViewModel.PGdetail.PGName != String.Empty)
-                //{
-                //    //set details to inserta new PG
-                //    var pgDetail = new Data.DBEntity.PGDetail();
-                //    pgDetail.PGName = houseViewModel.PGdetail.PGName;
-                //    pgDetail.AreaID = houseViewModel.AreaID;
-                //    pgDetail.UserID = houseViewModel.OwnerID;
-                //    //Insert into DB
-                //    pgDetailRepository.Insert(pgDetail);
-                //    unitOfWork.SaveChanges();
-                //    //set PGDetailID for House Table
-                //    /****commented due to identity or DB update****/
-                //    //houseViewModel.House.PGDetailID = pgDetail.PGDetailID;
-                   
-                //   // houseViewModel.House.IsPg = true;
+             }
+             else if(houseViewModel.House.BlockID <= 0)
+             {
+                 var defaultBlock = (from a in apartmentRepository.Get()
+                                         join b in blockRepository.Get(b => b.IsDefault == true) on a.ApartmentID equals b.ApartmentID
+                                         select new Model.Block
+                                         {
+                                            BlockID = b.BlockID,
+                                            BlockName = b.BlockName
+                                         }).FirstOrDefault();
+                 if (defaultBlock == null) { 
+                     var block = new LYSAdmin.Data.DBEntity.Block();
+                     block.BlockName = LYSAdmin.Model.Constants.Constants.DEFAULT_BLOCK + houseViewModel.ApartmentID;
+                     block.ApartmentID = houseViewModel.ApartmentID;
+                     block.CreatedBy = houseViewModel.House.CreatedBy;
+                     block.CreatedOn = DateTime.Now;
+                     block.IsDefault = true;
+                     block.LastUpdatedOn = DateTime.Now;
+                     block.Description = "Default Block";
+                     block.Status = true;
 
-                //}
-                //else
-                //{
-                //    //is not a PG type House
-                //    /****commented due to identity or DB update****/
+                     blockRepository.Insert(block);
 
-                //    //houseViewModel.House.PGDetailID = 0;
-                //    //houseViewModel.House.IsPg = false;
+                     unitOfWork.SaveChanges();
+                     houseViewModel.House.BlockID = block.BlockID;
+                 }
 
-                //}
-            }
-            #endregion PGSelectioFunctionality
+                 houseViewModel.House.BlockID = defaultBlock.BlockID;
+             }
+           
 
-            /*----------------------------------------------------------------------------------------------------------------------------------------------------*/
+           /*----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
             //insert House
             var dbHouse = Mapper.Map<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>(houseViewModel.House);//Converting Model.House to Data.House
@@ -286,11 +296,11 @@ namespace LYSAdmin.Domain.HouseManagement
             if (count > 0)
             {
                 //insert house amenity
-                //var dbHouseAmenity = Mapper.Map<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>(houseViewModel.HouseAmenity);
-                //dbHouseAmenity.HouseID = dbHouse.HouseID;
-                //dbHouseAmenity.CreatedOn = DateTime.Now;
-                //dbHouseAmenity.LastUpdatedOn = DateTime.Now;
-                //houseAmenityRepository.Insert(dbHouseAmenity);
+                var dbHouseAmenity = Mapper.Map<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>(houseViewModel.HouseAmenity);
+                dbHouseAmenity.HouseID = dbHouse.HouseID;
+                dbHouseAmenity.CreatedOn = DateTime.Now;
+                dbHouseAmenity.LastUpdatedOn = DateTime.Now;
+                houseAmenityRepository.Insert(dbHouseAmenity);
 
                 //save houseamenities 
                 unitOfWork.SaveChanges();
