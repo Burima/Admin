@@ -161,10 +161,10 @@ $(document).ready(function () {
         $('#collapseDetailInformation').addClass('in');
     });
 
-    //btnSaveAllInformation click event
-    $('#btnSaveAllInformation').click(function () {
-        alert(fnValidateAllRequiredfield());
-    });
+    ////btnSaveAllInformation click event
+    //$('#btnSaveAllInformation').click(function () {
+    //    alert(fnValidateAllRequiredfield());
+    //});
 
 
     /*---------------------- end button click events for every forms ----------------------------------------------------*/
@@ -452,27 +452,27 @@ function fnShowModalNewPGInsertion() {
 //}
 
 //this function will validate all required field value
-function fnValidateAllRequiredfield() {
-    var flag = false;
-    $("#collapseDetailInformation .required").each(function () {
+//function fnValidateAllRequiredfield() {
+//    var flag = false;
+//    $("#collapseDetailInformation .required").each(function () {
 
-        var id = $(this).attr("id");
-        var value = $("#" + id).val();
-        alert($(this).html());
-        if (value.trim() == "") {
-            console.log("no value detected" + id + "----------" + value);
-            $("#" + id).css("border", "1px solid red");
-            flag = true;
-        }
-        else {
-            $("#" + id).css("border", "1px solid #e5e6e7");
-            flag = false;
-        }
-    });
+//        var id = $(this).attr("id");
+//        var value = $("#" + id).val();
+//        alert($(this).html());
+//        if (value.trim() == "") {
+//            console.log("no value detected" + id + "----------" + value);
+//            $("#" + id).css("border", "1px solid red");
+//            flag = true;
+//        }
+//        else {
+//            $("#" + id).css("border", "1px solid #e5e6e7");
+//            flag = false;
+//        }
+//    });
 
-    if (flag) {
-        return false;
-    }
-}
+//    if (flag) {
+//        return false;
+//    }
+//}
 
 
