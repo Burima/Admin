@@ -19,7 +19,26 @@ $(document).ready(function () {
     charlimit();
     inputkeyup();
 
+     //view all apartments
+    $('#divHouses').show();
+    $('#divAddHouse').hide();
     
+
+    //Initialize data table
+    $('.dataTables-houses').dataTable({
+        /* Disable initial sort */
+        "aaSorting": []
+    });
+
+    $('.btn-show-add-house').click(function () {
+        $('#divHouses').hide();
+        $('#divAddHouse').show();
+     });
+
+    //Char Limit function
+    charlimit();
+    inputkeyup();
+
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
         //visible div block

@@ -13,6 +13,6 @@ namespace LYSAdmin.Domain.HouseManagement
         Model.House GetHouseByID(int LinkTypeID);
         int AddHouse(HouseViewModel house);
 
-        //HouseViewModel GetHouseByOwnerIDAndAreaID(long OwnerID, int AreaID);
+        IList<PGDetail> GetPGsByOwnerIDAndAreaID(long OwnerID, int AreaID);
     }
 }

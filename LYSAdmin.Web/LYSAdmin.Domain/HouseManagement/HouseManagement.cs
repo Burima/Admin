@@ -363,5 +363,86 @@ namespace LYSAdmin.Domain.HouseManagement
         }
 
 
+        public IList<PGDetail> GetPGsByOwnerIDAndAreaID(long OwnerID, int AreaID)
+        {
+            List<Model.PGDetail> allPGs = (from p in pgDetailRepository.Get(p => p.UserID == OwnerID && p.AreaID == AreaID, q => q.OrderByDescending(p => p.PGName))
+                                           select new Model.PGDetail
+                                           {
+                                               PGDetailID = p.PGDetailID,
+                                               PGName = p.PGName,
+                                               Apartments = (from a in p.Apartments
+                                                             select new LYSAdmin.Model.Apartment
+                                                             {
+                                                                 ApartmentID = a.ApartmentID,
+                                                                 ApartmentName = a.ApartmentName,
+                                                                 IsDefault = a.IsDefault,
+                                                                 Blocks = (from b in a.Blocks
+                                                                           select new LYSAdmin.Model.Block
+                                                                           {
+                                                                               BlockID = b.BlockID,
+                                                                               BlockName = b.BlockName,
+                                                                               IsDefault = b.IsDefault,
+                                                                               Houses = (from h in b.Houses
+                                                                                         select new LYSAdmin.Model.House
+                                                                                         {
+                                                                                             HouseID = h.HouseID,
+                                                                                             HouseName = h.HouseName,
+                                                                                             Gender = h.Gender,
+                                                                                             HouseAmenities = (from g in h.HouseAmenities
+                                                                                                               select new LYSAdmin.Model.HouseAmenity
+                                                                                                               {
+
+                                                                                                                   HouseAmenityID = g.HouseAmenityID,
+                                                                                                                   AC = g.AC,
+                                                                                                                   Aquaguard = g.Aquaguard,
+                                                                                                                   AttachBathrooms = g.AttachBathrooms,
+                                                                                                                   BreakFastGiven = g.BreakFastGiven,
+                                                                                                                   Clubhouse = g.Clubhouse,
+                                                                                                                   CommonTV = g.CommonTV,
+                                                                                                                   CreatedOn = g.CreatedOn,
+                                                                                                                   DinnerGiven = g.DinnerGiven,
+                                                                                                                   EmergencyMedicalServices = g.EmergencyMedicalServices,
+                                                                                                                   FourWheelerCloseParking = g.FourWheelerCloseParking,
+                                                                                                                   FourWheelerOpenParking = g.FourWheelerOpenParking,
+                                                                                                                   Fridge = g.Fridge,
+                                                                                                                   GuardianEntry = g.GuardianEntry,
+                                                                                                                   GYM = g.GYM,
+                                                                                                                   HotColdWaterSupply = g.HotColdWaterSupply,
+                                                                                                                   Housekeeping = g.Housekeeping,
+                                                                                                                   IndividualTV = g.IndividualTV,
+                                                                                                                   IntercomFacility = g.IntercomFacility,
+                                                                                                                   IroningWashingServices = g.IroningWashingServices,
+                                                                                                                   KitchenFacilityWithGas = g.KitchenFacilityWithGas,
+                                                                                                                   LCDTVCableConnection = g.LCDTVCableConnection,
+                                                                                                                   Lift = g.Lift,
+                                                                                                                   Lockers = g.Lockers,
+                                                                                                                   LunchGiven = g.LunchGiven,
+                                                                                                                   MineralDrinkingWater = g.MineralDrinkingWater,
+                                                                                                                   Newspaper = g.Newspaper,
+                                                                                                                   NoBoysEntry = g.NoBoysEntry,
+                                                                                                                   NoDrinking = g.NoDrinking,
+                                                                                                                   NoSmoking = g.NoSmoking,
+                                                                                                                   NonVegAllowed = g.NonVegAllowed,
+                                                                                                                   Partyhall = g.Partyhall,
+                                                                                                                   Playground = g.Playground,
+                                                                                                                   Powerbackup = g.Powerbackup,
+                                                                                                                   RoomService = g.RoomService,
+                                                                                                                   Security = g.Security,
+                                                                                                                   SwimmingPool = g.SwimmingPool,
+                                                                                                                   TwoWheelerCloseParking = g.TwoWheelerCloseParking,
+                                                                                                                   TwoWheelerOpenParking = g.TwoWheelerOpenParking,
+                                                                                                                   VideoSurveillance = g.VideoSurveillance,
+                                                                                                                   Wardrobes = g.Wardrobes,
+                                                                                                                   Washingmachine = g.Washingmachine,
+                                                                                                                   WaterSupply = g.WaterSupply,
+                                                                                                                   Wifi = g.Wifi
+                                                                                                               }).ToList()
+                                                                                         }).ToList()
+                                                                           }).ToList()
+                                                             }).ToList(),
+                                           }).ToList();
+            return allPGs;
+        }
+
     }
 }
