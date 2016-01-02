@@ -93,7 +93,7 @@
                                                                     <td>@pgDetails.PGName</td>
                                                                     <td>@apartment.ApartmentName</td>
                                                                     <td>@block.BlockName</td>
-                                                                    <td>@house.Gender</td>
+                                                                    <td>@(house.Gender == 1 ? "Male" : "FeMale")</td>
                                                                     <td>
                                                                         <input type="button" class="btnShowModalAmenities" value="View Amenities">
                                                                         <input type="hidden" class="hdnAmenities" value="@JsonConvert.SerializeObject(house.HouseAmenities)">
