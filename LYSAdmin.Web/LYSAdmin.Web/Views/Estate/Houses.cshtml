@@ -139,8 +139,11 @@
         @Html.Partial("_AddHouse", Model)
     </div><!-- End Add House -->
 }
-
+@section Styles {
+    @Styles.Render("~/Content/plugins/dropzone/dropZoneStyles")
+}
 @section scripts{
+@Scripts.Render("~/plugins/dropZone")
 
     <!-- variables -->
     <script>
@@ -155,10 +158,13 @@
         var HousesUrl = '@Url.Action("Houses","Estate")';
         var UpdateLocationUrl = '@Url.Action("UpdateLocation", "Estate")';
         var GetPGsByOwnerIDandAreaIDUrl = '@Url.Action("GetPGsByOwnerIDandAreaID", "Estate")';
+        var ImageUploadUrl = '@Url.Action("HouseImageUpload", "Estate")';
+
     </script>
     @Scripts.Render("~/plugins/dataTables")
    
     <script src='@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.js")'></script>
+    
 
     <!-- Custom javascript of Houses -->
     <script src='@Url.Content("~/Scripts/Custom/Houeses.js")'></script>

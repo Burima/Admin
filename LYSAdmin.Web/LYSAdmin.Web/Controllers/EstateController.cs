@@ -10,6 +10,7 @@ using LYSAdmin.Domain.BlockManagement;
 using Newtonsoft.Json;
 using LYSAdmin.Domain.HouseManagement;
 using LYSAdmin.Domain.PGDetailManagement;
+using System.IO;
 
 namespace LYSAdmin.Web.Controllers
 {
@@ -293,6 +294,27 @@ namespace LYSAdmin.Web.Controllers
             return RedirectToAction("Houses", "Estate");
         }
 
+        public ActionResult HouseImageUpload()
+        {
+            foreach (var fileKey in Request.Files.AllKeys)
+            {
+                var file = Request.Files[fileKey];
+                try
+                {
+                    if (file != null)
+                    {
+                        var fileName = Path.GetFileName(file.FileName) + String.Format("{0:d-M-yyyy HH-mm-ss}", DateTime.Now);
+                        var path = Path.Combine(Server.MapPath("~/files/HouseImages/"), fileName);
+                        file.SaveAs(path);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { Message = "Error in saving file" });
+                }
+            }
+            return Json(new { Message = "File saved" });
+        }
         #endregion Houses
 
         public ActionResult Rooms()

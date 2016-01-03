@@ -6,7 +6,7 @@ var InitialLatitude, InitialLongitude;
 var blocks;
 //converting all the areas in json list
 eval("var areaList = " + Areas);
-
+Dropzone.autoDiscover = false;
 $(document).ready(function () {
    
      //if area is not selected show modal
@@ -35,9 +35,27 @@ $(document).ready(function () {
         $('#divAddHouse').show();
      });
 
-    //Char Limit function
-    charlimit();
-    inputkeyup();
+   //dropzone
+Dropzone.options.myAwesomeDropzone = {
+
+    autoProcessQueue: false,
+    parallelUploads: 100,
+    maxFiles: 100,
+    paramName: "files",
+    
+    // Dropzone settings
+    init: function () {
+        var myDropzone = new Dropzone("#my-awesome-dropzone", { url: ImageUploadUrl })
+       
+       this.on("sendingmultiple", function () {
+        });
+        this.on("successmultiple", function (files, response) {
+        });
+        this.on("errormultiple", function (files, response) {
+        });
+    }
+
+}
 
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
@@ -153,8 +171,8 @@ $(document).ready(function () {
 
             //initialization of the map based on area and city
            // initialize();
-            $('#linkcollapseBasicAmenities').attr('href', '#collapseBasicAmenities'); //activate collapseable functionality through linking it with the target id 
-            $('#collapseBasicAmenities').addClass('in');//open Locality panel
+            $('#linkcollapseHouseImages').attr('href', '#collapseHouseImage'); //activate collapseable functionality through linking it with the target id 
+            $('#collapseHouseImage').addClass('in');//open Locality panel
         }
     });
 
@@ -328,3 +346,25 @@ function fnShowModalNewPGInsertion() {
     //$('#txtPGName').removeClass('hidden');//make the input box for new pg visible    
 }
 
+
+$("#UploadImage").click(function () {
+    $.ajax({
+        url: ImageUploadUrl,
+        type: 'POST',
+        data: jmodel,
+        dataType: 'JSON',
+        success: function (response, textStatus, XMLHttpRequest) {
+            if (response.toUpperCase() == "SUCCESS") {
+                alert('successful');
+            } else if (response.toUpperCase() == "FAILED") {
+                alert('something went wrong. Please try again!');
+                //Adding of new Apartment failed
+            }
+            hideProgress();
+        },
+        error: function (xhr, status) {
+            alert('error');
+            hideProgress();
+        }
+    });
+});
