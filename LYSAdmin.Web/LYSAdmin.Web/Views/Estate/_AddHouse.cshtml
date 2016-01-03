@@ -85,34 +85,9 @@
                                 <a id="linkcollapseHouseImages" class="locality" data-toggle="collapse" data-parent="#accordion" href="#">Locality</a>
                             </h4>
                         </div>
-                        <div id="collapseHouse" class="panel-collapse collapse">
+                        <div id="collapseHouseImage" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <label>Address <span  id="spnLatitude" class="label label-default"></span> <span  id="spnLongitude" class="label label-default"></span></label>
-                                        <!--hidden fields to store Lat n Long in Model-->
-                                        <input id="hdnLatitude" type="hidden" name="House.Latitude" value="0"/>
-                                        <input id="hdnLongitude" type="hidden" name="House.Longitude" value="0"/>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label>Landmark</label>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <input type="text" id="txtAddress" placeholder="Enter Address" class="form-control input-sm" maxlength="100" tabindex="1" required name="House.Address" autocomplete="off">
-                                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <input type="text" id="txtLandmark" placeholder="Enter Landmark" class="form-control input-sm" maxlength="50" tabindex="1" name="House.Landmark">
-                                        <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button id="btnNextLocality" class="btn btn-primary" type="button" tabindex="5" value="Geocode">Next</button>
-                                    </div>
-                                </div>
                                
-                                <div class="row row-padding-top-5">
-                                    <div id="map-canvas" class="col-md-12"></div>
-                                </div>
                             </div>
 
                         </div>
