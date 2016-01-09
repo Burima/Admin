@@ -143,7 +143,6 @@
     @Styles.Render("~/Content/plugins/dropzone/dropZoneStyles")
 }
 @section scripts{
-@Scripts.Render("~/plugins/dropZone")
 
     <!-- variables -->
     <script>
@@ -162,8 +161,8 @@
 
     </script>
     @Scripts.Render("~/plugins/dataTables")
-   
-    <script src='@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.js")'></script>
+    @Scripts.Render("~/plugins/dropZone")
+     <script src='@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.js")'></script>
     
 
     <!-- Custom javascript of Houses -->
