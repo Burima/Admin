@@ -294,6 +294,7 @@ namespace LYSAdmin.Web.Controllers
             return RedirectToAction("Houses", "Estate");
         }
 
+        [HttpPost]
         public ActionResult HouseImageUpload()
         {
             foreach (var fileKey in Request.Files.AllKeys)

@@ -58,3 +58,10 @@ p {
 .text-danger {
     color: #a94442;
 }
+
+div.table .file-row:nth-child(odd) {
+    background: #f9f9f9;
+}
+div.table .file-row {
+    display: table-row;
+}

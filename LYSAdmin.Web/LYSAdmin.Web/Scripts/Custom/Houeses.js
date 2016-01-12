@@ -44,8 +44,8 @@ $(document).ready(function () {
         var previewTemplate = previewNode.parentNode.innerHTML;
         previewNode.parentNode.removeChild(previewNode);
        
-        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-            url: '~/Estate/HouseImageUpload', // Set the url
+        var myDropzone = new Dropzone("div#mydropzone", { // Make the whole body a dropzone
+            url: 'Estate/HouseImageUpload', // Set the url
             thumbnailWidth: 80,
             thumbnailHeight: 80,
             parallelUploads: 20,

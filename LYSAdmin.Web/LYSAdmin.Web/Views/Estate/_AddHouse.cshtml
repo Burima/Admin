@@ -86,26 +86,15 @@
                             </h4>
                         </div>
                         <div id="collapseHouseImage" class="panel-collapse collapse">
-                            <div class="row" >
+                            <div class="row row-padding-top-5" style="padding-left:5%">
                                 <span class="btn btn-success fileinput-button" style="padding-left:10px">
                                     <i class="glyphicon glyphicon-plus"></i>
                                     <span>Add files..</span>
                                 </span>
-                                <button class="btn btn-primary start">
-                                    <i class="glyphicon glyphicon-upload"></i>
-                                    <span>Start</span>
-                                </button>
-                                <button type="reset" class="btn btn-warning cancel">
-                                    <i class="glyphicon glyphicon-ban-circle"></i>
-                                    <span>Cancel</span>
-                                </button>
-                                <button data-dz-remove class="btn btn-danger delete">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                    <span>Delete</span>
-                                </button>
                             </div>
-                            <div class="table table-striped files" id="previews">
-                                <div id="template" class="file-row dz-image-preview">
+                            <div id="mydropzone">
+                                <div class="table table-striped files" id="previews">
+                                    <div id="template" class="file-row dz-image-preview">
                                         <!-- This is used as the file preview template -->
                                         <div>
                                             <span class="preview"><img data-dz-thumbnail /></span>
@@ -121,9 +110,21 @@
                                             </div>
                                         </div>
                                         <div>
-                                         
+                                            <button class="btn btn-primary start">
+                                                <i class="glyphicon glyphicon-upload"></i>
+                                                <span>Start</span>
+                                            </button>
+                                            <button data-dz-remove class="btn btn-warning cancel">
+                                                <i class="glyphicon glyphicon-ban-circle"></i>
+                                                <span>Cancel</span>
+                                            </button>
+                                            <button data-dz-remove class="btn btn-danger delete">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                                <span>Delete</span>
+                                            </button>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
