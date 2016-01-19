@@ -14,5 +14,7 @@ namespace LYSAdmin.Domain.HouseManagement
         int AddHouse(HouseViewModel house);
 
         IList<PGDetail> GetPGsByOwnerIDAndAreaID(long OwnerID, int AreaID);
+
+        int InsertHouseImages(HouseViewModel houseViewModel);
     }
 }

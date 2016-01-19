@@ -17,6 +17,76 @@
 @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
 <!-- check whether city and area is selected or not to do operations in Estate-->
 
+@if (TempData.Count > 0 && (bool)TempData["bHouseImageUpload"] == true)
+{
+    <div class="modal inmodal fade in" id="modalUploadHouseImages" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Upload Images</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <form action="~/Estate/HouseImageUpload" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                                <input type="submit" value="Upload" />
+                                <input type="hidden" name="AddedHouseID">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+else if (TempData.Count > 0 && (bool)TempData["bHouseImageUpload"] == false && TempData["Message"] != null)
+{
+    <div class="modal inmodal fade in" id="modalShowMessage" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        @TempData["Message"]
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (TempData["Message"] != null)
+{
+     <div class="modal inmodal fade in" id="modalShowMessage" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        @TempData["Message"]
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary center-block" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <div class="modal inmodal" id="modalSelectCityAndArea" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">

@@ -39,51 +39,77 @@ $(document).ready(function () {
 
     /***********************DropZone Manually creation*****************************/
    
-        var previewNode = document.querySelector("#template");
-        previewNode.id = "";
-        var previewTemplate = previewNode.parentNode.innerHTML;
-        previewNode.parentNode.removeChild(previewNode);
+        //var previewNode = document.querySelector("#template");
+        //previewNode.id = "";
+        //var previewTemplate = previewNode.parentNode.innerHTML;
+        //previewNode.parentNode.removeChild(previewNode);
        
-        var myDropzone = new Dropzone("div#mydropzone", { // Make the whole body a dropzone
-            url: 'Estate/HouseImageUpload', // Set the url
-            thumbnailWidth: 80,
-            thumbnailHeight: 80,
-            parallelUploads: 20,
-            autoDiscover : false,
-            previewTemplate: previewTemplate,
-            autoQueue: false, // Make sure the files aren't queued until manually added
-            previewsContainer: "#previews", // Define the container to display the previews
-            clickable: ".fileinput-button"
-        });
+        //var myDropzone = new Dropzone("div#mydropzone", { // Make the whole body a dropzone
+        //    url: 'Estate/HouseImageUpload', // Set the url
+        //    thumbnailWidth: 80,
+        //    thumbnailHeight: 80,
+        //    parallelUploads: 20,
+        //    autoDiscover : false,
+        //    previewTemplate: previewTemplate,
+        //    autoQueue: false, // Make sure the files aren't queued until manually added
+        //    previewsContainer: "#previews", // Define the container to display the previews
+        //    clickable: ".fileinput-button"
+        //});
 
-        myDropzone.on("addedfile", function (file) {
-            // Hookup the start button
-            $(".start").click(function(){
-                myDropzone.enqueueFile(file);
-            });
+        //myDropzone.on("addedfile", function (file) {
+        //    // Hookup the start button
+        //    $(".start").click(function(){
+        //        myDropzone.enqueueFile(file);
+        //    });
                
-        });
+        //});
 
-        // Update the total progress bar
-        myDropzone.on("totaluploadprogress", function (progress) {
-            $("#total-progress .progress-bar").style.width = progress + "%";
-        });
+        //// Update the total progress bar
+        //myDropzone.on("totaluploadprogress", function (progress) {
+        //    $("#total-progress .progress-bar").style.width = progress + "%";
+        //});
 
-        myDropzone.on("sending", function (file) {
-            // Show the total progress bar when upload starts
-           $("#total-progress").style.opacity = "1";
-            // And disable the start button
-            $(".start").setAttribute("disabled", "disabled");
-        });
+        //myDropzone.on("sending", function (file) {
+        //    // Show the total progress bar when upload starts
+        //   $("#total-progress").style.opacity = "1";
+        //    // And disable the start button
+        //    $(".start").setAttribute("disabled", "disabled");
+        //});
 
-        // Hide the total progress bar when nothing's uploading anymore
-        myDropzone.on("queuecomplete", function (progress) {
-            $("#total-progress").style.opacity = "0";
-        });
+        //// Hide the total progress bar when nothing's uploading anymore
+        //myDropzone.on("queuecomplete", function (progress) {
+        //    $("#total-progress").style.opacity = "0";
+        //});
 
        
 
-    
+    //File Upload response from the server
+    Dropzone.options.dropzoneForm = {
+        maxFiles: 5,
+        init: function () {
+            this.on("maxfilesexceeded", function (data) {
+                var res = eval('(' + data.xhr.responseText + ')');
+            });
+            this.on("addedfile", function (file) {
+                // Create the remove button
+                var removeButton = Dropzone.createElement("<button>Remove file</button>");
+                // Capture the Dropzone instance as closure.
+                var _this = this;
+                // Listen to the click event
+                removeButton.addEventListener("click", function (e) {
+                    // Make sure the button click doesn't submit the form:
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Remove the file preview.
+                    _this.removeFile(file);
+                    // If you want to the delete the file on the server as well,
+                    // you can do the AJAX request here.
+                });
+                // Add the button to the file preview element.
+                file.previewElement.appendChild(removeButton);
+            });
+        }
+    };
    
     /***********************DropZone Manually creation*****************************/
     //apartmet seletion change
@@ -120,6 +146,7 @@ $(document).ready(function () {
 
     //modify for PGDetail
     $("select[name='PGDetailID']").change(function () {
+        alert("hi")
         //visible div block
         $('#divApartments').removeClass('hidden');
         $('#txtHouseName').attr("readonly", false);
@@ -200,8 +227,8 @@ $(document).ready(function () {
 
             //initialization of the map based on area and city
            // initialize();
-            $('#linkcollapseHouseImages').attr('href', '#collapseHouseImage'); //activate collapseable functionality through linking it with the target id 
-            $('#collapseHouseImage').addClass('in');//open Locality panel
+            $('#linkcollapseBasicAmenities').attr('href', '#collapseBasicAmenities'); //activate collapseable functionality through linking it with the target id 
+            $('#collapseBasicAmenities').addClass('in');//open Locality panel
         }
     });
 

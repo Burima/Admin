@@ -25,6 +25,7 @@ namespace LYSAdmin.Model
         public IList<Room> Rooms { get; set; }
         public IList<PGDetail> PGDetails { get; set; }
 
+        public IList<string> HouseImages { get; set; }
         public int PGDetailID { get; set; }
         public int ApartmentID { get; set; }
         public int BlockID { get; set; }        
@@ -34,6 +35,8 @@ namespace LYSAdmin.Model
         public PGDetail PGdetail { get; set; }
 
         public bool HasApartment { get; set; }
+
+        public int AddedHouseID { get; set; }
 
     }
 

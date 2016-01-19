@@ -19,6 +19,7 @@ namespace LYSAdmin.Domain.HouseManagement
         private IBaseRepository<Data.DBEntity.Bed> bedRepository = null;
         private IBaseRepository<Data.DBEntity.Apartment> apartmentRepository = null;
         private IBaseRepository<Data.DBEntity.Block> blockRepository = null;
+        private IBaseRepository<Data.DBEntity.HouseImage> houseImageRepository = null;
         public HouseManagement()
         {
             unitOfWork = new UnitOfWork();
@@ -29,6 +30,7 @@ namespace LYSAdmin.Domain.HouseManagement
             bedRepository = new BaseRepository<Data.DBEntity.Bed>(unitOfWork);
             apartmentRepository = new BaseRepository<Data.DBEntity.Apartment>(unitOfWork);
             blockRepository = new BaseRepository<Data.DBEntity.Block>(unitOfWork);
+            houseImageRepository = new BaseRepository<Data.DBEntity.HouseImage>(unitOfWork);
             //automapper 
             Mapper.CreateMap<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>();
             Mapper.CreateMap<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>();
@@ -352,7 +354,7 @@ namespace LYSAdmin.Domain.HouseManagement
 
             }
 
-            return count;//Saving the changes to DB
+            return dbHouse.HouseID;//Saving the changes to DB
 
         }
         public int UpdateHouse(LYSAdmin.Model.HouseViewModel houseViewModel)
@@ -443,6 +445,27 @@ namespace LYSAdmin.Domain.HouseManagement
                                            }).ToList();
             return allPGs;
         }
+
+        public int InsertHouseImages(HouseViewModel houseViewModel)
+        {
+            
+            if(houseViewModel.HouseImages.Count > 0){
+                foreach(string imagePath in houseViewModel.HouseImages){
+                    var houseImage = new LYSAdmin.Data.DBEntity.HouseImage();
+                    houseImage.HouseID = houseViewModel.AddedHouseID;
+                    houseImage.ImagePath = imagePath;
+                    houseImage.CreatedOn = DateTime.Now;
+                    houseImage.LastUpdatedOn = DateTime.Now;
+
+                    houseImageRepository.Insert(houseImage);
+                }
+            }
+
+            int count =  unitOfWork.SaveChanges();
+
+            return count;
+        }
+
 
     }
 }

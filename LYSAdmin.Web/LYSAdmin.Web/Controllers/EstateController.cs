@@ -287,26 +287,59 @@ namespace LYSAdmin.Web.Controllers
         [HttpPost]
         public ActionResult AddHouse(HouseViewModel houseViewModel)
         {
-            //houseViewModel.AreaID = GetAreaID();
-            houseViewModel.House.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
-            int count = houseManagement.AddHouse(houseViewModel);
+            if (ModelState.IsValid)
+            {
+                houseViewModel.House.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
+                if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
+                {
+                    int houseID = houseManagement.AddHouse(houseViewModel);
+                    if (houseID > 0)
+                    {
+                        TempData["bHouseImageUpload"] = true;
+                        //Apartment Inserted Successfully
+                        houseViewModel.AddedHouseID = houseID;
+                    }
+                    else
+                    {
+                        TempData["bHouseImageUpload"] = false;
+                        //Insertion failed
+                        TempData["Message"] = "Houses couldn't be added. Please try again later.";
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = "SelectArea"; //Area is not selected for session..Redirect to View to Selet the Area
+                }
+            }
+            else
+            {
+                //Insertion failed
+                TempData["Message"] = "House couldn't be added. Please try again later.";
 
+            }
             return RedirectToAction("Houses", "Estate");
         }
 
         [HttpPost]
-        public ActionResult HouseImageUpload()
+        public ActionResult HouseImageUpload(HouseViewModel houseViewModel)
         {
             foreach (var fileKey in Request.Files.AllKeys)
             {
                 var file = Request.Files[fileKey];
+                IList<string> houseImageList = new List<string>();
                 try
                 {
                     if (file != null)
                     {
-                        var fileName = Path.GetFileName(file.FileName) + String.Format("{0:d-M-yyyy HH-mm-ss}", DateTime.Now);
-                        var path = Path.Combine(Server.MapPath("~/files/HouseImages/"), fileName);
+                        var fileName = Path.GetFileName(file.FileName);
+                        var path = Server.MapPath("~/files/HouseImages/" + houseViewModel.AddedHouseID + "/");
+                        bool isExists = System.IO.Directory.Exists(path);
+                        if (!isExists)
+                            System.IO.Directory.CreateDirectory(path);
+
+                        path =   Path.Combine(path, fileName);
                         file.SaveAs(path);
+                        houseViewModel.HouseImages.Add(path);
                     }
                 }
                 catch (Exception ex)
@@ -314,6 +347,8 @@ namespace LYSAdmin.Web.Controllers
                     return Json(new { Message = "Error in saving file" });
                 }
             }
+
+            houseManagement.InsertHouseImages(houseViewModel);
             return Json(new { Message = "File saved" });
         }
         #endregion Houses
