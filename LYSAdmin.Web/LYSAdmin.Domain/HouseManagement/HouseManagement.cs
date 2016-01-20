@@ -211,7 +211,7 @@ namespace LYSAdmin.Domain.HouseManagement
             int count = 0;
             int PGDetailID = houseViewModel.PGDetailID;
             int OwnerID = houseViewModel.OwnerID;
-           
+            int AddedHouseID = 0;
             //create default apartment/block 
              if(houseViewModel.ApartmentID <= 0){
                   var defaultApartment =(from pg in pgDetailRepository.Get() join
@@ -295,11 +295,13 @@ namespace LYSAdmin.Domain.HouseManagement
             dbHouse.LastUpdatedOn = DateTime.Now;
             houseRepository.Insert(dbHouse);//Inserting new house
             count = unitOfWork.SaveChanges();
+            
             if (count > 0)
             {
                 //insert house amenity
                 var dbHouseAmenity = Mapper.Map<LYSAdmin.Model.HouseAmenity, LYSAdmin.Data.DBEntity.HouseAmenity>(houseViewModel.HouseAmenity);
                 dbHouseAmenity.HouseID = dbHouse.HouseID;
+                AddedHouseID = dbHouse.HouseID;
                 dbHouseAmenity.CreatedOn = DateTime.Now;
                 dbHouseAmenity.LastUpdatedOn = DateTime.Now;
                 houseAmenityRepository.Insert(dbHouseAmenity);
@@ -354,7 +356,7 @@ namespace LYSAdmin.Domain.HouseManagement
 
             }
 
-            return dbHouse.HouseID;//Saving the changes to DB
+            return AddedHouseID;//Saving the changes to DB
 
         }
         public int UpdateHouse(LYSAdmin.Model.HouseViewModel houseViewModel)

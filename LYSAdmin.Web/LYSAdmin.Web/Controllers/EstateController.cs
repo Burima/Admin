@@ -24,7 +24,8 @@ namespace LYSAdmin.Web.Controllers
         Apartment apartment = new Apartment();
         PGDetail pgDetail = new PGDetail();
         HouseViewModel houseViewModel = new HouseViewModel();
-        public EstateController(ApartmentManagement apartmentManagement, BlockManagement blockManagement, HouseManagement houseManagement, PGDetailManagement pgDetailManagement)
+        public EstateController(ApartmentManagement apartmentManagement, BlockManagement blockManagement, 
+            HouseManagement houseManagement, PGDetailManagement pgDetailManagement)
         {
             this.apartmentManagement = apartmentManagement;
             this.blockManagement = blockManagement;
@@ -276,7 +277,7 @@ namespace LYSAdmin.Web.Controllers
 
         // GET: Estate/Houses
         [HttpGet]
-        public ActionResult Houses()
+        public ActionResult Houses(HouseViewModel houseViewModel)
         {
             houseViewModel.PGDetails = houseManagement.GetPGsByOwnerIDAndAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
             return View("Houses", houseViewModel);
@@ -296,7 +297,6 @@ namespace LYSAdmin.Web.Controllers
                     if (houseID > 0)
                     {
                         TempData["bHouseImageUpload"] = true;
-                        //Apartment Inserted Successfully
                         houseViewModel.AddedHouseID = houseID;
                     }
                     else
@@ -317,7 +317,7 @@ namespace LYSAdmin.Web.Controllers
                 TempData["Message"] = "House couldn't be added. Please try again later.";
 
             }
-            return RedirectToAction("Houses", "Estate");
+            return RedirectToAction("Houses", "Estate", houseViewModel);
         }
 
         [HttpPost]
