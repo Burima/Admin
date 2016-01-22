@@ -321,12 +321,13 @@ namespace LYSAdmin.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult HouseImageUpload(HouseViewModel houseViewModel)
+        public ActionResult SaveHouseImageToServerPath(HouseViewModel houseViewModel)
         {
+            houseViewModel.HouseImages = new List<string>();
             foreach (var fileKey in Request.Files.AllKeys)
             {
                 var file = Request.Files[fileKey];
-                IList<string> houseImageList = new List<string>();
+               
                 try
                 {
                     if (file != null)
@@ -348,11 +349,29 @@ namespace LYSAdmin.Web.Controllers
                 }
             }
 
-            houseManagement.InsertHouseImages(houseViewModel);
-            return Json(new { Message = "File saved" });
-        }
-        #endregion Houses
+            //houseManagement.InsertHouseImages(houseViewModel);
 
+            return Json(houseViewModel);
+        }
+
+        [HttpPost]
+
+        #endregion Houses
+        public ActionResult HouseImageUpload(HouseViewModel houseViewModel)
+        {
+            int count = houseManagement.InsertHouseImages(houseViewModel);
+            if (count > 0)
+            {
+                TempData["Message"] = "Images uploaded successfully";
+            }
+            else
+            {
+                TempData["Message"] = "Uploading images failed.Please try again.";
+            }
+
+            return View("Houses", "Estate", houseViewModel);
+            
+        }
         public ActionResult Rooms()
         {
             return View();

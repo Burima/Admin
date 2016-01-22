@@ -413,6 +413,7 @@ function fnShowModalNewPGInsertion() {
 
 
 $("#UploadImage").click(function () {
+
     $.ajax({
         url: ImageUploadUrl,
         type: 'POST',

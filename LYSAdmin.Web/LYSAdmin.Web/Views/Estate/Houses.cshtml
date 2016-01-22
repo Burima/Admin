@@ -28,17 +28,20 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <form action="~/Estate/HouseImageUpload" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+                        <form action="~/Estate/SaveHouseImageToServerPath" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
                             <div class="fallback">
                                 <input name="file" type="file" multiple />
                                 <input type="submit" value="Upload" />
                                 <input type="hidden" name="AddedHouseID">
+                                <input type="hidden" name="HouseImages">
                             </div>
                         </form>
                     </div>
 
                 </div>
-
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary center-block" data-dismiss="modal" value="Upload Images" id="UploadImage"/>
+                </div>
             </div>
         </div>
     </div>
