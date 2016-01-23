@@ -448,13 +448,16 @@ namespace LYSAdmin.Domain.HouseManagement
             return allPGs;
         }
 
-        public int InsertHouseImages(HouseViewModel houseViewModel)
+        public int InsertHouseImages(IDictionary<int, List<string>> houseImageMap)
         {
-            
-            if(houseViewModel.HouseImages.Count > 0){
-                foreach(string imagePath in houseViewModel.HouseImages){
+
+            if (houseImageMap.Count > 0)
+            {
+               
+                foreach (string imagePath in houseImageMap.Values.FirstOrDefault())
+                {
                     var houseImage = new LYSAdmin.Data.DBEntity.HouseImage();
-                    houseImage.HouseID = houseViewModel.AddedHouseID;
+                    houseImage.HouseID = houseImageMap.Keys.FirstOrDefault();
                     houseImage.ImagePath = imagePath;
                     houseImage.CreatedOn = DateTime.Now;
                     houseImage.LastUpdatedOn = DateTime.Now;

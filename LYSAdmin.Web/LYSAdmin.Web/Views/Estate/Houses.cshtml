@@ -11,13 +11,15 @@
     //cityname and areaname
     var CityName = Session["CityName"] != null ? Convert.ToString(Session["CityName"]) : String.Empty;
     var AreaName = Session["AreaName"] != null ? Convert.ToString(Session["AreaName"]) : String.Empty;
+    var showMessage = TempData["Message"] != null ? true : false;
+    var houseImage = Session["HouseImageList"] != null ? true : false;
 }
 <link href='@Url.Content("~/Content/Custom/Houses.css")' rel="stylesheet" />
 <!-- Datatable Css-->
 @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
 <!-- check whether city and area is selected or not to do operations in Estate-->
 
-@if (TempData.Count > 0 && (bool)TempData["bHouseImageUpload"] == true)
+@if (Session["HouseImageList"] != null)
 {
     <div class="modal inmodal fade in" id="modalUploadHouseImages" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
         <div class="modal-dialog">
@@ -28,14 +30,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <form action="~/Estate/SaveHouseImageToServerPath" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
-                            <div class="fallback">
+                        @using (Ajax.BeginForm("SaveHouseImageToServerPath", "Estate", FormMethod.Post, new AjaxOptions { HttpMethod = "POST" }, new { @class = "dropzone", id = "dropzoneForm" }))
+                        {
+                             <div class="fallback">
                                 <input name="file" type="file" multiple />
                                 <input type="submit" value="Upload" />
                                 <input type="hidden" name="AddedHouseID">
                                 <input type="hidden" name="HouseImages">
                             </div>
-                        </form>
+                        }
+                       
                     </div>
 
                 </div>
@@ -70,7 +74,7 @@ else if (TempData.Count > 0 && (bool)TempData["bHouseImageUpload"] == false && T
 
 @if (TempData["Message"] != null)
 {
-     <div class="modal inmodal fade in" id="modalShowMessage" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
+     <div class="modal inmodal fade" id="modalShowMessage" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">

@@ -413,23 +413,20 @@ function fnShowModalNewPGInsertion() {
 
 
 $("#UploadImage").click(function () {
-
+   
     $.ajax({
         url: ImageUploadUrl,
         type: 'POST',
-        data: jmodel,
-        dataType: 'JSON',
+        dataType: 'json',
         success: function (response, textStatus, XMLHttpRequest) {
             if (response.toUpperCase() == "SUCCESS") {
-                alert('successful');
-            } else if (response.toUpperCase() == "FAILED") {
-                alert('something went wrong. Please try again!');
-                //Adding of new Apartment failed
+                alert(response);
+                $('#modalUploadHouseImages').modal('hide');
+                hideProgress();
             }
-            hideProgress();
         },
         error: function (xhr, status) {
-            alert('error');
+            $('#modalUploadHouseImages').modal('hide');
             hideProgress();
         }
     });

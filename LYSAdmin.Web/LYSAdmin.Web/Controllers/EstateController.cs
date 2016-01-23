@@ -277,7 +277,7 @@ namespace LYSAdmin.Web.Controllers
 
         // GET: Estate/Houses
         [HttpGet]
-        public ActionResult Houses(HouseViewModel houseViewModel)
+        public ActionResult Houses()
         {
             houseViewModel.PGDetails = houseManagement.GetPGsByOwnerIDAndAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
             return View("Houses", houseViewModel);
@@ -290,6 +290,7 @@ namespace LYSAdmin.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                IDictionary<int, List<string>> houseImage = new Dictionary<int, List<string>>();
                 houseViewModel.House.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
                 if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
                 {
@@ -297,7 +298,8 @@ namespace LYSAdmin.Web.Controllers
                     if (houseID > 0)
                     {
                         TempData["bHouseImageUpload"] = true;
-                        houseViewModel.AddedHouseID = houseID;
+                        houseImage.Add(houseID,new List<string>());
+                        Session["HouseImageList"] = houseImage;
                     }
                     else
                     {
@@ -317,61 +319,65 @@ namespace LYSAdmin.Web.Controllers
                 TempData["Message"] = "House couldn't be added. Please try again later.";
 
             }
-            return RedirectToAction("Houses", "Estate", houseViewModel);
+            return RedirectToAction("Houses", "Estate");
         }
 
         [HttpPost]
-        public ActionResult SaveHouseImageToServerPath(HouseViewModel houseViewModel)
+        public ActionResult SaveHouseImageToServerPath()
         {
-            houseViewModel.HouseImages = new List<string>();
             foreach (var fileKey in Request.Files.AllKeys)
             {
                 var file = Request.Files[fileKey];
                
                 try
                 {
-                    if (file != null)
+                    if (file != null && Session["HouseImageList"] != null)
                     {
+                        IDictionary<int, List<string>> houseImageMap = (Dictionary<int, List<string>>)Session["HouseImageList"];
+                        int houseID = houseImageMap.Keys.FirstOrDefault();
                         var fileName = Path.GetFileName(file.FileName);
-                        var path = Server.MapPath("~/files/HouseImages/" + houseViewModel.AddedHouseID + "/");
+                        var path = Server.MapPath("~/files/HouseImages/" + houseID + "/");
                         bool isExists = System.IO.Directory.Exists(path);
                         if (!isExists)
                             System.IO.Directory.CreateDirectory(path);
 
                         path =   Path.Combine(path, fileName);
                         file.SaveAs(path);
-                        houseViewModel.HouseImages.Add(path);
+                        houseImageMap[houseID].Add(path);
                     }
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     return Json(new { Message = "Error in saving file" });
                 }
             }
-
-            //houseManagement.InsertHouseImages(houseViewModel);
-
-            return Json(houseViewModel);
+            
+            return Json(new { Message = "File saved" });
+           
         }
 
         [HttpPost]
-
-        #endregion Houses
-        public ActionResult HouseImageUpload(HouseViewModel houseViewModel)
+        public ActionResult HouseImageUpload()
         {
-            int count = houseManagement.InsertHouseImages(houseViewModel);
+            int count = houseManagement.InsertHouseImages((Dictionary<int, List<string>>)Session["HouseImageList"]);
             if (count > 0)
             {
+               
                 TempData["Message"] = "Images uploaded successfully";
+                Session["HouseImageList"] = null;
+                return Json("SUCCESS");
             }
             else
             {
+                Session["HouseImageList"] = null;
                 TempData["Message"] = "Uploading images failed.Please try again.";
+                return Json("FAILED");
             }
-
-            return View("Houses", "Estate", houseViewModel);
             
-        }
+           }
+        #endregion Houses
+      
         public ActionResult Rooms()
         {
             return View();
