@@ -8,7 +8,11 @@ var blocks;
 eval("var areaList = " + Areas);
 
 $(document).ready(function () {
+    //newly added house info..soon after popup for house images will appear
    
+    if (AddedHouseID != 0) {
+        $('#modalUploadHouseImages').modal('show');
+    }
      //if area is not selected show modal
     //for select City and fnOpenBasicAmenities()
     if (AreaID == 0) {
@@ -34,54 +38,6 @@ $(document).ready(function () {
         $('#divHouses').hide();
         $('#divAddHouse').show();
      });
-
-  
-
-    /***********************DropZone Manually creation*****************************/
-   
-        //var previewNode = document.querySelector("#template");
-        //previewNode.id = "";
-        //var previewTemplate = previewNode.parentNode.innerHTML;
-        //previewNode.parentNode.removeChild(previewNode);
-       
-        //var myDropzone = new Dropzone("div#mydropzone", { // Make the whole body a dropzone
-        //    url: 'Estate/HouseImageUpload', // Set the url
-        //    thumbnailWidth: 80,
-        //    thumbnailHeight: 80,
-        //    parallelUploads: 20,
-        //    autoDiscover : false,
-        //    previewTemplate: previewTemplate,
-        //    autoQueue: false, // Make sure the files aren't queued until manually added
-        //    previewsContainer: "#previews", // Define the container to display the previews
-        //    clickable: ".fileinput-button"
-        //});
-
-        //myDropzone.on("addedfile", function (file) {
-        //    // Hookup the start button
-        //    $(".start").click(function(){
-        //        myDropzone.enqueueFile(file);
-        //    });
-               
-        //});
-
-        //// Update the total progress bar
-        //myDropzone.on("totaluploadprogress", function (progress) {
-        //    $("#total-progress .progress-bar").style.width = progress + "%";
-        //});
-
-        //myDropzone.on("sending", function (file) {
-        //    // Show the total progress bar when upload starts
-        //   $("#total-progress").style.opacity = "1";
-        //    // And disable the start button
-        //    $(".start").setAttribute("disabled", "disabled");
-        //});
-
-        //// Hide the total progress bar when nothing's uploading anymore
-        //myDropzone.on("queuecomplete", function (progress) {
-        //    $("#total-progress").style.opacity = "0";
-        //});
-
-       
 
     //File Upload response from the server
     Dropzone.options.dropzoneForm = {
@@ -116,7 +72,6 @@ $(document).ready(function () {
     $("select[name='ApartmentID']").change(function () {
         //visible div block
         $('#divBlocks').removeClass('hidden');
-
         var blocks = $(this).find(':selected').attr('blocks');
         eval("var blockList = " + blocks);
        
@@ -124,20 +79,20 @@ $(document).ready(function () {
            by default it will contain [] so length will two if there is no blocks
         */
         if (Object.keys(blocks).length > 2) {
-            //make no block found invisible
-            $('#spnNoBlockFound').addClass("hidden");
-            $('#ddlBlocks').removeClass('hidden');
-            //add all the block to the ddl for the selected apartment
-            //default option
-            $('#ddlBlocks').empty();
-            $('#ddlBlocks').append(
-                   $('<option value="" disabled selected></option>').html("--Select Block--")
-               );
-            $.each(blockList, function (i, block) {
+                //make no block found invisible
+                $('#spnNoBlockFound').addClass("hidden");
+                $('#ddlBlocks').removeClass('hidden');
+                //add all the block to the ddl for the selected apartment
+                //default option
+                $('#ddlBlocks').empty();
                 $('#ddlBlocks').append(
-                $('<option></option>').val(block.BlockID).html(block.BlockName)
-               );
-            });
+                       $('<option value="" disabled selected></option>').html("--Select Block--")
+                   );
+                $.each(blockList, function (i, block) {
+                        $('#ddlBlocks').append(
+                        $('<option></option>').val(block.BlockID).html(block.BlockName));
+                });
+            
         } else {
             $('#spnNoBlockFound').removeClass("hidden");
             $('#ddlBlocks').addClass('hidden');
@@ -146,36 +101,38 @@ $(document).ready(function () {
 
     //modify for PGDetail
     $("select[name='PGDetailID']").change(function () {
-        alert("hi")
-        //visible div block
+         //visible div block
         $('#divApartments').removeClass('hidden');
         $('#txtHouseName').attr("readonly", false);
         $('#txtDisplayName').attr("readonly", false);
         $('#txtDescription').attr("readonly", false);
         $('#btnNextBasicInformation').attr("disabled", false);
         var apartments = $(this).find(':selected').attr('apartments');
-        
-        eval("var apartmentList = " + apartments);
+         eval("var apartmentList = " + apartments);
         //alert(apartments.jsonApartments.length);
         /* number of items in features array
            by default it will contain [] so length will two if there is no blocks
         */
-        if (Object.keys(apartments).length > 2) {
-            //make no block found invisible
-            $('#spnNoApartmentFound').addClass("hidden");
-            $('#ddlApartments').removeClass('hidden');
-            //add all the block to the ddl for the selected apartment
-            //default option
-            $('#ddlApartments').empty();
-            $('#ddlApartments').append(
-                   $('<option value="" disabled selected ></option>').html("--Select Apartment--")
-               );
-            
-            $.each(apartmentList, function (i, apartment) {
+        if (Object.keys(apartments).length > 2 ) {
+                //make no block found invisible
+                $('#spnNoApartmentFound').addClass("hidden");
+                $('#ddlApartments').removeClass('hidden');
+                //add all the block to the ddl for the selected apartment
+                //default option
+                $('#ddlApartments').empty();
                 $('#ddlApartments').append(
-                $('<option></option>').val(apartment.ApartmentID).html(apartment.ApartmentName).attr('blocks', JSON.stringify(apartment.Blocks))
-               );
-            });
+                       $('<option value="" disabled selected ></option>').html("--Select Apartment--")
+                   );
+            
+                $.each(apartmentList, function (i, apartment) {
+                   
+                        $('#ddlApartments').append(
+                        $('<option></option>').val(apartment.ApartmentID).html(apartment.ApartmentName).attr('blocks', JSON.stringify(apartment.Blocks))
+                       );
+
+                });
+            
+           
         } else {
             $('#spnNoApartmentFound').removeClass("hidden");
             $('#ddlApartments').addClass('hidden');
@@ -422,12 +379,12 @@ $("#UploadImage").click(function () {
             if (response.toUpperCase() == "SUCCESS") {
                 alert(response);
                 $('#modalUploadHouseImages').modal('hide');
-                hideProgress();
+               
             }
         },
         error: function (xhr, status) {
             $('#modalUploadHouseImages').modal('hide');
-            hideProgress();
+           
         }
     });
 });

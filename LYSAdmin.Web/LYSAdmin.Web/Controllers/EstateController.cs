@@ -24,6 +24,7 @@ namespace LYSAdmin.Web.Controllers
         Apartment apartment = new Apartment();
         PGDetail pgDetail = new PGDetail();
         HouseViewModel houseViewModel = new HouseViewModel();
+       
         public EstateController(ApartmentManagement apartmentManagement, BlockManagement blockManagement, 
             HouseManagement houseManagement, PGDetailManagement pgDetailManagement)
         {
@@ -277,9 +278,17 @@ namespace LYSAdmin.Web.Controllers
 
         // GET: Estate/Houses
         [HttpGet]
-        public ActionResult Houses()
+        public ActionResult Houses(int AddedHouseID=0)
         {
-            houseViewModel.PGDetails = houseManagement.GetPGsByOwnerIDAndAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
+            if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
+            {
+                houseViewModel.PGDetails = houseManagement.GetPGsByOwnerIDAndAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
+            }
+            else
+            {
+                TempData["Message"] = "SelectArea"; 
+            }
+            houseViewModel.AddedHouseID = AddedHouseID;
             return View("Houses", houseViewModel);
 
         }
@@ -288,25 +297,19 @@ namespace LYSAdmin.Web.Controllers
         [HttpPost]
         public ActionResult AddHouse(HouseViewModel houseViewModel)
         {
+            int houseID =0;
             if (ModelState.IsValid)
             {
-                IDictionary<int, List<string>> houseImage = new Dictionary<int, List<string>>();
+                //IDictionary<int, List<string>> houseImage = new Dictionary<int, List<string>>();
                 houseViewModel.House.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
                 if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
                 {
-                    int houseID = houseManagement.AddHouse(houseViewModel);
-                    if (houseID > 0)
+                    houseID = houseManagement.AddHouse(houseViewModel);
+                    if (houseID <=0)
                     {
-                        TempData["bHouseImageUpload"] = true;
-                        houseImage.Add(houseID,new List<string>());
-                        Session["HouseImageList"] = houseImage;
-                    }
-                    else
-                    {
-                        TempData["bHouseImageUpload"] = false;
-                        //Insertion failed
                         TempData["Message"] = "Houses couldn't be added. Please try again later.";
                     }
+                   
                 }
                 else
                 {
@@ -319,22 +322,23 @@ namespace LYSAdmin.Web.Controllers
                 TempData["Message"] = "House couldn't be added. Please try again later.";
 
             }
-            return RedirectToAction("Houses", "Estate");
+            return RedirectToAction("Houses", "Estate", new { AddedHouseID = houseID }); 
         }
 
         [HttpPost]
-        public ActionResult SaveHouseImageToServerPath()
+        public ActionResult SaveHouseImageToServerPath(HouseViewModel houseViewModel)
         {
+            IDictionary<int, List<string>> houseImageMap;
+            int houseID = houseViewModel.AddedHouseID;
             foreach (var fileKey in Request.Files.AllKeys)
             {
                 var file = Request.Files[fileKey];
                
                 try
                 {
-                    if (file != null && Session["HouseImageList"] != null)
+                    if (file != null)
                     {
-                        IDictionary<int, List<string>> houseImageMap = (Dictionary<int, List<string>>)Session["HouseImageList"];
-                        int houseID = houseImageMap.Keys.FirstOrDefault();
+
                         var fileName = Path.GetFileName(file.FileName);
                         var path = Server.MapPath("~/files/HouseImages/" + houseID + "/");
                         bool isExists = System.IO.Directory.Exists(path);
@@ -343,7 +347,19 @@ namespace LYSAdmin.Web.Controllers
 
                         path =   Path.Combine(path, fileName);
                         file.SaveAs(path);
-                        houseImageMap[houseID].Add(path);
+                        if (Session["HouseImageList"] == null)
+                        {
+                            houseImageMap = new Dictionary<int, List<string>>();
+                            houseImageMap.Add(houseID, new List<string>() { path});
+                            Session["HouseImageList"] = houseImageMap;
+                        }
+                        
+                        else
+                        {
+                            houseImageMap = (Dictionary<int, List<string>>)Session["HouseImageList"];
+                            houseImageMap[houseID].Add(path);
+                        }
+                       
                     }
                 }
                 catch (Exception ex)
@@ -352,7 +368,7 @@ namespace LYSAdmin.Web.Controllers
                     return Json(new { Message = "Error in saving file" });
                 }
             }
-            
+          
             return Json(new { Message = "File saved" });
            
         }

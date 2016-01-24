@@ -450,8 +450,8 @@ namespace LYSAdmin.Domain.HouseManagement
 
         public int InsertHouseImages(IDictionary<int, List<string>> houseImageMap)
         {
-
-            if (houseImageMap.Count > 0)
+            
+            if (houseImageMap!= null && houseImageMap.Count > 0)
             {
                
                 foreach (string imagePath in houseImageMap.Values.FirstOrDefault())
