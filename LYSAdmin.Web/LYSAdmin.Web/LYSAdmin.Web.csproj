@@ -351,6 +351,7 @@
     <Content Include="Images\gallery\9.jpg" />
     <Content Include="Images\gallery\9s.jpg" />
     <Content Include="Images\header.jpg" />
+    <Content Include="Images\marker-green.png" />
     <Content Include="Images\off_canvas.jpg" />
     <Content Include="Images\p1.jpg" />
     <Content Include="Images\p2.jpg" />
@@ -367,6 +368,7 @@
     <Content Include="Images\p_big2.jpg" />
     <Content Include="Images\p_big3.jpg" />
     <Content Include="Images\spinner01.gif" />
+    <Content Include="Images\stars.png" />
     <Content Include="Images\zender_logo.png" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
