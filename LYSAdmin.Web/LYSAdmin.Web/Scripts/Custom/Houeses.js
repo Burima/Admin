@@ -9,24 +9,24 @@ eval("var areaList = " + Areas);
 
 $(document).ready(function () {
     //newly added house info..soon after popup for house images will appear
-   
+
     if (AddedHouseID != 0) {
         $('#modalUploadHouseImages').modal('show');
     }
-     //if area is not selected show modal
+    //if area is not selected show modal
     //for select City and fnOpenBasicAmenities()
     if (AreaID == 0) {
         fnChangeLocation();
     }
-   
+
     //set char limli of all the inputs
     charlimit();
     inputkeyup();
 
-     //view all apartments
+    //view all apartments
     $('#divHouses').show();
     $('#divAddHouse').hide();
-    
+
 
     //Initialize data table
     $('.dataTables-houses').dataTable({
@@ -37,7 +37,7 @@ $(document).ready(function () {
     $('.btn-show-add-house').click(function () {
         $('#divHouses').hide();
         $('#divAddHouse').show();
-     });
+    });
 
     //File Upload response from the server
     Dropzone.options.dropzoneForm = {
@@ -66,19 +66,24 @@ $(document).ready(function () {
             });
         }
     };
-   
+
     /***********************DropZone Manually creation*****************************/
     //apartmet seletion change
     $("select[name='ApartmentID']").change(function () {
         //visible div block
         $('#divBlocks').removeClass('hidden');
+        var ApartmentID = $("select[name='ApartmentID']").val();
         var blocks = $(this).find(':selected').attr('blocks');
         eval("var blockList = " + blocks);
-       
+
         /* number of items in features array
            by default it will contain [] so length will two if there is no blocks
         */
         if (Object.keys(blocks).length > 2) {
+            if (blockList.length == 1 && blockList[0].BlockName.toUpperCase() == "DEFAULT_BLOCK_" + ApartmentID) {
+                $('#spnNoBlockFound').removeClass("hidden");
+                $('#ddlBlocks').addClass('hidden');
+            } else {
                 //make no block found invisible
                 $('#spnNoBlockFound').addClass("hidden");
                 $('#ddlBlocks').removeClass('hidden');
@@ -89,10 +94,12 @@ $(document).ready(function () {
                        $('<option value="" disabled selected></option>').html("--Select Block--")
                    );
                 $.each(blockList, function (i, block) {
+                    if (block.BlockName.toUpperCase() != "DEFAULT_BLOCK_" + ApartmentID) {
                         $('#ddlBlocks').append(
                         $('<option></option>').val(block.BlockID).html(block.BlockName));
+                    }
                 });
-            
+            }
         } else {
             $('#spnNoBlockFound').removeClass("hidden");
             $('#ddlBlocks').addClass('hidden');
@@ -101,38 +108,43 @@ $(document).ready(function () {
 
     //modify for PGDetail
     $("select[name='PGDetailID']").change(function () {
-         //visible div block
+        //visible div block
         $('#divApartments').removeClass('hidden');
         $('#txtHouseName').attr("readonly", false);
         $('#txtDisplayName').attr("readonly", false);
         $('#txtDescription').attr("readonly", false);
         $('#btnNextBasicInformation').attr("disabled", false);
         var apartments = $(this).find(':selected').attr('apartments');
-         eval("var apartmentList = " + apartments);
+        var PGDetailID = $("select[name='PGDetailID']").val();
+        eval("var apartmentList = " + apartments);
         //alert(apartments.jsonApartments.length);
         /* number of items in features array
            by default it will contain [] so length will two if there is no blocks
         */
-        if (Object.keys(apartments).length > 2 ) {
-                //make no block found invisible
-                $('#spnNoApartmentFound').addClass("hidden");
-                $('#ddlApartments').removeClass('hidden');
-                //add all the block to the ddl for the selected apartment
-                //default option
-                $('#ddlApartments').empty();
-                $('#ddlApartments').append(
-                       $('<option value="" disabled selected ></option>').html("--Select Apartment--")
-                   );
-            
-                $.each(apartmentList, function (i, apartment) {
-                   
-                        $('#ddlApartments').append(
-                        $('<option></option>').val(apartment.ApartmentID).html(apartment.ApartmentName).attr('blocks', JSON.stringify(apartment.Blocks))
-                       );
+        if (Object.keys(apartments).length > 2) {
+            if (apartmentList.length == 1 && [0].ApartmentName.toUpperCase() == "DEFAULT_APARTMENT_" + PGDetailID) {
+                $('#spnNoApartmentFound').removeClass("hidden");
+                $('#ddlApartments').addClass('hidden');
+            }else{
+            //make no block found invisible
+            $('#spnNoApartmentFound').addClass("hidden");
+            $('#ddlApartments').removeClass('hidden');
+            //add all the block to the ddl for the selected apartment
+            //default option
+            $('#ddlApartments').empty();
+            $('#ddlApartments').append(
+                   $('<option value="" disabled selected ></option>').html("--Select Apartment--")
+               );
 
-                });
-            
-           
+            $.each(apartmentList, function (i, apartment) {
+                if (apartment.ApartmentName.toUpperCase() != "DEFAULT_APARTMENT_" + PGDetailID) {
+                $('#ddlApartments').append(
+                $('<option></option>').val(apartment.ApartmentID).html(apartment.ApartmentName).attr('blocks', JSON.stringify(apartment.Blocks))
+               );
+                }
+            });
+             }
+
         } else {
             $('#spnNoApartmentFound').removeClass("hidden");
             $('#ddlApartments').addClass('hidden');
@@ -164,7 +176,7 @@ $(document).ready(function () {
                                          '</div>' +
                                          '<input type="hidden" name="Rooms[' + (i - 1) + '].RoomID" value="' + i + '">' +
                                          '<div class="col-md-3"><input type="text" placeholder="Mothly Rent" class="form-control monthly-rent required" id="Rooms' + i + '.MonthlyRent"    name="Rooms[' + (i - 1) + '].MonthlyRent"/></div>' +
-                                         '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit required" id="Rooms' + i  + '.Deposit" name="Rooms[' + (i - 1) + '].Deposit"/></div></div>';
+                                         '<div class="col-md-3"><input type="text" placeholder="Deposit" class="form-control deposit required" id="Rooms' + i + '.Deposit" name="Rooms[' + (i - 1) + '].Deposit"/></div></div>';
 
                 divRoomDetails.append(newroom);
             }
@@ -183,7 +195,7 @@ $(document).ready(function () {
             //google api function
 
             //initialization of the map based on area and city
-           // initialize();
+            // initialize();
             $('#linkcollapseBasicAmenities').attr('href', '#collapseBasicAmenities'); //activate collapseable functionality through linking it with the target id 
             $('#collapseBasicAmenities').addClass('in');//open Locality panel
         }
@@ -198,7 +210,7 @@ $(document).ready(function () {
             address = address + " " + Area + " " + City;
             updateMarker(address);
         }
-        else {            
+        else {
             $('#txtAddress').css('border-color', 'red');
         }
     });
@@ -211,13 +223,13 @@ $(document).ready(function () {
         $('#collapseDetailInformation').addClass('in');
     });
 
- 
+
 
     //autofill of address
     $(".locality").click(function (e) {
         e.preventDefault();
     });
-    
+
 
 });
 
@@ -233,26 +245,26 @@ function fnOpenBasicAmenities() {
 // Setup the buttons for all transfers
 // The "add files" button doesn't need to be setup because the config
 // `clickable` has already been specified.
-$(".start").click(function() {
+$(".start").click(function () {
     myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
 });
-$(".cancel").click(function() {
+$(".cancel").click(function () {
     myDropzone.removeAllFiles(true);
 });
 
 //show change location modal
 function fnChangeLocation() {
     //prevent click outside and make all keyboard false 
-  $("#modalSelectCityAndArea").modal({ backdrop: 'static', keyboard: false });
+    $("#modalSelectCityAndArea").modal({ backdrop: 'static', keyboard: false });
     //show the modal
-   $('#modalSelectCityAndArea').modal('show');
+    $('#modalSelectCityAndArea').modal('show');
 }
 
 
 
 
 //Change Area when changing City
-$("select[name='CityID']").change(function () {   
+$("select[name='CityID']").change(function () {
     var ddlvalue = $('#ddlCity').val();//get the selected value of ddlCityID
     $('#divArea').removeClass('hidden');//make divArea visible
     $('#ddlArea').empty();//Restart the Areas in a City
@@ -290,12 +302,12 @@ $('#btnSaveLocation').click(function () {
             fnSaveLocation();
         } else {
             //area not selected
-            $('#ddlArea').css('border-color', 'red');            
+            $('#ddlArea').css('border-color', 'red');
         }
 
     } else {
         //city not selected
-        $('#ddlCity').css('border-color', 'red');        
+        $('#ddlCity').css('border-color', 'red');
     }
 });
 
@@ -327,35 +339,35 @@ function fnSaveLocation() {
 
 //on Selection of ISPG radio button ddlSelectPG txtPGName
 function fnGetAllPGs() {
-        //get all PG in the same Area under same owner
-        showProgress(false, "Getting PGs. Please wait...");
-        $.ajax({
-            url: GetPGsByOwnerIDandAreaIDUrl,
-            type: 'GET',           
-            dataType: 'JSON',
-            success: function (response, textStatus, XMLHttpRequest) {
-                var pgList = $.parseJSON(response);
-                
-                if (pgList.length > 0) {
-                   
-                    $('#ddlSelectPG').empty();//Restart the Areas in a City
-                    $('#ddlSelectPG').append(
-                                  $('<option value="0" disabled selected></option>').html("--Select PG--")
-                              );//Appending default value
-                    $.each(pgList, function (i, pg) {                        
-                        $('#ddlSelectPG').append($('<option></option>').val(pg.PGDetailID).html(pg.PGName));
-                    });
-                } else {
-                    fnShowModalNewPGInsertion();
-                }
-                hideProgress();
-            },
-            error: function (xhr, status) {
-                alert('error');
-                hideProgress();
+    //get all PG in the same Area under same owner
+    showProgress(false, "Getting PGs. Please wait...");
+    $.ajax({
+        url: GetPGsByOwnerIDandAreaIDUrl,
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (response, textStatus, XMLHttpRequest) {
+            var pgList = $.parseJSON(response);
+
+            if (pgList.length > 0) {
+
+                $('#ddlSelectPG').empty();//Restart the Areas in a City
+                $('#ddlSelectPG').append(
+                              $('<option value="0" disabled selected></option>').html("--Select PG--")
+                          );//Appending default value
+                $.each(pgList, function (i, pg) {
+                    $('#ddlSelectPG').append($('<option></option>').val(pg.PGDetailID).html(pg.PGName));
+                });
+            } else {
+                fnShowModalNewPGInsertion();
             }
-        });
-   
+            hideProgress();
+        },
+        error: function (xhr, status) {
+            alert('error');
+            hideProgress();
+        }
+    });
+
 }
 
 //this funtion enables new PG insetion inputbox and hides the selectPG ddl
@@ -370,7 +382,7 @@ function fnShowModalNewPGInsertion() {
 
 
 $("#UploadImage").click(function () {
-   
+
     $.ajax({
         url: ImageUploadUrl,
         type: 'POST',
@@ -379,12 +391,12 @@ $("#UploadImage").click(function () {
             if (response.toUpperCase() == "SUCCESS") {
                 alert(response);
                 $('#modalUploadHouseImages').modal('hide');
-               
+
             }
         },
         error: function (xhr, status) {
             $('#modalUploadHouseImages').modal('hide');
-           
+
         }
     });
 });

@@ -36,7 +36,7 @@ namespace LYSAdmin.Domain.ApartmentManagement
                                                             HouseNo=p.HouseNo,
                                                             Description=p.Description,
                                                             LastUpdatedOn=p.LastUpdatedOn,
-                                                            Blocks = (from g in p.Blocks
+                                                            Blocks = (from g in p.Blocks.Where(g=> g.IsDefault == false)
                                                                       select new LYSAdmin.Model.Block
                                                                       {
                                                                           BlockID=g.BlockID,
@@ -128,7 +128,7 @@ namespace LYSAdmin.Domain.ApartmentManagement
                                                  Address = p.Address,
                                                  Description = p.Description,
 
-                                                 Apartments = (from a in p.Apartments
+                                                 Apartments = (from a in p.Apartments.Where(a => a.IsDefault == false)
                                                                select new LYSAdmin.Model.Apartment
                                                                {
                                                                    ApartmentID = a.ApartmentID,
@@ -141,7 +141,7 @@ namespace LYSAdmin.Domain.ApartmentManagement
                                                                      {
                                                                         PGName = h.PGName
                                                                     }).FirstOrDefault(),
-                                                                   Blocks = (from b in a.Blocks
+                                                                   Blocks = (from b in a.Blocks.Where(g => g.IsDefault == false)
                                                                              select new LYSAdmin.Model.Block
                                                                              {
                                                                                  BlockID = b.BlockID,
