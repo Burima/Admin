@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using LYSAdmin.Domain.HouseManagement;
 using LYSAdmin.Domain.PGDetailManagement;
 using System.IO;
+using LYSAdmin.Web.Services.Common;
 
 namespace LYSAdmin.Web.Controllers
 {
@@ -61,6 +62,7 @@ namespace LYSAdmin.Web.Controllers
         }
 
         #region PGDetails
+        [Route("Hostels", Name = RouteNames.Hostels)]
         public ActionResult Hostels()
         {
             if (Session["AreaID"] != null)
@@ -91,7 +93,7 @@ namespace LYSAdmin.Web.Controllers
                     int successCount = pgDetailManagement.AddHostel(pgDetailsViewModel.PGDetail);
                     if (successCount > 0)
                     {
-                        //Apartment Inserted Successfully
+                        //Hostel Inserted Successfully
                         TempData["Message"] = "Hostel Added Successfully";
                     }
                     else
@@ -123,7 +125,7 @@ namespace LYSAdmin.Web.Controllers
             return Json(pgDetail);
         }
 
-        //Edit Apartment
+        //Edit Hostel
         [HttpPost]
         public ActionResult EditHostel(PGDetailsViewModel pgDetailsViewModel)
         {
@@ -151,6 +153,7 @@ namespace LYSAdmin.Web.Controllers
         ///               
         /// </param>
         /// <returns></returns>
+        [Route("Apartments", Name = RouteNames.Apartments)]
         public ActionResult Apartments()
         {
             if (Session["AreaID"] != null)
@@ -278,6 +281,7 @@ namespace LYSAdmin.Web.Controllers
 
         // GET: Estate/Houses
         [HttpGet]
+         [Route("Houses", Name = RouteNames.Houses)]
         public ActionResult Houses(int AddedHouseID=0)
         {
             if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)

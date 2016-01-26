@@ -8,6 +8,7 @@ using LYSAdmin.Web.Utilities;
 using LYSAdmin.Domain.DashboardManagement;
 using LYSAdmin.Model;
 using LYSAdmin.Web.Services;
+using LYSAdmin.Web.Services.Common;
 
 namespace LYSAdmin.Web.Controllers
 {
@@ -24,46 +25,11 @@ namespace LYSAdmin.Web.Controllers
         }
 
          [HttpGet]
+         [Route("Dashboard", Name = RouteNames.Dashboard)]
         public ActionResult Dashboard()
         {
             return View("Dashboard", dashboardManagement.GetCommentsAndRating(SessionManager.GetSessionUser().Id));
         }
 
-        public ActionResult Dashboard_2()
-        {
-            return View();
-        }
-
-        public ActionResult Dashboard_3()
-        {
-            return View();
-        }
-
-        public ActionResult Dashboard_4()
-        {
-            return View();
-        }
-
-        public ActionResult Dashboard_4_1()
-        {
-            return View();
-        }
-
-        private dynamic GetOwnerID()
-        {
-            var user = (Model.User)Session["User"];
-            int ownerID = 0;
-            if (user != null)
-            {
-                /****commented due to identity or DB update****/
-                //ownerID = user.RoleID <= 3 ? user.UserID : user.ManagerID;
-                return ownerID;
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-        }
-    }
+     }
 }

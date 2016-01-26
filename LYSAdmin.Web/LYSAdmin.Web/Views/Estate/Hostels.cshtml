@@ -1,5 +1,6 @@
 ﻿@using LYSAdmin.Model;
 @using Newtonsoft.Json;
+@using LYSAdmin.Web.Services.Common;
 @model LYSAdmin.Model.PGDetailsViewModel
 
 @{
@@ -131,6 +132,7 @@
                                             <td>@pgDetail.Address</td>
                                             <td>@pgDetail.Landmark</td>
                                             <td>
+                                                <a class="btn" href="@Url.Action("AddApartment","Estate")">Add Apartment</a>
                                                 <input type="button" class="btnShowModalBlocks" value="Add Apartment">
                                                 @*<input type="hidden" class="hdnBlocks" value="@JsonConvert.SerializeObject(apartment.Blocks)">*@
                                             </td>
