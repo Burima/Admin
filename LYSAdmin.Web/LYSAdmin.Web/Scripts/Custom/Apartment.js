@@ -3,10 +3,10 @@
 eval("var areaList = " + Areas);
 
 $(document).ready(function () {
-
+    
     //char alone 
     $(".charAlone").on(" keydown ", function (event) { return isCharField(event); });
-
+    
     //if area is not selected show modal
     //for select City and Area
     if (AreaID == 0) {
@@ -17,13 +17,25 @@ $(document).ready(function () {
         $('#modalShowMessage').modal('show');
     }
 
+    if (operation != null && operation == "Add") {
+        //view all apartments
+        $('#divApartments').hide();
+        $('#divAddApartment').show();
+        $('#divEditApartment').hide();
 
-    //view all apartments
-    $('#divApartments').show();
-    $('#divAddApartment').hide();
-    $('#divEditApartment').hide();
+    } else if (operation != null && operation == "Edit") {
+        //view all apartments
+        $('#divApartments').hide();
+        $('#divAddApartment').hide();
+        $('#divEditApartment').show();
 
-
+    } else {
+        //view all apartments
+        $('#divApartments').show();
+        $('#divAddApartment').hide();
+        $('#divEditApartment').hide();
+    }
+    
     //Initialize data table
     $('.dataTables-apartments').dataTable({
         /* Disable initial sort */

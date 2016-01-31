@@ -4,7 +4,7 @@
 <div class="col-sm-9">
     <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-primary pull-right" type="button" onclick="window.location.href='@Url.Action("Apartments", "Estate")'" tabindex="4">View All</button>
+                <button class="btn btn-primary pull-right" type="button" onclick="window.location.href='@Url.Action("Apartments", "Estate", new { operation = ""})'" tabindex="4">View All</button>
             </div>
         </div>
     <div class="row">
@@ -12,7 +12,7 @@
             <h3 class="m-t-none m-b">Add new Apartment</h3>
             @*<p>Add new Apartment today for more expirience.</p>*@
             <br />
-            @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "form-add-an-apartment", style = "min-height:420px", autocomplete = "off" }))
+            @using (Html.BeginForm("AddApartment", "Estate", FormMethod.Post, new { role = "form", id = "form-add-an-apartment", style = "min-height:500px", autocomplete = "off" }))
             {
                 <div class="saving-progress hidden"><h4>Saved!</h4></div>
                 <div class="form-group">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group row-padding-top-5">
                     <div class="pull-right">
-                        <button id="btnCancel" class="btn btn-white" onclick="window.location.href='@Url.Action("Apartments", "Estate")'" type="button" tabindex="4">Cancel</button>
+                        <button id="btnCancel" class="btn btn-white" onclick="window.location.href='@Url.Action("Apartments", "Estate", new { opeartion = ""})'" type="button" tabindex="4">Cancel</button>
                         <button id="btnAddApartment" class="btn btn-primary" type="button" tabindex="5">Save</button>
                     </div>
                 </div>

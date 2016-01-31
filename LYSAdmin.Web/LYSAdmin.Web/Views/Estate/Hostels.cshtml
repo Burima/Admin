@@ -132,9 +132,7 @@
                                             <td>@pgDetail.Address</td>
                                             <td>@pgDetail.Landmark</td>
                                             <td>
-                                                <a class="btn" href="@Url.Action("AddApartment","Estate")">Add Apartment</a>
-                                                <input type="button" class="btnShowModalBlocks" value="Add Apartment">
-                                                @*<input type="hidden" class="hdnBlocks" value="@JsonConvert.SerializeObject(apartment.Blocks)">*@
+                                                <a class="btn" href="@Url.Action("Apartments", "Estate", new { operation = "Add" })">Add Apartment</a>
                                             </td>
                                             <td><input type="button" class="btnDeleteApartment" value="Delete"></td>
                                         </tr>

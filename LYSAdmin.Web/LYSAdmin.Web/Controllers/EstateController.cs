@@ -153,14 +153,14 @@ namespace LYSAdmin.Web.Controllers
         ///               
         /// </param>
         /// <returns></returns>
-        [Route("Apartments", Name = RouteNames.Apartments)]
-        public ActionResult Apartments()
+        [Route("Apartments/{operation?}" , Name = RouteNames.Apartments)]
+        public ActionResult Apartments(string operation)
         {
             if (Session["AreaID"] != null)
             {
                 ApartmentViewModel apartmentViewModel = apartmentManagement.GetApartmentsByAreaID(
                     LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, Convert.ToInt32(Session["AreaID"]));
-                
+                ViewBag.operation = operation;
                 return View(apartmentViewModel);
             }
             else
@@ -169,7 +169,7 @@ namespace LYSAdmin.Web.Controllers
             }
         }
 
-
+      
         /// <summary>
         /// Add New partment
         /// </summary>
