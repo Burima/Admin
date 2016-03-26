@@ -1,9 +1,51 @@
 ﻿@model LYSAdmin.Model.Room
+@using LYSAdmin.Model
+
 @{
     ViewBag.Title = "Rooms";
 
+    var AreaID = Session["AreaID"] != null ? Convert.ToInt32(Session["AreaID"]) : 0;
+    var Areas = System.Web.HttpContext.Current.Application["Areas"] as List<Area>;
+
+    //cityname and areaname
+    var CityName = Session["CityName"] != null ? Convert.ToString(Session["CityName"]) : String.Empty;
+    var AreaName = Session["AreaName"] != null ? Convert.ToString(Session["AreaName"]) : String.Empty;
+    var showMessage = TempData["Message"] != null ? true : false;
+  
 }
 <link href='@Url.Content("~/Content/Custom/Rooms.css")' rel="stylesheet" />
+
+<div class="modal inmodal" id="modalSelectCityAndArea" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Location</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>City</label>
+                    <select id="ddlCity" name="CityID" class="form-control" required>
+                        <option value="" disabled selected>Select City</option>
+                        @foreach (var city in System.Web.HttpContext.Current.Application["Cities"] as IList<City>)
+                        {
+
+                            <option value="@city.CityID">@city.CityName</option>
+                        }
+                    </select>
+
+                </div>
+                <div id="divArea" class="form-group hidden">
+                    <label>Area</label>
+                    <select id="ddlArea" name="AreaID" class="form-control" required></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveLocation">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row  border-bottom white-bg dashboard-header">
     <!--Center Content-->
     <div class="col-sm-12">
@@ -23,7 +65,7 @@
                 </button>
                 <br/>
                 <br/>
-                <div class="row gray-bg" style="padding:10px">
+                @*<div class="row gray-bg" style="padding:10px">
                     <div class="col-md-5 room margin_4_pc">
                         <div class="row">
                             <div class="col-md-4"><a href="#" class="bed_inactive"><i class="fa fa-bed fa-2x"></i></a></div>
@@ -39,49 +81,11 @@
                             <div class="col-md-4"><a href="#" class="bed_active"><i class="fa fa-bed fa-2x"></i></a></div>
                         </div>
                     </div>
-                </div>
-                @using (Html.BeginForm("AddRoom", "Estate", FormMethod.Post, new { role = "form", id = "add-room-form", style = "min-height:420px" }))
-                {
-                    <div class="saving-progress hidden"><h4>Saved!</h4></div>
-                    <div class="form-group">
-                      <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Room Details</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>House Name/Flat Number</label>
-                                            @*<input type="text" placeholder="Enter house no" class="form-control input-large" maxlength="50" tabindex="2">*@
-                                            @*@Html.TextBoxFor(m => m.RoomNumber, new { type = "text", placeholder = "Enter room number", @class = "form-control input-large", maxlength = "50", tabindex = "2" })*@
-                                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Room Number</label>
-                                            @*<input type="text" placeholder="Enter house no" class="form-control input-large" maxlength="50" tabindex="2">*@
-                                            @Html.TextBoxFor(m => m.RoomNumber, new { type = "text", placeholder = "Enter room number", @class = "form-control input-large", maxlength = "50", tabindex = "2" })
-                                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                                        </div>
-                                        @*<div class="form-group">
-                                            <label>Sharing Type</label>                                            
-                                            @Html.TextBoxFor(m => m.SharingType, new { type = "text", placeholder = "Enter sharing type", @class = "form-control input-large", maxlength = "50", tabindex = "2" })
-                                            <div class="row-space-top-1 max-character-entered"><span class="span-char-left">50</span> characters left</div>
-                                        </div>*@
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @*</form>*@
-                }
-               
+                </div>*@
+                <!-- Add Room-->
+                <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divAddRoom">
+                    @Html.Partial("_AddRoom", Model)
+                </div><!-- End Add Room -->
             </div>
         </div>
     </div>
