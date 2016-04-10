@@ -101,5 +101,15 @@ namespace LYSAdmin.Domain.PGDetailManagement
             return pgDetail;
 
         }
+
+        //int DeleteHostel(string PGDetailID)
+        //{
+        //    var dbPGDetail = (from p in pgDetailRepository.Where(x => x.PGDetailID == pgDetailsViewModel.PGDetail.PGDetailID)
+        //                      select p).FirstOrDefault();
+        //    if (dbPGDetail != null)
+        //    {
+        //       // dbPGDetail.d
+        //    }
+        //}
     }
 }

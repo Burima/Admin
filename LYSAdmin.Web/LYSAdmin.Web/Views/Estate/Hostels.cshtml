@@ -78,26 +78,6 @@
     </div>
 </div>
 
-<!-- modal confirm deletion -->
-@*<div class="modal inmodal fade" id="modalConfirmDeletion" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Delete Apartment</h4>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete <span id="spnApartmentName-ConfirmDeletion"></span> Apartment ?
-                    <input type="hidden" id="hdnApartmentID-ConfirmDeletion" value="0" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-primary btnSubmit">Yes</button>
-                </div>
-            </div>
-        </div>
-    </div>*@
-
 @if (Session["AreaID"] != null)
 {
     <div class="wrapper wrapper-content animated fadeInRight" id="divHostels" style="display:none">
@@ -164,35 +144,7 @@
     <div class="row  border-bottom white-bg dashboard-header" style="display:none;" id="divEditHostel">
         @Html.Partial("_EditHostel")
     </div>
-    @* modal addblocks *@
-    @*<form action="@Url.Action("saveBlock","Estate",FormMethod.Post)" id="saveblockmodal">
-        <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content animated bounceInRight">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Blocks</h4>
 
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="hdnApartmentID" />
-                       
-                        <div class="row">
-                            <label class="col-md-8">All Blocks</label><a class="col-md-1 glyphicon glyphicon-plus pull-right" id="addnewblock"></a>
-                        </div>
-                        <div class="form-group" id="divAddBlock">
-
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="modalblocksave">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>*@
 }
 @section scripts{
 

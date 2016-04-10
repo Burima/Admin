@@ -45,4 +45,15 @@ namespace LYSAdmin.Model
         public PGDetail PGDetail { get; set; }
         public IList<PGDetail> PGDetails { get; set; } 
     }
+
+    public class RoomViewModel
+    {
+        public Room Room { get; set; }
+
+        public IList<PGDetail> PGDetails { get; set; }
+
+        public IList<Bed> Beds { get; set; }
+
+        public IList<House> Houses { get; set; }
+    }
 }

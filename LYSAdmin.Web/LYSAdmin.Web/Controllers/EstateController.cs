@@ -141,6 +141,12 @@ namespace LYSAdmin.Web.Controllers
             return RedirectToAction("Hostels", "Estate");
         }
 
+        [HttpPost]
+        //public ActionResult DeleteHostel(string pDetailID)
+        //{
+        //    //int count = 
+        //}
+
         #endregion
 
         #region Apartment
@@ -400,7 +406,17 @@ namespace LYSAdmin.Web.Controllers
       
         public ActionResult Rooms()
         {
-            return View();
+            RoomViewModel roomViewModel = new RoomViewModel();
+            if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
+            {
+               //roomViewModel.Houses =
+            }
+            else
+            {
+                TempData["Message"] = "SelectArea";
+            }
+            
+           return View("Rooms", roomViewModel);
         }
 
         #region HelperMethods

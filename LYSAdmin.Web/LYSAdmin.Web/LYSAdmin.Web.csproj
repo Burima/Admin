@@ -418,6 +418,7 @@
     <Content Include="Scripts\Custom\Apartment.js" />
     <Content Include="Scripts\Custom\Hostel.js" />
     <Content Include="Scripts\Custom\Houeses.js" />
+    <Content Include="Scripts\Custom\Room.js" />
     <Content Include="Scripts\Custom\ViewProfile.js" />
     <Content Include="Scripts\form-image-crop.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />

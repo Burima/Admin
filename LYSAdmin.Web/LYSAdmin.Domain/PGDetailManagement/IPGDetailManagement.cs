@@ -16,5 +16,7 @@ namespace LYSAdmin.Domain.PGDetailManagement
         int UpdateHostel(LYSAdmin.Model.PGDetailsViewModel pgDetailsViewModel);
 
         LYSAdmin.Model.PGDetail GetHostelByID(int pgDetailID);
+
+        //int DeleteHostel(string PGDetailID);
     }
 }
