@@ -25,15 +25,14 @@ namespace LYSAdmin.Data.DBEntity
            
         }
     
-        public virtual DbSet<Apartment> Apartments { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Bed> Beds { get; set; }
-        public virtual DbSet<Block> Blocks { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<HouseAmenity> HouseAmenities { get; set; }
         public virtual DbSet<HouseImage> HouseImages { get; set; }
         public virtual DbSet<House> Houses { get; set; }
+        public virtual DbSet<OwnerPropertyListingRequest> OwnerPropertyListingRequests { get; set; }
         public virtual DbSet<PGDetail> PGDetails { get; set; }
         public virtual DbSet<PGReview> PGReviews { get; set; }
         public virtual DbSet<Role> Roles { get; set; }

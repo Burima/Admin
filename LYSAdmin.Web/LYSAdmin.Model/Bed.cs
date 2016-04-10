@@ -8,7 +8,6 @@ namespace LYSAdmin.Model
 {
     public class Bed
     {
-
         public int BedID { get; set; }
         public int RoomID { get; set; }
         public long UserID { get; set; }

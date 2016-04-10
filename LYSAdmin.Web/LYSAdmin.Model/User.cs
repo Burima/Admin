@@ -101,7 +101,7 @@ namespace LYSAdmin.Model
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
         public string ProfilePicture { get; set; }
         public Nullable<int> Gender { get; set; }
-
+        public int Status { get; set; }
         public int Status { get; set; }
         public Nullable<long> CreatedBy { get; set; }
 

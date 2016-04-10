@@ -9,6 +9,7 @@ namespace LYSAdmin.Model
     public class House
     {
 
+
         public int HouseID { get; set; }
         public string HouseName { get; set; }
         public Nullable<bool> Status { get; set; }
@@ -24,10 +25,11 @@ namespace LYSAdmin.Model
         public Nullable<int> NoOfBalconnies { get; set; }
         public int BlockID { get; set; }
         public string HouseNo { get; set; }
+        public int PGDetailID { get; set; }
 
-        public virtual Block Block { get; set; }
         public virtual ICollection<HouseAmenity> HouseAmenities { get; set; }
         public virtual ICollection<HouseImage> HouseImages { get; set; }
+        public virtual PGDetail PGDetail { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
     }
 }
