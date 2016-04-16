@@ -19,8 +19,7 @@ namespace LYSAdmin.Domain.DashboardManagement
         private IBaseRepository<Data.DBEntity.PGReview> PGReviewRepository = null;
         private IBaseRepository<Data.DBEntity.User> UserRepository = null;
         private IBaseRepository<Data.DBEntity.PGDetail> PGDetailRepository = null;
-        private IBaseRepository<Data.DBEntity.Apartment> ApartmentRepository = null;
-        private IBaseRepository<Data.DBEntity.Block> BlockRepository = null;
+
         public DashboardManagement()
         {
             unitOfWork = new UnitOfWork();
@@ -29,8 +28,7 @@ namespace LYSAdmin.Domain.DashboardManagement
             HouseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
             PGReviewRepository = new BaseRepository<Data.DBEntity.PGReview>(unitOfWork);
             UserRepository = new BaseRepository<Data.DBEntity.User>(unitOfWork);
-            ApartmentRepository = new BaseRepository<Data.DBEntity.Apartment>(unitOfWork);
-            BlockRepository = new BaseRepository<Data.DBEntity.Block>(unitOfWork);
+
             PGDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
         }
 
@@ -43,9 +41,7 @@ namespace LYSAdmin.Domain.DashboardManagement
             DateTime matchedDate = DateTime.Today.AddDays(-15);
             /****commented due to identity or DB update****/
             rooms = (from pg in PGDetailRepository.Get(pg => pg.UserID == OwnerID)
-                     join a in ApartmentRepository.Get() on pg.PGDetailID equals a.PGDetailID
-                     join b in BlockRepository.Get() on a.ApartmentID equals b.ApartmentID
-                     join h in HouseRepository.Get() on b.BlockID equals h.BlockID
+                     join h in HouseRepository.Get() on pg.PGDetailID equals h.PGDetailID
                      join r in RoomRepository.Get() on h.HouseID equals r.HouseID
                      select r.RoomID).ToList();
 
@@ -108,49 +104,7 @@ namespace LYSAdmin.Domain.DashboardManagement
                                  AverageRating = PGReviewRepository.Get(g => g.PGDetailID == p.PGDetailID).Average(g=> g.Rating)
                             }).ToList();
            
-            //houses = (from p in houseRepository.Get(p => p.isDeleted == false //&& p.OwnerID == OwnerID /****commented due to identity or DB update****/
-            //              )
-            //          select new Model.House
-            //          {
-            //              HouseID = p.HouseID,
-            //              DisplayName = p.DisplayName,
-            //              /****commented due to identity or DB update****/
-            //              PGReviews = (from g in p.HouseReviews
-            //                              select new LYSAdmin.Model.PGReview
-            //                              {
-            //                                  HouseID = g.HouseID,
-            //                                  Comments = g.Comments,
-            //                                  CommentTime = g.CommentTime,
-            //                                  Rating = g.Rating,
-            //                                  User = (from u in userRepository.Get(u => u.UserID == g.UserID)
-            //                                          select new LYSAdmin.Model.User
-            //                                          {
-            //                                              FirstName = u.FirstName,
-            //                                              LastName = u.LastName
-            //                                          }).FirstOrDefault()
-
-            //                              }).OrderBy(g => g.CommentTime).ToList()
-            //          }).ToList();
            
-            //foreach (House house in houses)
-            //{
-            //    HouseRating houseRating = new HouseRating();
-            //    houseRating.HouseID = house.HouseID;
-            //    houseRating.DisplayName = house.DisplayName;
-            //    //houseRating.AverageRating = (decimal)house.HouseReviews.Average(p => p.Rating); /****commented due to identity or DB update****/
-            //    houseRatings.Add(houseRating);
-            //    /****commented due to identity or DB update****/
-            //    //foreach (Model.PGReview houseReview in house.HouseReviews)
-            //    //{
-            //    //    Model.HouseComment comment = new Model.HouseComment();
-            //    //    comment.Message = houseReview.Comments;
-            //    //    comment.FeedbackTime = ((DateTime)houseReview.CommentTime).ToString("o");
-            //    //    comment.HouseName = house.DisplayName;
-            //    //    comment.Rating = (decimal)houseReview.Rating;
-            //    //    comment.UserName = houseReview.User.FirstName +" "+ houseReview.User.LastName;
-            //    //    houseComments.Add(comment);
-            //    //}
-            //}
             DashboardViewModel.PGReviewList = PGReviewList;
             DashboardViewModel.DonughtChart = GetDonught(OwnerID);
 

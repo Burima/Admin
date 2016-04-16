@@ -25,35 +25,35 @@ namespace LYSAdmin.Domain.RoomManagement
          
         }
 
-         public IList<PGDetail> GetHousesByOwnerIDAndAreaID(long OwnerID, int AreaID)
-         {
-             List<Model.PGDetail> allPGs = (from p in pgDetailRepository.Get(p => p.UserID == OwnerID && p.AreaID == AreaID, q => q.OrderByDescending(p => p.PGName))
-                                            select new Model.PGDetail
-                                            {
-                                                PGDetailID = p.PGDetailID,
-                                                Apartments = (from a in p.Apartments
-                                                              select new LYSAdmin.Model.Apartment
-                                                              {
-                                                                  ApartmentID = a.ApartmentID,
-                                                                  ApartmentName = a.ApartmentName,
-                                                                  IsDefault = a.IsDefault,
-                                                                  Blocks = (from b in a.Blocks
-                                                                            select new LYSAdmin.Model.Block
-                                                                            {
-                                                                                BlockID = b.BlockID,
+         //public IList<PGDetail> GetHousesByOwnerIDAndAreaID(long OwnerID, int AreaID)
+         //{
+         //    List<Model.PGDetail> allPGs = (from p in pgDetailRepository.Get(p => p.UserID == OwnerID && p.AreaID == AreaID, q => q.OrderByDescending(p => p.PGName))
+         //                                   select new Model.PGDetail
+         //                                   {
+         //                                       PGDetailID = p.PGDetailID,
+         //                                       Apartments = (from a in p.Apartments
+         //                                                     select new LYSAdmin.Model.Apartment
+         //                                                     {
+         //                                                         ApartmentID = a.ApartmentID,
+         //                                                         ApartmentName = a.ApartmentName,
+         //                                                         IsDefault = a.IsDefault,
+         //                                                         Blocks = (from b in a.Blocks
+         //                                                                   select new LYSAdmin.Model.Block
+         //                                                                   {
+         //                                                                       BlockID = b.BlockID,
                                                                               
-                                                                                Houses = (from h in b.Houses
-                                                                                          select new LYSAdmin.Model.House
-                                                                                          {
-                                                                                              HouseID = h.HouseID,
-                                                                                              HouseName = h.HouseName,
+         //                                                                       Houses = (from h in b.Houses
+         //                                                                                 select new LYSAdmin.Model.House
+         //                                                                                 {
+         //                                                                                     HouseID = h.HouseID,
+         //                                                                                     HouseName = h.HouseName,
 
-                                                                                          }).ToList()
-                                                                            }).ToList()
-                                                              }).ToList(),
-                                            }).ToList();
-             return allPGs;
+         //                                                                                 }).ToList()
+         //                                                                   }).ToList()
+         //                                                     }).ToList(),
+         //                                   }).ToList();
+         //    return allPGs;
 
-         }
+         //}
     }
 }

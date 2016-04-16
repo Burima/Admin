@@ -127,7 +127,6 @@
           <Property Name="Gender" Type="int" />
           <Property Name="NoOfBathrooms" Type="int" />
           <Property Name="NoOfBalconnies" Type="int" />
-          <Property Name="BlockID" Type="int" Nullable="false" />
           <Property Name="HouseNo" Type="varchar" MaxLength="50" />
           <Property Name="PGDetailID" Type="int" Nullable="false" />
         </EntityType>
@@ -781,7 +780,6 @@
           <Property Name="Gender" Type="Int32" />
           <Property Name="NoOfBathrooms" Type="Int32" />
           <Property Name="NoOfBalconnies" Type="Int32" />
-          <Property Name="BlockID" Type="Int32" Nullable="false" />
           <Property Name="HouseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PGDetailID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="HouseAmenities" Relationship="Self.FK__HouseAmenities__HouseID" FromRole="Houses" ToRole="HouseAmenities" />
@@ -1422,7 +1420,6 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="NoOfBathrooms" ColumnName="NoOfBathrooms" />
                 <ScalarProperty Name="NoOfBalconnies" ColumnName="NoOfBalconnies" />
-                <ScalarProperty Name="BlockID" ColumnName="BlockID" />
                 <ScalarProperty Name="HouseNo" ColumnName="HouseNo" />
                 <ScalarProperty Name="PGDetailID" ColumnName="PGDetailID" />
               </MappingFragment>

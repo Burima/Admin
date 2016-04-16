@@ -9,7 +9,6 @@ namespace LYSAdmin.Model
     public class House
     {
 
-
         public int HouseID { get; set; }
         public string HouseName { get; set; }
         public Nullable<bool> Status { get; set; }
@@ -23,7 +22,6 @@ namespace LYSAdmin.Model
         public Nullable<int> Gender { get; set; }
         public Nullable<int> NoOfBathrooms { get; set; }
         public Nullable<int> NoOfBalconnies { get; set; }
-        public int BlockID { get; set; }
         public string HouseNo { get; set; }
         public int PGDetailID { get; set; }
 

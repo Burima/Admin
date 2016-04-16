@@ -34,7 +34,6 @@ namespace LYSAdmin.Data.DBEntity
         public Nullable<int> Gender { get; set; }
         public Nullable<int> NoOfBathrooms { get; set; }
         public Nullable<int> NoOfBalconnies { get; set; }
-        public int BlockID { get; set; }
         public string HouseNo { get; set; }
         public int PGDetailID { get; set; }
     

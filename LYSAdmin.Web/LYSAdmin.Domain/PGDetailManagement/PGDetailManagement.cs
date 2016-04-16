@@ -34,17 +34,17 @@ namespace LYSAdmin.Domain.PGDetailManagement
                                             Longitude = p.Longitude,
                                             Address = p.Address,
                                             Description = p.Description,
-                                            Apartments = (from a in p.Apartments.Where(a=> a.IsDefault == false)
-                                                              select new LYSAdmin.Model.Apartment{
-                                                                  ApartmentID = a.ApartmentID,
-                                                                  ApartmentName = a.ApartmentName,
-                                                                  Blocks = (from b in a.Blocks.Where(b => b.IsDefault == false)
-                                                                            select new LYSAdmin.Model.Block
-                                                                            {
-                                                                                BlockID = b.BlockID,
-                                                                                BlockName = b.BlockName
-                                                                            }).ToList()
-                                                              }).ToList(),
+                                            //Houses = (from a in p.Houses.Where(a=> a.isDeleted == false)
+                                            //                  select new LYSAdmin.Model.Apartment{
+                                            //                      ApartmentID = a.ApartmentID,
+                                            //                      ApartmentName = a.ApartmentName,
+                                            //                      Blocks = (from b in a.Blocks.Where(b => b.IsDefault == false)
+                                            //                                select new LYSAdmin.Model.Block
+                                            //                                {
+                                            //                                    BlockID = b.BlockID,
+                                            //                                    BlockName = b.BlockName
+                                            //                                }).ToList()
+                                            //                  }).ToList(),
                                          }).ToList();
             return allPGs;
         }

@@ -100,8 +100,6 @@
                                 <tr>
                                     <th>House</th>
                                     <th>PG/Hostel Name</th>
-                                    <th>Apartment</th>
-                                    <th>Block</th>
                                     <th>Gender</th>
                                     <th>View Amenities</th>
                                     <th>Action</th>
@@ -112,47 +110,32 @@
                                 {
                                     foreach (var pgDetails in Model.PGDetails)
                                     {
-                                        if (pgDetails.Apartments != null && pgDetails.Apartments.Count > 0)
+                                        if (pgDetails.Houses != null && pgDetails.Houses.Count > 0)
                                         {
-                                            foreach (var apartment in pgDetails.Apartments)
+                                            foreach (var house in pgDetails.Houses)
                                             {
-                                                if (apartment.Blocks != null && apartment.Blocks.Count > 0)
-                                                {
-                                                    foreach (var block in apartment.Blocks)
-                                                    {
-                                                        if (block.Houses != null && block.Houses.Count > 0)
-                                                        {
-                                                            foreach (var house in block.Houses)
-                                                            {
-                                                                <tr class="gradeX" id="@house.HouseID">
-                                                                    <td>@house.HouseName</td>
-                                                                    <td>@pgDetails.PGName</td>
-                                                                    <td>@(apartment.ApartmentName.StartsWith(Constants.DEFAULT_APARTMENT) ? "N/A" : apartment.ApartmentName)</td>
-                                                                    <td>@(block.BlockName.StartsWith(Constants.DEFAULT_BLOCK) ? "N/A" : block.BlockName)</td>
-                                                                    <td>@(house.Gender == 1 ? "Male" : "Female")</td>
-                                                                    <td>
-                                                                        <input type="button" class="btnShowModalAmenities" value="View Amenities">
-                                                                        <input type="hidden" class="hdnAmenities" value="@JsonConvert.SerializeObject(house.HouseAmenities)">
-                                                                    </td>
-                                                                    <td><input type="button" class="btnDeleteHouse" value="Delete"></td>
-                                                                </tr>
-                                                            }
-
-                                                        }
-                                                    }
-                                                }
-
+                                                <tr class="gradeX" id="@house.HouseID">
+                                                    <td>@house.HouseName</td>
+                                                    <td>@pgDetails.PGName</td>
+                                                    <td>@(house.Gender == 1 ? "Male" : "Female")</td>
+                                                    <td>
+                                                        <input type="button" class="btnShowModalAmenities" value="View Amenities">
+                                                        <input type="hidden" class="hdnAmenities" value="@JsonConvert.SerializeObject(house.HouseAmenities)">
+                                                    </td>
+                                                    <td><input type="button" class="btnDeleteHouse" value="Delete"></td>
+                                                </tr>
                                             }
-                                        }
-                                    }
-                                }
+
+                                          }
+                                       }
+
+                                   }
+                                      
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>House</th>
                                     <th>PG/Hostel Name</th>
-                                    <th>Apartment</th>
-                                    <th>Block</th>
                                     <th>Gender</th>
                                     <th>View Amenities</th>
                                     <th>Action</th>
@@ -182,7 +165,7 @@
         var AreaID = '@AreaID';
         var Areas = '@Html.Raw(Json.Encode(Areas))';
 
-        //passing CityName and AreaName to Housees.js
+        //passing CityName and AreaName to Houses.js
         var cityname = '@CityName';
         var areaname = '@AreaName';
 

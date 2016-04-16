@@ -102,7 +102,6 @@ namespace LYSAdmin.Model
         public string ProfilePicture { get; set; }
         public Nullable<int> Gender { get; set; }
         public int Status { get; set; }
-        public int Status { get; set; }
         public Nullable<long> CreatedBy { get; set; }
 
         public virtual ICollection<Bed> Beds { get; set; }

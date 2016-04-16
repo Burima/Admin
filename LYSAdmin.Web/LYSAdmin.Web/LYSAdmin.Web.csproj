@@ -851,16 +851,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Employee\Employee.cshtml" />
-    <Content Include="Views\Estate\Apartments.cshtml" />
-    <Content Include="Views\Estate\Blocks.cshtml" />
     <Content Include="Views\Estate\Houses.cshtml" />
     <Content Include="Views\Estate\Rooms.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
-    <Content Include="Views\Estate\_AddApartment.cshtml" />
-    <Content Include="Views\Estate\_EditApartment.cshtml" />
-    <Content Include="Views\Estate\_AddBlock.cshtml" />
-    <Content Include="Views\Estate\_EditBlock.cshtml" />
     <Content Include="Views\Estate\_AddHouse.cshtml" />
     <Content Include="Views\Estate\_EditHouse.cshtml" />
     <Content Include="Views\Estate\_AddRoom.cshtml" />

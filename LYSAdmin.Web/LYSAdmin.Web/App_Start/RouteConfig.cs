@@ -28,11 +28,11 @@ namespace LYSAdmin.Web
             );
 
             //Employee
-            routes.MapRoute(
-                name: "Estate",
-                url: "Estate/{action}",
-                defaults: new { controller = "Estate", action = "Houses" }
-            );
+            //routes.MapRoute(
+            //    name: "Estate",
+            //    url: "Estate/{action}",
+            //    defaults: new { controller = "Estate", action = "Houses" }
+            //);
             
             //Default
             routes.MapRoute(

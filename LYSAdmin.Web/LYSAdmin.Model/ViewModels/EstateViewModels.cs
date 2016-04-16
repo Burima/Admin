@@ -9,26 +9,17 @@ namespace LYSAdmin.Model
     class EstateViewModels
     {
     }
-    public class ApartmentViewModel
-    {
-        public Apartment Apartment { get; set; }
-       
-        public IList<PGDetail> PGDetails { get; set; } 
-        
-    }
-
+  
     public class HouseViewModel
     {
         public House House { get; set; }
         public HouseAmenity HouseAmenity { get; set; }               
-        //public IList<House> Houses { get; set; }
+        
         public IList<Room> Rooms { get; set; }
         public IList<PGDetail> PGDetails { get; set; }
 
         public IList<string> HouseImages { get; set; }
         public int PGDetailID { get; set; }
-        public int ApartmentID { get; set; }
-        public int BlockID { get; set; }        
         public int OwnerID { get; set; }
 
         public int NoOfRooms { get; set; }

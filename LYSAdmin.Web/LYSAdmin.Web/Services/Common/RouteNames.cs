@@ -20,7 +20,6 @@ namespace LYSAdmin.Web.Services.Common
         public const string LoginPost = "LoginPost";
         public const string Dashboard = "Dashboard";
         public const string Hostels = "Hostels";
-        public const string Apartments = "Apartments";
         public const string Houses = "Houses";
     }
 }

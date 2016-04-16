@@ -68,10 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApartmentManagement\ApartmentManagement.cs" />
-    <Compile Include="ApartmentManagement\IApartmentManagement.cs" />
-    <Compile Include="BlockManagement\BlockManagement.cs" />
-    <Compile Include="BlockManagement\IBlockManagement.cs" />
     <Compile Include="DashboardManagement\DashboardManagement.cs" />
     <Compile Include="DashboardManagement\IDashboardManagement.cs" />
     <Compile Include="FileHelper.cs" />

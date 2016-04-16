@@ -78,6 +78,7 @@
     <Compile Include="EntityModel\SmsService.cs" />
     <Compile Include="EntityModel\UserManager.cs" />
     <Compile Include="HouseAmenity.cs" />
+    <Compile Include="OwnerPropertyListingRequest.cs" />
     <Compile Include="PGReview.cs" />
     <Compile Include="PGDetail.cs" />
     <Compile Include="Transaction.cs" />
@@ -86,10 +87,8 @@
     <Compile Include="UserLogin.cs" />
     <Compile Include="UserRole.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
-    <Compile Include="Apartment.cs" />
     <Compile Include="Area.cs" />
     <Compile Include="Bed.cs" />
-    <Compile Include="Block.cs" />
     <Compile Include="City.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Country.cs" />
