@@ -71,7 +71,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                           
+                           @if (Model.PGDetails != null && Model.PGDetails.Count > 0)
+                           {
+                               foreach (var pgDetail in Model.PGDetails)
+                               {
+                                   if (pgDetail.Houses != null && pgDetail.Houses.Count > 0)
+                                   {
+                                       foreach (var house in pgDetail.Houses)
+                                       {
+                                           if (house.Rooms != null && house.Rooms.Count > 0)
+                                           {
+                                               foreach (var room in house.Rooms)
+                                               {
+                                                <tr class="gradeX" id="@room.RoomID">
+                                                    <td>@room.RoomNumber</td>
+                                                    <td>@pgDetail.PGName</td>
+                                                    <td>@house.HouseName</td>
+                                                    <td>@room.MonthlyRent</td>
+                                                    <td>@room.Deposit</td>
+                                                    <td><input type="button" class="btnDeleteHouse" value="Delete"></td>
+                                                </tr>
+                                               }
+                                           }
+                                       }
+                                   }
+                               }
+                           }
                         </tbody>
                         <tfoot>
                             <tr>

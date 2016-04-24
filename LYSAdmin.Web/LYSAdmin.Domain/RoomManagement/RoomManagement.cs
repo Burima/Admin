@@ -9,51 +9,105 @@ using LYSAdmin.Data.DBRepository;
 
 namespace LYSAdmin.Domain.RoomManagement
 {
-    class RoomManagement : IRoomManagement
+    public class RoomManagement : IRoomManagement
     {
          private IUnitOfWork unitOfWork = null;
-         private IBaseRepository<Data.DBEntity.House> houseRepository = null;
+         private IBaseRepository<Data.DBEntity.Room> roomRepository = null;
+         private IBaseRepository<Data.DBEntity.Bed> bedRepository = null;
          private IBaseRepository<Data.DBEntity.PGDetail> pgDetailRepository = null;
-
          public RoomManagement()
         {
             unitOfWork = new UnitOfWork();
-            houseRepository = new BaseRepository<Data.DBEntity.House>(unitOfWork);
+            roomRepository = new BaseRepository<Data.DBEntity.Room>(unitOfWork);
+            bedRepository = new BaseRepository<Data.DBEntity.Bed>(unitOfWork);
             pgDetailRepository = new BaseRepository<Data.DBEntity.PGDetail>(unitOfWork);
             //automapper 
-            Mapper.CreateMap<LYSAdmin.Model.House, LYSAdmin.Data.DBEntity.House>();
+            Mapper.CreateMap<LYSAdmin.Model.Room, LYSAdmin.Data.DBEntity.Room>();
          
         }
 
-         //public IList<PGDetail> GetHousesByOwnerIDAndAreaID(long OwnerID, int AreaID)
-         //{
-         //    List<Model.PGDetail> allPGs = (from p in pgDetailRepository.Get(p => p.UserID == OwnerID && p.AreaID == AreaID, q => q.OrderByDescending(p => p.PGName))
-         //                                   select new Model.PGDetail
-         //                                   {
-         //                                       PGDetailID = p.PGDetailID,
-         //                                       Apartments = (from a in p.Apartments
-         //                                                     select new LYSAdmin.Model.Apartment
-         //                                                     {
-         //                                                         ApartmentID = a.ApartmentID,
-         //                                                         ApartmentName = a.ApartmentName,
-         //                                                         IsDefault = a.IsDefault,
-         //                                                         Blocks = (from b in a.Blocks
-         //                                                                   select new LYSAdmin.Model.Block
-         //                                                                   {
-         //                                                                       BlockID = b.BlockID,
-                                                                              
-         //                                                                       Houses = (from h in b.Houses
-         //                                                                                 select new LYSAdmin.Model.House
-         //                                                                                 {
-         //                                                                                     HouseID = h.HouseID,
-         //                                                                                     HouseName = h.HouseName,
+         public IList<PGDetail> GetHousesByOwnerIDAndAreaID(long OwnerID, int AreaID)
+         {
+             List<Model.PGDetail> allPGs = (from p in pgDetailRepository.Get(p => p.UserID == OwnerID && p.AreaID == AreaID, q => q.OrderByDescending(p => p.PGName))
+                                            select new Model.PGDetail
+                                            {
+                                                PGDetailID = p.PGDetailID,
+                                                PGName = p.PGName,
+                                                 Houses = (from h in p.Houses
+                                                            select new LYSAdmin.Model.House
+                                                            {
+                                                                HouseID = h.HouseID,
+                                                                HouseName = h.HouseName,
+                                                                Rooms = (from r in h.Rooms
+                                                                         select new LYSAdmin.Model.Room
+                                                                         {
+                                                                             RoomID = r.RoomID,
+                                                                             RoomNumber = r.RoomNumber,
+                                                                             MonthlyRent = r.MonthlyRent,
+                                                                             Deposit = r.Deposit,
+                                                                             NoOfBeds = r.NoOfBeds,
+                                                                             Beds = (from b in r.Beds
+                                                                                     select new LYSAdmin.Model.Bed
+                                                                                     {
+                                                                                         BedID = b.BedID,
+                                                                                         BedStatus = b.BedStatus,
+                                                                                         BookingFromDate = b.BookingFromDate,
+                                                                                         BookingToDate = b.BookingToDate,
+                                                                                         
+                                                                                     }).ToList()
+                                                                         }).ToList(),
+                                                            }).ToList(),
+                                            }).ToList();
+             return allPGs;
 
-         //                                                                                 }).ToList()
-         //                                                                   }).ToList()
-         //                                                     }).ToList(),
-         //                                   }).ToList();
-         //    return allPGs;
+         }
 
-         //}
-    }
+         public int AddRoom(RoomViewModel roomViewModel)
+         {
+
+             int count = 0;
+             var dbRoom = Mapper.Map<LYSAdmin.Model.Room, LYSAdmin.Data.DBEntity.Room>(roomViewModel.Room);//Converting Model.Room to Data.Room 
+             dbRoom.Status = true;
+             dbRoom.CreatedOn = DateTime.Now;
+             dbRoom.LastUpdatedOn = DateTime.Now;
+             roomRepository.Insert(dbRoom);//Inserting new room
+             count = unitOfWork.SaveChanges();
+
+             if (count > 0)
+             {
+                 if (roomViewModel.Room.NoOfBeds > 0)
+                 {
+                     for (int i = 1; i <= roomViewModel.Room.NoOfBeds; i++)
+                     {
+                         var dbBed = new Data.DBEntity.Bed();
+                         dbBed.RoomID = dbRoom.RoomID;
+                         dbBed.UserID = 0;
+                         dbBed.Status = true;//active                                    
+                         dbBed.CreatedOn = DateTime.Now;
+                         dbBed.LastUpdatedOn = DateTime.Now;
+                         dbBed.BedStatus = 0;//empty
+                         dbBed.StatusUpdateDate = DateTime.Now;
+                         //insert Bed
+                         bedRepository.Insert(dbBed);
+                         unitOfWork.SaveChanges();
+                     }
+                 }
+             }
+
+            
+
+             return count;
+            }
+
+   
+
+  }
 }
+
+
+
+
+
+
+
+

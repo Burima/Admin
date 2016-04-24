@@ -8,6 +8,7 @@ using LYSAdmin.Web.Utilities;
 using Newtonsoft.Json;
 using LYSAdmin.Domain.HouseManagement;
 using LYSAdmin.Domain.PGDetailManagement;
+using LYSAdmin.Domain.RoomManagement;
 using System.IO;
 using LYSAdmin.Web.Services.Common;
 
@@ -18,14 +19,15 @@ namespace LYSAdmin.Web.Controllers
     {
         private IHouseManagement houseManagement;
         private IPGDetailManagement pgDetailManagement;
+        private IRoomManagement roomManagement;
         PGDetail pgDetail = new PGDetail();
         HouseViewModel houseViewModel = new HouseViewModel();
-       
-        public EstateController(HouseManagement houseManagement, PGDetailManagement pgDetailManagement)
+
+        public EstateController(HouseManagement houseManagement, PGDetailManagement pgDetailManagement, RoomManagement roomManagement)
         {
             this.houseManagement = houseManagement;
             this.pgDetailManagement = pgDetailManagement;
-
+            this.roomManagement = roomManagement;
         }
         // GET: Estate
         public ActionResult Index()
@@ -170,7 +172,7 @@ namespace LYSAdmin.Web.Controllers
             int houseID =0;
             if (ModelState.IsValid)
             {
-                //IDictionary<int, List<string>> houseImage = new Dictionary<int, List<string>>();
+                
                 houseViewModel.House.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
                 if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
                 {
@@ -269,7 +271,7 @@ namespace LYSAdmin.Web.Controllers
             RoomViewModel roomViewModel = new RoomViewModel();
             if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
             {
-               //roomViewModel.Houses =
+                roomViewModel.PGDetails = roomManagement.GetHousesByOwnerIDAndAreaID(LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id, GetAreaID());
             }
             else
             {
@@ -277,6 +279,36 @@ namespace LYSAdmin.Web.Controllers
             }
             
            return View("Rooms", roomViewModel);
+        }
+
+        public ActionResult AddRoom(RoomViewModel roomViewModel)
+        {
+            int roomID = 0;
+            if (ModelState.IsValid)
+            {
+
+                //roomViewModel.Room.CreatedBy = LYSAdmin.Web.Services.SessionManager.GetSessionUser().Id; /****commented due to identity or DB update****/
+                if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
+                {
+                    roomID = roomManagement.AddRoom(roomViewModel);
+                    if (roomID <= 0)
+                    {
+                        TempData["Message"] = "Room couldn't be added. Please try again later.";
+                    }
+
+                }
+                else
+                {
+                    TempData["Message"] = "SelectArea"; //Area is not selected for session..Redirect to View to Selet the Area
+                }
+            }
+            else
+            {
+                //Insertion failed
+                TempData["Message"] = "Room couldn't be added. Please try again later.";
+
+            }
+            return RedirectToAction("Rooms", "Estate"); 
         }
 
         #region HelperMethods

@@ -27,6 +27,13 @@ $(document).ready(function () {
         $('#divRooms').hide();
         $('#divAddRoom').show();
     });
+
+    $('#btnAddRoom').click(function () {
+        if ($("#add-room-form").valid() == true) {
+            showProgress(false, "Adding your Room...");
+            $("#add-room-form").submit();
+        }
+    });
 });
 
 function fnChangeLocation() {

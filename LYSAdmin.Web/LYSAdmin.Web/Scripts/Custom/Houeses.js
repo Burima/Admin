@@ -203,6 +203,14 @@ $("select[name='CityID']").change(function () {
     });
 });
 
+$("select[name='PGDetailID']").change(function () {
+    //visible div block
+    $('#txtHouseName').attr("readonly", false);
+    $('#txtDisplayName').attr("readonly", false);
+    $('#txtDescription').attr("readonly", false);
+    $('#btnNextBasicInformation').attr("disabled", false);
+   
+});
 //bind locations to session after btnSaveLocation click
 $('#btnSaveLocation').click(function () {
     //if ($('#update-location-form').valid()) {
