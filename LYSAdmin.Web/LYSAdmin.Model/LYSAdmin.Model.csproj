@@ -81,6 +81,7 @@
     <Compile Include="OwnerPropertyListingRequest.cs" />
     <Compile Include="PGReview.cs" />
     <Compile Include="PGDetail.cs" />
+    <Compile Include="PhoneVerificationCode.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="TransactionStatus.cs" />
     <Compile Include="UserClaim.cs" />
