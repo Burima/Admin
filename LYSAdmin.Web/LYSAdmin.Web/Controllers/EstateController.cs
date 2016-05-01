@@ -265,8 +265,10 @@ namespace LYSAdmin.Web.Controllers
             
            }
         #endregion Houses
-      
-        public ActionResult Rooms()
+
+        [Route("Rooms/{operation?}", Name = RouteNames.Rooms)]
+
+        public ActionResult Rooms(string operation)
         {
             RoomViewModel roomViewModel = new RoomViewModel();
             if (Session["AreaID"] != null && Convert.ToInt32(Session["AreaID"]) > 0)
@@ -277,7 +279,7 @@ namespace LYSAdmin.Web.Controllers
             {
                 TempData["Message"] = "SelectArea";
             }
-            
+            ViewBag.operation = operation;
            return View("Rooms", roomViewModel);
         }
 

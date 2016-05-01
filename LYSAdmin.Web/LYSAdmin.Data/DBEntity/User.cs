@@ -19,6 +19,7 @@ namespace LYSAdmin.Data.DBEntity
             this.Beds = new HashSet<Bed>();
             this.PGDetails = new HashSet<PGDetail>();
             this.PGReviews = new HashSet<PGReview>();
+            this.PhoneVerificationCodes = new HashSet<PhoneVerificationCode>();
             this.Transactions = new HashSet<Transaction>();
             this.UserClaims = new HashSet<UserClaim>();
             this.UserDetails = new HashSet<UserDetail>();
@@ -47,10 +48,12 @@ namespace LYSAdmin.Data.DBEntity
         public int AccessFailedCount { get; set; }
         public int Status { get; set; }
         public Nullable<long> CreatedBy { get; set; }
+        public string PhoneVerificationCode { get; set; }
     
         public virtual ICollection<Bed> Beds { get; set; }
         public virtual ICollection<PGDetail> PGDetails { get; set; }
         public virtual ICollection<PGReview> PGReviews { get; set; }
+        public virtual ICollection<PhoneVerificationCode> PhoneVerificationCodes { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual ICollection<UserClaim> UserClaims { get; set; }
         public virtual ICollection<UserDetail> UserDetails { get; set; }

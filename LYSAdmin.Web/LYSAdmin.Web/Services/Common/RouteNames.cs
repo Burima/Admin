@@ -21,5 +21,6 @@ namespace LYSAdmin.Web.Services.Common
         public const string Dashboard = "Dashboard";
         public const string Hostels = "Hostels";
         public const string Houses = "Houses";
+        public const string Rooms = "Rooms";
     }
 }

@@ -18,6 +18,10 @@ namespace LYSAdmin.Model
         public Nullable<System.DateTime> StatusUpdateDate { get; set; }
         public Nullable<System.DateTime> BookingFromDate { get; set; }
         public Nullable<System.DateTime> BookingToDate { get; set; }
+        public Nullable<long> CreatedBy { get; set; }
+        public Nullable<System.DateTime> DeletedOn { get; set; }
+        public Nullable<long> DeletedBy { get; set; }
+        public Nullable<bool> isDeleted { get; set; }
 
         public virtual Room Room { get; set; }
         public virtual User User { get; set; }

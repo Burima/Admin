@@ -29,6 +29,10 @@
           <Property Name="StatusUpdateDate" Type="datetime" />
           <Property Name="BookingFromDate" Type="datetime" />
           <Property Name="BookingToDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="bigint" />
+          <Property Name="isDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="Cities">
           <Key>
@@ -173,6 +177,18 @@
           <Property Name="CommentTime" Type="datetime" />
           <Property Name="PGDetailID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="PhoneVerificationCodes">
+          <Key>
+            <PropertyRef Name="PhoneVerificationCodeID" />
+          </Key>
+          <Property Name="PhoneVerificationCodeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="VerificationCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Sid" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -193,6 +209,10 @@
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="bigint" />
+          <Property Name="isDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -293,7 +313,20 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="PhoneVerificationCode" Type="nvarchar" MaxLength="6" />
         </EntityType>
+        <Association Name="DF_PhoneVerificationCode_UserID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="PhoneVerificationCodes" Type="Self.PhoneVerificationCodes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PhoneVerificationCodes">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__HouseAmenities__HouseID">
           <End Role="Houses" Type="Self.Houses" Multiplicity="1" />
           <End Role="HouseAmenities" Type="Self.HouseAmenities" Multiplicity="*" />
@@ -553,6 +586,7 @@
           <EntitySet Name="OwnerPropertyListingRequests" EntityType="Self.OwnerPropertyListingRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PGDetails" EntityType="Self.PGDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PGReviews" EntityType="Self.PGReviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhoneVerificationCodes" EntityType="Self.PhoneVerificationCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
@@ -562,6 +596,10 @@
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="DF_PhoneVerificationCode_UserID" Association="Self.DF_PhoneVerificationCode_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PhoneVerificationCodes" EntitySet="PhoneVerificationCodes" />
+          </AssociationSet>
           <AssociationSet Name="FK__HouseAmenities__HouseID" Association="Self.FK__HouseAmenities__HouseID">
             <End Role="Houses" EntitySet="Houses" />
             <End Role="HouseAmenities" EntitySet="HouseAmenities" />
@@ -674,6 +712,10 @@
           <Property Name="StatusUpdateDate" Type="DateTime" Precision="3" />
           <Property Name="BookingFromDate" Type="DateTime" Precision="3" />
           <Property Name="BookingToDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int64" />
+          <Property Name="isDeleted" Type="Boolean" />
           <NavigationProperty Name="Room" Relationship="Self.FK_Beds_RoomID" FromRole="Beds" ToRole="Rooms" />
           <NavigationProperty Name="User" Relationship="Self.FK_Beds_UserID" FromRole="Beds" ToRole="Users" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_BedID" FromRole="Beds" ToRole="Transactions" />
@@ -836,6 +878,19 @@
           <NavigationProperty Name="PGDetail" Relationship="Self.FK_PGReviews_PGDetailID" FromRole="PGReviews" ToRole="PGDetails" />
           <NavigationProperty Name="User" Relationship="Self.FK_PGReviews_UserID" FromRole="PGReviews" ToRole="Users" />
         </EntityType>
+        <EntityType Name="PhoneVerificationCode">
+          <Key>
+            <PropertyRef Name="PhoneVerificationCodeID" />
+          </Key>
+          <Property Name="PhoneVerificationCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VerificationCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.DF_PhoneVerificationCode_UserID" FromRole="PhoneVerificationCodes" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -857,6 +912,10 @@
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int64" />
+          <Property Name="isDeleted" Type="Boolean" />
           <NavigationProperty Name="Beds" Relationship="Self.FK_Beds_RoomID" FromRole="Rooms" ToRole="Beds" />
           <NavigationProperty Name="House" Relationship="Self.FK_Rooms_HouseID" FromRole="Rooms" ToRole="Houses" />
         </EntityType>
@@ -958,9 +1017,11 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="PhoneVerificationCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Beds" Relationship="Self.FK_Beds_UserID" FromRole="Users" ToRole="Beds" />
           <NavigationProperty Name="PGDetails" Relationship="Self.FK_PGDetails_UserID" FromRole="Users" ToRole="PGDetails" />
           <NavigationProperty Name="PGReviews" Relationship="Self.FK_PGReviews_UserID" FromRole="Users" ToRole="PGReviews" />
+          <NavigationProperty Name="PhoneVerificationCodes" Relationship="Self.DF_PhoneVerificationCode_UserID" FromRole="Users" ToRole="PhoneVerificationCodes" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_UserID" FromRole="Users" ToRole="Transactions" />
           <NavigationProperty Name="UserClaims" Relationship="Self.FK_dbo_UserClaim_dbo_User_UserID" FromRole="Users" ToRole="UserClaims" />
           <NavigationProperty Name="UserDetails" Relationship="Self.FK_UserDetails_UserID" FromRole="Users" ToRole="UserDetails" />
@@ -1123,6 +1184,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DF_PhoneVerificationCode_UserID">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="PhoneVerificationCodes" Type="Self.PhoneVerificationCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PhoneVerificationCodes">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Transactions_TransactionStatusID">
           <End Role="TransactionStatuses" Type="Self.TransactionStatus" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
@@ -1202,6 +1275,7 @@
           <EntitySet Name="OwnerPropertyListingRequests" EntityType="Self.OwnerPropertyListingRequest" />
           <EntitySet Name="PGDetails" EntityType="Self.PGDetail" />
           <EntitySet Name="PGReviews" EntityType="Self.PGReview" />
+          <EntitySet Name="PhoneVerificationCodes" EntityType="Self.PhoneVerificationCode" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Rooms" EntityType="Self.Room" />
           <EntitySet Name="Transactions" EntityType="Self.Transaction" />
@@ -1262,6 +1336,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="PGReviews" EntitySet="PGReviews" />
           </AssociationSet>
+          <AssociationSet Name="DF_PhoneVerificationCode_UserID" Association="Self.DF_PhoneVerificationCode_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PhoneVerificationCodes" EntitySet="PhoneVerificationCodes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Transactions_TransactionStatusID" Association="Self.FK_Transactions_TransactionStatusID">
             <End Role="TransactionStatuses" EntitySet="TransactionStatuses" />
             <End Role="Transactions" EntitySet="Transactions" />
@@ -1317,6 +1395,10 @@
                 <ScalarProperty Name="StatusUpdateDate" ColumnName="StatusUpdateDate" />
                 <ScalarProperty Name="BookingFromDate" ColumnName="BookingFromDate" />
                 <ScalarProperty Name="BookingToDate" ColumnName="BookingToDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1471,6 +1553,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PhoneVerificationCodes">
+            <EntityTypeMapping TypeName="LYSAdminModel.PhoneVerificationCode">
+              <MappingFragment StoreEntitySet="PhoneVerificationCodes">
+                <ScalarProperty Name="PhoneVerificationCodeID" ColumnName="PhoneVerificationCodeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="Sid" ColumnName="Sid" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="LYSAdminModel.Role">
               <MappingFragment StoreEntitySet="Roles">
@@ -1491,6 +1586,10 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1587,6 +1686,7 @@
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PhoneVerificationCode" ColumnName="PhoneVerificationCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

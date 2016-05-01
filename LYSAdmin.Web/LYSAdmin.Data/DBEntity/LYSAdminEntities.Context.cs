@@ -22,7 +22,7 @@ namespace LYSAdmin.Data.DBEntity
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<Area> Areas { get; set; }
@@ -35,6 +35,7 @@ namespace LYSAdmin.Data.DBEntity
         public virtual DbSet<OwnerPropertyListingRequest> OwnerPropertyListingRequests { get; set; }
         public virtual DbSet<PGDetail> PGDetails { get; set; }
         public virtual DbSet<PGReview> PGReviews { get; set; }
+        public virtual DbSet<PhoneVerificationCode> PhoneVerificationCodes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
