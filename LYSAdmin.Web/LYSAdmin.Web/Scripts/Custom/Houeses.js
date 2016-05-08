@@ -326,3 +326,13 @@ $("#UploadImage").click(function () {
         }
     });
 });
+
+$(".btnViewAmenities").click(function () {
+
+    if ($(this).parents('.divRowHouse').find('.divAmenities').hasClass('hidden')) {
+        $(this).parents('.divRowHouse').find('.divAmenities').removeClass('hidden');
+    } else {
+        $(this).parents('.divRowHouse').find('.divAmenities').addClass('hidden');
+    }
+   
+});
