@@ -113,3 +113,11 @@ function fnSaveLocation() {
         }
     });
 }
+
+$('.btnViewBed').click(function () {
+    if ($(this).parents('.divRowRoom').find('.divViewBed').hasClass('hidden')) {
+        $(this).parents('.divRowRoom').find('.divViewBed').removeClass('hidden');
+    } else {
+        $(this).parents('.divRowRoom').find('.divViewBed').addClass('hidden');
+    }
+});

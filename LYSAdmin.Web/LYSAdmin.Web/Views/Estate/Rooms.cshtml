@@ -58,20 +58,16 @@
                     <button class="btn btn-primary pull-right btn-show-add-room" type="button" style="margin-top:-1%;">Add</button>
                 </div>
                 <div class="ibox-content">
-
-                    <table class="table table-striped table-bordered table-hover dataTables-houses">
-                        <thead>
-                            <tr>
-                                <th>Room Number</th>
-                                <th>PG/Hostel Name</th>
-                                <th>House Name</th>
-                                <th>Monthly Rent</th>
-                                <th>Deposit</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           @if (Model.PGDetails != null && Model.PGDetails.Count > 0)
+                    <div>
+                        <div id="tblRoomHeader" class="row">
+                            <div class="col-md-2"><h4>Room Number</h4></div>
+                            <div class="col-md-2"><h4>PG/Hostel Name</h4></div>
+                            <div class="col-md-2"><h4>House Name</h4></div>
+                            <div class="col-md-2"><h4>Monthly Rent</h4></div>
+                            <div class="col-md-2"><h4>View Bed</h4></div>
+                            <div class="col-md-2"><h4>Action</h4></div>
+                        </div>
+                        @if (Model.PGDetails != null && Model.PGDetails.Count > 0)
                            {
                                foreach (var pgDetail in Model.PGDetails)
                                {
@@ -83,32 +79,51 @@
                                            {
                                                foreach (var room in house.Rooms)
                                                {
-                                                <tr class="gradeX" id="@room.RoomID">
-                                                    <td>@room.RoomNumber</td>
-                                                    <td>@pgDetail.PGName</td>
-                                                    <td>@house.HouseName</td>
-                                                    <td>@room.MonthlyRent</td>
-                                                    <td>@room.Deposit</td>
-                                                    <td><input type="button" class="btnDeleteHouse" value="Delete"></td>
-                                                </tr>
-                                               }
-                                           }
-                                       }
-                                   }
-                               }
-                           }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Room Number</th>
-                                <th>PG/Hostel Name</th>
-                                <th>House Name</th>
-                                <th>Monthly Rent</th>
-                                <th>Deposit</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                                                <div class="row row-padding-top-1 border-bottom padding-left divRowRoom">
+                                                    <div class="col-md-2">
+                                                        <input type="hidden" name="RoomID" value="@room.RoomID" />
+                                                        @room.RoomNumber
+                                                    </div>
+                                                    <div class="col-md-2">@pgDetail.PGName</div>
+                                                    <div class="col-md-2">@house.HouseName</div>
+                                                    <div class="col-md-2">@room.MonthlyRent</div>
+                                                    <div class="col-md-2"><input type="button" class="btnViewBed" value="View Bed"></div>
+                                                    <div class="col-md-2"><input type="button" class="btnDeleteHouse" value="Delete"></div>
+                                                    <div class="col-md-12  row-padding-top-3">
+                                                        <div class="row divViewBed hidden">
+                                                            <div class="row gray-bg" style="padding:10px">
+                                                                <div class="col-md-5 room margin_4_pc">
+                                                                    <div class="row">
+                                                                       @if (room.Beds != null && room.Beds.Count > 0)
+                                                                       {
+                                                                           foreach (var bed in room.Beds)
+                                                                           {
+                                                                               if (bed.BedStatus == 4)
+                                                                               {
+                                                                                   <div class="col-md-4"><a href="#" class="bed_inactive"><i class="fa fa-bed fa-2x"></i></a></div>
+                                                                               }
+                                                                               else
+                                                                               {
+                                                                                   <div class="col-md-4"><a href="#" class="bed_active"><i class="fa fa-bed fa-2x"></i></a></div>
+                                                                               }
+                                                                                
+                                                                           }
+                                                                       }
+                                                                      </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                    </div>
 
                 </div>
             </div>
