@@ -91,12 +91,13 @@
                                                     <div class="col-md-2"><input type="button" class="btnDeleteHouse" value="Delete"></div>
                                                     <div class="col-md-12  row-padding-top-3">
                                                         <div class="row divViewBed hidden">
-                                                            <div class="row gray-bg" style="padding:10px">
-                                                                <div class="col-md-5 room margin_4_pc">
+                                                        @if (room.Beds != null && room.Beds.Count > 0)
+                                                         {
+
+                                                            <div class="row gray-bg" style="padding-left:15%;padding-right:15%;padding-top:1%;padding-bottom:1%">
+                                                                <div class="col-md-12 room margin_4_pc">
                                                                     <div class="row">
-                                                                       @if (room.Beds != null && room.Beds.Count > 0)
-                                                                       {
-                                                                           foreach (var bed in room.Beds)
+                                                                        @foreach (var bed in room.Beds)
                                                                            {
                                                                                if (bed.BedStatus == 4)
                                                                                {
@@ -108,11 +109,18 @@
                                                                                }
                                                                                 
                                                                            }
-                                                                       }
+                                                                       
                                                                       </div>
                                                                 </div>
                                                             </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div>Oops!No bed under this Room.Click <a>here</a> to add a bed.</div>
+                                                            }
                                                         </div>
+                                                       
+                                                   
                                                     </div>
                                                 </div>
                                             }
