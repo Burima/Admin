@@ -121,3 +121,11 @@ $('.btnViewBed').click(function () {
         $(this).parents('.divRowRoom').find('.divViewBed').addClass('hidden');
     }
 });
+
+$('bed_inactive').click(function () {
+    //var bedStatus = $(this).data('id');
+    //$(".modal-body #bookId").val(myBookId);
+    // As pointed out in comments, 
+    // it is superfluous to have to manually call the modal.
+    $('#modalShowBedDetails').modal('show');
+});
